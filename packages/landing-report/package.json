@@ -1,0 +1,48 @@
+{
+  "name": "@ku-utils/landing-report",
+  "version": "1.1.21",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队落地页埋点上报 SDK（继承 CoreTracker，无 alive/heartbeat/start 自动上报）",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "clean": "rm -rf dist",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "dependencies": {
+    "@ku-utils/report": "workspace:*",
+    "@ku-utils/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "eslint": "^9.27.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.1"
+  }
+}

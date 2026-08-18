@@ -1,0 +1,25 @@
+{
+  "name": "@ku-utils/prettier-config",
+  "version": "1.2.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队共享 Prettier 配置",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "peerDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.cjs"
+  }
+}

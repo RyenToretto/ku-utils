@@ -1,0 +1,52 @@
+{
+  "name": "@ku-utils/utils",
+  "version": "1.5.4",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队通用工具函数库（零框架依赖）",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./auto-import": {
+      "types": "./dist/auto-import.d.ts",
+      "import": "./dist/auto-import.js",
+      "require": "./dist/auto-import.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsup && node scripts/generate-auto-import.mjs && tsup",
+    "postinstall": "node scripts/postinstall.cjs",
+    "build:only": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "eslint": "^9.27.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "happy-dom": "^17.4.4",
+    "vitest": "^3.2.1"
+  }
+}

@@ -1,0 +1,25 @@
+/*
+ * Splash 视觉样式 SSOT 在 index.html（首屏内联）。
+ * 此处只同步 token，避免 bundle CSS 二次注入导致 progress 动画重启闪烁。
+ */
+
+:root {
+  --splash-bg: #f7f8fa;
+  --splash-text: #1f2329;
+  --splash-primary: #3370ff;
+  --splash-track: #e5e6eb;
+  --splash-grid: rgba(51, 112, 255, 0.1);
+  --splash-orb: rgba(51, 112, 255, 0.18);
+  --splash-font:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+html.dark {
+  --splash-bg: #121316;
+  --splash-text: #f2f3f5;
+  --splash-primary: #4e83fd;
+  --splash-track: #2b2f36;
+  --splash-grid: rgba(78, 131, 253, 0.14);
+  --splash-orb: rgba(78, 131, 253, 0.2);
+}

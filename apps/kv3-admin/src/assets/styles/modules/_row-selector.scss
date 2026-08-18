@@ -1,0 +1,88 @@
+/* 行选中单元格：单选圆点 / 多选方框 / 表头批量 */
+
+.do-select-cell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-color, #dcdfe6);
+  border-radius: 2px;
+  background: var(--bg-card, #fff);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    border-color var(--el-transition-duration-fast, 0.2s) ease,
+    background-color var(--el-transition-duration-fast, 0.2s) ease;
+  position: relative;
+  z-index: 2;
+
+  .el-icon {
+    opacity: 0;
+    font-size: 12px;
+  }
+
+  &:hover {
+    border-color: var(--primary-color);
+  }
+
+  &.active {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+
+    .el-icon {
+      opacity: 1;
+    }
+  }
+
+  &.single {
+    border-radius: 50%;
+
+    &.active {
+      .el-icon {
+        display: none;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #fff;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  &.transparent {
+    opacity: 0.35;
+  }
+
+  &.batch-select-box {
+    margin: 0 auto;
+
+    &.half-selected {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+
+      .el-icon {
+        opacity: 1;
+      }
+    }
+
+    &.all-selected {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+
+      .el-icon {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+---
+description: "@ku-utils/marketing 使用规范。接入 Adjust/Appsflyer 渠道归因、落地页 bootstrap 脚本生成、App 下载/唤起时适用。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/marketing 使用规范
+
+## 核心原则
+
+1. **Tracker 在页面渲染前初始化**：必须在 `main.ts` / `app.ts` 等入口中完成，不能在路由守卫内懒初始化
+2. **单例模式**：全局只创建一个 Tracker 实例，禁止多处 `createAdjustTracker()`
+3. **Adjust 与 Appsflyer 不混用**：一个落地页/广告活动只用一套归因 SDK
+4. **PairedTracker 事件必须预声明**：业务事件名必须在 `events` 配置中预先注册，禁止动态字符串上报
+
+## 模块速查
+
+| 场景 | 使用 |
+|---|---|
+| Adjust 宏替换归因 | `createAdjustTracker` |
+| Appsflyer OneLink 归因 | `createAppsflyerTracker` |
+| Appsflyer Smart Script HTML | `createSmartScriptTag` |
+| 落地页 bootstrap 脚本 | `createBootstrapScript` |
+| Pixel 条件化加载脚本 | `createPixelScripts` |
+| App 下载/唤起 | `startDownload` / `appAndDownload` / `makeDownload` |
+| 多 SDK 漏斗配对上报 | `createPairedTracker` |
+| 落地页运行时参数 | `getLandingParams` / `getDeviceToken` / `isTiktok` |
+
+## 禁止事项
+
+- 禁止在路由组件内初始化 Tracker（已错过最早上报窗口）
+- 禁止手动拼接 Adjust 链接参数 — 使用 `createAdjustTracker`
+- 禁止混合使用 Adjust + Appsflyer（同一活动选一个）
+- 禁止调用不存在的方法（`createSmartScript` / `tryWakeApp` 不存在；应使用 `createSmartScriptTag` / `appAndDownload`）
+- 禁止 PairedTracker 中用大写事件名（业务事件用 snake_case，只有 FB/TikTok 标准事件名用 PascalCase）
+- FB/TikTok 自定义事件（非平台标准白名单）必须显式设 `standard: false`

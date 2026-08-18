@@ -1,0 +1,30 @@
+---
+description: Vue / CSS 开发规范。编写 Vue 组件和 SCSS 时读取。
+globs:
+alwaysApply: false
+---
+
+# Vue 开发规范
+
+## CSS 规范
+- CSS 代码不允许使用 & 拼接类名，必须写完整的类名
+- `&.success` 是可以的，但 `&-success`、`&__item`、`&--large` 等类名拼接不允许
+- 推荐使用 BEM 命名但不使用 SCSS 嵌套拼接
+
+## Vue 3 规范
+- 优先使用 `<script setup lang="ts">` 语法
+- Props 使用 type-based 声明：`defineProps<Props>()`
+- Emits 使用 type-based 声明：`defineEmits<Emits>()`
+- 使用 `defineOptions({ name: 'ComponentName' })` 定义组件名
+- 组件标签顺序：`<template>` → `<script>` → `<style>`
+
+## Vue 2 规范
+- 组件标签顺序：`<template>` → `<script>` → `<style>`
+- 使用 Options API
+- 复杂逻辑可使用 Vue 2.7 的 Composition API
+
+## 通用规范
+- 使用 @ku-utils/* 系列包，不重复造轮子
+- 工具函数用 @ku-utils/utils，不自行实现 debounce/throttle 等
+- HTTP 请求使用 @ku-utils/request
+- 类型定义优先使用 @ku-utils/types 中的公共类型

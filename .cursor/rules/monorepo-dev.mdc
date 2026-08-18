@@ -1,0 +1,32 @@
+---
+description: ku-utils Monorepo 开发规范。新增包、加依赖、发版时读取。
+globs:
+alwaysApply: false
+---
+
+# Monorepo 开发规范
+
+## 包管理
+- 使用 pnpm 作为包管理器
+- 添加依赖到根目录：`pnpm add -wD <pkg>`
+- 添加依赖到子包：`pnpm add <pkg> --filter <workspace>`
+- 引用 workspace 内的包：`"@ku-utils/utils": "workspace:*"`
+
+## 开发流程
+- 新增公共功能先评估是否可以放入现有的 @ku-utils/* 包
+- 如需新增包，在 packages/ 目录创建
+- 每个包必须有 README.md、tsconfig.json、package.json
+- 构建使用 tsup（纯 TS 库）或 Vite（Vue 组件库）
+
+## 版本发布
+- 使用 `pnpm changeset` 创建变更记录
+- 合入 `main` 后由 GitHub Actions 打开 Version Packages PR，合并后发布到 npm 并打 `@ku-utils/<pkg>@<ver>` tag
+- 本地紧急发版：`pnpm release` 后 `git push --follow-tags`
+- 遵循语义化版本：patch（修复）/ minor（新功能）/ major（破坏性变更）
+
+## Commit 规范
+- 格式：`type(scope): 中文描述`
+- type: feat / fix / docs / style / refactor / perf / test / build / ci / chore（保持英文）
+- scope: 包名（如 utils / hooks / ui）（保持英文）
+- message 描述部分尽量使用中文，例如：`feat(utils): 新增日期格式化函数`
+- body 和 footer 部分也建议使用中文

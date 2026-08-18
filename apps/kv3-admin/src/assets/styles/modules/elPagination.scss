@@ -1,0 +1,100 @@
+/*
+ * ============================================================
+ * Element Plus — 分页器全局增强样式
+ * ============================================================
+ * 覆写 EP 默认分页器的视觉细节：
+ *  - 圆角按钮（通过 --el-pagination-border-radius 已在 _el-base.scss 设置）
+ *  - 与设计系统对齐的 hover / active 状态
+ *  - 规范的右对齐容器与 footer 分隔线（配合 .table-wrap__ft）
+ * ============================================================
+ */
+
+/* ── 全局覆写 EP 在 .el-pagination 上的默认变量 ──────────────
+ *
+ * EP 把 --el-pagination-border-radius 等变量定义在 .el-pagination
+ * 选择器上（非 :root），导致 :root 里的覆写被高优先级规则遮盖。
+ * 在此重新声明，确保生效。
+ */
+.do-pagination {
+  padding: 16px 0;
+  text-align: center;
+  // 卡片页脚的翻页
+  .do-card .ft > & {
+    margin-top: 16px / 2;
+    margin-bottom: 0;
+  }
+}
+.el-pagination {
+  justify-content: flex-end;
+  --el-pagination-border-radius: 6px;
+  --el-pagination-button-width: 30px;
+  --el-pagination-button-height: 30px;
+  --el-pagination-font-size: 13px;
+  --el-pagination-item-gap: 8px;
+}
+
+/* ── 背景模式按钮精调 ─────────────────────────────────────────
+ *
+ * EP 的 is-background 模式将当前页按钮填充为 primary 色，
+ * 其余按钮背景为 --el-pagination-button-bg-color。
+ * 通过提升 hover 透明度让交互反馈更清晰。
+ */
+.el-pagination.is-background {
+  .btn-prev,
+  .btn-next,
+  .el-pager li {
+    min-width: 32px;
+    background: #fff;
+    border: 1px solid var(--el-border-color-lighter);
+    border-radius: var(--el-pagination-border-radius);
+    transition:
+      background-color var(--el-transition-duration-fast),
+      color var(--el-transition-duration-fast),
+      box-shadow var(--el-transition-duration-fast);
+
+    &:hover:not(.is-active):not(:disabled) {
+      color: var(--el-color-primary);
+      background-color: var(--el-color-primary-light-9);
+    }
+  }
+
+  .el-pager li.is-active {
+    border-radius: var(--el-pagination-border-radius);
+    font-weight: 600;
+  }
+}
+
+/* ── 跳页 input 高度对齐 ─────────────────────────────────────
+ *
+ * EP 跳页区 .el-pagination__jump 的 input 默认比按钮稍高，
+ * 这里将其高度锁定与按钮一致。
+ */
+.el-pagination__jump .el-input__wrapper {
+  padding: 0 6px;
+
+  .el-input__inner {
+    width: 36px;
+    text-align: center;
+  }
+}
+
+/* ── table-wrap__ft：footer 容器分隔线与内边距 ────────────────
+ *
+ * 当分页器放在 TableWrap 的 #ft 插槽时，
+ * 为其增加顶部分隔线和 padding，使其视觉上与表格分离。
+ */
+.table-wrap__ft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 8px 4px;
+  flex-shrink: 0;
+
+  .do-pagination {
+    padding: 0;
+  }
+
+  > .el-pagination {
+    padding-bottom: 8px;
+  }
+}

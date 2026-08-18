@@ -1,0 +1,18 @@
+{
+  "extends": "@ku-utils/tsconfig/vue3.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      // 仅 Demo 开关用（固定 4 个）；新增业务域走 @/*，勿往这里加 paths
+      "@example-routes": ["./src/stubs/emptyExampleRoutes.ts"],
+      "@example-maps": ["./src/stubs/emptyExampleMaps.ts"],
+      "@example-mocks": ["./src/stubs/emptyExampleMocks.ts"],
+      "@header-example-tab": ["./src/stubs/emptyExampleNavTab.ts"]
+    },
+    "types": ["vite/client", "node"],
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*", "src/types/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

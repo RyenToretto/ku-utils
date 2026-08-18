@@ -1,0 +1,11 @@
+export { vPermission } from './vPermission';
+export { vLoading } from './vLoading';
+export { vClickOutside } from './vClickOutside';
+export { vCopy } from './vCopy';
+export { vDebounce } from './vDebounce';
+export { vFocus } from './vFocus';
+export { vLazyLoad } from './vLazyLoad';
+export { vLongpress } from './vLongpress';
+export { vTooltip } from './vTooltip';
+export { vWatermark } from './vWatermark';
+export { installDirectives } from './install';

@@ -1,0 +1,37 @@
+{
+  "name": "@ku-utils/constants",
+  "version": "1.1.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队共享常量、枚举和正则",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "devDependencies": {
+    "@ku-utils/tsconfig": "workspace:*",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}

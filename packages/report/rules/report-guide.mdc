@@ -1,0 +1,63 @@
+---
+description: "@ku-utils/report 使用规范。接入通用埋点上报（createXhReport）时适用。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/report 使用规范
+
+## 核心原则
+
+1. **单例**：全局只调用一次 `createXhReport()`，导出实例供全局使用
+2. **alive / heartbeat / start 由 SDK 自动触发**，禁止手动上报内置生命周期 key（`xh_alive` / `xh_heartbeat` / `xh_start`）
+3. **isDev 模式**：开发/测试环境必须配置 `isDev: true`，避免污染生产数据
+4. **keys 预定义**：事件 key 必须通过 `keys` 预定义为常量后引用，禁止散落的魔法字符串
+
+## 标准用法
+
+```ts
+// src/plugins/report.ts
+import { createXhReport } from '@ku-utils/report'
+
+export const xh = createXhReport({
+  pkg: 'com.example.app',
+  version: import.meta.env.VITE_APP_VERSION,  // 原始版本字符串，如 '1.0.1'
+  isDev: import.meta.env.DEV,
+  keys: ['LOGIN', 'REGISTER', 'PURCHASE'],
+  reportUrl: import.meta.env.VITE_REPORT_URL,
+})
+
+// 正确上报方式：用预定义 key 常量（xh.LOGIN === 'login'）
+xh(xh.LOGIN, { method: 'phone' })    // ✅ 上报 'login'
+xh(xh.REGISTER, { channel: 'ad' })  // ✅ 上报 'register'
+// xh('LOGIN', ...) ← 错误：会上报大写字符串 'LOGIN' 而非 'login'
+```
+
+## 需要等 token 就绪时：两阶段初始化
+
+```ts
+// 阶段一：先创建实例（module 顶层），此时未 init
+const xh = createXhReport()
+
+// 阶段二：等 token 就绪后初始化（如登录/刷新 token 后）
+async function initTracker(token: string) {
+  await xh.init({
+    pkg: 'com.example.app',
+    version: '1.0.1',
+    isDev: import.meta.env.DEV,
+    tk: token,
+    reportUrl: 'https://report.example.com/adtrack',
+    moreGetter: () => ({ instanceId: getGAClientId() }),
+  })
+}
+
+// init 前调用的 xh(...) 会自动入队，init 完成后统一 flush，不会丢失
+```
+
+## 禁止事项
+
+- 禁止多次调用 `createXhReport()` 创建多个实例
+- 禁止手动上报 `'xh_alive'`、`'xh_heartbeat'`、`'xh_start'`（SDK 自动管理）
+- 禁止 `version` 传 `makeVersionCode(...)` 的结果（`version` 接受原始字符串如 `'1.0.1'`，SDK 内部会自动转换）
+- 禁止直接用大写字符串上报：`xh('LOGIN', ...)` ← 应改为 `xh(xh.LOGIN, ...)`
+- 支付/转化事件必须加 `dedupeKey` 防重复上报

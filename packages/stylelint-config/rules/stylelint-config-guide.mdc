@@ -1,0 +1,43 @@
+---
+description: "@ku-utils/stylelint-config 使用规范。编写 CSS/SCSS 样式代码时适用，强制执行命名规范。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/stylelint-config 使用规范
+
+## 核心规则：禁止 & 拼接类名
+
+**`&` 字符只能用于状态/伪类/属性选择器，禁止用于拼接类名片段**。
+
+```scss
+// ❌ 错误：& 拼接类名
+.button {
+  &-primary { color: blue; }   // 违规：& 拼接生成新类名
+  &__icon { ... }               // 违规：& 拼接 BEM element
+  &--large { font-size: 18px; } // 违规：& 拼接 BEM modifier
+}
+
+// ✅ 正确：& 只用于状态/伪类
+.button {
+  &:hover { opacity: 0.8; }    // 合法：伪类
+  &.is-active { ... }           // 合法：状态类
+  &[disabled] { ... }           // 合法：属性选择器
+  &::before { ... }             // 合法：伪元素
+}
+
+// ✅ 正确：完整类名写法
+.button { ... }
+.button-primary { ... }
+.button__icon { ... }
+.button--large { ... }
+```
+
+## 为什么禁止 & 拼接？
+
+IDE 全文搜索 `.button-primary` 时，`&-primary` 的写法无法被找到，严重影响可维护性。
+
+## 禁止事项
+
+- 禁止 `&-xxx`、`&__xxx`、`&--xxx` 等形式的类名拼接
+- 禁止硬编码颜色 — 使用 design-tokens CSS 变量（`var(--do-color-primary)`）

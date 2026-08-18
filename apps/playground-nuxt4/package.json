@@ -1,0 +1,29 @@
+{
+  "name": "@ku-utils/playground-nuxt4",
+  "private": true,
+  "version": "1.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --host",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck",
+    "clean": "rm -rf .nuxt .output dist node_modules"
+  },
+  "dependencies": {
+    "@ku-utils/report": "workspace:^",
+    "nuxt": "^3.17.3",
+    "vue": "^3.5.16",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/prettier-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "eslint": "^9.27.0",
+    "typescript": "^5.9.3"
+  }
+}

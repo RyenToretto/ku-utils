@@ -1,0 +1,32 @@
+---
+description: "@ku-utils/prettier-config 使用规范。项目配置 Prettier 时适用。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/prettier-config 使用规范
+
+## 核心原则
+
+**统一格式化**：所有项目必须引用 `@ku-utils/prettier-config`，禁止本地自定义 `.prettierrc` 覆盖核心规则（单引号、100列宽等）。
+
+## 配置方式
+
+```json
+// package.json（推荐）
+{
+  "prettier": "@ku-utils/prettier-config"
+}
+```
+
+或创建 `.prettierrc.js`：
+
+```js
+module.exports = require('@ku-utils/prettier-config')
+```
+
+## 禁止事项
+
+- 禁止在业务文件中使用 `// prettier-ignore`（除格式化会破坏数据结构的特殊注释外）
+- 禁止自定义 `.prettierrc` 修改 `singleQuote`/`printWidth`/`trailingComma` 等核心规则
+- 禁止提交未格式化的代码（CI 中应运行 `prettier --check`）

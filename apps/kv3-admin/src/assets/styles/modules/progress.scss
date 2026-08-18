@@ -1,0 +1,34 @@
+/* NProgress, Make clicks pass-through */
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background-color: var(--primary-color);
+  background-image: linear-gradient(
+    to left,
+    transparent 25%,
+    rgba(255, 255, 255, 0.3) 100%,
+    transparent
+  );
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-position: right 0;
+  border-radius: 0 2px 2px 0;
+  box-shadow:
+    0 0 8px var(--primary-color),
+    0 0 4px var(--primary-color);
+  position: fixed;
+  z-index: 99999999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow:
+    0 0 10px var(--primary-color),
+    0 0 5px var(--primary-color);
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@ku-utils/ui-vue2",
+  "version": "1.2.2",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队 Vue 2 业务组件库（维护模式）",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "clean": "rm -rf dist",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "peerDependencies": {
+    "vue": "^2.7.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue2": "^2.3.3",
+    "vite": "^6.3.5",
+    "vue": "^2.7.16"
+  }
+}

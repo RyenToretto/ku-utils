@@ -1,0 +1,33 @@
+{
+  "name": "@ku-utils/stylelint-config",
+  "version": "1.2.2",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队共享 Stylelint 配置",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./scss": "./scss.js"
+  },
+  "files": [
+    "index.js",
+    "scss.js",
+    "plugins",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "dependencies": {
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-config-recess-order": "^5.1.1"
+  },
+  "peerDependencies": {
+    "stylelint": "^16.0.0"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.cjs"
+  }
+}

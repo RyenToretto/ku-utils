@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "paths": {
+      "@/*": ["./src/*"],
+      "#imports": ["./.nuxt/types/imports.d.ts"],
+      "#app": ["./.nuxt/types/app.d.ts"]
+    },
+    "types": ["./.nuxt/types/plugins.d.ts"]
+  },
+  "include": ["app/**/*.ts", "app/**/*.vue", "server/**/*.ts", "shared/**/*.ts", "*.config.ts"],
+  "exclude": ["node_modules", "dist", ".nuxt", ".output"]
+}

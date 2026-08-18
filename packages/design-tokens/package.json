@@ -1,0 +1,42 @@
+{
+  "name": "@ku-utils/design-tokens",
+  "version": "1.1.4",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队设计令牌（Design Tokens）",
+  "type": "module",
+  "main": "./dist/tokens.cjs",
+  "module": "./dist/tokens.js",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs"
+    },
+    "./css": "./dist/tokens.css",
+    "./scss": "./dist/tokens.scss",
+    "./json": "./dist/tokens.json",
+    "./dist/tokens.css": "./dist/tokens.css",
+    "./dist/tokens.scss": "./dist/tokens.scss",
+    "./dist/tokens.js": "./dist/tokens.js",
+    "./dist/tokens.json": "./dist/tokens.json",
+    "./css-custom-data": "./dist/css-custom-data.json"
+  },
+  "files": [
+    "scripts",
+    "skills",
+    "dist",
+    "rules"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "node scripts/build.js --watch",
+    "clean": "rm -rf dist",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "devDependencies": {
+    "@ku-utils/tsconfig": "workspace:*"
+  }
+}

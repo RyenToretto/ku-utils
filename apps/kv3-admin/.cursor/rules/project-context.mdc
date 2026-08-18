@@ -1,0 +1,40 @@
+---
+description: kv3-admin starter 约定。写列表页、表格、筛选、弹层、自定义列时读取。
+globs:
+alwaysApply: false
+---
+
+# kv3-admin starter
+
+- 对话与 commit message 使用中文
+- 本目录是 Vue 3 + Vite + Element Plus 管理端 starter，workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/custom-columns`
+- 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`
+- 文档真源：`apps/kv3-admin/docs/admin-list-page-pattern.md`
+
+## 目录骨架
+
+```text
+src/modules/<域>/<子业务>/
+├── _router/
+├── _api/
+├── _map/
+├── _mock/
+├── _module/          # XxxList.vue、DialogXxx.vue
+└── XxxLayer.vue
+```
+
+## 列表页硬约束
+
+1. 页面根 class：`page-<业务>`
+2. 表格用 `<TableWrap>` 包裹
+3. 表格 class：`do-inner-scroller page-table hide-table-border`
+4. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks` 的 `useMaxHeight`）
+5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后
+6. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）
+7. 自定义列：`@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
+
+全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange` 等，见 `plugins/globalComponents.ts`。
+
+## Example 门控
+
+开发态 `VITE_APP_USE_EXAMPLE=1`。拷到业务仓后，生产构建应设为 `0`，并保留 `forbid-example-in-bundle` 插件。

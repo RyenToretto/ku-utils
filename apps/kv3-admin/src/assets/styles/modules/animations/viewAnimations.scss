@@ -1,0 +1,88 @@
+@use '../../common/mixins.scss' as *;
+
+$speed-animations: 1s linear;
+
+/* 从下到上的动画 */
+.animate-from-bottom {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity $speed-animations,
+    transform $speed-animations;
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @include mobile() {
+    /* 移动端默认显示，避免元素完全不可见 */
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 从上到下的动画 */
+.animate-from-top {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition:
+    opacity $speed-animations,
+    transform $speed-animations;
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @include mobile() {
+    /* 移动端默认显示，避免元素完全不可见 */
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 从左到右的动画 */
+.animate-from-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition:
+    opacity $speed-animations,
+    transform $speed-animations;
+  &.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 从右到左的动画 */
+.animate-from-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition:
+    opacity $speed-animations,
+    transform $speed-animations;
+  &.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 淡入动画 */
+.animate-fade-in {
+  opacity: 0;
+  transition: opacity $speed-animations;
+  &.in-view {
+    opacity: 1;
+  }
+}
+
+/* 缩放动画 */
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity $speed-animations,
+    transform $speed-animations;
+  &.in-view {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

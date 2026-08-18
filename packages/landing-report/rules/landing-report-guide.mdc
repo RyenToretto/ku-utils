@@ -1,0 +1,35 @@
+---
+description: "@ku-utils/landing-report 使用规范。落地页项目中接入埋点上报时适用（替代 @ku-utils/report）。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/landing-report 使用规范
+
+## 核心原则
+
+**落地页必须用 `createLandingReport`**，禁止在落地页中使用 `createXhReport`（后者会自动上报 alive/heartbeat，污染落地页 session 数据）。
+
+## 区别一览
+
+| 对比项 | @ku-utils/report | @ku-utils/landing-report |
+|---|---|---|
+| alive 自动上报 | ✅ | ❌ |
+| heartbeat 自动上报 | ✅ | ❌ |
+| start 自动上报 | ✅ | ❌ |
+| 适用场景 | App 内 H5 / 业务页面 | 落地页（广告跳转目标页） |
+
+## 用法
+
+```ts
+import { createLandingReport } from '@ku-utils/landing-report'
+
+const xh = createLandingReport({
+  pkg: 'com.example.landing',
+  version: '1.0.0',
+  isDev: import.meta.env.DEV,
+  reportUrl: 'https://api.example.com/track',
+})
+
+xh('LANDING_VIEW', { channel: 'adjust' })
+```

@@ -1,0 +1,27 @@
+{
+  "name": "@ku-utils/playground-vue2",
+  "private": true,
+  "version": "1.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "@ku-utils/report": "workspace:^",
+    "vue": "^2.7.16",
+    "vue-router": "^3.6.5",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/prettier-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "@vitejs/plugin-vue2": "^2.3.3",
+    "eslint": "^9.27.0",
+    "vite": "^6.3.5"
+  }
+}

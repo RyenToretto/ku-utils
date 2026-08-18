@@ -1,0 +1,35 @@
+.normal-link {
+  white-space: nowrap;
+  color: white;
+  text-decoration: none;
+  user-select: none;
+  line-height: 1.4;
+  cursor: pointer;
+  &.with-underline {
+    position: relative;
+    &::after {
+      content: '';
+      display: block;
+      box-sizing: border-box;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff4fc9 0%, #ff4f4f 100%);
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.3s ease;
+    }
+    &.active,
+    &.router-link-active {
+      color: #ff317d;
+      font-weight: 500;
+      &::after {
+        display: none;
+      }
+    }
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}

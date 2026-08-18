@@ -1,0 +1,43 @@
+---
+description: "@ku-utils/tsconfig 使用规范。项目配置 TypeScript 时适用，约束按场景 extends 正确的基础配置。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/tsconfig 使用规范
+
+## 核心原则
+
+**按场景选择对应的 extends**，禁止覆盖 `strict`、`noEmit`、`target` 等关键选项。
+
+## 场景速查
+
+| 项目类型 | extends 路径 |
+|---|---|
+| 通用 TypeScript 库 | `@ku-utils/tsconfig/library` |
+| Vue 3 / Vite 应用 | `@ku-utils/tsconfig/vue3` |
+| Vue 2 应用 | `@ku-utils/tsconfig/vue2` |
+| Nuxt 4 应用 | `@ku-utils/tsconfig/nuxt4` |
+| 通用基础 | `@ku-utils/tsconfig/base` |
+
+## 使用示例
+
+```json
+// tsconfig.json（Vue 3 项目）
+{
+  "extends": "@ku-utils/tsconfig/vue3",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*", "env.d.ts"]
+}
+```
+
+## 禁止事项
+
+- 禁止覆盖 `"strict": false`（必须开严格模式）
+- 禁止覆盖 `"noEmit": true`（编译交给 Vite，不 emit .js 文件）
+- 禁止自定义 `target`（基础配置已优化设置）

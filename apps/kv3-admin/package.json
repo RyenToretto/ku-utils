@@ -1,0 +1,46 @@
+{
+  "name": "@ku-utils/kv3-admin",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Vue 3 + Element Plus 管理端 starter，workspace 消费 @ku-utils/*",
+  "scripts": {
+    "dev": "vite --host",
+    "predev": "node ./scripts/generate-static-version.mjs",
+    "prebuild": "node ./scripts/generate-static-version.mjs",
+    "build": "vue-tsc -p tsconfig.app.json --noEmit && vite build",
+    "type-check": "vue-tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.vite.json --noEmit",
+    "typecheck": "vue-tsc -p tsconfig.app.json --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@ku-utils/custom-columns": "workspace:*",
+    "@ku-utils/hooks": "workspace:*",
+    "@ku-utils/utils": "workspace:*",
+    "axios": "^1.17.0",
+    "clipboard": "^2.0.11",
+    "dayjs": "^1.11.21",
+    "echarts": "^5.6.0",
+    "element-plus": "^2.14.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.4",
+    "qs": "^6.14.0",
+    "vue": "^3.5.35",
+    "vue-router": "^4.5.1",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@ku-utils/tsconfig": "workspace:*",
+    "@types/node": "^22.20.1",
+    "@types/nprogress": "^0.2.3",
+    "@types/qs": "^6.9.18",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "sass": "^1.100.0",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-element-plus": "^0.11.2",
+    "unplugin-vue-components": "^32.1.0",
+    "vite": "^6.3.5",
+    "vue-tsc": "^3.3.4"
+  }
+}

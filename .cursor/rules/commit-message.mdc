@@ -1,0 +1,59 @@
+---
+description: Git Commit Message 规范。编写或检查 git commit 时读取。
+globs:
+alwaysApply: false
+---
+
+# Git Commit Message 规范
+
+## 格式
+
+```
+type(scope): 中文描述
+```
+
+## 语言要求
+
+- `type` 和 `scope` 保持英文
+- subject 描述部分**必须使用中文**，禁止使用英文描述
+- body 和 footer 也使用中文
+
+## type 取值
+
+| type | 含义 |
+|------|------|
+| feat | 新功能 |
+| fix | 修复 bug |
+| docs | 文档变更 |
+| style | 代码格式（不影响逻辑） |
+| refactor | 重构 |
+| perf | 性能优化 |
+| test | 测试 |
+| build | 构建/依赖变更 |
+| ci | CI/CD 配置 |
+| chore | 杂项 |
+| revert | 回退 |
+| release | 版本发布 |
+
+## scope 取值
+
+使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / design-tokens / constants / request / i18n / types / nuxt-module / cli / create-app / docs / deps / ci / release
+
+## 示例
+
+```
+feat(utils): 新增货币格式化函数
+fix(hooks): 修复 useCountdown 内存泄漏
+docs(ui): 更新 DuButton 使用示例
+chore(deps): 升级 typescript 到 5.8.3
+refactor(request): 重构拦截器链路逻辑
+build: 修复 tsconfig 导致 apps 生成冗余编译产物
+```
+
+## 禁止
+
+```
+feat(utils): add formatCurrency function     ← 禁止英文描述
+Fix bug                                       ← 禁止无 type 格式
+feat: 新增功能新增功能新增功能...              ← 禁止超过 100 字符
+```

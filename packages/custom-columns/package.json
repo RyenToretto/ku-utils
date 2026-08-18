@@ -1,0 +1,59 @@
+{
+  "name": "@ku-utils/custom-columns",
+  "version": "1.0.8",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Vue 3 自定义列组件库 — schema + v-for 驱动，基于 Element Plus，支持多套配置持久化、拖拽排序、分组导航、嵌套表头",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style": "./dist/style.css",
+    "./dist/style.css": "./dist/style.css",
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "rules",
+    "skills",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "clean": "rm -rf dist",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "peerDependencies": {
+    "@element-plus/icons-vue": ">=2.0.0",
+    "element-plus": ">=2.3.0",
+    "vue": "^3.4.0"
+  },
+  "dependencies": {
+    "@ku-utils/utils": "workspace:*",
+    "vue-draggable-plus": "^0.6.0"
+  },
+  "devDependencies": {
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "element-plus": "^2.14.1",
+    "eslint": "^9.27.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "^3.5.16",
+    "vue-tsc": "^2.2.10"
+  }
+}

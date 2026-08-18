@@ -1,0 +1,2 @@
+bash scripts/check-no-auth-token.sh
+pnpm lint-staged

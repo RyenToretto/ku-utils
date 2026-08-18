@@ -1,0 +1,881 @@
+@use '../common/mixins.scss' as *;
+
+.table-ctl__form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  > .el-form-item {
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &:not(:last-child) {
+      margin: 0 12px 0 0;
+    }
+  }
+}
+
+.table-wrap {
+  min-width: 0;
+  /* 表格作为内容区上的独立白纸面，与 --bg-page 分层 */
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-light, var(--el-border-color-lighter));
+  border-radius: var(--el-border-radius-base, 8px);
+  overflow: hidden;
+
+  & > .el-table {
+    width: 100%;
+  }
+  .el-table__fixed,
+  .el-table__fixed-right {
+    z-index: 4;
+  }
+  & > .hd {
+    & > .el-form {
+      margin: -4px;
+    }
+    .el-form-item {
+      margin: 4px 24px 4px 0;
+    }
+  }
+}
+
+/* 弹性身份列：由列的 min-width 控制可读宽度，长内容保持单行并省略 */
+.page-cell-ellipsis {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 金额、比例和数量统一右对齐并使用等宽数字 */
+.page-number-cell {
+  display: block;
+  white-space: nowrap;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.el-table {
+  &.do-inner-scroller {
+    .el-table__body-wrapper {
+      .el-table__empty-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .el-table__empty-text {
+        display: block;
+        box-sizing: border-box;
+        width: auto;
+        position: sticky;
+        left: 110px;
+        right: 110px;
+      }
+    }
+  }
+
+  /* 隐藏纵向边线，保留横向分割 */
+  &.el-table--border.hide-table-border {
+    border-width: 0;
+
+    &::before {
+      background-color: transparent;
+    }
+
+    th,
+    td {
+      &:not(.border) {
+        border-right-color: transparent;
+      }
+    }
+  }
+
+  &.page-table {
+    --page-even-color: var(--primary-50);
+    .el-table__row.hover-row {
+      --page-even-color: var(--el-fill-color-light);
+    }
+    .el-table__empty-block {
+      min-height: calc(100vh - 420px);
+    }
+    .el-table__body-wrapper {
+      .el-table__empty-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .el-table__empty-text {
+        display: block;
+        box-sizing: border-box;
+        width: auto;
+        position: sticky;
+        left: 110px;
+        right: 110px;
+      }
+    }
+    &.mini-bar {
+      .el-table__body-wrapper {
+        @include doScrollbar(10px, 10px);
+      }
+    }
+    thead.is-group {
+      th.el-table__cell:not(.major-column) {
+        background-color: var(--el-bg-color);
+      }
+    }
+    .el-table__row--striped td.el-table__cell.even-column,
+    thead.is-group th.el-table__cell.even-column,
+    .even-column {
+      background: var(--page-even-color, var(--primary-50));
+    }
+    .warning-rate,
+    .warning-rate .id {
+      color: var(--color-error) !important;
+      font-weight: 700;
+    }
+    .el-table__body tr.el-table__row--striped.major-row td.el-table__cell,
+    .major-row td.el-table__cell {
+      --major-table-cell-bg: var(--primary-100);
+      background: var(--major-table-cell-bg);
+    }
+    .major-column.times-column {
+      --major-table-cell-bg: #fcffec;
+    }
+    .el-table__body tr.hover-row > td.el-table__cell {
+      background-color: var(--el-fill-color-light);
+    }
+    // 隐藏表格纵向线条
+    > .el-table.el-table--border,
+    &.el-table--border {
+      border-width: 0;
+      .el-table__inner-wrapper::before,
+      .el-table__inner-wrapper::after,
+      .el-table__border-bottom-patch,
+      .el-table__border-right-patch,
+      .el-table__border-left-patch,
+      &::before,
+      &::after {
+        display: none;
+      }
+      th,
+      td {
+        &:not(.border) {
+          border-right-color: transparent;
+        }
+      }
+      .is-group {
+        th.el-table__cell {
+          background: inherit;
+        }
+      }
+      thead tr:hover {
+        th.is-leaf {
+          &::after {
+            content: '';
+            width: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-left: 1px solid var(--el-border-color-lighter);
+          }
+        }
+      }
+    }
+  }
+  &.with-leaf {
+    --leaf-table-border-color: var(--el-border-color-lighter);
+    --leaf-table-bg: var(--el-border-color-lighter);
+    --leaf-table-color: var(--text-primary);
+
+    &.dark-leaf {
+      --leaf-table-border-color: #697370;
+      --leaf-table-bg: #282c34;
+      --leaf-table-color: #c5c9cf;
+    }
+    .el-table__expanded-cell {
+      background-color: var(--leaf-table-bg);
+      &:hover {
+        background-color: var(--leaf-table-bg) !important;
+      }
+      .el-table.leaf-table {
+        color: var(--leaf-table-color);
+        tr {
+          background-color: var(--leaf-table-bg);
+          > td {
+            background-color: var(--leaf-table-bg);
+            border-bottom-color: var(--leaf-table-border-color);
+          }
+        }
+        .el-table__header-wrapper {
+          display: none;
+        }
+      }
+    }
+  }
+  .el-table__row.hide-expand-ico {
+    > .el-table__expand-column {
+      .cell {
+        display: none;
+      }
+    }
+  }
+  .el-table__row.lighter-row {
+    background-color: var(--color-error-bg);
+    &.hover-row td {
+      background-color: var(--color-error-bg);
+    }
+  }
+  .el-table__row.lighter-green-line {
+    background-color: var(--color-success-bg);
+    &.hover-row td {
+      background-color: var(--color-success-bg);
+    }
+  }
+  .cell {
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 24px;
+  }
+  // 表头强制不折行
+  th {
+    color: var(--text-primary);
+    & > .cell {
+      white-space: nowrap;
+    }
+  }
+  .svg-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+  }
+  // 表头排序箭头
+  .caret-wrapper {
+    width: 16px;
+  }
+  .sort-caret {
+    left: 3px;
+  }
+  td.td-thin {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+// 隔行变色：皮肤 --table-stripe-bg（比 EP 默认多一层 .el-table，压过按需注入的 fill-color-lighter）
+.el-table.el-table--striped {
+  .el-table__body tr.el-table__row--striped {
+    td.el-table__cell {
+      background-color: var(--table-stripe-bg);
+    }
+  }
+}
+
+// 默认行底：表格面（白/卡片色），与内容区 --bg-page 分层
+.el-table__body td.el-table__cell {
+  background-color: var(--el-table-tr-bg-color, var(--el-bg-color));
+}
+
+.el-table__body tr:hover > td.el-table__cell {
+  background-color: var(--el-table-row-hover-bg-color);
+}
+
+.el-table__body tr.current-row > td {
+  background-color: var(--primary-50);
+}
+
+.el-table__column-resize-proxy {
+  border-left: 1px solid var(--el-border-color-lighter);
+}
+
+// 单元格内容对齐
+.el-table td {
+  &.flex-cell {
+    .cell {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      .el-dropdown {
+        display: inline-flex;
+        align-items: center;
+        line-height: 1;
+      }
+    }
+    &.is-right {
+      .cell {
+        justify-content: flex-end;
+      }
+    }
+    &.is-left {
+      .cell {
+        justify-content: flex-start;
+      }
+    }
+    &.is-center {
+      .cell {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// 表头排序按钮对齐
+.el-table th {
+  &.is-sortable {
+    &.is-right {
+      .cell {
+        padding-right: 0;
+      }
+    }
+  }
+  &.custom-header {
+    .cell {
+      display: flex;
+      align-items: center;
+      .caret-wrapper {
+        min-width: 16px;
+      }
+    }
+    &.is-right {
+      .cell {
+        justify-content: flex-end;
+      }
+    }
+    &.is-left {
+      .cell {
+        justify-content: flex-start;
+        .cell-header {
+          flex: 1;
+        }
+      }
+    }
+    &.is-center {
+      .cell {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// 去掉表头横线
+.el-table th.is-leaf {
+  border-bottom-width: 2px;
+}
+
+.el-table tbody tr:last-child td {
+  border-bottom-width: 0;
+}
+
+// 展开按钮
+.el-table__expand-icon {
+  font-size: 12px;
+  height: 23px;
+  .el-icon {
+    border: 1px solid var(--el-border-color-light);
+    padding: 2px;
+    margin-left: -9px;
+    margin-top: -9px;
+  }
+}
+
+.el-table__expand-icon--expanded {
+  transform: rotate(0deg);
+}
+
+// 展开表格
+.el-table__expanded-cell {
+  background: var(--el-fill-color-light);
+  &:hover {
+    background: inherit !important;
+  }
+  .placement-table {
+    margin: -20px -50px -20px 0px;
+    .el-table {
+      background: transparent;
+    }
+    tr,
+    th {
+      background: transparent;
+    }
+  }
+  // 空数据
+  .el-table__empty-block {
+    min-height: 42px;
+  }
+  .el-table__empty-text {
+    line-height: 42px;
+  }
+}
+
+.placement-table {
+  th {
+    color: var(--text-secondary);
+  }
+  td {
+    border-bottom-width: 0;
+  }
+}
+
+.el-table td.center-cell .cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// id名称合并 / 应用名称+包名+ID
+.el-table td.name-slot-cell {
+  & > .cell {
+    margin-top: -6px;
+    margin-bottom: -6px;
+  }
+  .name,
+  .pkg,
+  .id {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .name {
+    line-height: 16px;
+    padding-bottom: 2px;
+    .underline-dash {
+      display: inline-block;
+    }
+  }
+  .pkg,
+  .id {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+}
+
+.el-table td.has-prev-tips {
+  .warn-prev-anchor {
+    box-sizing: border-box;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-error);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    z-index: 999;
+    transform: translate3d(0, 50%, 0);
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    transition: background-color 0.3s linear;
+    .warn-prev-tips {
+      box-sizing: border-box;
+      padding: 4px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 1;
+      color: var(--color-error);
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate3d(10px, -50%, 0);
+      transition:
+        background-color 0.3s linear,
+        color 0.3s linear;
+      .hover-show {
+        opacity: 0;
+        transition: opacity 0.3s linear;
+      }
+      &:hover {
+        .hover-show {
+          opacity: 1;
+        }
+      }
+    }
+    &.red {
+      background-color: var(--color-warning);
+      .warn-prev-tips {
+        color: var(--color-warning);
+      }
+    }
+    &.pointer:hover {
+      .warn-prev-tips {
+        color: var(--text-inverse);
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.el-table tr:first-child td.has-prev-tips {
+  .warn-prev-anchor {
+    transform: translate3d(0, 300%, 0);
+  }
+}
+
+// name-cell
+.el-table__row:hover {
+  .name-cell {
+    .name {
+      padding-right: 40px;
+    }
+    .ctrls {
+      display: block;
+    }
+  }
+  .state::after {
+    display: block;
+  }
+}
+
+// 表格操作列
+.ctrl-td {
+  & > .cell {
+    margin: -5px 0;
+    a {
+      font-size: 12px;
+      line-height: 1.2;
+      display: block;
+      & + a {
+        margin-top: 5px;
+      }
+    }
+    .btn-in-table-ctrl {
+      display: inline-block;
+    }
+  }
+  .el-button {
+    margin: 5px;
+  }
+}
+
+// 多行表头
+.el-table thead.is-group th {
+  background: none;
+  padding: 3px 0;
+  line-height: 1;
+}
+
+// 事件表格表头提示框
+.event-label__tooltip {
+  .label {
+    color: var(--el-text-color-secondary);
+    font-weight: 900;
+  }
+}
+
+.el-table__footer {
+  .cell {
+    color: var(--text-primary);
+    font-family: var(--font-family-mono), sans-serif;
+    white-space: nowrap;
+  }
+}
+
+// 表头过滤条件
+.el-table th .el-popover__reference {
+  cursor: pointer;
+  &:hover {
+    fill: var(--primary-color);
+  }
+}
+
+// 主要指标列
+:root {
+  --major-table-cell-bg: var(--primary-50);
+}
+
+.el-table td.major-row {
+  background: var(--major-table-cell-bg);
+}
+
+.el-table th.major-column,
+.el-table thead.is-group th.el-table__cell.major-column,
+.el-table--striped .el-table__body tr.el-table__row--striped td.major-column,
+.el-table td.major-column {
+  background: var(--major-table-cell-bg);
+}
+
+.el-table th.stripe-column,
+.el-table td.stripe-column {
+  background: var(--el-fill-color-light);
+}
+
+// 两行省略号
+.table-cell-ellipse-two {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 18px;
+  min-height: 18px;
+  max-height: 36px;
+  cursor: default;
+  &.fs-14 {
+    font-size: 14px;
+    line-height: 21px;
+    min-height: 21px;
+    max-height: 42px;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// .with-photo 带图片的td
+td.with-photo {
+  > .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > a {
+      box-sizing: border-box;
+      padding: 4px;
+      width: 58px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > img {
+        width: 100%;
+      }
+    }
+    .photo-fill {
+      box-sizing: border-box;
+      padding: 4px;
+      width: 58px;
+      height: 58px;
+      background-color: var(--el-fill-color);
+    }
+    .info {
+      box-sizing: border-box;
+      margin-left: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .more {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        color: var(--primary-color);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// 带图片的td
+td.image-td {
+  &.el-table__cell {
+    padding: 4px 0;
+  }
+  > .cell {
+    padding: 4px;
+    display: inline-flex;
+    flex-direction: column;
+    .el-image {
+      display: inline-block;
+    }
+  }
+}
+
+// ctrl-td
+.ctrl-td {
+  &.mini-gap {
+    .cell {
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .el-button {
+          margin: 2px;
+          padding: 0 5px;
+          height: 24px;
+        }
+        &.flex-align-right {
+          justify-content: flex-end;
+        }
+      }
+    }
+    &.is-left {
+      .cell {
+        > div {
+          justify-content: flex-start;
+        }
+      }
+    }
+    &.is-right {
+      .cell {
+        > div {
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
+
+// 页面级表格操作列：单行、紧凑、禁止换行（最大宽度由列 width 约束，不超过 240px）
+.du-ctl-column {
+  > .cell {
+    white-space: nowrap;
+  }
+}
+
+.du-control {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 4px;
+  max-width: 100%;
+
+  .el-button {
+    margin: 0;
+    padding: 0 4px;
+    height: 24px;
+  }
+
+  .el-dropdown {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.ctrl-td__wrap {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  tr:hover & {
+    display: block;
+  }
+}
+
+.ctrl-td__bd {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  &.portrait {
+    flex-direction: column;
+    justify-content: center;
+  }
+  & .btn {
+    padding: 5px;
+    cursor: pointer;
+    background: var(--el-bg-color);
+    transition: background 0.3s;
+    &:hover {
+      background: var(--primary-200);
+    }
+  }
+}
+
+// 单元格标记底色
+td.el-table__cell {
+  &.cell-bg__success {
+    background-color: var(--cell-bg-success) !important;
+  }
+  &.cell-bg__warning {
+    background-color: var(--cell-bg-warning) !important;
+  }
+  &.cell-bg__danger {
+    background-color: var(--cell-bg-danger) !important;
+  }
+  &.cell-bg__disabled {
+    background-color: var(--cell-bg-disabled) !important;
+  }
+  &.cell-blue_2 {
+    background-color: #9fdbff !important;
+  }
+  &.cell-blue_1 {
+    background-color: #cdf1ff !important;
+  }
+  .cell > .el-button {
+    margin: 2px;
+    padding: 0 5px;
+    height: 24px;
+  }
+}
+
+// 表格行hover时显示
+.el-table__row {
+  .hover-show {
+    display: none;
+  }
+  &.hover-row {
+    .hover-show {
+      display: unset;
+    }
+  }
+}
+
+// 不显示表头
+.el-table {
+  thead.is-group {
+    th.ghost-th {
+      padding: 0;
+      font-size: 0;
+      border-bottom: 0 none;
+    }
+  }
+}
+
+/**
+ * 数据报表列表页表头总计行的样式，全局生效（el-table 内部 DOM 没有 scoped 属性）。
+ *
+ * 注意：
+ *  - .cell 不改 display，保持 inline-block；
+ *  - .report-th__summary 是 block，会自动换行到列名下方；
+ *  - text-align: inherit 让数值复用列的对齐（右对齐数值列依旧右对齐）；
+ *  - sortable 排序箭头（.caret-wrapper）位置不受影响。
+ */
+.el-table__header,
+.el-table__fixed-header-wrapper {
+  th.has-summary {
+    .cell {
+      line-height: 22px;
+
+      .report-th__summary {
+        display: block;
+        margin-top: 4px;
+        padding: 4px 4px 0 0;
+        border-top: 1px dashed var(--el-border-color-lighter);
+        font-size: 12px;
+        font-weight: 600;
+        font-family: var(--font-family-mono), sans-serif;
+        color: var(--text-primary);
+        line-height: 18px;
+        text-align: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:empty {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * 限宽 70vw、限高 40vh，仅内容超高才出滚动条。
+ * 限高与滚动必须落在内容子节点上：箭头是绝对定位 + 旋转伪元素，会把根节点的
+ * scrollHeight 恒定撑出约 10px，一旦在根节点开 overflow，短内容也会长期出现滚动条。
+ */
+.el-popper {
+  > *:not(.el-popper__arrow) {
+    display: block;
+    box-sizing: border-box;
+    max-width: 70vw;
+    max-height: 40vh;
+    overflow: auto;
+    white-space: break-spaces;
+    word-break: break-all;
+  }
+}

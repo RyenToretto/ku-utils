@@ -1,0 +1,69 @@
+@use '../../common/mixins.scss' as *;
+
+.scroll-y-transition {
+  @include transitionDefault();
+
+  .scroll-y-transition-enter-from,
+  .scroll-y-transition-leave-to {
+    opacity: 0;
+  }
+
+  .scroll-y-transition-enter-from {
+    transform: translateY(-15px);
+  }
+
+  .scroll-y-transition-leave-to {
+    transform: translateY(15px);
+  }
+}
+
+.scroll-y-reverse-transition {
+  @include transitionDefault();
+
+  .scroll-y-reverse-transition-enter-from,
+  .scroll-y-reverse-transition-leave-to {
+    opacity: 0;
+  }
+
+  .scroll-y-reverse-transition-enter-from {
+    transform: translateY(15px);
+  }
+
+  .scroll-y-reverse-transition-leave-to {
+    transform: translateY(-15px);
+  }
+}
+
+.scroll-x-transition {
+  @include transitionDefault();
+
+  .scroll-x-transition-enter-from,
+  .scroll-x-transition-leave-to {
+    opacity: 0;
+  }
+
+  .scroll-x-transition-enter-from {
+    transform: translateX(-15px);
+  }
+
+  .scroll-x-transition-leave-to {
+    transform: translateX(15px);
+  }
+}
+
+.scroll-x-reverse-transition {
+  @include transitionDefault();
+
+  .scroll-x-reverse-transition-enter-from,
+  .scroll-x-reverse-transition-leave-to {
+    opacity: 0;
+  }
+
+  .scroll-x-reverse-transition-enter-from {
+    transform: translateX(15px);
+  }
+
+  .scroll-x-reverse-transition-leave-to {
+    transform: translateX(-15px);
+  }
+}

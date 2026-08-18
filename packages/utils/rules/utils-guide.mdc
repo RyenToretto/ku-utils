@@ -1,0 +1,92 @@
+---
+description: "@ku-utils/utils 使用规范。在业务代码中处理字符串、日期、存储、URL、校验等通用场景时适用。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/utils 使用规范
+
+## 核心原则
+
+**禁止重复造轮子**：`@ku-utils/utils` 已覆盖日期/字符串/存储/URL/校验/DOM/设备检测等常见场景，业务代码在自行实现前必须先检查此库是否已有。
+
+## 常用函数速查
+
+### 字符串
+
+```ts
+import { camelCase, kebabCase, snakeCase, transferTF, truncate, maskPhone, maskEmail } from '@ku-utils/utils'
+
+camelCase('foo-bar')      // => 'fooBar'
+kebabCase('fooBar')       // => 'foo-bar'
+snakeCase('fooBar')       // => 'foo_bar'
+truncate('长文本...', 10) // => '长文本...'
+maskPhone('13812345678')  // => '138****5678'
+maskEmail('user@do.com')  // => 'us***@do.com'
+```
+
+### 日期
+
+```ts
+import { formatDate, formatTime, getRelativeTime, daysAgo, isToday } from '@ku-utils/utils'
+
+formatDate(new Date(), 'YYYY-MM-DD')   // => '2026-01-01'
+formatTime(timestamp)                  // => '2026-01-01 12:00:00'
+getRelativeTime(timestamp)             // => '3 小时前'
+isToday(new Date())                    // => true
+daysAgo(7)                             // => 7天前的 Date
+```
+
+### 本地存储（带过期时间）
+
+```ts
+import { local, session } from '@ku-utils/utils'
+
+local.set('key', { data: 1 }, 3600_000)  // 1小时后过期
+local.get<MyType>('key')                 // => MyType | null（过期返回 null）
+local.remove('key')
+session.set('key', value)
+```
+
+### URL / 校验
+
+```ts
+import { parseQuery, buildQuery, isEmail, isMobile, isUrl } from '@ku-utils/utils'
+
+parseQuery('?a=1&b=2')           // => { a: '1', b: '2' }
+buildQuery({ a: '1', b: '2' })   // => 'a=1&b=2'
+isEmail('user@do.com')           // => true
+isMobile('13812345678')          // => true
+```
+
+### 对象 / 数组
+
+```ts
+import { deepClone, pick, omit, groupBy, unique, chunk } from '@ku-utils/utils'
+
+deepClone(obj)              // 深拷贝
+pick(obj, ['a', 'b'])       // 选取字段
+omit(obj, ['a'])            // 排除字段
+groupBy(arr, 'type')        // 按字段分组
+unique(arr)                 // 去重
+chunk(arr, 3)               // 按大小分块
+```
+
+## 禁止事项
+
+- 禁止直接使用 `dayjs` 做日期格式化 — 优先 `formatDate`/`formatTime`
+- 禁止手动 `JSON.parse(localStorage.getItem(...))` — 使用 `local.get()`
+- 禁止手动写 camelCase/snake_case 转换 — 使用 `camelCase`/`snakeCase`
+- 禁止自行实现手机号/邮箱正则校验 — 使用 `isMobile`/`isEmail`
+
+## auto-import 配置（Vite 项目）
+
+```ts
+// vite.config.ts
+import { kuUtilsUtilsImports } from '@ku-utils/utils/auto-import'
+import AutoImport from 'unplugin-auto-import/vite'
+
+plugins: [
+  AutoImport({ imports: [kuUtilsUtilsImports] })
+]
+```

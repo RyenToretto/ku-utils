@@ -1,0 +1,9 @@
+{
+  "extends": "@ku-utils/tsconfig/vue3.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": true
+  },
+  "include": ["src"]
+}

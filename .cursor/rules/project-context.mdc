@@ -1,0 +1,45 @@
+---
+description: ku-utils Monorepo 全局上下文。需要了解项目结构、包列表、发布规范、常用命令时读取。
+globs:
+alwaysApply: false
+---
+
+# ku-utils Monorepo 全局上下文
+
+## 项目概要
+
+前端公共库 Monorepo，pnpm v10 + Turborepo v2，覆盖 Vue 2 / Vue 3 / Nuxt 4。包以 `@ku-utils/*` **public** 发布到 npmjs.org。升版与 tag 走 Changesets + GitHub Actions。
+
+## 目录地图
+
+```
+packages/            → 可发布库（utils/hooks/ui/custom-columns/report/…）
+tools/               → cli / create-app
+apps/
+  playground-vue3|vue2|nuxt4
+  kv3-admin          → Vue3 + Element Plus starter（private）
+docs/                → VitePress
+```
+
+## 关键约束
+
+1. **tsconfig**: base.json 设 `noEmit: true`，library.json 覆盖为 `noEmit: false` + declaration
+2. **ESLint**: 根 eslint.config.js 使用 vue3 配置但关闭 `vue/block-lang`（兼容 Vue 2）
+3. **UI 导出**: ui/ui-vue2 只用命名导出 `export function install()`，无 default export
+4. **pnpm strict**: shamefully-hoist=false，包必须显式声明所有依赖
+5. **publishConfig**: `{ "access": "public" }`
+6. 消费方使用 `@ku-utils/xxx`；本仓 apps 用 `workspace:*`
+
+## 发版
+
+```bash
+pnpm changeset
+# 合入 main → Version Packages PR → 合并后自动 npm publish + git tag
+pnpm release   # 本地紧急发版
+```
+
+## 修改代码时
+
+- 改了包源码 → `pnpm build`（或对应 filter）
+- 新增包 → `packages/<name>`，含 README + package.json（publishConfig.access=public）+ commitlint scope
+- 详细流程见 `docs/npm-publish.md` 与 `docs/contributing.md`

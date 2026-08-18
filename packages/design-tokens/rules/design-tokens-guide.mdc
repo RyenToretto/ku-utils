@@ -1,0 +1,78 @@
+---
+description: "@ku-utils/design-tokens 使用规范。编写 CSS/SCSS 样式时适用，约束颜色/间距/字体等必须使用设计令牌。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/design-tokens 使用规范
+
+## 核心原则
+
+**禁止在样式中硬编码颜色、间距、阴影等设计值**，必须使用设计令牌（CSS Custom Properties）。
+
+> **前缀速记**：所有变量以 `--du-` 开头（不是 `--do-`）；颜色分类为 `primary/success/warning/danger/neutral`（无 `gray`/`error`）；排版属性用 camelCase（`--du-fontSize-base`，不是 `--du-font-size-base`）。
+
+## 颜色使用
+
+```css
+/* ❌ 硬编码或错误前缀 */
+.button { background: #3b82f6; }
+.text { color: #171717; }
+.error { color: var(--do-color-error-500); }  /* 错误：前缀错、分类名错 */
+
+/* ✅ 使用正确 Token */
+.button { background: var(--du-color-primary); }          /* 语义别名，自动跟随主题 */
+.button-alt { background: var(--du-primary-500); }        /* 原子色，固定值 */
+.text { color: var(--du-color-text-primary); }
+.danger { color: var(--du-color-danger); }                /* danger，不是 error */
+.muted { color: var(--du-neutral-500); }                  /* neutral，不是 gray */
+```
+
+## 间距使用
+
+```css
+/* ❌ 硬编码 */
+.card { padding: 16px; margin: 24px; }
+
+/* ✅ 使用 Token */
+.card { padding: var(--du-spacing-4); margin: var(--du-spacing-6); }
+```
+
+## 排版使用
+
+```css
+/* ❌ 错误（kebab-case 不存在） */
+.title { font-size: var(--du-font-size-lg); font-weight: var(--du-font-weight-bold); }
+
+/* ✅ 正确（camelCase） */
+.title { font-size: var(--du-fontSize-lg); font-weight: var(--du-fontWeight-bold); }
+```
+
+## 圆角与阴影
+
+```css
+.card {
+  border-radius: var(--du-radius-lg);   /* 0.75rem */
+  box-shadow: var(--du-shadow-md);
+}
+```
+
+## 引入方式
+
+```ts
+// main.ts（全局引入 CSS 变量）
+import '@ku-utils/design-tokens/css'
+
+// 或在 SCSS 中使用
+@use '@ku-utils/design-tokens/scss' as tokens;
+```
+
+## 禁止事项
+
+- 禁止 `color: #3b82f6` — 使用 `var(--du-primary-500)` 或 `var(--du-color-primary)`
+- 禁止 `padding: 16px` — 使用 `var(--du-spacing-4)`（4 × 4px = 16px）
+- 禁止 `var(--do-xxx)` — 前缀是 `--du-`，不是 `--do-`
+- 禁止 `var(--du-color-gray-*)` — 中性色分类是 `neutral`，不是 `gray`
+- 禁止 `var(--du-color-error-*)` — 危险色分类是 `danger`，不是 `error`
+- 禁止 `var(--du-font-size-*)` — 排版用 camelCase：`--du-fontSize-*`
+- 禁止在样式中定义自己的颜色变量（使用 token 层次结构）

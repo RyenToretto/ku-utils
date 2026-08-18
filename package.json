@@ -1,0 +1,68 @@
+{
+  "name": "ku-utils",
+  "private": true,
+  "version": "1.0.1",
+  "type": "module",
+  "description": "ku-utils 前端团队 Monorepo 公共库",
+  "packageManager": "pnpm@10.8.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "pnpm --filter @ku-utils/docs dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:v3": "pnpm --filter @ku-utils/playground-vue3 dev",
+    "dev:v2": "pnpm --filter @ku-utils/playground-vue2 dev",
+    "dev:n4": "pnpm --filter @ku-utils/playground-nuxt4 dev",
+    "dev:admin": "pnpm --filter @ku-utils/kv3-admin dev",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter='./packages/*' --filter='./tools/*' && changeset publish",
+    "pack:tarballs": "turbo run build --filter='./packages/*' && node scripts/pack-tarballs.mjs",
+    "pack:tarballs:only": "node scripts/pack-tarballs.mjs",
+    "pack:report-standalone": "pnpm --filter @ku-utils/report-standalone build && pnpm --dir packages/report-standalone pack --pack-destination ../../tarballs",
+    "pack:landing-report-standalone": "pnpm --filter @ku-utils/landing-report-standalone build && pnpm --dir packages/landing-report-standalone pack --pack-destination ../../tarballs",
+    "prepare": "husky"
+  },
+  "prettier": "@ku-utils/prettier-config",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.4",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/prettier-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "eslint": "^9.27.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.0",
+    "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "packages/**/*.{ts,tsx,js,jsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "tools/**/*.{ts,tsx,js,jsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "apps/**/*.{ts,tsx,js,jsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,md,css,scss}": [
+      "prettier --write"
+    ]
+  }
+}

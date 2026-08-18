@@ -1,0 +1,35 @@
+---
+description: Vue 3 自定义列模式约束（@ku-utils/custom-columns）
+globs:
+alwaysApply: false
+---
+
+# DoCustomColumns v3（Vue 3）开发模式
+
+使用 `@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + schema + `v-for` 模式。
+
+## 接入要求
+
+1. `apps/kv3-admin/src/main.ts` 只全局引入一次 `@ku-utils/custom-columns/style`
+2. 复杂 schema 放入同模块 `*ColumnSchemas.ts`；叶子列 `prop` 全局稳定且唯一
+3. 页面调用 `useSchemaColumnConfig`，提供唯一 `storageKey`、从 1 开始的 `schemaVersion` 和完整中文 `CustomColumnMessages`
+4. `TableWrap` 启用 `enable-do-header`，并设置 `:disabled-column-config="false"`
+5. 表格放在独立 `XxxList.vue`；固定身份列和操作列写在 schema 循环外
+6. 必须把 `tableRenderKey` 绑定到 `el-table :key`
+
+```ts
+const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConfig({
+  columnSchemas: COLUMN_SCHEMAS,
+  storageKey: 'kv3-xxx-columns',
+  schemaVersion: 1,
+  messages: CUSTOM_COLUMN_MESSAGES
+})
+```
+
+## schema 约束
+
+- 数字列右对齐，并按金额、整数、比例语义格式化
+- 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级
+- `storageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
+- `CustomColumnMessages` 全部字段必须显式提供中文值
+- 嵌套表头优先使用包提供的 `SchemaColumn`；自定义 cell 使用独立 Vue 3 SFC

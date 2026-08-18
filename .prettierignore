@@ -1,0 +1,10 @@
+node_modules
+dist
+.output
+.nuxt
+.turbo
+.changeset
+pnpm-lock.yaml
+*.tsbuildinfo
+.vitepress/dist
+.vitepress/cache

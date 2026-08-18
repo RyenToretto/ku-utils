@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+dist-ssr
+.output
+.nuxt
+.nitro
+.cache
+**/.vite
+
+# TypeScript
+*.tsbuildinfo
+
+# tsup 编译 tsup.config.ts 时的临时产物（进程异常退出时残留）
+**/tsup.config.bundled_*.mjs
+
+# Local env / temp
+*.local
+.turbo
+
+# Editor directories and files
+docs/.vitepress/cache/*
+.playwright-mcp/*
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+.history
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+Thumbs.db
+
+# Coverage
+coverage
+
+# Offline tarballs (generated)
+tarballs

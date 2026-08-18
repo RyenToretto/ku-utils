@@ -1,0 +1,402 @@
+/*
+ * ============================================================
+ * Page Layout Utilities
+ * 页面级公共布局类，console / admin 所有页面共享
+ * ============================================================
+ */
+
+/* 页头：面包屑 + 副标题 + 可选 title-right（贴标题）+ actions（靠右），见 PageHeader */
+
+.page-crumb {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  > .el-breadcrumb__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &.prev-page-title {
+      > .el-breadcrumb__inner {
+        > h2 {
+          font-size: 20px;
+          line-height: 1.42857143;
+          font-weight: 400;
+          text-decoration: none;
+          transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+          color: #afafaf;
+          cursor: pointer;
+        }
+      }
+    }
+    > .el-breadcrumb__inner {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      > h1 {
+        font-size: 20px;
+        line-height: 1.42857143;
+        font-weight: 400;
+        color: #000000;
+        cursor: text;
+      }
+    }
+    > .el-breadcrumb__separator {
+      font-size: 24px;
+    }
+  }
+}
+
+.main-radio-title {
+  box-sizing: border-box;
+  margin: 0 8px 0 -8px;
+  .el-radio-button {
+    outline: none !important;
+    box-shadow: none !important;
+    position: relative;
+    .el-radio-button__inner {
+      padding: 0 8px;
+      border: 0 none;
+      border-radius: 0;
+      font-size: 20px;
+      font-weight: 400;
+      color: #595959;
+      line-height: 40px;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: transparent;
+    }
+    &.is-active {
+      .el-radio-button__inner {
+        background-color: transparent;
+        color: #409eff;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      &::after {
+        background-color: #409eff;
+      }
+    }
+  }
+}
+
+.page-header {
+  padding: 16px 0;
+
+  .page-head__main {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .page-head__title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 16px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .page-head__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  /* 标题行：标题主区 + 紧贴标题右侧的操作（如「新建」） */
+  .page-head__title-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .page-head__title-main {
+    min-width: 0;
+  }
+
+  .page-head__title-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    position: relative;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* 页级工具：靠右（变更日志 / 导出等），与 title-right 职责分离 */
+  .page-head__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}
+
+/* ─── do-form-section 双栏表单布局 ─────────────────────────── */
+/*
+ * 适用于 el-dialog / el-drawer 内容较多时的左右分栏布局。
+ * 可直接用 CSS 类名（纯 HTML），也可使用 <DoFormSection> Vue 组件。
+ *
+ * HTML 结构：
+ *   <div class="do-form-section">
+ *     <div class="do-form-left">...</div>
+ *     <div class="do-form-split"><div class="do-form-split-line"></div></div>
+ *     <div class="do-form-right">...</div>
+ *   </div>
+ */
+.do-form-section {
+  --do-form-split-gap: 18px;
+  --do-form-split-color: var(--el-border-color-light);
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  .do-form-left,
+  .do-form-right {
+    box-sizing: border-box;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  .do-form-split {
+    box-sizing: border-box;
+    width: calc(var(--do-form-split-gap) * 2);
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-shrink: 0;
+
+    .do-form-split-line {
+      width: 1px;
+      border-right: 1px dashed var(--do-form-split-color);
+      position: relative;
+
+      .do-form-split-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--el-bg-color);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 12px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        user-select: none;
+      }
+    }
+  }
+}
+
+/* 挂在 el-form-item 上，让表单项撑满右栏高度（适用于复杂编辑器等高占位场景） */
+el-form-item.do-fill-form,
+el-form-item.do-fill-form > .el-form-item__content {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ─── 全局响应式约束 ─────────────────────────────────────────── */
+
+/* 弹窗不超出视口（兜底约束，优先由 width prop 的 min() 表达式控制） */
+.el-overlay-dialog .el-dialog {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  margin: 16px auto;
+}
+
+.el-overlay-dialog .el-dialog__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Drawer 内点选/列表：配合 useDrawerPickListMaxHeight（禁止写死 max-height px） */
+.drawer-model-selector {
+  .el-drawer__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 12px;
+  }
+
+  .el-drawer__body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* 内容壳必须撑满 body，否则表格高度会回落到 minHeight（约 4～5 行） */
+  .do-drawer__view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    gap: 12px;
+  }
+
+  .page-school-resource {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .drawer-pick-table-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+
+    .table-wrap__bd {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 任意抽屉内表，勿再为每个 tableClass 单独加 flex */
+    .el-table {
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
+  .page-table .el-table__empty-block {
+    min-height: 120px;
+  }
+}
+
+/* ─── flex-drawer 表单类 Drawer 高度铺满 ─────────────────────── */
+/*
+ * 挂在 el-drawer 的 class 上（可与业务 class 并存）。
+ * 让 header / footer 固定，body 与 .do-drawer__view / 内嵌 el-form / .do-form-section
+ * 纵向撑满剩余高度，右侧可滚动区吃掉空白，避免短表单在高抽屉里上下大块留白。
+ *
+ *   <el-drawer class="dialog-xxx flex-drawer">
+ *     <div class="do-drawer__view">...</div>
+ *   </el-drawer>
+ */
+.flex-drawer {
+  --flex-drawer-body-padding-y: 12px;
+
+  .el-drawer__header {
+    margin-bottom: 0;
+    padding-bottom: 12px;
+  }
+
+  .el-drawer__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding-top: var(--flex-drawer-body-padding-y);
+    padding-bottom: var(--flex-drawer-body-padding-y);
+  }
+
+  .el-drawer__footer {
+    flex-shrink: 0;
+    padding-top: 12px;
+  }
+
+  .do-drawer__view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .do-drawer__view > .el-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .do-form-section {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .do-form-left {
+    justify-content: flex-start;
+  }
+
+  .do-form-right {
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+/* ─── 其他工具类 ─────────────────────────── */
+
+.is-left {
+  .line-actions {
+    justify-content: flex-start;
+  }
+}
+.is-center {
+  .line-actions {
+    justify-content: center;
+  }
+}
+.is-right {
+  .line-actions {
+    justify-content: flex-end;
+  }
+}
+
+.line-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3px;
+  .el-button {
+    margin: 2px;
+    padding: 0 5px;
+    height: 24px;
+  }
+}

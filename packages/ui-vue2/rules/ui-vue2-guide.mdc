@@ -1,0 +1,44 @@
+---
+description: "@ku-utils/ui-vue2 使用规范。Vue 2 项目中使用团队 UI 组件（维护模式）时适用。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/ui-vue2 使用规范
+
+## 核心原则
+
+**维护模式**：`@ku-utils/ui-vue2` 仅接受 Bug 修复，不新增功能。Vue 2 项目新需求若 ui-vue2 不满足，直接在业务层实现，不要为 ui-vue2 提 feature request。
+
+## 安装与注册
+
+```js
+// main.js
+import { install } from '@ku-utils/ui-vue2'
+import '@ku-utils/ui-vue2/style'
+
+Vue.use(install)
+// 或单独注册
+import { DuButton, DuEmpty, DuStatusTag } from '@ku-utils/ui-vue2'
+Vue.component('DuButton', DuButton)
+```
+
+## 组件速查
+
+```html
+<!-- 空态 -->
+<DuEmpty description="暂无数据" />
+
+<!-- 按钮 -->
+<DuButton type="primary" :loading="loading" @click="submit">提交</DuButton>
+
+<!-- 状态标签 -->
+<DuStatusTag status="success">成功</DuStatusTag>
+<DuStatusTag status="warning">警告</DuStatusTag>
+<DuStatusTag status="error">失败</DuStatusTag>
+```
+
+## 禁止事项
+
+- 禁止向 ui-vue2 新增功能（维护模式）
+- 禁止在 Vue 3 项目中引用 ui-vue2（使用 `@ku-utils/ui`）

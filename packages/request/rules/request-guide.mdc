@@ -1,0 +1,49 @@
+---
+description: "@ku-utils/request 使用规范。在项目中配置 HTTP 请求实例时适用，约束 createRequest 工厂的正确使用方式。"
+globs:
+alwaysApply: false
+---
+
+# @ku-utils/request 使用规范
+
+## 核心原则
+
+**所有 HTTP 请求必须通过 `createRequest` 工厂创建的实例发送**，禁止在业务代码中直接使用 `import axios from 'axios'`。
+
+## 标准用法
+
+```ts
+// src/plugins/http.ts — 项目中创建一次，全局复用
+import { createRequest } from '@ku-utils/request'
+import { HttpStatus } from '@ku-utils/constants'
+import { local } from '@ku-utils/utils'
+import { StorageKey } from '@ku-utils/constants'
+
+export const http = createRequest({
+  baseURL: import.meta.env.VITE_API_BASE,
+  timeout: 15000,
+  interceptors: {
+    requestInterceptor: (config) => {
+      const token = local.get<string>(StorageKey.TOKEN)
+      if (token) config.headers.Authorization = `Bearer ${token}`
+      return config
+    },
+    responseInterceptor: (response) => {
+      return response.data  // 解包 data
+    },
+    responseInterceptorCatch: (error) => {
+      if (error.response?.status === HttpStatus.UNAUTHORIZED) {
+        // 跳登录
+      }
+      return Promise.reject(error)
+    }
+  }
+})
+```
+
+## 禁止事项
+
+- 禁止 `import axios from 'axios'` 直接使用裸 axios
+- 禁止每个业务模块各自 `createRequest()`，全局共享一个实例
+- 禁止在请求拦截器外部处理 token 注入
+- 禁止忽略 `cancelDuplicate`（重复请求自动取消已内置）

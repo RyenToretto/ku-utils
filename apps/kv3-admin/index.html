@@ -1,0 +1,266 @@
+<!doctype html>
+<html
+  lang="zh-CN"
+  data-app="admin"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      ;(function () {
+        try {
+          var t = localStorage.getItem('admin_thm') || 'light'
+          var d =
+            t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)
+          if (d) document.documentElement.classList.add('dark')
+        } catch (e) {}
+      })()
+    </script>
+    <style>
+      /* 尽早注册字体：preload 必须配合 @font-face */
+      @font-face {
+        font-family: 'Montserrat';
+        src: url('/fonts/Montserrat-VariableFont_wght.woff2') format('woff2');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: optional;
+      }
+
+      /* 启动屏 token：跟 html.dark；唯一 DOM，无 Vue 第二层 */
+      :root {
+        --splash-bg: #f7f8fa;
+        --splash-text: #1f2329;
+        --splash-primary: #3370ff;
+        --splash-track: #e5e6eb;
+        --splash-grid: rgba(51, 112, 255, 0.1);
+        --splash-orb: rgba(51, 112, 255, 0.18);
+        --splash-font:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
+          'Helvetica Neue', Arial, sans-serif;
+      }
+
+      html.dark {
+        --splash-bg: #121316;
+        --splash-text: #f2f3f5;
+        --splash-primary: #4e83fd;
+        --splash-track: #2b2f36;
+        --splash-grid: rgba(78, 131, 253, 0.14);
+        --splash-orb: rgba(78, 131, 253, 0.2);
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .app-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 1000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--splash-bg);
+        color: var(--splash-text);
+        font-family: var(--splash-font);
+        transition: opacity 0.2s ease-out;
+      }
+
+      .app-splash.is-leaving {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .app-splash-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .app-splash-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(72px);
+        opacity: 0.55;
+        background: var(--splash-orb);
+      }
+
+      .app-splash-orb-primary {
+        top: -12%;
+        left: 50%;
+        width: min(520px, 72vw);
+        height: min(520px, 72vw);
+        transform: translateX(-58%);
+      }
+
+      .app-splash-orb-secondary {
+        right: -8%;
+        bottom: -18%;
+        width: min(380px, 56vw);
+        height: min(380px, 56vw);
+      }
+
+      .app-splash-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.9;
+        background-image:
+          linear-gradient(var(--splash-grid) 1px, transparent 1px),
+          linear-gradient(90deg, var(--splash-grid) 1px, transparent 1px);
+        background-size: 32px 32px;
+        -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 20%, transparent 72%);
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 20%, transparent 72%);
+      }
+
+      .app-splash-body {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 0 24px;
+        text-align: center;
+        color: var(--splash-text);
+      }
+
+      .app-splash-logo-fallback {
+        display: block;
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        color: var(--splash-primary);
+        filter: drop-shadow(0 8px 24px color-mix(in srgb, var(--splash-primary) 35%, transparent));
+      }
+
+      .app-splash-site-name {
+        margin: 0;
+        font-family: var(--splash-font);
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.03em;
+        color: var(--splash-text);
+      }
+
+      .app-splash-progress {
+        position: relative;
+        box-sizing: border-box;
+        width: 180px;
+        height: 5px;
+        margin-top: 6px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--splash-track);
+      }
+
+      .app-splash-progress::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 42%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--splash-primary) 55%, transparent),
+          var(--splash-primary) 45%,
+          color-mix(in srgb, var(--splash-primary) 75%, #fff)
+        );
+        box-shadow: 0 0 12px color-mix(in srgb, var(--splash-primary) 65%, transparent);
+        animation: app-splash-progress-slide 0.95s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        content: '';
+        will-change: transform;
+      }
+
+      @keyframes app-splash-progress-slide {
+        from {
+          transform: translateX(-100%);
+        }
+
+        to {
+          transform: translateX(350%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .app-splash {
+          transition: none;
+        }
+
+        .app-splash-progress::after {
+          left: 30%;
+          width: 40%;
+          animation: none;
+          transform: none;
+        }
+      }
+    </style>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Montserrat-VariableFont_wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="icon"
+      href="/favicon.ico"
+      sizes="any"
+    />
+    <link
+      rel="icon"
+      href="/favicon.svg"
+      type="image/svg+xml"
+    />
+    <title>%VITE_APP_PROJECT_NAME%</title>
+  </head>
+  <body>
+    <div
+      id="app-inline-splash"
+      class="app-splash"
+      role="status"
+      aria-live="polite"
+      aria-label="正在加载"
+    >
+      <div
+        class="app-splash-bg"
+        aria-hidden="true"
+      >
+        <div class="app-splash-orb app-splash-orb-primary"></div>
+        <div class="app-splash-orb app-splash-orb-secondary"></div>
+        <div class="app-splash-grid"></div>
+      </div>
+      <div class="app-splash-body">
+        <svg
+          class="app-splash-logo-fallback"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <p class="app-splash-site-name">%VITE_APP_PROJECT_NAME%</p>
+        <div
+          class="app-splash-progress"
+          aria-hidden="true"
+        ></div>
+      </div>
+    </div>
+    <div id="app"></div>
+    <script
+      type="module"
+      src="/src/main.ts"
+    ></script>
+  </body>
+</html>

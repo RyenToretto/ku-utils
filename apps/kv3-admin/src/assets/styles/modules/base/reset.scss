@@ -1,0 +1,257 @@
+/**
+ * Reset
+ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:focus-visible,
+button.el-button:focus-visible {
+  outline: 0 solid var(--el-color-primary);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html {
+  font-family: var(
+    --font-family-base,
+    'Montserrat',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    Arial,
+    sans-serif
+  );
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-page, #f0ebf2);
+  color: var(--text-primary, #1e1a2e);
+}
+
+body {
+  font-size: 14px;
+  @media (max-width: 1023px) {
+    font-size: 0.14rem;
+  }
+}
+
+.jwplayer {
+  word-break: normal;
+  .jw-preview {
+    background-size: contain;
+  }
+  > div:not(.jw-media):not(.jw-preview) {
+    display: none !important;
+  }
+  .jw-media {
+    video[data-playing='playing'],
+    video[data-playing='paused'] {
+      opacity: 1;
+    }
+  }
+}
+.jw-error {
+  .jw-title,
+  .jw-title .jw-title-primary,
+  .jw-title .jw-title-secondary {
+    color: #777777;
+    text-align: center;
+    padding-top: 5vh;
+    font-size: 32px;
+  }
+  .jw-icon-container.jw-reset {
+    display: none;
+  }
+}
+.jw-skin-bce .jw-controlbar {
+  width: 100%;
+}
+
+/* Remove list item style */
+ol,
+ul {
+  list-style: none;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  &.inline-block {
+    display: inline-block;
+  }
+}
+
+/* 隐藏 Safari/Chrome 输入框右边的联系人按钮 */
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+}
+
+/* 隐藏 Safari/Chrome 自动填充下拉箭头（如果有） */
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+}
+
+/* 一些浏览器可能用这个伪元素显示 UI，统一隐藏 */
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+.du-tips {
+  font-size: 12px;
+  color: #999;
+}
+
+.mono-text,
+.number-text {
+  font-family: var(--font-family-mono), sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+code {
+  font-family: Monaco, 'courier new', serif;
+  color: #ec1f4e;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 1em;
+  line-height: 1.2;
+  border-radius: 3px;
+}
+
+pre {
+  code {
+    display: block;
+    padding: 10px;
+    white-space: break-spaces;
+    word-break: break-all;
+    background-color: #f7f6f3;
+    color: rgba(101, 152, 0, 1);
+    border-width: 0;
+    font-weight: 500;
+  }
+}
+.light {
+  > code {
+    background-color: transparent;
+    color: #000000;
+    border-width: 0;
+    white-space: break-spaces;
+    word-break: break-all;
+  }
+  &.grey-bg {
+    > code {
+      background-color: #f7f6f3;
+      color: rgba(101, 152, 0, 1);
+      font-weight: 500;
+    }
+  }
+}
+
+.dark-night {
+  > code {
+    background-color: #272b33;
+    color: #dddff9;
+    border-left: 6px solid #ec1f4e;
+  }
+}
+
+.popover-code {
+  padding: 0;
+  code {
+    word-break: break-all;
+  }
+}
