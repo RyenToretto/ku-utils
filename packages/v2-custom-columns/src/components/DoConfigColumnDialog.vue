@@ -339,29 +339,6 @@ export default {
 
       return this.uniqueGroups.filter((g) => groupMap.has(g)).map((g) => groupMap.get(g));
     },
-    /** 兼容旧逻辑 */
-    leftColumnTree() {
-      const groupExistMap = {};
-      return this.columnList.reduce((treeColumnList, item) => {
-        const groupName = item.group || '未分组';
-        if (groupExistMap[groupName]) {
-          const index = treeColumnList.findIndex((i) => i.label === groupName);
-          if (index >= 0) {
-            treeColumnList[index].children.push(item);
-          }
-        } else {
-          groupExistMap[groupName] = true;
-          treeColumnList = [
-            ...treeColumnList,
-            {
-              label: groupName,
-              children: [item],
-            },
-          ];
-        }
-        return treeColumnList;
-      }, []);
-    },
     /**
      * 硬编码固定列列表
      */

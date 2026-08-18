@@ -1,7 +1,7 @@
 ---
 description: ku-utils Monorepo 全局上下文。需要了解项目结构、包列表、发布规范、常用命令时读取。
 globs:
-alwaysApply: false
+alwaysApply: true
 ---
 
 # ku-utils Monorepo 全局上下文
@@ -29,6 +29,12 @@ docs/                → VitePress
 4. **pnpm strict**: shamefully-hoist=false，包必须显式声明所有依赖
 5. **publishConfig**: `{ "access": "public" }`
 6. 消费方使用 `@ku-utils/xxx`；本仓 apps 用 `workspace:*`
+
+## 演进原则
+
+- 始终保持最佳实践、面向最新最稳定的写法；重命名/重构时直接改到位，不允许为兼容旧写法而加"转发桥接""兼容层"之类的逃逸方案
+- 发现遗留的兼容层（如变量别名转发、废弃 API 的 shim）应主动清理，而不是绕过或叠加新的兼容代码
+- 确需过渡期兼容（例如跨大版本的破坏性变更）时，必须显式记录清理计划（TODO + 负责人/时间点），不能无限期保留
 
 ## 发版
 
