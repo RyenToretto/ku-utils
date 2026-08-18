@@ -34,7 +34,7 @@ Turborepo 会根据 `turbo.json` 中的 `dependsOn` 构建一个有向无环图�
 当执行 `turbo run build` 时：
 
 1. 先并行构建没有内部依赖的包（`utils`、`design-tokens`、`constants`、`types` 等）
-2. 再构建依赖上述包的包（`hooks`、`directives`、`request` 等）
+2. 再构建依赖上述包的包（`hooks`、`directives` 等）
 3. 最后构建顶层包（`ui`、`nuxt-module` 等）
 
 ## 二、项目配置详解
@@ -439,7 +439,6 @@ Tasks to Run
  • @ku-utils/design-tokens#build
  • @ku-utils/hooks#build
  • @ku-utils/directives#build
- • @ku-utils/request#build
  • @ku-utils/ui#build
  ...
 ```
@@ -504,7 +503,6 @@ turbo run build --output-logs=none
                                 │
                     ┌─ @ku-utils/hooks ─────────────┐
   第 2 层           ├─ @ku-utils/directives ────────┤  并行
-                    ├─ @ku-utils/request ───────────┤
                     └─ @ku-utils/eslint-config ─────┘
                                 │
   第 3 层           ┌─ @ku-utils/ui ────────────────┐  并行

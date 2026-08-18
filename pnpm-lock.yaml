@@ -129,9 +129,6 @@ importers:
 
   apps/playground-nuxt4:
     dependencies:
-      '@ku-utils/report':
-        specifier: workspace:^
-        version: link:../../packages/report
       nuxt:
         specifier: ^3.17.3
         version: 3.21.11(@oxc-project/types@0.143.0)(@parcel/watcher@2.6.0)(@types/node@22.20.1)(@vue/compiler-sfc@3.5.41)(cac@6.7.14)(commander@13.1.0)(db0@0.3.4)(esbuild@0.28.2)(eslint@9.39.5(jiti@2.7.0))(ioredis@5.11.1)(less@4.9.0)(magicast@0.5.4)(meow@13.2.0)(optionator@0.9.4)(rollup-plugin-visualizer@7.1.1(rollup@4.62.4))(rollup@4.62.4)(sass@1.102.0)(srvx@0.11.22)(stylelint@16.26.1(typescript@5.9.3))(terser@5.50.0)(typescript@5.9.3)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(less@4.9.0)(sass@1.102.0)(terser@5.50.0)(yaml@2.9.0))(vue-tsc@3.3.10(typescript@5.9.3))(yaml@2.9.0)
@@ -160,9 +157,6 @@ importers:
 
   apps/playground-vue2:
     dependencies:
-      '@ku-utils/report':
-        specifier: workspace:^
-        version: link:../../packages/report
       vue:
         specifier: ^2.7.16
         version: 2.7.16
@@ -194,9 +188,6 @@ importers:
 
   apps/playground-vue3:
     dependencies:
-      '@ku-utils/report':
-        specifier: workspace:^
-        version: link:../../packages/report
       pinia:
         specifier: ^3.0.3
         version: 3.0.4(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3))
@@ -385,83 +376,6 @@ importers:
         specifier: ^3.5.16
         version: 3.5.41(typescript@5.9.3)
 
-  packages/landing-report:
-    dependencies:
-      '@ku-utils/report':
-        specifier: workspace:*
-        version: link:../report
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^3.2.1
-        version: 3.2.7(@types/node@22.20.1)(happy-dom@17.6.3)(jiti@2.7.0)(less@4.9.0)(sass@1.102.0)(terser@5.50.0)(yaml@2.9.0)
-
-  packages/landing-report-standalone:
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/landing-report':
-        specifier: workspace:*
-        version: link:../landing-report
-      '@ku-utils/report':
-        specifier: workspace:*
-        version: link:../report
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/marketing:
-    dependencies:
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
   packages/nuxt-module:
     dependencies:
       '@ku-utils/directives':
@@ -493,104 +407,11 @@ importers:
         specifier: ^3.5.16
         version: 3.5.41(typescript@5.9.3)
 
-  packages/pay:
-    dependencies:
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-      js-md5:
-        specifier: ^0.8.3
-        version: 0.8.3
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
   packages/prettier-config:
     dependencies:
       prettier:
         specifier: ^3.0.0
         version: 3.9.6
-
-  packages/report:
-    dependencies:
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^3.2.1
-        version: 3.2.7(@types/node@22.20.1)(happy-dom@17.6.3)(jiti@2.7.0)(less@4.9.0)(sass@1.102.0)(terser@5.50.0)(yaml@2.9.0)
-
-  packages/report-standalone:
-    devDependencies:
-      '@ku-utils/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ku-utils/report':
-        specifier: workspace:*
-        version: link:../report
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      '@ku-utils/utils':
-        specifier: workspace:*
-        version: link:../utils
-      eslint:
-        specifier: ^9.27.0
-        version: 9.39.5(jiti@2.7.0)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/request:
-    dependencies:
-      axios:
-        specifier: ^1.9.0
-        version: 1.19.0
-    devDependencies:
-      '@ku-utils/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      '@ku-utils/types':
-        specifier: workspace:*
-        version: link:../types
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.1(@microsoft/api-extractor@7.58.12(@types/node@22.20.1))(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
 
   packages/stylelint-config:
     dependencies:
@@ -5407,9 +5228,6 @@ packages:
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
-
-  js-md5@0.8.3:
-    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==}
 
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
@@ -12872,8 +12690,6 @@ snapshots:
   jju@1.4.0: {}
 
   joycon@3.1.1: {}
-
-  js-md5@0.8.3: {}
 
   js-tokens@10.0.0: {}
 

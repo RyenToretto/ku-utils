@@ -55,8 +55,7 @@ const emit = defineEmits<{
 1. **CSS 类名**：禁止 `&-suffix` / `&__item` / `&--modifier` 拼接，必须写完整类名
 2. **Composables**：优先使用 `@ku-utils/hooks`，不重复封装
 3. **工具函数**：使用 `@ku-utils/utils`，不自行实现
-4. **HTTP 请求**：使用 `@ku-utils/request` 的 `createRequest`
-5. **类型定义**：优先使用 `@ku-utils/types` 的公共类型
+4. **类型定义**：优先使用 `@ku-utils/types` 的公共类型
 
 ## Vue 2 项目
 

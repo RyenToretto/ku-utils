@@ -35,6 +35,6 @@ tags: [debugging, workflow]
 ## 5. 团队常见问题
 
 - **跨域**：检查后端 CORS 配置和代理设置
-- **token 失效**：检查 @ku-utils/request 的拦截器是否正确处理 401
+- **token 失效**：检查请求拦截器是否正确处理 401
 - **构建失败**：先执行 `pnpm clean && pnpm install`
 - **类型错误**：检查 tsconfig.json 是否正确继承 @ku-utils/tsconfig

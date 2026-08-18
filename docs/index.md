@@ -17,9 +17,7 @@ features:
   - title: 组件库
     details: Vue 3 / Vue 2 业务组件库，ProTable、ProForm、Modal 等高频组件
   - title: 工具集
-    details: Utils、Hooks、Directives、Request 等开箱即用的工具库
-  - title: 业务 SDK
-    details: Marketing 营销追踪、Report 埋点上报、Pay 支付，覆盖落地页与业务全流程
+    details: Utils、Hooks、Directives 等开箱即用的工具库
   - title: CLI 工具
     details: 脚手架一键创建项目、初始化配置、健康检查
   - title: 设计令牌

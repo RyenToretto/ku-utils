@@ -37,7 +37,7 @@ type(scope): 中文描述
 
 ## scope 取值
 
-使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / design-tokens / constants / request / i18n / types / nuxt-module / cli / create-app / docs / deps / ci / release
+使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / design-tokens / constants / i18n / types / nuxt-module / custom-columns / v2-custom-columns / cli / create-app / kv3-admin / docs / deps / ci / release
 
 ## 示例
 
@@ -46,7 +46,6 @@ feat(utils): 新增货币格式化函数
 fix(hooks): 修复 useCountdown 内存泄漏
 docs(ui): 更新 DuButton 使用示例
 chore(deps): 升级 typescript 到 5.8.3
-refactor(request): 重构拦截器链路逻辑
 build: 修复 tsconfig 导致 apps 生成冗余编译产物
 ```
 

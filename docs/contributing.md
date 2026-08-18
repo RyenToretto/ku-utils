@@ -32,7 +32,6 @@ ku-utils/
 │   ├── utils/              # @ku-utils/utils
 │   ├── hooks/              # @ku-utils/hooks
 │   ├── directives/         # @ku-utils/directives
-│   ├── request/            # @ku-utils/request
 │   ├── constants/          # @ku-utils/constants
 │   ├── types/              # @ku-utils/types
 │   ├── i18n/               # @ku-utils/i18n
@@ -41,7 +40,7 @@ ku-utils/
 │   ├── ui-vue2/            # @ku-utils/ui-vue2（Vue 2）
 │   ├── nuxt-module/        # @ku-utils/nuxt-module
 │   ├── custom-columns/
-│   └── …                   # marketing / report / pay 等
+│   └── v2-custom-columns/
 ├── tools/                  # CLI 工具
 │   ├── cli/                # @ku-utils/cli
 │   └── create-app/         # @ku-utils/create-app
@@ -174,8 +173,8 @@ type(scope): 中文描述
 ```
 eslint-config | prettier-config | tsconfig | stylelint-config
 utils | hooks | directives | ui | ui-vue2 | design-tokens
-constants | request | i18n | types | nuxt-module
-custom-columns | v2-custom-columns | marketing | report | landing-report | pay
+constants | i18n | types | nuxt-module
+custom-columns | v2-custom-columns
 cli | create-app | kv3-admin | docs | deps | ci | release
 ```
 
@@ -186,7 +185,6 @@ git commit -m "feat(utils): 新增货币格式化函数"
 git commit -m "fix(hooks): 修复 useCountdown 内存泄漏"
 git commit -m "docs(ui): 更新 DuButton 使用示例"
 git commit -m "chore(deps): 升级 typescript 到 5.8.3"
-git commit -m "refactor(request): 重构拦截器链路逻辑"
 ```
 
 ## 六、Pre-commit 钩子

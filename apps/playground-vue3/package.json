@@ -12,7 +12,6 @@
     "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
-    "@ku-utils/report": "workspace:^",
     "pinia": "^3.0.3",
     "vue": "^3.5.16",
     "vue-router": "^4.5.1"

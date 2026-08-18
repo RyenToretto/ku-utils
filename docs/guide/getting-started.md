@@ -30,7 +30,7 @@ npx @ku-utils/cli create my-project
 pnpm add -D @ku-utils/eslint-config @ku-utils/prettier-config @ku-utils/tsconfig eslint
 
 # 安装业务包（按需）
-pnpm add @ku-utils/utils @ku-utils/hooks @ku-utils/ui @ku-utils/request
+pnpm add @ku-utils/utils @ku-utils/hooks @ku-utils/ui
 ```
 
 ### 配置 ESLint

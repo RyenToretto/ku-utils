@@ -9,14 +9,14 @@
 
 ## 1. 入口与配置
 
-| 源                                                                                                                                       | 处理   | 去向 / 原因                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/index.ts`                                                                                                                           | ⏭      | 旧入口含 `export * from 'lodash-es'` 反模式，不迁移；新包按需导出                                                                                    |
-| `src/auto-import.ts`                                                                                                                     | ⏭      | du-utils 项目专属配置，不迁移                                                                                                                        |
-| `src/types.ts` → `RealType` / `Recordable`                                                                                               | ⏭ / ✅ | `Recordable` ku-utils 已有；`RealType` 改放 `@ku-utils/types/common.ts` 与 `@ku-utils/utils/is.ts`                                                   |
-| `src/types.ts` → `BrowserInfo` / `BrowserSupport` / `DeviceType` / `OSType` / `DeviceDetectResult` / `SetFontSizeOptions` / `PageParams` | ✅     | 前 6 个迁入 `@ku-utils/types/common.ts` + `@ku-utils/utils/device.ts` 各保一份；`PageParams` 迁入 `@ku-utils/marketing/landing/types.ts`（业务专属） |
-| `src/cursor-rules.mdc`                                                                                                                   | ⏭      | 项目专属规则                                                                                                                                         |
-| `package.json` 的 lodash-es 全量 re-export                                                                                               | ⏭      | 反模式；mergeWith 改自实现，cloneDeep 用本地 deepClone                                                                                               |
+| 源                                                                                                                                       | 处理   | 去向 / 原因                                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.ts`                                                                                                                           | ⏭      | 旧入口含 `export * from 'lodash-es'` 反模式，不迁移；新包按需导出                                                           |
+| `src/auto-import.ts`                                                                                                                     | ⏭      | du-utils 项目专属配置，不迁移                                                                                               |
+| `src/types.ts` → `RealType` / `Recordable`                                                                                               | ⏭ / ✅ | `Recordable` ku-utils 已有；`RealType` 改放 `@ku-utils/types/common.ts` 与 `@ku-utils/utils/is.ts`                          |
+| `src/types.ts` → `BrowserInfo` / `BrowserSupport` / `DeviceType` / `OSType` / `DeviceDetectResult` / `SetFontSizeOptions` / `PageParams` | ✅ / ⏭ | 前 6 个迁入 `@ku-utils/types/common.ts` + `@ku-utils/utils/device.ts` 各保一份；`PageParams` 为落地页业务类型，本仓不再收录 |
+| `src/cursor-rules.mdc`                                                                                                                   | ⏭      | 项目专属规则                                                                                                                |
+| `package.json` 的 lodash-es 全量 re-export                                                                                               | ⏭      | 反模式；mergeWith 改自实现，cloneDeep 用本地 deepClone                                                                      |
 
 ## 2. core/
 
@@ -71,9 +71,9 @@
 | `dom/getStyle.ts` / `getScrollBarWidth.ts` / `getViewHeight.ts` / `scrollTo.ts` / `posInElement.ts` | ⏭    | 与 dom.ts 主文件重复，只取主版本                                              |
 | `dom/compressImage.ts`                                                                              | ✅   | `@ku-utils/utils/image.ts`（含 `UserUploadInfo` / `CompressionOptions` 类型） |
 | `dom/setFontSize.ts → initFontSize` / `setFontSizePlugin`                                           | ✅   | `@ku-utils/utils/rem.ts`                                                      |
-| `dom/appAndDownload.ts`                                                                             | ✅   | `@ku-utils/marketing/download/appAndDownload.ts`（业务专属）                  |
-| `dom/makeDownload.ts`                                                                               | ✅   | `@ku-utils/marketing/download/makeDownload.ts`                                |
-| `dom/startDownload.ts`                                                                              | ✅   | `@ku-utils/marketing/download/startDownload.ts`                               |
+| `dom/appAndDownload.ts`                                                                             | ⏭    | 落地页唤起下载，本仓不再收录业务 SDK                                          |
+| `dom/makeDownload.ts`                                                                               | ⏭    | 同上                                                                          |
+| `dom/startDownload.ts`                                                                              | ⏭    | 同上                                                                          |
 
 ## 5. device/
 
@@ -130,16 +130,13 @@ ku-utils 保留的 `joinUrl` / `buildQuery`（du-utils 无对应）。
 
 `@ku-utils/hooks/src/useClipboard.ts` 改为内部调用 `@ku-utils/utils` 的 `setCopy`，获得 execCommand 降级能力。tsup external 化 `@ku-utils/utils`。
 
-## 12. adjust / landing / appsflyer → @ku-utils/marketing
+## 12. adjust / landing / appsflyer
 
-| 源                                                                                              | 去向                                   |
-| ----------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `adjust/index.ts` / `tracker.ts` / `macros.ts` / `types.ts`                                     | `@ku-utils/marketing/adjust/`          |
-| `adjust/lighten.ts`                                                                             | `@ku-utils/marketing/color/lighten.ts` |
-| `landing/index.ts` / `runtime.ts` / `bootstrap.ts` / `pixelManager.ts` / `path.ts` / `types.ts` | `@ku-utils/marketing/landing/`         |
-| `appsflyer/index.ts` / `tracker.ts` / `smartScript.ts` / `types.ts`                             | `@ku-utils/marketing/appsflyer/`       |
+| 源                                         | 处理 | 去向 / 原因                        |
+| ------------------------------------------ | ---- | ---------------------------------- |
+| `adjust/` / `landing/` / `appsflyer/` 目录 | ⏭    | 营销归因与落地页能力，本仓不再收录 |
 
-`adjust/tracker.ts` 中的 `import { isAndroid } from '../device/detectDevice'` 改为 `from '@ku-utils/utils'`。
+原计划迁入独立业务 SDK，现已从 ku-utils 移除。
 
 ---
 
@@ -161,14 +158,14 @@ ku-utils 保留的 `joinUrl` / `buildQuery`（du-utils 无对应）。
 | `src/format/index.ts`                                                     | ⏭    | 同上，format/\* 按 #3 处理                                                      |
 | `src/http/index.ts`                                                       | ⏭    | 同上，http/\* 按 #10 处理                                                       |
 | `src/url/index.ts`                                                        | ⏭    | 同上，url/\* 按 #9 处理                                                         |
-| `src/adjust/index.ts` / `src/appsflyer/index.ts` / `src/landing/index.ts` | ⏭    | 业务子目录聚合，迁入 marketing 时按子目录重写 index.ts                          |
+| `src/adjust/index.ts` / `src/appsflyer/index.ts` / `src/landing/index.ts` | ⏭    | 业务子目录聚合；营销/落地页能力本仓不再收录                                     |
 
 ### 全部 70 个文件的归宿统计
 
 | 归宿                                                          | 数量 |
 | ------------------------------------------------------------- | ---- |
 | ✅ 迁入 @ku-utils/utils                                       | 36   |
-| ✅ 迁入 @ku-utils/marketing                                   | 19   |
+| ⏭ 营销 / 落地页（adjust / landing / appsflyer 等）            | 19   |
 | ✅ 迁入 @ku-utils/types（共享类型）                           | 6    |
 | ⏭ 跳过（聚合 index / lodash re-export / 重复实现 / 项目专属） | 9    |
 

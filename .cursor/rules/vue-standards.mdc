@@ -26,5 +26,4 @@ alwaysApply: false
 ## 通用规范
 - 使用 @ku-utils/* 系列包，不重复造轮子
 - 工具函数用 @ku-utils/utils，不自行实现 debounce/throttle 等
-- HTTP 请求使用 @ku-utils/request
 - 类型定义优先使用 @ku-utils/types 中的公共类型

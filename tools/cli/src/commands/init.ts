@@ -38,7 +38,6 @@ export async function init() {
       { name: '工具函数 (@ku-utils/utils)', value: 'utils' },
       { name: 'Hooks (@ku-utils/hooks)', value: 'hooks' },
       { name: 'UI 组件 (@ku-utils/ui)', value: 'ui' },
-      { name: 'HTTP 请求 (@ku-utils/request)', value: 'request' },
     ],
   });
 
@@ -74,9 +73,6 @@ export async function init() {
     }
     if (features.includes('ui')) {
       pkg.dependencies['@ku-utils/ui'] = ver;
-    }
-    if (features.includes('request')) {
-      pkg.dependencies['@ku-utils/request'] = ver;
     }
 
     writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);

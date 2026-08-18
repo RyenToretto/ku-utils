@@ -64,27 +64,7 @@ import { formatDate } from '@/utils/date';
 import { debounce, formatDate } from '@ku-utils/utils';
 ```
 
-### 6. 替换 HTTP 请求
-
-```typescript
-// 旧
-import axios from 'axios';
-const instance = axios.create({ ... });
-
-// 新
-import { createRequest } from '@ku-utils/request';
-const http = createRequest({
-  baseURL: '/api',
-  interceptors: {
-    requestInterceptor(config) {
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
-    },
-  },
-});
-```
-
-### 7. 使用健康检查
+### 6. 使用健康检查
 
 ```bash
 npx @ku-utils/cli doctor
@@ -97,7 +77,6 @@ npx @ku-utils/cli doctor
 - [ ] 安装 `@ku-utils/tsconfig` 并替换旧 tsconfig
 - [ ] 替换自定义工具函数为 `@ku-utils/utils`
 - [ ] 替换自定义 hooks 为 `@ku-utils/hooks`
-- [ ] 替换 axios 实例为 `@ku-utils/request`
 - [ ] 安装 `@ku-utils/ui` 并替换可复用的业务组件
 - [ ] 运行 `npx @ku-utils/cli doctor` 检查配置健康度
 - [ ] 运行 `pnpm lint` 确保无报错

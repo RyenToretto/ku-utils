@@ -27,7 +27,7 @@
 
 ```
 ku-utils/
-├── packages/           # 可发布的 npm 包（17 个）
+├── packages/           # 可发布的 npm 包（16 个）
 │   ├── eslint-config/     构建: tsup       ESLint Flat Config（含 vue2/vue3/nuxt4 子配置）
 │   ├── prettier-config/   构建: 无（纯JSON） Prettier 共享配置
 │   ├── tsconfig/          构建: 无（纯JSON） TypeScript 配置集（base/library/vue3/vue2/nuxt4）
@@ -35,14 +35,15 @@ ku-utils/
 │   ├── utils/             构建: tsup       纯函数工具库（零框架依赖）
 │   ├── hooks/             构建: tsup       Vue 3 Composables（useLoading/useCountdown/useClipboard...）
 │   ├── directives/        构建: tsup       Vue 3 自定义指令（vLoading/vPermission/vDebounce）
-│   ├── request/           构建: tsup       Axios 封装（拦截器、重试、取消）
 │   ├── constants/         构建: tsup       枚举常量（HttpStatus/ContentType/PAGINATION/REGEX）
 │   ├── types/             构建: tsup       公共 TypeScript 类型
 │   ├── i18n/              构建: tsup       多语言工具（createI18n/detectBrowserLocale）
 │   ├── design-tokens/     构建: 自定义脚本  设计令牌→CSS/SCSS/JS/JSON + 语义别名 + IDE Custom Data
 │   ├── ui/                构建: Vite       Vue 3 组件库（DuButton/DuModal/DuEmpty/DuStatusTag）
 │   ├── ui-vue2/           构建: Vite       Vue 2 组件库（维护模式）
-│   └── nuxt-module/       构建: nuxt-module-builder   Nuxt 4 集成模块
+│   ├── nuxt-module/       构建: nuxt-module-builder   Nuxt 4 集成模块
+│   ├── custom-columns/    构建: tsup       Vue 3 自定义列
+│   └── v2-custom-columns/ 构建: tsup       Vue 2 自定义列
 ├── tools/              # CLI 工具（2 个）
 │   ├── cli/               @ku-utils/cli 团队命令行工具
 │   └── create-app/        @ku-utils/create-app 项目脚手架

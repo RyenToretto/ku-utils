@@ -13,7 +13,7 @@ alwaysApply: false
 ## 目录地图
 
 ```
-packages/            → 可发布库（utils/hooks/ui/custom-columns/report/…）
+packages/            → 可发布库（utils/hooks/ui/custom-columns/…）
 tools/               → cli / create-app
 apps/
   playground-vue3|vue2|nuxt4

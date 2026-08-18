@@ -66,22 +66,12 @@ export default defineConfig({
           items: [
             { text: 'Utils 工具函数', link: '/packages/utils' },
             { text: 'Hooks 组合式函数', link: '/packages/hooks' },
-            { text: 'Request HTTP 请求', link: '/packages/request' },
             { text: 'Constants 常量', link: '/packages/constants' },
             { text: 'Types 类型定义', link: '/packages/types' },
             { text: 'Directives 指令', link: '/packages/directives' },
             { text: 'I18n 多语言', link: '/packages/i18n' },
             { text: 'Design Tokens 设计令牌', link: '/packages/design-tokens' },
             { text: 'Nuxt Module', link: '/packages/nuxt-module' },
-          ],
-        },
-        {
-          text: '业务 SDK',
-          items: [
-            { text: 'Marketing 营销追踪', link: '/packages/marketing' },
-            { text: 'Report 通用埋点', link: '/packages/report' },
-            { text: 'Landing Report 落地页埋点', link: '/packages/landing-report' },
-            { text: 'Pay Web 支付', link: '/packages/pay' },
           ],
         },
       ],

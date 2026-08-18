@@ -100,37 +100,11 @@ for (const pkg of packages) {
 // 4. 生成 tarballs/README.md
 // ──────────────────────────────────────────────
 const successResults = results.filter((r) => r.ok && r.tgz)
-const reportStandaloneVersion =
-  packages.find((p) => p.name === '@ku-utils/report-standalone')?.version ?? '<version>'
-const landingReportStandaloneVersion =
-  packages.find((p) => p.name === '@ku-utils/landing-report-standalone')?.version ??
-  '<version>'
 
 let readmeContent = `# @ku-utils/* 离线 tarball 包
 
 > 供无法访问 npm、需要离线安装的项目使用（如内网、外包交付）。  
 > 每次执行 \`pnpm pack:tarballs\` 后自动更新，每个包仅保留最新版本。
-
-## Report 单包离线交付
-
-只需要埋点 SDK 时，优先交付
-\`ku-utils-report-standalone-${reportStandaloneVersion}.tgz\`。
-该包已内联 \`@ku-utils/report\` 和 \`@ku-utils/utils\`，消费方不需要安装其他 tarball：
-
-\`\`\`bash
-pnpm add ./vendor/ku-utils/ku-utils-report-standalone-${reportStandaloneVersion}.tgz
-\`\`\`
-
-## Landing Report 单包离线交付
-
-只需要落地页埋点 SDK 时，优先交付
-\`ku-utils-landing-report-standalone-${landingReportStandaloneVersion}.tgz\`。
-该包已内联 \`@ku-utils/landing-report\`、\`@ku-utils/report\` 和
-\`@ku-utils/utils\`，消费方不需要安装其他 tarball：
-
-\`\`\`bash
-pnpm add ./vendor/ku-utils/ku-utils-landing-report-standalone-${landingReportStandaloneVersion}.tgz
-\`\`\`
 
 ## 安装方式
 
@@ -156,9 +130,7 @@ ${successResults.map((r) => `| \`${r.name}\` | \`${r.version}\` | \`${r.tgz}\` |
 
 ## 注意事项
 
-- \`@ku-utils/report-standalone\` 和 \`@ku-utils/landing-report-standalone\` 是零运行时依赖的离线交付包，只需单独引入对应包。
-- 标准版 \`@ku-utils/report\` 和 \`@ku-utils/landing-report\` 仍有内部依赖；离线交付时不要只提供标准版 tarball。
-- \`@ku-utils/hooks\`、\`@ku-utils/marketing\`、\`@ku-utils/nuxt-module\` 等标准包仍依赖 \`@ku-utils/utils\`，请务必同时引入。
+- \`@ku-utils/hooks\`、\`@ku-utils/nuxt-module\` 等标准包仍依赖 \`@ku-utils/utils\`，请务必同时引入。
 - 配置包（\`eslint-config\`、\`prettier-config\`、\`tsconfig\`、\`stylelint-config\`）不含运行时代码，只需项目开发依赖引入时才需要。
 - tarball 安装与从 npm 安装行为一致。仅 custom-columns / v2-custom-columns 带 Cursor rules/skills 的 \`postinstall\`，\`CI=1\` 时不会拷贝。
 

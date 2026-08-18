@@ -14,7 +14,7 @@ npx @ku-utils/cli init
 多选框中通常包含：
 
 - ESLint、Prettier、TSConfig、Stylelint
-- `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/ui`、`@ku-utils/request`
+- `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/ui`
 
 根据勾选结果，CLI 会向 `package.json` 合并对应 `dependencies` / `devDependencies` 并生成或更新配置文件（具体文件列表以工具实现为准）。
 

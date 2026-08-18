@@ -13,7 +13,7 @@ pnpm 10 + Turborepo 2 + Changesets。Node >= 20。
 
 ## 目录
 
-- `packages/` 可发布库（utils、hooks、custom-columns、ui、report…）
+- `packages/` 可发布库（utils、hooks、custom-columns、ui…）
 - `tools/` `cli` / `create-app`
 - `apps/kv3-admin` Vue 3 + Element Plus 管理端 starter
 - `apps/playground-*` 包级联调

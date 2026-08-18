@@ -9,11 +9,6 @@ const routes = [
     name: 'Home',
     component: () => import('../views/Home.vue'),
   },
-  {
-    path: '/report-demo',
-    name: 'ReportDemo',
-    component: () => import('../views/ReportDemo.vue'),
-  },
 ];
 
 export default new VueRouter({

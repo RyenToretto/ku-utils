@@ -29,8 +29,6 @@
     "release": "turbo run build --filter='./packages/*' --filter='./tools/*' && changeset publish",
     "pack:tarballs": "turbo run build --filter='./packages/*' && node scripts/pack-tarballs.mjs",
     "pack:tarballs:only": "node scripts/pack-tarballs.mjs",
-    "pack:report-standalone": "pnpm --filter @ku-utils/report-standalone build && pnpm --dir packages/report-standalone pack --pack-destination ../../tarballs",
-    "pack:landing-report-standalone": "pnpm --filter @ku-utils/landing-report-standalone build && pnpm --dir packages/landing-report-standalone pack --pack-destination ../../tarballs",
     "prepare": "husky"
   },
   "prettier": "@ku-utils/prettier-config",
