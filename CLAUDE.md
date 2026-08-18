@@ -35,7 +35,7 @@ ku-utils/
 │   ├── utils/             构建: tsup       纯函数工具库（零框架依赖）
 │   ├── hooks/             构建: tsup       Vue 3 Composables（useLoading/useCountdown/useClipboard...）
 │   ├── directives/        构建: tsup       Vue 3 自定义指令（vLoading/vPermission/vDebounce）
-│   ├── constants/         构建: tsup       枚举常量（HttpStatus/ContentType/PAGINATION/REGEX）
+│   ├── constants/         构建: tsup       常用正则（REGEX）
 │   ├── types/             构建: tsup       公共 TypeScript 类型
 │   ├── i18n/              构建: tsup       多语言工具（createI18n/detectBrowserLocale）
 │   ├── design-tokens/     构建: 自定义脚本  设计令牌→CSS/SCSS/JS/JSON + 语义别名 + IDE Custom Data

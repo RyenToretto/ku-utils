@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "ku-utils 团队共享常量、枚举和正则",
+  "description": "ku-utils 团队共享正则",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

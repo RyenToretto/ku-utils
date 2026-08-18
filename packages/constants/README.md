@@ -1,6 +1,6 @@
 # @ku-utils/constants
 
-> 枚举、常量与正则表达式集合。
+> 常用正则表达式集合。
 
 ## 安装
 
@@ -8,19 +8,12 @@
 pnpm add @ku-utils/constants
 ```
 
-## 包含内容
-
-`HttpStatus` · `ContentType` · `PAGINATION` · `REGEX` 等
-
 ## 使用
 
 ```ts
-import { HttpStatus, REGEX } from '@ku-utils/constants';
+import { REGEX } from '@ku-utils/constants';
 
-if (status === HttpStatus.OK) {
-  /* ... */
-}
-REGEX.email.test('a@b.com'); // true
+REGEX.PHONE.test('13800138000'); // true
 ```
 
 ## 安装源

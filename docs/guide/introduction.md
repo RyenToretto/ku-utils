@@ -15,7 +15,7 @@ ku-utils 是前端公共库 Monorepo，基于 pnpm workspace + Turborepo 构建�
 | 工具库   | @ku-utils/utils             | 纯函数工具库                  |
 | 工具库   | @ku-utils/hooks             | Vue 3 Composables             |
 | 工具库   | @ku-utils/directives        | Vue 3 自定义指令              |
-| 工具库   | @ku-utils/constants         | 枚举/常量/正则                |
+| 工具库   | @ku-utils/constants         | 常用正则                      |
 | 工具库   | @ku-utils/types             | 公共 TypeScript 类型          |
 | 工具库   | @ku-utils/i18n              | 多语言工具                    |
 | 设计     | @ku-utils/design-tokens     | 设计令牌                      |
