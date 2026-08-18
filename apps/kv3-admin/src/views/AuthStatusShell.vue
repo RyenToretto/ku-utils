@@ -93,7 +93,7 @@ const panelClass = computed(() =>
   padding: 32px 24px;
   place-items: center;
   overflow: hidden;
-  background: var(--bg-page-gradient, var(--bg-page));
+  background: var(--ku-bg-page-gradient, var(--ku-bg-page));
 }
 
 .page-auth-status-atmosphere {
@@ -128,8 +128,8 @@ const panelClass = computed(() =>
   border-radius: 16px;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--el-color-primary) 12%, var(--bg-card)) 0%,
-    var(--bg-card) 48%
+    color-mix(in srgb, var(--el-color-primary) 12%, var(--ku-bg-card)) 0%,
+    var(--ku-bg-card) 48%
   );
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--el-color-primary) 8%, transparent),
@@ -208,7 +208,7 @@ const panelClass = computed(() =>
   height: 40px;
   border-radius: 12px;
   color: var(--el-color-primary);
-  background: color-mix(in srgb, var(--el-color-primary) 14%, var(--bg-card));
+  background: color-mix(in srgb, var(--el-color-primary) 14%, var(--ku-bg-card));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--el-color-primary) 16%, transparent);
 }
 
@@ -227,7 +227,7 @@ const panelClass = computed(() =>
 }
 
 .page-auth-status-brand-name {
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
@@ -235,7 +235,7 @@ const panelClass = computed(() =>
 }
 
 .page-auth-status-brand-sub {
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
   font-size: 12px;
   line-height: 1.2;
 }
@@ -251,20 +251,20 @@ const panelClass = computed(() =>
 }
 
 .page-auth-status-icon-warning {
-  background: color-mix(in srgb, var(--el-color-warning) 14%, var(--bg-card));
+  background: color-mix(in srgb, var(--el-color-warning) 14%, var(--ku-bg-card));
   color: var(--el-color-warning);
   box-shadow: 0 0 0 8px color-mix(in srgb, var(--el-color-warning) 8%, transparent);
 }
 
 .page-auth-status-icon-success {
-  background: color-mix(in srgb, var(--el-color-success) 14%, var(--bg-card));
+  background: color-mix(in srgb, var(--el-color-success) 14%, var(--ku-bg-card));
   color: var(--el-color-success);
   box-shadow: 0 0 0 8px color-mix(in srgb, var(--el-color-success) 8%, transparent);
 }
 
 .page-auth-status-title {
   margin: 0 0 8px;
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   font-size: 22px;
   font-weight: 600;
   line-height: 1.35;
@@ -274,7 +274,7 @@ const panelClass = computed(() =>
 .page-auth-status-desc {
   margin: 0 auto 20px;
   max-width: 34em;
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
   font-size: 14px;
   line-height: 1.65;
 }

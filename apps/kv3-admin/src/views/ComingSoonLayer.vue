@@ -51,8 +51,8 @@ const emptyDescription = computed(() => `${title.value} · 页面建设中，欢
   min-height: calc(100% - 24px);
   margin: 12px 0 24px;
   padding: 32px 24px;
-  background: var(--bg-card, #fff);
-  border: 1px solid var(--border-light);
+  background: var(--ku-bg-card, #fff);
+  border: 1px solid var(--ku-border-light);
   border-radius: 8px;
 }
 
@@ -73,7 +73,7 @@ const emptyDescription = computed(() => `${title.value} · 页面建设中，欢
 
 .page-coming-soon-meta {
   margin-top: 8px;
-  color: var(--text-secondary, #666);
+  color: var(--ku-text-secondary, #666);
   font-size: 13px;
   line-height: 1.7;
   text-align: center;

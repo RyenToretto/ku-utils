@@ -10,7 +10,7 @@
   height: 14px;
   border: 1px solid var(--border-color, #dcdfe6);
   border-radius: 2px;
-  background: var(--bg-card, #fff);
+  background: var(--ku-bg-card, #fff);
   color: #fff;
   font-size: 12px;
   cursor: pointer;
@@ -26,12 +26,12 @@
   }
 
   &:hover {
-    border-color: var(--primary-color);
+    border-color: var(--ku-color-primary);
   }
 
   &.active {
-    border-color: var(--primary-color);
-    background: var(--primary-color);
+    border-color: var(--ku-color-primary);
+    background: var(--ku-color-primary);
 
     .el-icon {
       opacity: 1;
@@ -68,8 +68,8 @@
     margin: 0 auto;
 
     &.half-selected {
-      border-color: var(--primary-color);
-      background: var(--primary-color);
+      border-color: var(--ku-color-primary);
+      background: var(--ku-color-primary);
 
       .el-icon {
         opacity: 1;
@@ -77,8 +77,8 @@
     }
 
     &.all-selected {
-      border-color: var(--primary-color);
-      background: var(--primary-color);
+      border-color: var(--ku-color-primary);
+      background: var(--ku-color-primary);
 
       .el-icon {
         opacity: 1;

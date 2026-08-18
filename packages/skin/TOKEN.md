@@ -82,7 +82,7 @@
 ## 明确不在契约内
 
 - `packages/ui` 组件内联样式绑定的 `--ku-liquid-glass-*`、`--ku-liquid-floating-bar-*`：组件私有、运行时由 props 计算，不是皮肤契约。
-- `apps/kv3-admin` 迁移期用到的无前缀旧变量（`--primary-color`、`--bg-page` 等）：只在 admin 本地的 `legacy-bridge` 里做一次性别名，**不发布进本包**，业务代码后续应直接改用 `--ku-*`。
+- `apps/kv3-admin` 业务代码已全量直连 `--ku-*`，不保留旧无前缀变量（`--primary-color`、`--bg-page` 等）的别名/桥接层。
 - v1 只发 `lark`；其余 10 套皮肤（`themes/*.js`）留待后续按同一形状补数据，不需要改 `generate.mjs`。
 
 ## 变更记录

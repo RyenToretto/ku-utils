@@ -59,8 +59,8 @@ function requestRefresh() {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--layout-aside-width, 220px);
-  min-width: var(--layout-aside-width, 220px);
+  width: var(--ku-layout-aside-width, 220px);
+  min-width: var(--ku-layout-aside-width, 220px);
   height: 100%;
   padding: 0;
   margin: 0;

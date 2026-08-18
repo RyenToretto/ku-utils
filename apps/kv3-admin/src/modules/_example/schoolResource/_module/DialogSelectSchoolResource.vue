@@ -172,6 +172,6 @@ defineExpose({ show });
 .selected-count {
   margin-right: auto;
   font-size: 13px;
-  color: var(--text-secondary, #909399);
+  color: var(--ku-text-secondary, #909399);
 }
 </style>

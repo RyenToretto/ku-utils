@@ -121,7 +121,7 @@ pnpm release              # 构建 packages+tools 并 publish 到 npm
 - 皮肤是数据（`src/themes/*.js`），CSS 是产物：`scripts/generate.mjs` 用 `mix()` 从品牌基色现算 Element Plus 的 `--el-color-*` 完整色阶，不手写第二套色板
 - Element Plus 结构类变量（`--el-bg-color` 等）统一写成 `var(--ku-*)` 转发，只需在 `:root` 声明一次，`html.dark` 覆写对应 `--ku-*` 即可联动
 - v1 只发 `lark` 一套皮肤；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
-- `apps/kv3-admin` 迁移期用 `src/assets/styles/skins/_legacy-bridge.scss` 把旧无前缀变量（`--primary-color` 等）桥接到 `--ku-*`，仅本地维护，不是包的公开 API
+- `apps/kv3-admin` 已全量改用 `--ku-*`，不保留旧无前缀变量的转发桥接层
 
 ### pnpm strict hoisting
 

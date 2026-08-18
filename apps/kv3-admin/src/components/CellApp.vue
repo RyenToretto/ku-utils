@@ -73,7 +73,7 @@ const idText = computed(() => (hasId.value ? String(props.id) : ''));
   .id {
     font-size: 12px;
     line-height: 16px;
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
   }
 }
 </style>

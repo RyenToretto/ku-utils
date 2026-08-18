@@ -59,18 +59,18 @@ onMounted(() => triggerMenu());
   display: flex;
   height: 100%;
   overflow: hidden;
-  background: var(--bg-sidebar);
+  background: var(--ku-bg-sidebar);
 }
 
 .domain-module-aside {
-  width: var(--layout-aside-width, 220px);
+  width: var(--ku-layout-aside-width, 220px);
   flex-shrink: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-light);
+  background: var(--ku-bg-sidebar);
+  border-right: 1px solid var(--ku-border-light);
 }
 
 .domain-module-aside-body {
@@ -87,7 +87,7 @@ onMounted(() => triggerMenu());
   min-height: 0;
   overflow: auto;
   padding: 0 20px 20px;
-  background: var(--bg-page-gradient);
+  background: var(--ku-bg-page-gradient);
   background-attachment: local;
 }
 

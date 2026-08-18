@@ -127,7 +127,7 @@ $tablet: 1024px;
 
 // 虚线边框 mixin
 @mixin dashedBorder(
-  $color: var(--primary-500),
+  $color: var(--ku-primary-500),
   $dashLength: 12px,
   $gapLength: 8px,
   $borderWidth: 2px

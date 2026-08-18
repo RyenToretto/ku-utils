@@ -60,15 +60,15 @@ const headerCrumbs = computed(() => [{ label: pageTitle.value }]);
   margin-top: 16px;
   padding: 20px 24px;
   border-radius: 12px;
-  background: var(--bg-card, #fff);
-  border: 1px solid var(--border-light);
+  background: var(--ku-bg-card, #fff);
+  border: 1px solid var(--ku-border-light);
 }
 
 .nest-menus-card-title {
   margin: 0 0 12px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
 }
 
 .nest-menus-meta {
@@ -85,16 +85,16 @@ const headerCrumbs = computed(() => [{ label: pageTitle.value }]);
   dt {
     flex: 0 0 72px;
     margin: 0;
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
   }
 
   dd {
     margin: 0;
-    color: var(--text-primary);
+    color: var(--ku-text-primary);
   }
 
   code {
-    font-family: var(--font-family-mono, ui-monospace, monospace);
+    font-family: var(--ku-font-family-mono, ui-monospace, monospace);
     font-size: 12px;
   }
 }
@@ -103,6 +103,6 @@ const headerCrumbs = computed(() => [{ label: pageTitle.value }]);
   margin: 16px 0 0;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
 }
 </style>

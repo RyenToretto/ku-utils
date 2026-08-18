@@ -494,7 +494,7 @@ defineExpose({ setChecked, clearSelection, search });
   align-items: center;
   gap: 4px;
   font-size: 13px;
-  color: var(--text-secondary, #909399);
+  color: var(--ku-text-secondary, #909399);
 }
 
 .ml-5 {

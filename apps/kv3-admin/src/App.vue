@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
   align-items: stretch;
   height: 100%;
   overflow: hidden;
-  background: var(--bg-page-gradient, var(--bg-page));
+  background: var(--ku-bg-page-gradient, var(--ku-bg-page));
 }
 
 .app-shell-main {

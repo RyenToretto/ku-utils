@@ -17,9 +17,9 @@
 
 .table-wrap {
   min-width: 0;
-  /* 表格作为内容区上的独立白纸面，与 --bg-page 分层 */
-  background: var(--bg-card, #ffffff);
-  border: 1px solid var(--border-light, var(--el-border-color-lighter));
+  /* 表格作为内容区上的独立白纸面，与 --ku-bg-page 分层 */
+  background: var(--ku-bg-card, #ffffff);
+  border: 1px solid var(--ku-border-light, var(--el-border-color-lighter));
   border-radius: var(--el-border-radius-base, 8px);
   overflow: hidden;
 
@@ -94,7 +94,7 @@
   }
 
   &.page-table {
-    --page-even-color: var(--primary-50);
+    --page-even-color: var(--ku-primary-50);
     .el-table__row.hover-row {
       --page-even-color: var(--el-fill-color-light);
     }
@@ -129,16 +129,16 @@
     .el-table__row--striped td.el-table__cell.even-column,
     thead.is-group th.el-table__cell.even-column,
     .even-column {
-      background: var(--page-even-color, var(--primary-50));
+      background: var(--page-even-color, var(--ku-primary-50));
     }
     .warning-rate,
     .warning-rate .id {
-      color: var(--color-error) !important;
+      color: var(--ku-color-danger) !important;
       font-weight: 700;
     }
     .el-table__body tr.el-table__row--striped.major-row td.el-table__cell,
     .major-row td.el-table__cell {
-      --major-table-cell-bg: var(--primary-100);
+      --major-table-cell-bg: var(--ku-primary-100);
       background: var(--major-table-cell-bg);
     }
     .major-column.times-column {
@@ -189,7 +189,7 @@
   &.with-leaf {
     --leaf-table-border-color: var(--el-border-color-lighter);
     --leaf-table-bg: var(--el-border-color-lighter);
-    --leaf-table-color: var(--text-primary);
+    --leaf-table-color: var(--ku-text-primary);
 
     &.dark-leaf {
       --leaf-table-border-color: #697370;
@@ -224,15 +224,15 @@
     }
   }
   .el-table__row.lighter-row {
-    background-color: var(--color-error-bg);
+    background-color: var(--ku-color-danger-bg);
     &.hover-row td {
-      background-color: var(--color-error-bg);
+      background-color: var(--ku-color-danger-bg);
     }
   }
   .el-table__row.lighter-green-line {
-    background-color: var(--color-success-bg);
+    background-color: var(--ku-color-success-bg);
     &.hover-row td {
-      background-color: var(--color-success-bg);
+      background-color: var(--ku-color-success-bg);
     }
   }
   .cell {
@@ -242,7 +242,7 @@
   }
   // 表头强制不折行
   th {
-    color: var(--text-primary);
+    color: var(--ku-text-primary);
     & > .cell {
       white-space: nowrap;
     }
@@ -265,16 +265,16 @@
   }
 }
 
-// 隔行变色：皮肤 --table-stripe-bg（比 EP 默认多一层 .el-table，压过按需注入的 fill-color-lighter）
+// 隔行变色：皮肤 --ku-table-stripe-bg（比 EP 默认多一层 .el-table，压过按需注入的 fill-color-lighter）
 .el-table.el-table--striped {
   .el-table__body tr.el-table__row--striped {
     td.el-table__cell {
-      background-color: var(--table-stripe-bg);
+      background-color: var(--ku-table-stripe-bg);
     }
   }
 }
 
-// 默认行底：表格面（白/卡片色），与内容区 --bg-page 分层
+// 默认行底：表格面（白/卡片色），与内容区 --ku-bg-page 分层
 .el-table__body td.el-table__cell {
   background-color: var(--el-table-tr-bg-color, var(--el-bg-color));
 }
@@ -284,7 +284,7 @@
 }
 
 .el-table__body tr.current-row > td {
-  background-color: var(--primary-50);
+  background-color: var(--ku-primary-50);
 }
 
 .el-table__column-resize-proxy {
@@ -412,7 +412,7 @@
 
 .placement-table {
   th {
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
   }
   td {
     border-bottom-width: 0;
@@ -449,7 +449,7 @@
   .id {
     font-size: 12px;
     line-height: 16px;
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
   }
 }
 
@@ -459,7 +459,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--color-error);
+    background-color: var(--ku-color-danger);
     position: absolute;
     bottom: 100%;
     left: 0;
@@ -475,7 +475,7 @@
       white-space: nowrap;
       font-size: 12px;
       line-height: 1;
-      color: var(--color-error);
+      color: var(--ku-color-danger);
       position: absolute;
       top: 50%;
       left: 0;
@@ -494,15 +494,15 @@
       }
     }
     &.red {
-      background-color: var(--color-warning);
+      background-color: var(--ku-color-warning);
       .warn-prev-tips {
-        color: var(--color-warning);
+        color: var(--ku-color-warning);
       }
     }
     &.pointer:hover {
       .warn-prev-tips {
-        color: var(--text-inverse);
-        background-color: var(--primary-color);
+        color: var(--ku-text-inverse);
+        background-color: var(--ku-color-primary);
       }
     }
   }
@@ -567,8 +567,8 @@
 
 .el-table__footer {
   .cell {
-    color: var(--text-primary);
-    font-family: var(--font-family-mono), sans-serif;
+    color: var(--ku-text-primary);
+    font-family: var(--ku-font-family-mono), sans-serif;
     white-space: nowrap;
   }
 }
@@ -577,13 +577,13 @@
 .el-table th .el-popover__reference {
   cursor: pointer;
   &:hover {
-    fill: var(--primary-color);
+    fill: var(--ku-color-primary);
   }
 }
 
 // 主要指标列
 :root {
-  --major-table-cell-bg: var(--primary-50);
+  --major-table-cell-bg: var(--ku-primary-50);
 }
 
 .el-table td.major-row {
@@ -658,7 +658,7 @@ td.with-photo {
       .more {
         text-decoration: underline;
         text-underline-offset: 2px;
-        color: var(--primary-color);
+        color: var(--ku-color-primary);
         cursor: pointer;
       }
     }
@@ -770,7 +770,7 @@ td.image-td {
     background: var(--el-bg-color);
     transition: background 0.3s;
     &:hover {
-      background: var(--primary-200);
+      background: var(--ku-primary-200);
     }
   }
 }
@@ -847,8 +847,8 @@ td.el-table__cell {
         border-top: 1px dashed var(--el-border-color-lighter);
         font-size: 12px;
         font-weight: 600;
-        font-family: var(--font-family-mono), sans-serif;
-        color: var(--text-primary);
+        font-family: var(--ku-font-family-mono), sans-serif;
+        color: var(--ku-text-primary);
         line-height: 18px;
         text-align: inherit;
         white-space: nowrap;

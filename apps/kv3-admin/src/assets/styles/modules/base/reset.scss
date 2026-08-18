@@ -98,7 +98,7 @@ a {
 
 html {
   font-family: var(
-    --font-family-base,
+    --ku-font-family-base,
     'Montserrat',
     -apple-system,
     BlinkMacSystemFont,
@@ -112,8 +112,8 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-page, #f0ebf2);
-  color: var(--text-primary, #1e1a2e);
+  background-color: var(--ku-bg-page, #f0ebf2);
+  color: var(--ku-text-primary, #1e1a2e);
 }
 
 body {
@@ -198,7 +198,7 @@ input::-webkit-calendar-picker-indicator {
 
 .mono-text,
 .number-text {
-  font-family: var(--font-family-mono), sans-serif;
+  font-family: var(--ku-font-family-mono), sans-serif;
   font-variant-numeric: tabular-nums;
 }
 

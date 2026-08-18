@@ -328,9 +328,9 @@ watch(
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px 10px;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--ku-border-light);
   border-radius: 4px;
-  background-color: color-mix(in srgb, var(--primary-color) 4%, var(--bg-card));
+  background-color: color-mix(in srgb, var(--ku-color-primary) 4%, var(--ku-bg-card));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -357,7 +357,7 @@ watch(
   padding: 0 10px;
   border: 1px solid var(--el-border-color);
   border-radius: 2px;
-  background-color: var(--bg-card);
+  background-color: var(--ku-bg-card);
   color: var(--el-text-color-regular);
   font-size: 12px;
   line-height: 26px;
@@ -365,8 +365,8 @@ watch(
 }
 
 .do-words-tag-recommend-chip:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  border-color: var(--ku-color-primary);
+  color: var(--ku-color-primary);
 }
 
 .do-words-tag-recommend-chip.is-active {
@@ -389,9 +389,9 @@ watch(
   box-sizing: border-box;
   flex: 1;
   min-height: 0;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--ku-border-light);
   border-radius: 4px;
-  background: var(--bg-card);
+  background: var(--ku-bg-card);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -401,7 +401,7 @@ watch(
   box-sizing: border-box;
   min-height: 36px;
   padding: 0 12px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--ku-border-light);
   background: var(--el-fill-color-lighter);
   display: flex;
   align-items: center;
@@ -434,7 +434,7 @@ watch(
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--primary-color);
+  color: var(--ku-color-primary);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -462,7 +462,7 @@ watch(
   padding: 3px 12px;
   border-radius: 2px;
   background-color: var(--el-fill-color-light);
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   font-size: 14px;
   line-height: 1.5;
   overflow: hidden;
@@ -530,7 +530,7 @@ watch(
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--bg-card);
+  background: var(--ku-bg-card);
 }
 
 .do-words-tag-recommend-scroller {
@@ -571,18 +571,18 @@ watch(
   flex-shrink: 0;
   color: #fff;
   font-size: 12px;
-  background: var(--bg-card);
+  background: var(--ku-bg-card);
 }
 
 .do-words-tag-recommend-check.is-active {
-  border-color: var(--primary-color);
-  background-color: var(--primary-color);
+  border-color: var(--ku-color-primary);
+  background-color: var(--ku-color-primary);
 }
 
 .do-words-tag-recommend-label {
   min-width: 0;
   font-size: 12px;
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   line-height: 1.4;
 }
 </style>

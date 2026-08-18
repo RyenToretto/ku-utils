@@ -172,7 +172,7 @@ const resetForm = () => {
     box-sizing: border-box;
     margin-left: 5px;
     padding: 0 5px;
-    color: var(--primary-color);
+    color: var(--ku-color-primary);
     cursor: pointer;
     display: inline-flex;
     justify-content: center;

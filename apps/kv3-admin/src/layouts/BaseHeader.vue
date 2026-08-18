@@ -68,7 +68,7 @@ function handleLogout() {
   height: 56px;
   /* 壳层固定纯黑：不走皮肤，不随 Light/Dark */
   background: #000000;
-  color: var(--top-header-text);
+  color: var(--ku-top-header-text);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
@@ -103,7 +103,7 @@ function handleLogout() {
   align-items: center;
   height: 100%;
   padding: 0 16px;
-  color: var(--top-header-text-muted);
+  color: var(--ku-top-header-text-muted);
   text-decoration: none;
   border-radius: 0;
   font-size: 14px;
@@ -113,12 +113,12 @@ function handleLogout() {
   user-select: none;
   -webkit-user-drag: none;
   &:hover {
-    color: var(--top-header-text);
+    color: var(--ku-top-header-text);
   }
 
   &.router-link-active {
-    color: var(--top-header-text);
-    background: var(--top-header-active-bg);
+    color: var(--ku-top-header-text);
+    background: var(--ku-top-header-active-bg);
 
     &::before {
       content: '';
@@ -126,8 +126,8 @@ function handleLogout() {
       bottom: 0;
       left: 0;
       right: 0;
-      height: var(--top-header-active-indicator-size, 3px);
-      background: var(--top-header-active-indicator, var(--primary-color));
+      height: var(--ku-top-header-active-indicator-size, 3px);
+      background: var(--ku-top-header-active-indicator, var(--ku-color-primary));
     }
   }
 }

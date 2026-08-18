@@ -2,7 +2,7 @@
 .page-login {
   display: flex;
   min-height: 100vh;
-  background: var(--bg-page);
+  background: var(--ku-bg-page);
 }
 
 // ─── 左侧 Hero 面板 ───────────────────────────────────────────
@@ -19,7 +19,7 @@
       145deg,
       var(--el-color-primary-light-8) 0%,
       var(--el-color-primary-light-9) 50%,
-      var(--bg-page) 100%
+      var(--ku-bg-page) 100%
     )
   );
   position: relative;
@@ -67,7 +67,7 @@
 
 .login-hero-icon {
   font-size: 28px;
-  color: var(--login-hero-icon-color, var(--primary-color));
+  color: var(--login-hero-icon-color, var(--ku-color-primary));
   filter: var(
     --login-hero-icon-shadow,
     drop-shadow(0 2px 8px rgba(var(--el-color-primary-rgb), 0.36))
@@ -85,7 +85,7 @@
 .login-hero-name {
   font-size: 20px;
   font-weight: 800;
-  color: var(--login-hero-name-color, var(--text-primary));
+  color: var(--login-hero-name-color, var(--ku-text-primary));
   letter-spacing: -0.5px;
 }
 
@@ -97,7 +97,7 @@
 .login-hero-title {
   font-size: 36px;
   font-weight: 800;
-  color: var(--login-hero-title-color, var(--text-primary));
+  color: var(--login-hero-title-color, var(--ku-text-primary));
   line-height: 1.2;
   letter-spacing: -0.8px;
   margin-bottom: 16px;
@@ -105,7 +105,7 @@
 
 .login-hero-desc {
   font-size: 16px;
-  color: var(--login-hero-desc-color, var(--text-secondary));
+  color: var(--login-hero-desc-color, var(--ku-text-secondary));
   line-height: 1.65;
   max-width: 420px;
   margin-bottom: 40px;
@@ -122,13 +122,13 @@
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: var(--login-hero-feature-color, var(--text-secondary));
+  color: var(--login-hero-feature-color, var(--ku-text-secondary));
 
   .feature-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--login-hero-dot-color, var(--primary-color));
+    background: var(--login-hero-dot-color, var(--ku-color-primary));
     flex-shrink: 0;
     opacity: var(--login-hero-dot-opacity, 0.7);
   }
@@ -144,8 +144,8 @@
   justify-content: center;
   padding: 40px;
   padding-bottom: max(40px, env(safe-area-inset-bottom));
-  background: var(--bg-card);
-  border-left: 1px solid var(--border-light);
+  background: var(--ku-bg-card);
+  border-left: 1px solid var(--ku-border-light);
 }
 
 // ─── 登录卡片（右侧内容） ─────────────────────────────────────
@@ -161,14 +161,14 @@
 .login-title {
   font-size: 24px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   letter-spacing: -0.4px;
   margin-bottom: 6px;
 }
 
 .login-subtitle {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
   line-height: 1.5;
 }
 
@@ -179,7 +179,7 @@
 
   .el-form-item__label {
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--ku-text-primary);
   }
 
   .login-submit {
@@ -200,7 +200,7 @@
   border-radius: 6px;
   background: var(--el-color-danger-light-9);
   border: 1px solid var(--el-color-danger-light-5);
-  color: var(--color-error);
+  color: var(--ku-color-danger);
   font-size: 13px;
   line-height: 1.5;
   margin-bottom: 16px;
@@ -209,7 +209,7 @@
 .login-error-icon {
   font-size: 15px;
   flex-shrink: 0;
-  color: var(--color-error);
+  color: var(--ku-color-danger);
 }
 
 .login-link {
@@ -281,7 +281,7 @@
 .login-footer-note {
   margin-top: 20px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
   text-align: center;
   line-height: 1.5;
 }
@@ -296,16 +296,16 @@
     width: 100%;
     min-height: 100vh;
     border-left: none;
-    background: var(--bg-page);
+    background: var(--ku-bg-page);
     padding: max(32px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
   }
 
   .login-card {
     max-width: min(400px, 100%);
     padding: 32px 28px;
-    background: var(--bg-card);
+    background: var(--ku-bg-card);
     border-radius: var(--el-border-radius-large, 12px);
-    box-shadow: var(--shadow-modal);
+    box-shadow: var(--ku-shadow-modal);
   }
 
   .login-card .mfa-qr-panel-canvas {
@@ -323,8 +323,8 @@ html.dark {
         linear-gradient(
           145deg,
           var(--el-color-primary-light-9) 0%,
-          var(--bg-card) 60%,
-          var(--bg-page) 100%
+          var(--ku-bg-card) 60%,
+          var(--ku-bg-page) 100%
         )
       )
     );

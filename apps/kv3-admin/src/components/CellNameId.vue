@@ -111,7 +111,7 @@ function onIdClick(event: MouseEvent) {
   .id {
     font-size: 12px;
     line-height: 16px;
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
   }
 
   &.is-clickable {

@@ -75,7 +75,7 @@ withDefaults(
 :deep(.do-table-header) {
   box-sizing: border-box;
   padding: 10px 10px 12px 10px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--ku-border-light);
   width: 100%;
   display: flex;
   justify-content: space-between;

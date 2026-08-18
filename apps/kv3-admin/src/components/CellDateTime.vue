@@ -161,7 +161,7 @@ const inlineText = computed(() => {
   .id {
     font-size: 12px;
     line-height: 16px;
-    color: var(--text-secondary);
+    color: var(--ku-text-secondary);
     text-align: right;
   }
 }

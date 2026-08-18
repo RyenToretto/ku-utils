@@ -343,7 +343,7 @@ onBeforeUnmount(() => {
     }
 
     .do-name-pattern-token {
-      color: var(--primary-color);
+      color: var(--ku-color-primary);
       line-height: 28px;
       height: 28px;
 
@@ -372,13 +372,13 @@ onBeforeUnmount(() => {
     left: -6px;
     border: 6px solid transparent;
     border-top-width: 0;
-    border-bottom-color: var(--bg-card, var(--el-bg-color-overlay));
+    border-bottom-color: var(--ku-bg-card, var(--el-bg-color-overlay));
   }
 }
 
 .do-name-pattern-panel {
   width: 100%;
-  background: var(--bg-card, var(--el-bg-color-overlay));
+  background: var(--ku-bg-card, var(--el-bg-color-overlay));
   border: 1px solid var(--el-border-color-light);
   box-shadow: var(--el-box-shadow-light);
   border-radius: 4px;

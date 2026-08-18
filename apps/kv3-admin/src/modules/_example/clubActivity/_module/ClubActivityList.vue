@@ -364,7 +364,7 @@ async function switchClubStatus(row: ClubActivityRow, nextStatus: string | numbe
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--text-secondary, #909399);
+  color: var(--ku-text-secondary, #909399);
 }
 
 .school-chip {

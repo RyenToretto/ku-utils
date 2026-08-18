@@ -104,7 +104,7 @@ const resolvedCrumbs = computed(() => {
 
 <style lang="scss" scoped>
 .page-head__bread_link {
-  color: var(--text-secondary);
+  color: var(--ku-text-secondary);
   text-decoration: none;
   transition: color var(--el-transition-duration-fast);
 
@@ -120,7 +120,7 @@ const resolvedCrumbs = computed(() => {
 }
 
 .page-head__bread_current {
-  color: var(--text-primary);
+  color: var(--ku-text-primary);
   font-weight: 600;
 }
 </style>

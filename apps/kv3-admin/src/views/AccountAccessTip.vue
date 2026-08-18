@@ -61,7 +61,7 @@ function handleRelogin() {
   justify-content: center;
   padding: 40px 24px;
   box-sizing: border-box;
-  background: var(--bg-page, var(--el-bg-color-page));
+  background: var(--ku-bg-page, var(--el-bg-color-page));
 }
 
 .page-account-access-tip-card {
@@ -75,7 +75,7 @@ function handleRelogin() {
   font-size: 22px;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--text-primary, var(--el-text-color-primary));
+  color: var(--ku-text-primary, var(--el-text-color-primary));
 }
 
 .page-account-access-tip-desc {
