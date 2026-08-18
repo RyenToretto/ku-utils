@@ -1,0 +1,26 @@
+{
+  "name": "@ku-utils/skin",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "ku-utils 团队统一皮肤：--ku-* 语义变量 + Element Plus --el-* 桥接",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.css",
+    "./lark": "./dist/lark.css",
+    "./base": "./dist/base.css"
+  },
+  "files": [
+    "dist",
+    "TOKEN.md"
+  ],
+  "scripts": {
+    "build": "node scripts/generate.mjs",
+    "dev": "node scripts/generate.mjs --watch",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@ku-utils/tsconfig": "workspace:*"
+  }
+}

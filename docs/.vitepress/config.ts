@@ -69,6 +69,7 @@ export default defineConfig({
             { text: 'Constants 常量', link: '/packages/constants' },
             { text: 'Types 类型定义', link: '/packages/types' },
             { text: 'Directives 指令', link: '/packages/directives' },
+            { text: 'Skin 统一皮肤', link: '/packages/skin' },
             { text: 'I18n 多语言', link: '/packages/i18n' },
             { text: 'Nuxt Module', link: '/packages/nuxt-module' },
           ],

@@ -60,15 +60,15 @@ const props = withDefaults(defineProps<Props>(), {
   expandedMargin: '0 auto',
   condensedMargin: '10px auto 0',
   expandedRadius: '0',
-  condensedRadius: 'var(--du-radius-full)',
+  condensedRadius: 'var(--ku-radius-full)',
   transitionDuration: 420,
   blur: 7,
   saturate: 1.4,
-  tint: 'color-mix(in srgb, var(--du-color-bg-primary) 58%, transparent)',
-  borderColor: 'color-mix(in srgb, var(--du-color-border) 62%, transparent)',
+  tint: 'color-mix(in srgb, var(--ku-bg-card) 58%, transparent)',
+  borderColor: 'color-mix(in srgb, var(--ku-border-default) 62%, transparent)',
   borderWidth: '1px',
   shadow:
-    'inset 0 0 2px 1px color-mix(in srgb, var(--du-color-bg-primary) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--du-color-bg-primary) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--du-neutral-900) 8%, transparent), 0 14px 44px color-mix(in srgb, var(--du-neutral-900) 6%, transparent)',
+    'inset 0 0 2px 1px color-mix(in srgb, var(--ku-bg-card) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--ku-bg-card) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--ku-neutral-900) 8%, transparent), 0 14px 44px color-mix(in srgb, var(--ku-neutral-900) 6%, transparent)',
   displacementScale: 50,
   optimizeLiquidDuringTransition: true,
   edge: false,
@@ -133,17 +133,17 @@ const glassMode = computed(() => {
 });
 
 const barStyle = computed<CSSProperties>(() => ({
-  '--du-liquid-floating-bar-width': isCondensed.value ? props.condensedWidth : props.expandedWidth,
-  '--du-liquid-floating-bar-height': isCondensed.value
+  '--ku-liquid-floating-bar-width': isCondensed.value ? props.condensedWidth : props.expandedWidth,
+  '--ku-liquid-floating-bar-height': isCondensed.value
     ? props.condensedHeight
     : props.expandedHeight,
-  '--du-liquid-floating-bar-margin': isCondensed.value
+  '--ku-liquid-floating-bar-margin': isCondensed.value
     ? props.condensedMargin
     : props.expandedMargin,
-  '--du-liquid-floating-bar-offset': props.offset,
-  '--du-liquid-floating-bar-z-index': String(props.zIndex),
-  '--du-liquid-floating-bar-transition-duration': `${props.transitionDuration}ms`,
-  '--du-liquid-floating-bar-will-change': isTransitioning.value ? 'width, height, margin' : 'auto',
+  '--ku-liquid-floating-bar-offset': props.offset,
+  '--ku-liquid-floating-bar-z-index': String(props.zIndex),
+  '--ku-liquid-floating-bar-transition-duration': `${props.transitionDuration}ms`,
+  '--ku-liquid-floating-bar-will-change': isTransitioning.value ? 'width, height, margin' : 'auto',
 }));
 
 function markTransitioning() {
@@ -215,30 +215,30 @@ onUnmounted(() => {
 
 <style>
 .du-liquid-floating-bar {
-  width: var(--du-liquid-floating-bar-width);
-  height: var(--du-liquid-floating-bar-height);
-  margin: var(--du-liquid-floating-bar-margin);
+  width: var(--ku-liquid-floating-bar-width);
+  height: var(--ku-liquid-floating-bar-height);
+  margin: var(--ku-liquid-floating-bar-margin);
   contain: layout;
   transform: translateZ(0);
   backface-visibility: hidden;
-  will-change: var(--du-liquid-floating-bar-will-change);
+  will-change: var(--ku-liquid-floating-bar-will-change);
   transition:
-    width var(--du-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1),
-    height var(--du-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1),
-    margin var(--du-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1);
+    width var(--ku-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1),
+    height var(--ku-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1),
+    margin var(--ku-liquid-floating-bar-transition-duration) cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .du-liquid-floating-bar-sticky {
   position: sticky;
-  z-index: var(--du-liquid-floating-bar-z-index);
+  z-index: var(--ku-liquid-floating-bar-z-index);
 }
 
 .du-liquid-floating-bar-top.du-liquid-floating-bar-sticky {
-  top: var(--du-liquid-floating-bar-offset);
+  top: var(--ku-liquid-floating-bar-offset);
 }
 
 .du-liquid-floating-bar-bottom.du-liquid-floating-bar-sticky {
-  bottom: var(--du-liquid-floating-bar-offset);
+  bottom: var(--ku-liquid-floating-bar-offset);
 }
 
 .du-liquid-floating-bar-static {

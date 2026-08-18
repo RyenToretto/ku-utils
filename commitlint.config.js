@@ -32,6 +32,7 @@ export default {
         'directives',
         'ui',
         'ui-vue2',
+        'skin',
         'constants',
         'i18n',
         'types',

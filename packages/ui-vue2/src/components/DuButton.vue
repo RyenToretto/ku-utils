@@ -35,52 +35,52 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ku-space-2, 0.5rem);
   border: 1px solid transparent;
-  border-radius: 0.375rem;
-  font-weight: 500;
+  border-radius: var(--ku-radius-base, 0.375rem);
+  font-weight: var(--ku-font-weight-medium, 500);
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all var(--ku-transition-base, 200ms ease);
 }
 .du-button-small {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
+  padding: var(--ku-space-1, 0.25rem) var(--ku-space-3, 0.75rem);
+  font-size: var(--ku-font-size-xs, 0.75rem);
 }
 .du-button-medium {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
+  padding: var(--ku-space-2, 0.5rem) var(--ku-space-4, 1rem);
+  font-size: var(--ku-font-size-sm, 0.875rem);
 }
 .du-button-large {
-  padding: 0.625rem 1.5rem;
-  font-size: 1rem;
+  padding: var(--ku-space-3, 0.625rem) var(--ku-space-6, 1.5rem);
+  font-size: var(--ku-font-size-base, 1rem);
 }
 .du-button-default {
-  background: #fff;
-  border-color: #d4d4d4;
-  color: #404040;
+  background: var(--ku-bg-card, #fff);
+  border-color: var(--ku-border-hover, #d4d4d4);
+  color: var(--ku-neutral-700, #404040);
 }
 .du-button-default:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+  border-color: var(--ku-color-primary, #3b82f6);
+  color: var(--ku-color-primary, #3b82f6);
 }
 .du-button-primary {
-  background: #3b82f6;
-  color: #fff;
+  background: var(--ku-color-primary, #3b82f6);
+  color: var(--ku-bg-card, #fff);
 }
 .du-button-primary:hover {
-  background: #2563eb;
+  background: var(--ku-color-primary-hover, #2563eb);
 }
 .du-button-success {
-  background: #22c55e;
-  color: #fff;
+  background: var(--ku-color-success, #22c55e);
+  color: var(--ku-bg-card, #fff);
 }
 .du-button-warning {
-  background: #f59e0b;
-  color: #fff;
+  background: var(--ku-color-warning, #f59e0b);
+  color: var(--ku-bg-card, #fff);
 }
 .du-button-danger {
-  background: #ef4444;
-  color: #fff;
+  background: var(--ku-color-danger, #ef4444);
+  color: var(--ku-bg-card, #fff);
 }
 .du-button-disabled {
   opacity: 0.6;

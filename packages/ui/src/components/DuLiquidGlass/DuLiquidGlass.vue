@@ -121,14 +121,14 @@ const props = withDefaults(defineProps<Props>(), {
   filterId: undefined,
   mode: 'liquid',
   disabled: false,
-  radius: 'var(--du-radius-xl)',
+  radius: 'var(--ku-radius-xl)',
   blur: 7,
   saturate: 1.4,
-  tint: 'color-mix(in srgb, var(--du-color-bg-primary) 58%, transparent)',
-  borderColor: 'color-mix(in srgb, var(--du-color-border) 62%, transparent)',
+  tint: 'color-mix(in srgb, var(--ku-bg-card) 58%, transparent)',
+  borderColor: 'color-mix(in srgb, var(--ku-border-default) 62%, transparent)',
   borderWidth: '1px',
   shadow:
-    'inset 0 0 2px 1px color-mix(in srgb, var(--du-color-bg-primary) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--du-color-bg-primary) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--du-neutral-900) 8%, transparent)',
+    'inset 0 0 2px 1px color-mix(in srgb, var(--ku-bg-card) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--ku-bg-card) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--ku-neutral-900) 8%, transparent)',
   displacementScale: 50,
   mapBlur: undefined,
   mapAlpha: 0.93,
@@ -184,11 +184,11 @@ const backdropFilter = computed(() => {
 });
 
 const containerStyle = computed<CSSProperties>(() => ({
-  '--du-liquid-glass-radius': props.radius,
-  '--du-liquid-glass-tint': props.disabled ? 'transparent' : props.tint,
-  '--du-liquid-glass-border-color': props.disabled ? 'transparent' : props.borderColor,
-  '--du-liquid-glass-border-width': props.disabled ? '0' : props.borderWidth,
-  '--du-liquid-glass-shadow': props.disabled ? 'none' : props.shadow,
+  '--ku-liquid-glass-radius': props.radius,
+  '--ku-liquid-glass-tint': props.disabled ? 'transparent' : props.tint,
+  '--ku-liquid-glass-border-color': props.disabled ? 'transparent' : props.borderColor,
+  '--ku-liquid-glass-border-width': props.disabled ? '0' : props.borderWidth,
+  '--ku-liquid-glass-shadow': props.disabled ? 'none' : props.shadow,
 }));
 
 const surfaceStyle = computed<CSSProperties>(() => ({
@@ -267,10 +267,10 @@ defineExpose({ syncGlassMap });
   overflow: hidden;
   width: 100%;
   height: 100%;
-  border: var(--du-liquid-glass-border-width) solid var(--du-liquid-glass-border-color);
-  border-radius: var(--du-liquid-glass-radius);
+  border: var(--ku-liquid-glass-border-width) solid var(--ku-liquid-glass-border-color);
+  border-radius: var(--ku-liquid-glass-radius);
   background: transparent;
-  box-shadow: var(--du-liquid-glass-shadow);
+  box-shadow: var(--ku-liquid-glass-shadow);
   isolation: isolate;
   contain: layout;
   transform: translateZ(0);
@@ -290,10 +290,10 @@ defineExpose({ syncGlassMap });
   inset: 0;
   z-index: 0;
   border-radius: inherit;
-  background: var(--du-liquid-glass-tint);
+  background: var(--ku-liquid-glass-tint);
   transition:
-    background var(--du-transition-base),
-    opacity var(--du-transition-base);
+    background var(--ku-transition-base),
+    opacity var(--ku-transition-base);
   pointer-events: none;
 }
 
@@ -307,14 +307,14 @@ defineExpose({ syncGlassMap });
 }
 
 .du-liquid-glass-edge {
-  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--du-color-bg-primary) 42%, transparent);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ku-bg-card) 42%, transparent);
   mask-image: linear-gradient(to bottom, transparent 0, transparent 62%, #fff 100%);
 }
 
 .du-liquid-glass-highlight {
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--du-color-bg-primary) 64%, transparent),
-    inset 0 -10px 30px color-mix(in srgb, var(--du-color-bg-primary) 12%, transparent);
+    inset 0 1px 0 color-mix(in srgb, var(--ku-bg-card) 64%, transparent),
+    inset 0 -10px 30px color-mix(in srgb, var(--ku-bg-card) 12%, transparent);
   opacity: 0.9;
 }
 
@@ -331,7 +331,7 @@ defineExpose({ syncGlassMap });
 
 @supports not (backdrop-filter: blur(1px)) {
   .du-liquid-glass-surface {
-    background: color-mix(in srgb, var(--du-color-bg-primary) 88%, transparent);
+    background: color-mix(in srgb, var(--ku-bg-card) 88%, transparent);
   }
 }
 

@@ -71,7 +71,7 @@ interface Props {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--du-spacing-8);
+  padding: var(--ku-space-8);
 }
 
 .du-empty-image svg,
@@ -81,12 +81,12 @@ interface Props {
 }
 
 .du-empty-description {
-  color: var(--du-color-text-placeholder);
-  font-size: var(--du-fontSize-sm);
-  margin-top: var(--du-spacing-2);
+  color: var(--ku-text-placeholder);
+  font-size: var(--ku-font-size-sm);
+  margin-top: var(--ku-space-2);
 }
 
 .du-empty-footer {
-  margin-top: var(--du-spacing-4);
+  margin-top: var(--ku-space-4);
 }
 </style>

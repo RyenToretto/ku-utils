@@ -68,42 +68,42 @@ interface Props {
 
 <style>
 .du-card {
-  background: var(--du-color-bg-primary);
-  border-radius: var(--du-radius-md);
+  background: var(--ku-bg-card);
+  border-radius: var(--ku-radius-md);
   overflow: hidden;
-  transition: box-shadow var(--du-transition-base);
+  transition: box-shadow var(--ku-transition-base);
 }
 
 .du-card-bordered {
-  border: 1px solid var(--du-color-border);
+  border: 1px solid var(--ku-border-default);
 }
 
 .du-card-hoverable:hover {
-  box-shadow: var(--du-shadow-md);
+  box-shadow: var(--ku-shadow-md);
 }
 
 .du-card-shadow {
-  box-shadow: var(--du-shadow-base);
+  box-shadow: var(--ku-shadow-base);
 }
 
 .du-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--du-spacing-4) var(--du-spacing-5);
-  border-bottom: 1px solid var(--du-color-border);
+  padding: var(--ku-space-4) var(--ku-space-5);
+  border-bottom: 1px solid var(--ku-border-default);
 }
 
 .du-card-title {
-  font-size: var(--du-fontSize-base);
-  font-weight: var(--du-fontWeight-semibold);
-  color: var(--du-color-text-primary);
+  font-size: var(--ku-font-size-base);
+  font-weight: var(--ku-font-weight-semibold);
+  color: var(--ku-text-primary);
 }
 
 .du-card-subtitle {
-  margin-left: var(--du-spacing-2);
-  font-size: var(--du-fontSize-sm);
-  color: var(--du-color-text-secondary);
+  margin-left: var(--ku-space-2);
+  font-size: var(--ku-font-size-sm);
+  color: var(--ku-text-secondary);
 }
 
 .du-card-extra {
@@ -111,11 +111,11 @@ interface Props {
 }
 
 .du-card-body {
-  padding: var(--du-spacing-5);
+  padding: var(--ku-space-5);
 }
 
 .du-card-footer {
-  padding: var(--du-spacing-3) var(--du-spacing-5);
-  border-top: 1px solid var(--du-color-border);
+  padding: var(--ku-space-3) var(--ku-space-5);
+  border-top: 1px solid var(--ku-border-default);
 }
 </style>

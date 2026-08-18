@@ -32,6 +32,7 @@ ku-utils/
 │   ├── utils/              # @ku-utils/utils
 │   ├── hooks/              # @ku-utils/hooks
 │   ├── directives/         # @ku-utils/directives
+│   ├── skin/               # @ku-utils/skin
 │   ├── constants/          # @ku-utils/constants
 │   ├── types/              # @ku-utils/types
 │   ├── i18n/               # @ku-utils/i18n
@@ -171,7 +172,7 @@ type(scope): 中文描述
 
 ```
 eslint-config | prettier-config | tsconfig | stylelint-config
-utils | hooks | directives | ui | ui-vue2
+utils | hooks | directives | ui | ui-vue2 | skin
 constants | i18n | types | nuxt-module
 custom-columns | v2-custom-columns
 cli | create-app | kv3-admin | docs | deps | ci | release

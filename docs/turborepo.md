@@ -494,6 +494,7 @@ turbo run build --output-logs=none
                     ├─ @ku-utils/constants ─────────┤
   第 1 层（无依赖） ├─ @ku-utils/utils ─────────────┤  并行
                     ├─ @ku-utils/i18n ──────────────┤
+                    ├─ @ku-utils/skin ──────────────┤
                     ├─ @ku-utils/prettier-config ───┤
                     ├─ @ku-utils/tsconfig ──────────┤
                     └─ @ku-utils/stylelint-config ──┘

@@ -1,0 +1,119 @@
+/*
+ * ============================================================
+ * 迁移期桥接层 —— 不是 @ku-utils/skin 的公开契约
+ * ============================================================
+ * 本仓业务代码里还有大量无前缀变量（--primary-color / --bg-page / --text-*
+ * 等，来自旧的 theme-juxiao-lark.scss）。全部改成 --ku-* 工作量很大，这里先
+ * 用一层 1:1 的 var() 转发桥接，行为与原来完全一致（值来自 @ku-utils/skin）。
+ *
+ * 规则：
+ * - 新代码直接用 --ku-*，不要再引用这里的旧名字；
+ * - 这层只在 kv3-admin 本地维护，不会发布进 @ku-utils/skin；
+ * - 待业务代码全部迁移到 --ku-* 后，删除这个文件即可，无需改 @ku-utils/skin。
+ * ============================================================
+ */
+:root {
+  --primary-50: var(--ku-primary-50);
+  --primary-100: var(--ku-primary-100);
+  --primary-200: var(--ku-primary-200);
+  --primary-300: var(--ku-primary-300);
+  --primary-400: var(--ku-primary-400);
+  --primary-500: var(--ku-primary-500);
+  --primary-600: var(--ku-primary-600);
+  --primary-700: var(--ku-primary-700);
+  --primary-800: var(--ku-primary-800);
+  --primary-900: var(--ku-primary-900);
+  --primary-950: var(--ku-primary-950);
+
+  --primary-color: var(--ku-color-primary);
+  --primary-hover-color: var(--ku-color-primary-hover);
+  --primary-light: var(--ku-color-primary-light);
+  --primary-bg: var(--ku-color-primary-bg);
+
+  --bg-page-from: var(--ku-bg-page-from);
+  --bg-page-to: var(--ku-bg-page-to);
+  --bg-page: var(--ku-bg-page);
+  --bg-page-gradient: var(--ku-bg-page-gradient);
+  --bg-card: var(--ku-bg-card);
+  --bg-card-elevated: var(--ku-bg-card-elevated);
+  --bg-sidebar: var(--ku-bg-sidebar);
+  --bg-sidebar-active: var(--ku-bg-sidebar-active);
+  --bg-sidebar-hover: var(--ku-bg-sidebar-hover);
+  --table-stripe-bg: var(--ku-table-stripe-bg);
+  --table-header-bg: var(--ku-table-header-bg);
+  --bg-input: var(--ku-bg-input);
+  --bg-hover: var(--ku-bg-hover);
+  --bg-active: var(--ku-bg-active);
+  --bg-tag: var(--ku-bg-tag);
+  --bg-overlay: var(--ku-bg-overlay);
+  --bg-tooltip: var(--ku-bg-tooltip);
+
+  --top-header-bg: var(--ku-top-header-bg);
+  --top-header-text: var(--ku-top-header-text);
+  --top-header-text-muted: var(--ku-top-header-text-muted);
+  --top-header-hover-bg: var(--ku-top-header-hover-bg);
+  --top-header-hover-border: var(--ku-top-header-hover-border);
+  --top-header-active-bg: var(--ku-top-header-active-bg);
+  --top-header-active-border: var(--ku-top-header-active-border);
+  --top-header-active-indicator: var(--ku-top-header-active-indicator);
+  --top-header-active-indicator-size: var(--ku-top-header-active-indicator-size);
+  --top-header-expanded-bg: var(--ku-top-header-expanded-bg);
+  --top-header-expanded-border: var(--ku-top-header-expanded-border);
+  --top-header-expanded-text: var(--ku-top-header-expanded-text);
+  --top-header-selection-bg: var(--ku-top-header-selection-bg);
+  --top-header-selection-text: var(--ku-top-header-selection-text);
+
+  --text-primary: var(--ku-text-primary);
+  --text-secondary: var(--ku-text-secondary);
+  --text-disabled: var(--ku-text-disabled);
+  --text-placeholder: var(--ku-text-placeholder);
+  --text-link: var(--ku-text-link);
+  --text-link-hover: var(--ku-text-link-hover);
+  --text-inverse: var(--ku-text-inverse);
+  --text-on-sidebar: var(--ku-text-on-sidebar);
+  --text-on-sidebar-muted: var(--ku-text-on-sidebar-muted);
+
+  --border-default: var(--ku-border-default);
+  --border-hover: var(--ku-border-hover);
+  --border-focus: var(--ku-border-focus);
+  --border-light: var(--ku-border-light);
+  --divider: var(--ku-divider);
+
+  --color-success: var(--ku-color-success);
+  --color-success-bg: var(--ku-color-success-bg);
+  --color-success-border: var(--ku-color-success-border);
+  --color-warning: var(--ku-color-warning);
+  --color-warning-bg: var(--ku-color-warning-bg);
+  --color-warning-border: var(--ku-color-warning-border);
+  // 旧命名是 --color-error（不是 --color-danger），@ku-utils/skin 统一叫 danger。
+  --color-error: var(--ku-color-danger);
+  --color-error-bg: var(--ku-color-danger-bg);
+  --color-error-border: var(--ku-color-danger-border);
+  --color-info: var(--ku-color-info);
+  --color-info-bg: var(--ku-color-info-bg);
+  --color-info-border: var(--ku-color-info-border);
+
+  --chart-ring-1: var(--ku-chart-ring-1);
+  --chart-ring-2: var(--ku-chart-ring-2);
+  --chart-ring-3: var(--ku-chart-ring-3);
+  --chart-ring-4: var(--ku-chart-ring-4);
+  --chart-ring-track: var(--ku-chart-ring-track);
+
+  --scrollbar-width: var(--ku-scrollbar-width);
+  --scrollbar-track: var(--ku-scrollbar-track);
+  --scrollbar-thumb: var(--ku-scrollbar-thumb);
+  --scrollbar-thumb-hover: var(--ku-scrollbar-thumb-hover);
+  --layout-aside-width: var(--ku-layout-aside-width);
+
+  --selection-bg: var(--ku-selection-bg);
+  --selection-text: var(--ku-selection-text);
+
+  --shadow-card: var(--ku-shadow-card);
+  --shadow-card-hover: var(--ku-shadow-card-hover);
+  --shadow-nav-active: var(--ku-shadow-nav-active);
+  --shadow-modal: var(--ku-shadow-modal);
+  --shadow-dropdown: var(--ku-shadow-dropdown);
+
+  --font-family-base: var(--ku-font-family-base);
+  --font-family-mono: var(--ku-font-family-mono);
+}

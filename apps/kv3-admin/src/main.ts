@@ -10,9 +10,11 @@ import 'element-plus/es/components/message-box/style/css';
 import '@/assets/styles/tokens.css';
 import '@/assets/styles/fonts.css';
 import 'element-plus/theme-chalk/dark/css-vars.css';
-import '@/assets/styles/skins/_el-base.scss';
-// 皮肤切换：只保留下面一行 import，按需改为 theme-juxiao-dusk / theme-juxiao-sky 等
-import '@/assets/styles/skins/theme-juxiao-lark.scss';
+// 品牌皮肤（--ku-* + --el-* 桥接）统一交给 @ku-utils/skin，v1 只有 lark 一套
+import '@ku-utils/skin';
+// 迁移期桥接：把业务里的旧无前缀变量名（--primary-color 等）转发到 --ku-*，
+// 详见文件内注释；新代码请直接用 --ku-*，不要再依赖这层。
+import '@/assets/styles/skins/_legacy-bridge.scss';
 import '@/assets/styles/index.scss';
 
 import App from './App.vue';

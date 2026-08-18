@@ -19,7 +19,7 @@ graph LR
 ### 演讲要点（口播）
 
 - **ku-utils** 前端团队的公共库，沉淀团队工程能力，基于 pnpm v10 workspace + Turborepo v2 构建
-- 包以 `@ku-utils/*` **public** 发布到 npmjs.org，覆盖 **15 个可发布包 + 2 个 CLI 工具**
+- 包以 `@ku-utils/*` **public** 发布到 npmjs.org，覆盖 **16 个可发布包 + 2 个 CLI 工具**
 
 ### 库文档
 
@@ -76,6 +76,7 @@ graph TD
   subgraph ui [组件库]
     UI[ui Vue 3]
     UIVue2[ui-vue2 Vue 2]
+    Skin[skin 统一皮肤]
     NuxtModule[nuxt-module Nuxt 4]
   end
 

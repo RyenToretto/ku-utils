@@ -1,3 +1,6 @@
+import '@ku-utils/skin';
+import '@ku-utils/ui/style';
+
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 

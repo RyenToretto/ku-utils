@@ -27,7 +27,7 @@
 
 ```
 ku-utils/
-├── packages/           # 可发布的 npm 包（15 个）
+├── packages/           # 可发布的 npm 包（16 个）
 │   ├── eslint-config/     构建: tsup       ESLint Flat Config（含 vue2/vue3/nuxt4 子配置）
 │   ├── prettier-config/   构建: 无（纯JSON） Prettier 共享配置
 │   ├── tsconfig/          构建: 无（纯JSON） TypeScript 配置集（base/library/vue3/vue2/nuxt4）
@@ -35,6 +35,7 @@ ku-utils/
 │   ├── utils/             构建: tsup       纯函数工具库（零框架依赖）
 │   ├── hooks/             构建: tsup       Vue 3 Composables（useLoading/useCountdown/useClipboard...）
 │   ├── directives/        构建: tsup       Vue 3 自定义指令（vLoading/vPermission/vDebounce）
+│   ├── skin/              构建: 自定义脚本 统一皮肤（--ku-* 语义变量 + Element Plus --el-* 桥接）
 │   ├── constants/         构建: tsup       常用正则（REGEX）
 │   ├── types/             构建: tsup       公共 TypeScript 类型
 │   ├── i18n/              构建: tsup       多语言工具（createI18n/detectBrowserLocale）
@@ -113,6 +114,14 @@ pnpm release              # 构建 packages+tools 并 publish 到 npm
 - `@ku-utils/ui` 和 `@ku-utils/ui-vue2` 只使用**命名导出**（`export function install(app)`），没有 `export default`
 - 消费方：`import { install as installUI } from '@ku-utils/ui'; app.use(installUI);`
 - 原因：避免 Rollup 的 mixed named/default export 警告，提升 tree-shaking
+
+### 统一皮肤 `@ku-utils/skin`
+
+- 唯一语义变量前缀 `--ku-*`；`packages/ui`、`ui-vue2`、`directives` 全部消费它，不再有 `--du-*`
+- 皮肤是数据（`src/themes/*.js`），CSS 是产物：`scripts/generate.mjs` 用 `mix()` 从品牌基色现算 Element Plus 的 `--el-color-*` 完整色阶，不手写第二套色板
+- Element Plus 结构类变量（`--el-bg-color` 等）统一写成 `var(--ku-*)` 转发，只需在 `:root` 声明一次，`html.dark` 覆写对应 `--ku-*` 即可联动
+- v1 只发 `lark` 一套皮肤；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
+- `apps/kv3-admin` 迁移期用 `src/assets/styles/skins/_legacy-bridge.scss` 把旧无前缀变量（`--primary-color` 等）桥接到 `--ku-*`，仅本地维护，不是包的公开 API
 
 ### pnpm strict hoisting
 

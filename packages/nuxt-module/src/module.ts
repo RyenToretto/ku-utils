@@ -30,6 +30,8 @@ const kuUtilsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>
     }
 
     if (options.css) {
+      // 皮肤必须在组件样式之前注入，Du* 组件读的 --ku-* 才有值。
+      nuxt.options.css.push('@ku-utils/skin');
       nuxt.options.css.push('@ku-utils/ui/style');
     }
 

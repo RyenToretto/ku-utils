@@ -37,7 +37,7 @@ type(scope): 中文描述
 
 ## scope 取值
 
-使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / constants / i18n / types / nuxt-module / custom-columns / v2-custom-columns / cli / create-app / kv3-admin / docs / deps / ci / release
+使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / skin / constants / i18n / types / nuxt-module / custom-columns / v2-custom-columns / cli / create-app / kv3-admin / docs / deps / ci / release
 
 ## 示例
 

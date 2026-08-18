@@ -26,10 +26,10 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  padding: 0.125rem var(--ku-space-2, 0.5rem);
+  border-radius: var(--ku-radius-full, 9999px);
+  font-size: var(--ku-font-size-xs, 0.75rem);
+  font-weight: var(--ku-font-weight-medium, 500);
 }
 .du-status-tag-dot {
   width: 6px;
@@ -38,23 +38,23 @@ export default {
   background: currentColor;
 }
 .du-status-tag-success {
-  background: #f0fdf4;
-  color: #16a34a;
+  background: var(--ku-color-success-bg, #f0fdf4);
+  color: var(--ku-success-600, #16a34a);
 }
 .du-status-tag-warning {
-  background: #fffbeb;
-  color: #d97706;
+  background: var(--ku-color-warning-bg, #fffbeb);
+  color: var(--ku-warning-600, #d97706);
 }
 .du-status-tag-danger {
-  background: #fef2f2;
-  color: #dc2626;
+  background: var(--ku-color-danger-bg, #fef2f2);
+  color: var(--ku-danger-600, #dc2626);
 }
 .du-status-tag-info {
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--ku-color-info-bg, #eff6ff);
+  color: var(--ku-primary-600, #2563eb);
 }
 .du-status-tag-default {
-  background: #f5f5f5;
-  color: #525252;
+  background: var(--ku-bg-sidebar, #f5f5f5);
+  color: var(--ku-text-secondary, #525252);
 }
 </style>

@@ -77,13 +77,13 @@ function onMaskClick() {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.45);
-  z-index: var(--du-zIndex-modal);
+  z-index: var(--ku-z-modal);
 }
 
 .du-modal {
-  background: var(--du-color-bg-primary);
-  border-radius: var(--du-radius-md);
-  box-shadow: var(--du-shadow-xl);
+  background: var(--ku-bg-card);
+  border-radius: var(--ku-radius-md);
+  box-shadow: var(--ku-shadow-xl);
   max-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -93,30 +93,30 @@ function onMaskClick() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--du-spacing-4) var(--du-spacing-6);
-  border-bottom: 1px solid var(--du-color-border);
+  padding: var(--ku-space-4) var(--ku-space-6);
+  border-bottom: 1px solid var(--ku-border-default);
 }
 
 .du-modal-title {
-  font-size: var(--du-fontSize-base);
-  font-weight: var(--du-fontWeight-semibold);
+  font-size: var(--ku-font-size-base);
+  font-weight: var(--ku-font-weight-semibold);
 }
 
 .du-modal-close {
   background: none;
   border: none;
-  font-size: var(--du-fontSize-2xl);
+  font-size: var(--ku-font-size-2xl);
   cursor: pointer;
-  color: var(--du-color-text-placeholder);
+  color: var(--ku-text-placeholder);
   line-height: 1;
 }
 
 .du-modal-close:hover {
-  color: var(--du-color-text-primary);
+  color: var(--ku-text-primary);
 }
 
 .du-modal-body {
-  padding: var(--du-spacing-6);
+  padding: var(--ku-space-6);
   overflow-y: auto;
   flex: 1;
 }
@@ -124,14 +124,14 @@ function onMaskClick() {
 .du-modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: var(--du-spacing-2);
-  padding: var(--du-spacing-4) var(--du-spacing-6);
-  border-top: 1px solid var(--du-color-border);
+  gap: var(--ku-space-2);
+  padding: var(--ku-space-4) var(--ku-space-6);
+  border-top: 1px solid var(--ku-border-default);
 }
 
 .du-modal-fade-enter-active,
 .du-modal-fade-leave-active {
-  transition: opacity var(--du-transition-base);
+  transition: opacity var(--ku-transition-base);
 }
 
 .du-modal-fade-enter-from,

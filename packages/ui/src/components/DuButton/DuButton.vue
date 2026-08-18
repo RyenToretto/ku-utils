@@ -46,75 +46,75 @@ interface Props {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--du-spacing-2);
+  gap: var(--ku-space-2);
   border: 1px solid transparent;
-  border-radius: var(--du-radius-base);
-  font-weight: var(--du-fontWeight-medium);
+  border-radius: var(--ku-radius-base);
+  font-weight: var(--ku-font-weight-medium);
   cursor: pointer;
-  transition: all var(--du-transition-base);
+  transition: all var(--ku-transition-base);
   outline: none;
 }
 
 .du-button-small {
-  padding: var(--du-spacing-1) var(--du-spacing-3);
-  font-size: var(--du-fontSize-xs);
+  padding: var(--ku-space-1) var(--ku-space-3);
+  font-size: var(--ku-font-size-xs);
 }
 
 .du-button-medium {
-  padding: var(--du-spacing-2) var(--du-spacing-4);
-  font-size: var(--du-fontSize-sm);
+  padding: var(--ku-space-2) var(--ku-space-4);
+  font-size: var(--ku-font-size-sm);
 }
 
 .du-button-large {
-  padding: var(--du-spacing-3) var(--du-spacing-6);
-  font-size: var(--du-fontSize-base);
+  padding: var(--ku-space-3) var(--ku-space-6);
+  font-size: var(--ku-font-size-base);
 }
 
 .du-button-default {
-  background: var(--du-color-bg-primary);
-  border-color: var(--du-color-border-hover);
-  color: var(--du-neutral-700);
+  background: var(--ku-bg-card);
+  border-color: var(--ku-border-hover);
+  color: var(--ku-neutral-700);
 }
 
 .du-button-default:hover {
-  border-color: var(--du-color-primary);
-  color: var(--du-color-primary);
+  border-color: var(--ku-color-primary);
+  color: var(--ku-color-primary);
 }
 
 .du-button-primary {
-  background: var(--du-color-primary);
-  color: var(--du-color-bg-primary);
+  background: var(--ku-color-primary);
+  color: var(--ku-bg-card);
 }
 
 .du-button-primary:hover {
-  background: var(--du-color-primary-hover);
+  background: var(--ku-color-primary-hover);
 }
 
 .du-button-success {
-  background: var(--du-color-success);
-  color: var(--du-color-bg-primary);
+  background: var(--ku-color-success);
+  color: var(--ku-bg-card);
 }
 
 .du-button-success:hover {
-  background: var(--du-success-600);
+  background: var(--ku-success-600);
 }
 
 .du-button-warning {
-  background: var(--du-color-warning);
-  color: var(--du-color-bg-primary);
+  background: var(--ku-color-warning);
+  color: var(--ku-bg-card);
 }
 
 .du-button-warning:hover {
-  background: var(--du-warning-600);
+  background: var(--ku-warning-600);
 }
 
 .du-button-danger {
-  background: var(--du-color-danger);
-  color: var(--du-color-bg-primary);
+  background: var(--ku-color-danger);
+  color: var(--ku-bg-card);
 }
 
 .du-button-danger:hover {
-  background: var(--du-danger-600);
+  background: var(--ku-danger-600);
 }
 
 .du-button-disabled {
@@ -131,7 +131,7 @@ interface Props {
   height: 1em;
   border: 2px solid currentColor;
   border-right-color: transparent;
-  border-radius: var(--du-borderRadius-full);
+  border-radius: var(--ku-radius-full);
   animation: du-spin 0.6s linear infinite;
 }
 

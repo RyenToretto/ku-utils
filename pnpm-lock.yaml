@@ -56,6 +56,9 @@ importers:
       '@ku-utils/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
+      '@ku-utils/skin':
+        specifier: workspace:*
+        version: link:../../packages/skin
       '@ku-utils/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -188,6 +191,12 @@ importers:
 
   apps/playground-vue3:
     dependencies:
+      '@ku-utils/skin':
+        specifier: workspace:*
+        version: link:../../packages/skin
+      '@ku-utils/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       pinia:
         specifier: ^3.0.3
         version: 3.0.4(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3))
@@ -378,6 +387,9 @@ importers:
       '@ku-utils/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@ku-utils/skin':
+        specifier: workspace:*
+        version: link:../skin
       '@nuxt/kit':
         specifier: ^3.17.3
         version: 3.21.11(magicast@0.5.4)
@@ -406,6 +418,12 @@ importers:
       prettier:
         specifier: ^3.0.0
         version: 3.9.6
+
+  packages/skin:
+    devDependencies:
+      '@ku-utils/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
 
   packages/stylelint-config:
     dependencies:

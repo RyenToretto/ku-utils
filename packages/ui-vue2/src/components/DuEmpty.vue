@@ -24,13 +24,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: var(--ku-space-8, 2rem);
 }
 .du-empty-description {
-  color: #a3a3a3;
-  font-size: 0.875rem;
+  color: var(--ku-text-placeholder, #a3a3a3);
+  font-size: var(--ku-font-size-sm, 0.875rem);
 }
 .du-empty-footer {
-  margin-top: 1rem;
+  margin-top: var(--ku-space-4, 1rem);
 }
 </style>
