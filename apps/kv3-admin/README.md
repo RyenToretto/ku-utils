@@ -16,7 +16,7 @@ pnpm dev:admin
 ## 约定真源
 
 - 列表页范式：[`docs/admin-list-page-pattern.md`](./docs/admin-list-page-pattern.md)
-- Cursor：`.cursor/rules` 与 `.cursor/skills`
+- Cursor：`.cursor/rules`（列表页约定 + custom-columns）与 `.cursor/skills/custom-columns`
 - 样板代码：`src/modules/_example/`（`simpleExample` / `customColumns` / `schoolResource` 等）
 
 后续可用本目录作为新后台项目的 starter（拷贝后把 `workspace:*` 换成 npm 上的 `@ku-utils/*` 版本）。`create-ku-utils-app` 完整拷贝本模板不在本期。

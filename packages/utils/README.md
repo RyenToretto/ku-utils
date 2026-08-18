@@ -25,14 +25,6 @@ clamp(15, 0, 10); // 10
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/utils/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/utils 处理日期、字符串、存储、URL、校验、DOM 等通用场景。当需要处理上述类型数据时使用。
-
-同时会在消费项目缺少 `docs/render.md` 时自动写入展示格式化说明文档，便于迁移 Vue 2 filter 和表格渲染 formatter。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

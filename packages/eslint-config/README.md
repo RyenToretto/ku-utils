@@ -30,12 +30,6 @@ export default [...vue3Config];
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/eslint-config/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 为项目配置 @ku-utils/eslint-config ESLint 预设（base/vue2/vue3/nuxt4）。当初始化新项目 ESLint 或排查 lint 报错时使用。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

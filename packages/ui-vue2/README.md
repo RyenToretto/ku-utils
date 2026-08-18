@@ -31,12 +31,6 @@ Vue.use(install);
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/ui-vue2/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/ui-vue2 的 Vue 2 业务组件（维护模式）。Vue 2 项目中需要 DuButton、DuEmpty、DuStatusTag 时使用。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

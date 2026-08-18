@@ -1,5 +1,5 @@
 ---
-name: custom-columns
+name: v2-custom-columns
 description: 使用 @ku-utils/v2-custom-columns 为 Vue 2 table 页面实现自定义列能力。当用户要给一个新页面接入自定义列、新增/修改列 schema、迁移旧 tableControl 页面、或排查自定义列问题时使用。涵盖安装、schema 定义、useSchemaColumnConfig mixin 接入、模板写法（扁平/嵌套）、版本管理、cellComponent。
 ---
 

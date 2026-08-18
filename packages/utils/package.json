@@ -24,13 +24,10 @@
   "files": [
     "dist",
     "docs",
-    "rules",
-    "skills",
     "scripts"
   ],
   "scripts": {
     "build": "tsup && node scripts/generate-auto-import.mjs && tsup",
-    "postinstall": "node scripts/postinstall.cjs",
     "build:only": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",

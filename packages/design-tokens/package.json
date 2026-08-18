@@ -26,15 +26,12 @@
   },
   "files": [
     "scripts",
-    "skills",
-    "dist",
-    "rules"
+    "dist"
   ],
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/build.js --watch",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@ku-utils/tsconfig": "workspace:*"

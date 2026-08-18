@@ -15,17 +15,13 @@
     }
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "nuxt-module-build build",
     "dev": "nuxt-module-build build --stub",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "nuxt": "^3.17.0",

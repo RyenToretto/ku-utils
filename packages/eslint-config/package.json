@@ -13,16 +13,12 @@
     "./nuxt4": "./dist/nuxt4.js"
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "eslint-plugin-vue": "^10.2.0",

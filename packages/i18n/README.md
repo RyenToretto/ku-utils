@@ -24,12 +24,6 @@ const { t } = useI18n();
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/i18n/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/i18n 实现多语言国际化（createI18n、useI18n、detectBrowserLocale）。当项目需要支持多语言时使用。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

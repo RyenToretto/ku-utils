@@ -160,7 +160,7 @@ ${successResults.map((r) => `| \`${r.name}\` | \`${r.version}\` | \`${r.tgz}\` |
 - 标准版 \`@ku-utils/report\` 和 \`@ku-utils/landing-report\` 仍有内部依赖；离线交付时不要只提供标准版 tarball。
 - \`@ku-utils/hooks\`、\`@ku-utils/marketing\`、\`@ku-utils/nuxt-module\` 等标准包仍依赖 \`@ku-utils/utils\`，请务必同时引入。
 - 配置包（\`eslint-config\`、\`prettier-config\`、\`tsconfig\`、\`stylelint-config\`）不含运行时代码，只需项目开发依赖引入时才需要。
-- tarball 安装与从 npm 安装行为一致，\`postinstall\` 脚本同样会运行。
+- tarball 安装与从 npm 安装行为一致。仅部分包带 Cursor rules/skills 的 \`postinstall\`，\`CI=1\` 时不会拷贝。
 
 ## 更新
 

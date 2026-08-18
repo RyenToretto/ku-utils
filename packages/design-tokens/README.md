@@ -36,12 +36,6 @@ import tokens from '@ku-utils/design-tokens/json';
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/design-tokens/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/design-tokens 中的颜色/排版/间距/效果设计令牌。当需要在样式中引用品牌色、间距规范、阴影、圆角等时使用。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

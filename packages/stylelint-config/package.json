@@ -14,10 +14,7 @@
   "files": [
     "index.js",
     "scss.js",
-    "plugins",
-    "rules",
-    "skills",
-    "scripts"
+    "plugins"
   ],
   "dependencies": {
     "stylelint-config-standard": "^37.0.0",
@@ -26,8 +23,5 @@
   },
   "peerDependencies": {
     "stylelint": "^16.0.0"
-  },
-  "scripts": {
-    "postinstall": "node scripts/postinstall.cjs"
   }
 }

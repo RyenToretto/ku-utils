@@ -57,8 +57,8 @@ try {
 }
 
 // ── 安装 Cursor Skills ───────────────────────────────────────────────────────
-const skillsDir = path.join(pkgRoot, 'skills', 'custom-columns')
-const targetSkillsDir = path.join(projectRoot, '.cursor', 'skills', 'custom-columns')
+const skillsDir = path.join(pkgRoot, 'skills', 'v2-custom-columns')
+const targetSkillsDir = path.join(projectRoot, '.cursor', 'skills', 'v2-custom-columns')
 
 try {
   copyIfNotExists(

@@ -31,12 +31,6 @@ pnpm add -D @ku-utils/tsconfig
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/tsconfig/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 为项目配置 @ku-utils/tsconfig TypeScript 共享配置。当初始化新项目 tsconfig.json 时使用。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)

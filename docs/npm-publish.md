@@ -30,4 +30,4 @@ git push --follow-tags
 pnpm add @ku-utils/utils @ku-utils/hooks
 ```
 
-无需自定义 `.npmrc`。CI 环境设置 `CI=1` 时，包的 postinstall 不会拷贝 Cursor rules/skills。
+无需自定义 `.npmrc`。仅 custom-columns、v2-custom-columns、report、landing-report、request、marketing、pay 会在安装时拷贝 Cursor rules/skills；CI 环境设置 `CI=1` 时跳过。

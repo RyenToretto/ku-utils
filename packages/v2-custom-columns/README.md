@@ -44,7 +44,7 @@ export default {
 
 ## AI Skill
 
-安装后自动同步至 `.cursor/skills/custom-columns/SKILL.md`，在 Cursor 对话中可按需调用：
+安装后自动同步至 `.cursor/skills/v2-custom-columns/SKILL.md`，在 Cursor 对话中可按需调用：
 
 > 使用 @ku-utils/v2-custom-columns 为 Vue 2 table 页面实现自定义列能力。当用户要给一个新页面接入自定义列、新增/修改列 schema、迁移旧 tableControl 页面时使用。
 

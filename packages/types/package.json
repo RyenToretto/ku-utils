@@ -17,16 +17,12 @@
     }
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@ku-utils/tsconfig": "workspace:*",

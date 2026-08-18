@@ -17,17 +17,13 @@
     }
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "vue": "^3.4.0"

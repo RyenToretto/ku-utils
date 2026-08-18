@@ -16,16 +16,12 @@
     "./style": "./dist/style.css"
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "vite build",
     "dev": "vite build --watch",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "vue": "^2.7.0"

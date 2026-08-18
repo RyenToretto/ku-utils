@@ -20,10 +20,7 @@
     "./style.css": "./dist/style.css"
   },
   "files": [
-    "dist",
-    "rules",
-    "skills",
-    "scripts"
+    "dist"
   ],
   "scripts": {
     "build": "vite build",
@@ -31,8 +28,7 @@
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "clean": "rm -rf dist",
-    "postinstall": "node scripts/postinstall.cjs"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "vue": "^3.4.0"

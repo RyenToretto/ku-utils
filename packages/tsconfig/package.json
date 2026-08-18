@@ -16,12 +16,6 @@
   "files": [
     "*.json",
     "!package.json",
-    "!tsconfig.json",
-    "rules",
-    "skills",
-    "scripts"
-  ],
-  "scripts": {
-    "postinstall": "node scripts/postinstall.cjs"
-  }
+    "!tsconfig.json"
+  ]
 }

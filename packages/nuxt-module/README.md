@@ -28,12 +28,6 @@ export default defineNuxtConfig({
 
 发布于 npmjs.org，直接 `pnpm add` 即可。
 
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/nuxt-module/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 在 Nuxt 4 项目中集成 @ku-utils/nuxt-module，一键启用 hooks auto-import、组件注册、指令、CSS tokens。
-
 ---
 
 详细文档请参考 [ku-utils 文档站](../../docs/)
