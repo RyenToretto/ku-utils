@@ -20,8 +20,6 @@ features:
     details: Utils、Hooks、Directives 等开箱即用的工具库
   - title: CLI 工具
     details: 脚手架一键创建项目、初始化配置、健康检查
-  - title: 设计令牌
-    details: CSS Variables / SCSS / JS / JSON 多格式输出，统一设计语言
   - title: npm 公开发布
     details: Changesets + GitHub Actions 自动升版、发版并打 tag
 ---

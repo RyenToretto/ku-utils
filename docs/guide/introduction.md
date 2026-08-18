@@ -18,7 +18,6 @@ ku-utils 是前端公共库 Monorepo，基于 pnpm workspace + Turborepo 构建�
 | 工具库   | @ku-utils/constants         | 常用正则                      |
 | 工具库   | @ku-utils/types             | 公共 TypeScript 类型          |
 | 工具库   | @ku-utils/i18n              | 多语言工具                    |
-| 设计     | @ku-utils/design-tokens     | 设计令牌                      |
 | 组件库   | @ku-utils/ui                | Vue 3 业务组件库              |
 | 组件库   | @ku-utils/ui-vue2           | Vue 2 业务组件库              |
 | 组件库   | @ku-utils/custom-columns    | Vue 3 表格自定义列            |

@@ -70,7 +70,6 @@ export default defineConfig({
             { text: 'Types 类型定义', link: '/packages/types' },
             { text: 'Directives 指令', link: '/packages/directives' },
             { text: 'I18n 多语言', link: '/packages/i18n' },
-            { text: 'Design Tokens 设计令牌', link: '/packages/design-tokens' },
             { text: 'Nuxt Module', link: '/packages/nuxt-module' },
           ],
         },

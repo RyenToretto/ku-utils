@@ -24,8 +24,7 @@ Turborepo 会根据 `turbo.json` 中的 `dependsOn` 构建一个有向无环图�
 ```
 @ku-utils/ui
     ├── depends on → @ku-utils/utils (^build)
-    ├── depends on → @ku-utils/hooks (^build)
-    └── depends on → @ku-utils/design-tokens (^build)
+    └── depends on → @ku-utils/hooks (^build)
 
 @ku-utils/hooks
     └── depends on → @ku-utils/utils (^build)
@@ -33,7 +32,7 @@ Turborepo 会根据 `turbo.json` 中的 `dependsOn` 构建一个有向无环图�
 
 当执行 `turbo run build` 时：
 
-1. 先并行构建没有内部依赖的包（`utils`、`design-tokens`、`constants`、`types` 等）
+1. 先并行构建没有内部依赖的包（`utils`、`constants`、`types` 等）
 2. 再构建依赖上述包的包（`hooks`、`directives` 等）
 3. 最后构建顶层包（`ui`、`nuxt-module` 等）
 
@@ -436,7 +435,6 @@ Tasks to Run
  • @ku-utils/types#build
  • @ku-utils/constants#build
  • @ku-utils/utils#build
- • @ku-utils/design-tokens#build
  • @ku-utils/hooks#build
  • @ku-utils/directives#build
  • @ku-utils/ui#build
@@ -494,7 +492,6 @@ turbo run build --output-logs=none
 ```
                     ┌─ @ku-utils/types ────────────┐
                     ├─ @ku-utils/constants ─────────┤
-                    ├─ @ku-utils/design-tokens ─────┤
   第 1 层（无依赖） ├─ @ku-utils/utils ─────────────┤  并行
                     ├─ @ku-utils/i18n ──────────────┤
                     ├─ @ku-utils/prettier-config ───┤

@@ -30,7 +30,6 @@ const kuUtilsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>
     }
 
     if (options.css) {
-      nuxt.options.css.push('@ku-utils/design-tokens/css');
       nuxt.options.css.push('@ku-utils/ui/style');
     }
 

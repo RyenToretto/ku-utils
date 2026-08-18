@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 - **组件**：`DuButton`、`DuEmpty`、`DuModal`、`DuStatusTag`
 - **Composables**：`useLoading`、`useRequest`、`usePagination`、`useClipboard`、`useCountdown`、`useEventBus`、`useMediaQuery`、`useBreakpoint`、`useFullscreen`、`useInterval`、`useWebSocket`
 - **指令**：通过客户端插件自动注册
-- **CSS**：自动引入 design-tokens 和 UI 样式
+- **CSS**：自动引入 UI 样式
 
 ## 安装源
 

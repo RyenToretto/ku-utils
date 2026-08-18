@@ -27,7 +27,7 @@
 
 ```
 ku-utils/
-├── packages/           # 可发布的 npm 包（16 个）
+├── packages/           # 可发布的 npm 包（15 个）
 │   ├── eslint-config/     构建: tsup       ESLint Flat Config（含 vue2/vue3/nuxt4 子配置）
 │   ├── prettier-config/   构建: 无（纯JSON） Prettier 共享配置
 │   ├── tsconfig/          构建: 无（纯JSON） TypeScript 配置集（base/library/vue3/vue2/nuxt4）
@@ -38,7 +38,6 @@ ku-utils/
 │   ├── constants/         构建: tsup       常用正则（REGEX）
 │   ├── types/             构建: tsup       公共 TypeScript 类型
 │   ├── i18n/              构建: tsup       多语言工具（createI18n/detectBrowserLocale）
-│   ├── design-tokens/     构建: 自定义脚本  设计令牌→CSS/SCSS/JS/JSON + 语义别名 + IDE Custom Data
 │   ├── ui/                构建: Vite       Vue 3 组件库（DuButton/DuModal/DuEmpty/DuStatusTag）
 │   ├── ui-vue2/           构建: Vite       Vue 2 组件库（维护模式）
 │   ├── nuxt-module/       构建: nuxt-module-builder   Nuxt 4 集成模块
@@ -54,7 +53,7 @@ ku-utils/
 │   └── kv3-admin/         Vue 3 + Element Plus 管理端 starter
 ├── docs/               # VitePress 文档站
 ├── .cursor/rules/      # AI 开发规范（4 个 .mdc 文件）
-├── .vscode/settings.json  # IDE 配置（CSS Custom Data）
+├── .vscode/settings.json  # IDE 配置
 ├── turbo.json          # Turborepo 任务配置
 ├── pnpm-workspace.yaml # pnpm workspace 声明
 ├── .npmrc              # pnpm hoist/peer 策略
@@ -115,13 +114,6 @@ pnpm release              # 构建 packages+tools 并 publish 到 npm
 - 消费方：`import { install as installUI } from '@ku-utils/ui'; app.use(installUI);`
 - 原因：避免 Rollup 的 mixed named/default export 警告，提升 tree-shaking
 
-### Design Tokens 双层变量
-
-- **原子层**: `--du-primary-500`, `--du-neutral-200` 等（色板级别）
-- **语义层**: `--du-color-primary`, `--du-color-text-primary`, `--du-color-border` 等（业务级别）
-- 语义层通过 `var()` 引用原子层，方便主题切换
-- 构建时自动生成 `css-custom-data.json` 供 IDE 消除 CSS 变量警告
-
 ### pnpm strict hoisting
 
 - `shamefully-hoist=false`：严格模式，包必须显式声明依赖
@@ -135,7 +127,7 @@ type(scope): 中文描述
 
 - type/scope 保持英文，描述**必须中文**
 - type: feat / fix / docs / style / refactor / perf / test / build / ci / chore / revert / release
-- scope: 包名（如 utils / hooks / ui / design-tokens）
+- scope: 包名（如 utils / hooks / ui）
 - 示例: `feat(utils): 新增货币格式化函数`
 - 由 commitlint + husky pre-commit hook 强制执行
 - lint-staged 会依次执行 eslint --fix → prettier --write
@@ -156,5 +148,4 @@ type(scope): 中文描述
 2. apps/ 下不应生成 .js/.d.ts 文件（由 tsconfig base.json 的 noEmit: true 控制）
 3. Nuxt 4 playground 的类型需要 `nuxt prepare` 生成 `.nuxt/` 目录
 4. 根目录的 `eslint.config.js` 关闭了 `vue/block-lang`，是刻意的（兼容 Vue 2）
-5. design-tokens 的 build 是自定义 Node 脚本（不是 tsup），修改时注意
-6. 文档站本期不强制上线；本地 `pnpm start` 即可预览，部署见 `docs/deploy-vitepress.md`
+5. 文档站本期不强制上线；本地 `pnpm start` 即可预览，部署见 `docs/deploy-vitepress.md`

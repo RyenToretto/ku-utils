@@ -74,7 +74,7 @@ export default [...nuxt4Config];
 ### 配置 Nuxt 4 模块
 
 ```bash
-pnpm add @ku-utils/nuxt-module @ku-utils/ui @ku-utils/hooks @ku-utils/directives @ku-utils/design-tokens
+pnpm add @ku-utils/nuxt-module @ku-utils/ui @ku-utils/hooks @ku-utils/directives
 ```
 
 ```typescript
