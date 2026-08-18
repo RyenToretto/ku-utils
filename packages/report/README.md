@@ -151,9 +151,3 @@ xh-report v3.0.1 的 `packages/sdk`，详见 [docs/migration/xh-report.md](../..
 
 - **1.1.2**（refactor）：抽出 `createTrackerFactory` 泛型工厂作为公共能力导出，`createXhReport` 改为一行调用。新增导出 `createTrackerFactory`，公开 API 向后兼容
 - **1.1.1**：首次发布（迁移自 xh-report v3.0.1）
-
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/report/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/report 接入通用埋点上报（createXhReport）。当需要初始化埋点 SDK、上报用户行为/转化/属性事件时使用。

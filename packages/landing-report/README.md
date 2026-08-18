@@ -100,9 +100,3 @@ xh-report v3.0.1 的 `packages/landing`，详见 [docs/migration/xh-report.md](.
 
 - **1.1.2**（refactor）：复用 `@ku-utils/report` 新增的 `createTrackerFactory` 泛型工厂，去除 30+ 行重复代码，dist 体积从 1.50 KB 降到 607 B
 - **1.1.1**：首次发布
-
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/landing-report/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/landing-report 在落地页中接入埋点上报（无 alive/heartbeat 自动上报）。当开发广告落地页需要埋点时使用，与 @ku-utils/report 的关键区别是不自动上报生命周期事件。

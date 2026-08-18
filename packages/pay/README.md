@@ -107,9 +107,3 @@ hela-pay v2.0.4，详见 [docs/migration/hela-pay.md](../../docs/migration/hela-
 
 - **1.1.2**（refactor）：移除 `core.ts` 中的局部 `makeVersionCode`，改为从 `@ku-utils/utils` 导入，避免双份实现
 - **1.1.1**：首次发布（迁移自 hela-pay v2.0.4）
-
-## AI Skill
-
-安装后自动同步至 `.cursor/skills/pay/SKILL.md`，在 Cursor 对话中可按需调用：
-
-> 使用 @ku-utils/pay 接入 HelaPay 支付（匿名登录、SKU 列表、下单、微信 JSAPI 支付）。当需要实现落地页/App 内购买流程时使用。
