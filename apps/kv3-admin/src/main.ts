@@ -7,7 +7,6 @@ import '@ku-utils/custom-columns/style';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
-import '@/assets/styles/tokens.css';
 import '@/assets/styles/fonts.css';
 import 'element-plus/theme-chalk/dark/css-vars.css';
 // 品牌皮肤（--ku-* + --el-* 桥接）统一交给 @ku-utils/skin，v1 只有 lark 一套

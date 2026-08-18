@@ -29,17 +29,18 @@ document.documentElement.classList.toggle('dark', isDark);
 
 ## 导出
 
-| 子路径                | 说明                                       |
-| --------------------- | ------------------------------------------ |
-| `@ku-utils/skin`      | 默认皮肤（v1 = `lark`）                    |
-| `@ku-utils/skin/lark` | 显式引用 `lark` 皮肤                       |
-| `@ku-utils/skin/base` | 只要间距/圆角/字号等通用 token，不含品牌色 |
+| 子路径                  | 说明                                                                                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@ku-utils/skin`        | 默认皮肤（= `lark`）                                                                                                                        |
+| `@ku-utils/skin/lark`   | 显式引用 `lark` 皮肤（当前唯一在用）                                                                                                        |
+| `@ku-utils/skin/<name>` | 备选皮肤：`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky`，数据已就位但尚未在任何应用启用 |
+| `@ku-utils/skin/base`   | 只要间距/圆角/字号等通用 token，不含品牌色                                                                                                  |
 
 ## 设计原则
 
 - **皮肤是数据，CSS 是产物**：每套皮肤在 `src/themes/*.js` 里只维护品牌语义色，`scripts/generate.mjs` 用 `mix()` 现算 Element Plus 的完整色阶，不手写第二套色板。
 - **一层语义，多套桥接**：业务和 `Du*` 组件只读 `--ku-*`；`--el-*` 全部是 `var(--ku-*)` 的转发或现算结果。
-- v1 只发布 `lark` 一套皮肤，其余皮肤按需补充 `themes/*.js` 即可扩展，不需要改生成器。
+- **apps 不维护自己的皮肤**：所有换肤数据集中在本包的 `themes/*.js`；消费方（含 `kv3-admin`）只做一行 import，不在应用目录下另存 `theme-*.scss` / 色板 token 文件。
 
 ## Token 契约
 

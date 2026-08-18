@@ -83,8 +83,9 @@
 
 - `packages/ui` 组件内联样式绑定的 `--ku-liquid-glass-*`、`--ku-liquid-floating-bar-*`：组件私有、运行时由 props 计算，不是皮肤契约。
 - `apps/kv3-admin` 业务代码已全量直连 `--ku-*`，不保留旧无前缀变量（`--primary-color`、`--bg-page` 等）的别名/桥接层。
-- v1 只发 `lark`；其余 10 套皮肤（`themes/*.js`）留待后续按同一形状补数据，不需要改 `generate.mjs`。
+- 默认在用的只有 `lark`；`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 是已迁移好数据、但还没有应用启用的备选皮肤（`themes/*.js`），启用只需改一行 import，不需要改 `generate.mjs`。
 
 ## 变更记录
 
 - `0.1.0`：首个版本，从 jx-dsp Lark 皮肤抽取，覆盖 `packages/ui` / `ui-vue2` / `directives` 当前用到的全部 token + Element Plus 桥接。
+- 未发版变更：把 `apps/kv3-admin` 本地保留的 10 套备选皮肤草稿（`theme-juxiao-*.scss`）迁移为 `themes/*.js` 数据 + 对应子路径导出；`apps/*` 不再保留任何本地皮肤/色板文件，统一由本包提供。发版时随 changeset 一并升版。

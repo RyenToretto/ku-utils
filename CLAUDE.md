@@ -120,8 +120,8 @@ pnpm release              # 构建 packages+tools 并 publish 到 npm
 - 唯一语义变量前缀 `--ku-*`；`packages/ui`、`ui-vue2`、`directives` 全部消费它，不再有 `--du-*`
 - 皮肤是数据（`src/themes/*.js`），CSS 是产物：`scripts/generate.mjs` 用 `mix()` 从品牌基色现算 Element Plus 的 `--el-color-*` 完整色阶，不手写第二套色板
 - Element Plus 结构类变量（`--el-bg-color` 等）统一写成 `var(--ku-*)` 转发，只需在 `:root` 声明一次，`html.dark` 覆写对应 `--ku-*` 即可联动
-- v1 只发 `lark` 一套皮肤；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
-- `apps/kv3-admin` 已全量改用 `--ku-*`，不保留旧无前缀变量的转发桥接层
+- 默认在用的是 `lark`；另有 10 套备选皮肤数据（`breeze`/`dusk`/`ember`/`glen`/`hextech`/`honey`/`indigo`/`iris`/`orchid`/`sky`），尚未在任何应用启用；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
+- `apps/kv3-admin` 已全量改用 `--ku-*`，不保留旧无前缀变量的转发桥接层，也不在 app 自己的目录下维护皮肤/token 文件——`apps/*` 下不应该有自己的皮肤定义，统一来自 `packages/skin`
 
 ### pnpm strict hoisting
 

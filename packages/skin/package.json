@@ -9,6 +9,16 @@
   "exports": {
     ".": "./dist/index.css",
     "./lark": "./dist/lark.css",
+    "./breeze": "./dist/breeze.css",
+    "./dusk": "./dist/dusk.css",
+    "./ember": "./dist/ember.css",
+    "./glen": "./dist/glen.css",
+    "./hextech": "./dist/hextech.css",
+    "./honey": "./dist/honey.css",
+    "./indigo": "./dist/indigo.css",
+    "./iris": "./dist/iris.css",
+    "./orchid": "./dist/orchid.css",
+    "./sky": "./dist/sky.css",
     "./base": "./dist/base.css"
   },
   "files": [

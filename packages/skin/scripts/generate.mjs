@@ -23,7 +23,19 @@ const srcDir = resolve(__dirname, '..', 'src');
 const distDir = resolve(__dirname, '..', 'dist');
 const watchMode = process.argv.includes('--watch');
 
-const THEME_FILES = ['lark'];
+const THEME_FILES = [
+  'lark',
+  'breeze',
+  'dusk',
+  'ember',
+  'glen',
+  'hextech',
+  'honey',
+  'indigo',
+  'iris',
+  'orchid',
+  'sky',
+];
 const DEFAULT_THEME = 'lark';
 
 /* ---------------------------------------------------------------- */

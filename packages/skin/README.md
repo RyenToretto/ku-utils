@@ -17,10 +17,12 @@ import '@ku-utils/skin'; // 默认皮肤 = lark
 import '@ku-utils/ui/style';
 ```
 
-按需显式引入某一套皮肤（当前 v1 只有 `lark`，与默认相同，为将来多皮肤保留写法）：
+按需显式引入某一套皮肤（默认 = `lark`，另有 10 套备选皮肤数据，尚未在任何应用里启用）：
 
 ```ts
 import '@ku-utils/skin/lark';
+// 或者切到备选皮肤之一：breeze / dusk / ember / glen / hextech / honey / indigo / iris / orchid / sky
+import '@ku-utils/skin/breeze';
 ```
 
 只要通用间距/圆角/字号等 token，不要品牌色（例如自己实现的皮肤系统，只想借用 `--ku-space-*` / `--ku-radius-*`）：
@@ -39,7 +41,7 @@ document.documentElement.classList.toggle('dark', isDark);
 
 ## 换肤（compile-time）
 
-v1 只发布 `lark` 一套皮肤，`@ku-utils/skin` 默认导出即 `lark`。后续新增皮肤会作为新的子路径导出（如 `@ku-utils/skin/dusk`），业务方换肤只需要改一行 import。
+`@ku-utils/skin` 默认导出即 `lark`（当前唯一在用的皮肤）；`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 是从 jx-dsp 迁移过来的备选色板，已经是本包的子路径导出，还没有任何应用启用。业务方换肤只需要改一行 import（`@ku-utils/skin` → `@ku-utils/skin/<name>`），不需要在应用自己的目录下另外维护一份皮肤文件。
 
 ## Token 契约
 

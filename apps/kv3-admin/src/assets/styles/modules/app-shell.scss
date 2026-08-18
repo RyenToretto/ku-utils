@@ -181,7 +181,7 @@ html.dark {
 
 .layout-top {
   position: relative;
-  z-index: var(--z-sticky, 200);
+  z-index: var(--ku-z-sticky, 1020);
   flex-shrink: 0;
   background: var(--ku-bg-sidebar);
   box-shadow: var(--layout-top-shadow, 0 1px 0 rgba(0, 0, 0, 0.04));
@@ -308,7 +308,7 @@ html.dark {
     height: 32px;
     flex-shrink: 0;
     object-fit: contain;
-    border-radius: var(--radius-md, 6px);
+    border-radius: var(--ku-radius-md, 0.5rem);
   }
 
   .logo-brand {
@@ -332,7 +332,7 @@ html.dark {
   }
 
   .admin-version-logo {
-    border-radius: var(--radius-sm, 4px);
+    border-radius: var(--ku-radius-sm, 0.25rem);
     outline-offset: 2px;
     transition: background-color var(--el-transition-duration-fast);
 
@@ -386,7 +386,7 @@ html.dark {
     height: 32px;
     flex-shrink: 0;
     object-fit: contain;
-    border-radius: var(--radius-md, 6px);
+    border-radius: var(--ku-radius-md, 0.5rem);
   }
 
   .logo-brand {
@@ -1054,7 +1054,7 @@ html.dark {
   }
 
   .el-loading-mask {
-    z-index: var(--z-raised, 10) !important;
+    z-index: 10 !important;
   }
 
   > div {
@@ -1087,7 +1087,7 @@ html.dark {
     height: 32px;
     flex-shrink: 0;
     object-fit: contain;
-    border-radius: var(--radius-md, 6px);
+    border-radius: var(--ku-radius-md, 0.5rem);
   }
 
   .logo-brand {
