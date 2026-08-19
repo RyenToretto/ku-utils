@@ -11,8 +11,15 @@
     "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
+    "@ku-utils/constants": "workspace:*",
+    "@ku-utils/skin": "workspace:*",
+    "@ku-utils/ui-vue2": "workspace:*",
+    "@ku-utils/utils": "workspace:*",
+    "@ku-utils/v2-custom-columns": "workspace:*",
+    "element-ui": "^2.15.14",
     "vue": "^2.7.16",
     "vue-router": "^3.6.5",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

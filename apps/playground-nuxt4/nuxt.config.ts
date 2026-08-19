@@ -3,5 +3,7 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  modules: ['@ku-utils/nuxt-module'],
+  css: ['~/assets/playground.css'],
   devtools: { enabled: true },
 });

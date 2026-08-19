@@ -22,15 +22,18 @@ app.mount('#app');
 
 ## 导出清单
 
-| 名称                | 说明                    |
-| ------------------- | ----------------------- |
-| `vPermission`       | 权限控制显示/交互       |
-| `vLoading`          | 元素加载态              |
-| `vClickOutside`     | 点击外部关闭            |
-| `vCopy`             | 一键复制                |
-| `vDebounce`         | 事件防抖                |
-| `vLazyLoad`         | 懒加载（如图片）        |
-| `vLongpress`        | 长按                    |
-| `installDirectives` | 在 `App` 上注册上述指令 |
+| 名称                | 说明                                     |
+| ------------------- | ---------------------------------------- |
+| `vPermission`       | 权限控制显示/交互                        |
+| `vLoading`          | 元素加载态                               |
+| `vClickOutside`     | 点击外部关闭                             |
+| `vCopy`             | 一键复制                                 |
+| `vDebounce`         | 事件防抖                                 |
+| `vLazyLoad`         | 懒加载（如图片）                         |
+| `vLongpress`        | 长按                                     |
+| `vTooltip`          | 悬停提示                                 |
+| `vFocus`            | 挂载后聚焦                               |
+| `vWatermark`        | 水印                                     |
+| `installDirectives` | 在 `App` 上注册上述指令（不含 vLoading） |
 
 `vLoading` / `vTooltip` 的颜色、圆角、层级走 `@ku-utils/skin` 的 `--ku-*`（带 lark 浅色 fallback）。应用侧建议 `import '@ku-utils/skin'`，不引入时指令仍按默认皮肤显示。

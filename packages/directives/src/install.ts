@@ -7,6 +7,7 @@ import { vFocus } from './vFocus';
 import { vLazyLoad } from './vLazyLoad';
 import { vLongpress } from './vLongpress';
 import { vPermission } from './vPermission';
+import { vTooltip } from './vTooltip';
 import { vWatermark } from './vWatermark';
 
 /**
@@ -27,5 +28,6 @@ export function installDirectives(app: App) {
   app.directive('focus', vFocus);
   app.directive('lazy-load', vLazyLoad);
   app.directive('longpress', vLongpress);
+  app.directive('tooltip', vTooltip);
   app.directive('watermark', vWatermark);
 }

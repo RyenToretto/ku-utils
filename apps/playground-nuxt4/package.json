@@ -14,6 +14,15 @@
     "clean": "rm -rf .nuxt .output dist node_modules"
   },
   "dependencies": {
+    "@ku-utils/constants": "workspace:*",
+    "@ku-utils/directives": "workspace:*",
+    "@ku-utils/hooks": "workspace:*",
+    "@ku-utils/i18n": "workspace:*",
+    "@ku-utils/nuxt-module": "workspace:*",
+    "@ku-utils/skin": "workspace:*",
+    "@ku-utils/types": "workspace:*",
+    "@ku-utils/ui": "workspace:*",
+    "@ku-utils/utils": "workspace:*",
     "nuxt": "^3.17.3",
     "vue": "^3.5.16",
     "vue-router": "^4.5.1"

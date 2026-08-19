@@ -1,54 +1,43 @@
 <template>
   <div class="home">
-    <h2>Home</h2>
-    <p>Count: {{ counter.count }}</p>
-    <button @click="counter.increment()">+1</button>
+    <p>
+      Pinia count: {{ counter.count }}
+      <button
+        type="button"
+        @click="counter.increment()"
+      >
+        +1
+      </button>
+    </p>
+    <nav class="pg-nav">
+      <a href="#ui">ui / skin</a>
+      <a href="#hooks">hooks</a>
+      <a href="#utils">utils / constants / types</a>
+      <a href="#directives">directives</a>
+      <a href="#i18n">i18n</a>
+      <a href="#custom-columns">custom-columns</a>
+      <a href="#toolchain">工程配置</a>
+    </nav>
 
-    <section class="skin-demo">
-      <h3>@ku-utils/skin 烟雾验证</h3>
-      <p>
-        下面按钮的主色应为 Lark 蓝
-        <code>#3370ff</code>
-        （来自 --ku-color-primary）：
-      </p>
-      <div class="skin-demo-row">
-        <DuButton type="primary">Primary</DuButton>
-        <DuButton type="success">Success</DuButton>
-        <DuButton type="warning">Warning</DuButton>
-        <DuButton type="danger">Danger</DuButton>
-        <DuButton>Default</DuButton>
-      </div>
-      <div class="skin-demo-row">
-        <DuStatusTag status="success">成功</DuStatusTag>
-        <DuStatusTag status="warning">警告</DuStatusTag>
-        <DuStatusTag status="danger">危险</DuStatusTag>
-        <DuStatusTag status="info">信息</DuStatusTag>
-      </div>
-    </section>
+    <UiDemo />
+    <HooksDemo />
+    <UtilsTypesDemo />
+    <DirectivesDemo />
+    <I18nDemo />
+    <CustomColumnsDemo />
+    <ToolchainDemo />
   </div>
 </template>
 
 <script setup lang="ts">
-import { DuButton, DuStatusTag } from '@ku-utils/ui';
-
+import CustomColumnsDemo from '@/demos/CustomColumnsDemo.vue';
+import DirectivesDemo from '@/demos/DirectivesDemo.vue';
+import HooksDemo from '@/demos/HooksDemo.vue';
+import I18nDemo from '@/demos/I18nDemo.vue';
+import ToolchainDemo from '@/demos/ToolchainDemo.vue';
+import UiDemo from '@/demos/UiDemo.vue';
+import UtilsTypesDemo from '@/demos/UtilsTypesDemo.vue';
 import { useCounterStore } from '@/stores/counter';
 
 const counter = useCounterStore();
 </script>
-
-<style>
-.skin-demo {
-  margin-top: var(--ku-space-6);
-  padding: var(--ku-space-4);
-  border: 1px solid var(--ku-border-default);
-  border-radius: var(--ku-radius-md);
-  background: var(--ku-bg-card);
-}
-
-.skin-demo-row {
-  display: flex;
-  align-items: center;
-  gap: var(--ku-space-3);
-  margin-top: var(--ku-space-3);
-}
-</style>

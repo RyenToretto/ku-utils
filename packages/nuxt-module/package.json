@@ -31,6 +31,7 @@
     "@ku-utils/directives": "workspace:*",
     "@ku-utils/hooks": "workspace:*",
     "@ku-utils/skin": "workspace:*",
+    "@ku-utils/ui": "workspace:*",
     "@nuxt/kit": "^3.17.3"
   },
   "devDependencies": {

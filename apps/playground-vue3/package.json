@@ -12,8 +12,17 @@
     "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@ku-utils/constants": "workspace:*",
+    "@ku-utils/custom-columns": "workspace:*",
+    "@ku-utils/directives": "workspace:*",
+    "@ku-utils/hooks": "workspace:*",
+    "@ku-utils/i18n": "workspace:*",
     "@ku-utils/skin": "workspace:*",
+    "@ku-utils/types": "workspace:*",
     "@ku-utils/ui": "workspace:*",
+    "@ku-utils/utils": "workspace:*",
+    "element-plus": "^2.14.1",
     "pinia": "^3.0.3",
     "vue": "^3.5.16",
     "vue-router": "^4.5.1"
@@ -21,9 +30,11 @@
   "devDependencies": {
     "@ku-utils/eslint-config": "workspace:*",
     "@ku-utils/prettier-config": "workspace:*",
+    "@ku-utils/stylelint-config": "workspace:*",
     "@ku-utils/tsconfig": "workspace:*",
     "@vitejs/plugin-vue": "^5.2.4",
     "eslint": "^9.27.0",
+    "stylelint": "^16.20.0",
     "typescript": "^5.9.3",
     "vite": "^6.3.5",
     "vue-tsc": "^2.2.10"
