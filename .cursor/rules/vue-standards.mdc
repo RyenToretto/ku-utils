@@ -11,6 +11,7 @@ alwaysApply: false
 - `&.success` 是可以的，但 `&-success`、`&__item`、`&--large` 等类名拼接不允许
 - 推荐使用 BEM 命名但不使用 SCSS 嵌套拼接
 - 颜色/间距/圆角/阴影等主题相关取值，用 `@ku-utils/skin` 的 `--ku-*` 变量，不要写死 hex 或重新发明一套变量名；变量清单见 `packages/skin/TOKEN.md`
+- **packages 内必须带 fallback**：写成 `var(--ku-xxx, <lark 浅色值>)`，这样消费方即使没引入 `@ku-utils/skin` 也能按默认皮肤显示；应用侧引入 skin 后 fallback 不生效、走换肤值
 
 ## Vue 3 规范
 - 优先使用 `<script setup lang="ts">` 语法

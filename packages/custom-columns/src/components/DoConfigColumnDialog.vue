@@ -588,7 +588,7 @@ defineExpose({ showConfigColumnDialog });
 .cfg-panels {
   display: flex;
   flex: 1;
-  border: 1px solid #f1f1f1;
+  border: 1px solid var(--ku-border-light, #e5e6eb);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -597,15 +597,15 @@ defineExpose({ showConfigColumnDialog });
   width: 240px;
   flex-shrink: 0;
   overflow-y: auto;
-  border-right: 1px solid #f1f1f1;
-  background: #fafafa;
+  border-right: 1px solid var(--ku-border-light, #e5e6eb);
+  background: var(--ku-neutral-50, #fafafa);
   padding: 8px 0;
 }
 
 .nav-link {
   padding: 8px 16px;
   font-size: 13px;
-  color: #606266;
+  color: var(--ku-text-secondary, #646a73);
   cursor: pointer;
   line-height: 1.4;
   transition:
@@ -614,13 +614,13 @@ defineExpose({ showConfigColumnDialog });
 }
 
 .nav-link:hover {
-  background: #f0f2f5;
-  color: #303133;
+  background: var(--ku-bg-hover, rgba(51, 112, 255, 0.06));
+  color: var(--ku-text-primary, #1f2329);
 }
 
 .nav-link.active {
-  color: #409eff;
-  background: #ecf5ff;
+  color: var(--ku-color-primary, #3370ff);
+  background: var(--ku-color-primary-bg, #f0f4ff);
   font-weight: 500;
 }
 
@@ -636,14 +636,14 @@ defineExpose({ showConfigColumnDialog });
   padding: 12px 10px 8px;
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--ku-bg-card, #ffffff);
   z-index: 9;
 }
 
 .grp-label {
   font-size: 13px;
   font-weight: 600;
-  color: #303133;
+  color: var(--ku-text-primary, #1f2329);
 }
 
 .grp-actions {
@@ -653,7 +653,7 @@ defineExpose({ showConfigColumnDialog });
 
 .grp-actions a {
   font-size: 12px;
-  color: #409eff;
+  color: var(--ku-color-primary, #3370ff);
   text-decoration: none;
 }
 
@@ -681,7 +681,7 @@ defineExpose({ showConfigColumnDialog });
 
 .grp-item :deep(.el-checkbox__label) {
   font-size: 13px;
-  color: #606266;
+  color: var(--ku-text-secondary, #646a73);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -690,17 +690,17 @@ defineExpose({ showConfigColumnDialog });
 .grp-empty {
   padding: 48px 16px;
   text-align: center;
-  color: #909399;
+  color: var(--ku-text-placeholder, #8f959e);
   font-size: 13px;
 }
 
 .cfg-right {
   width: 280px;
   flex-shrink: 0;
-  border-left: 1px solid #f1f1f1;
+  border-left: 1px solid var(--ku-border-light, #e5e6eb);
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--ku-bg-card, #ffffff);
 }
 
 .sel-header {
@@ -708,20 +708,20 @@ defineExpose({ showConfigColumnDialog });
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  border-bottom: 1px solid #f1f1f1;
-  background: #f5f7fa;
+  border-bottom: 1px solid var(--ku-border-light, #e5e6eb);
+  background: var(--ku-table-header-bg, #f5f6f7);
   flex-shrink: 0;
 }
 
 .sel-count {
   font-size: 13px;
-  color: #606266;
+  color: var(--ku-text-secondary, #646a73);
   font-weight: 500;
 }
 
 .sel-reset {
   font-size: 12px;
-  color: #409eff;
+  color: var(--ku-color-primary, #3370ff);
   text-decoration: none;
 }
 
@@ -745,20 +745,20 @@ defineExpose({ showConfigColumnDialog });
   align-items: center;
   padding: 0 12px;
   height: 36px;
-  background: #f5f7fa;
-  border-bottom: 1px solid #f0f2f5;
+  background: var(--ku-table-header-bg, #f5f6f7);
+  border-bottom: 1px solid var(--ku-bg-hover, rgba(51, 112, 255, 0.06));
 }
 
 .sel-lock {
   font-size: 12px;
-  color: #c0c4cc;
+  color: var(--ku-text-disabled, #bbbfc4);
   margin-right: 8px;
   flex-shrink: 0;
 }
 
 .sel-fix-name {
   font-size: 13px;
-  color: #606266;
+  color: var(--ku-text-secondary, #646a73);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -769,20 +769,20 @@ defineExpose({ showConfigColumnDialog });
   align-items: center;
   padding: 6px 12px;
   flex-shrink: 0;
-  background: #fff;
+  background: var(--ku-bg-card, #ffffff);
 }
 
 .sel-sepline::before,
 .sel-sepline::after {
   content: '';
   flex: 1;
-  border-top: 1px dashed #dcdfe6;
+  border-top: 1px dashed var(--ku-border-default, #dee0e3);
 }
 
 .sel-septip {
   padding: 0 8px;
   font-size: 11px;
-  color: #c0c4cc;
+  color: var(--ku-text-disabled, #bbbfc4);
   white-space: nowrap;
 }
 
@@ -795,12 +795,12 @@ defineExpose({ showConfigColumnDialog });
   align-items: center;
   height: 36px;
   padding: 0 4px 0 8px;
-  border-bottom: 1px solid #f5f7fa;
+  border-bottom: 1px solid var(--ku-table-header-bg, #f5f6f7);
   transition: background 0.12s;
 }
 
 .sel-drag-row:hover {
-  background: #f5f7fa;
+  background: var(--ku-table-header-bg, #f5f6f7);
 }
 
 .sel-drag-handle {
@@ -811,7 +811,7 @@ defineExpose({ showConfigColumnDialog });
   height: 100%;
   cursor: grab;
   flex-shrink: 0;
-  color: #c0c4cc;
+  color: var(--ku-text-disabled, #bbbfc4);
 }
 
 .sel-drag-handle:active {
@@ -830,7 +830,7 @@ defineExpose({ showConfigColumnDialog });
 .sel-drag-name {
   flex: 1;
   font-size: 13px;
-  color: #303133;
+  color: var(--ku-text-primary, #1f2329);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -842,7 +842,7 @@ defineExpose({ showConfigColumnDialog });
   width: 20px;
   height: 20px;
   font-size: 12px;
-  color: #c0c4cc;
+  color: var(--ku-text-disabled, #bbbfc4);
   cursor: pointer;
   border-radius: 3px;
   transition:
@@ -851,15 +851,15 @@ defineExpose({ showConfigColumnDialog });
 }
 
 .sel-remove:hover {
-  color: #f56c6c;
-  background: #fef0f0;
+  color: var(--ku-color-danger, #f54a45);
+  background: var(--ku-color-danger-bg, #fef1f1);
 }
 
 .sel-empty {
   padding: 24px 12px;
   text-align: center;
   font-size: 13px;
-  color: #c0c4cc;
+  color: var(--ku-text-disabled, #bbbfc4);
 }
 
 .drawer-foot {
@@ -869,7 +869,7 @@ defineExpose({ showConfigColumnDialog });
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-top: 1px solid #f1f1f1;
+  border-top: 1px solid var(--ku-border-light, #e5e6eb);
 }
 
 .left-btn-group > button {
@@ -878,11 +878,11 @@ defineExpose({ showConfigColumnDialog });
 }
 
 .drawer-title .tips.status-warning {
-  color: #e6a23c;
+  color: var(--ku-color-warning, #ff8800);
 }
 
 .drawer-title .tips.status-success {
-  color: #67c23a;
+  color: var(--ku-color-success, #34c724);
 }
 
 .save-to-local-form {

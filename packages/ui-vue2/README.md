@@ -16,6 +16,7 @@ pnpm add @ku-utils/ui-vue2
 
 ```js
 import { install } from '@ku-utils/ui-vue2';
+import '@ku-utils/skin'; // 换肤；不引入时组件会走 lark 浅色 fallback
 import '@ku-utils/ui-vue2/style';
 
 Vue.use(install);

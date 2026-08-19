@@ -28,15 +28,15 @@ function createTooltipEl(content: string): HTMLDivElement {
   el.style.cssText = `
     position: fixed;
     padding: 6px 10px;
-    background: #262626;
-    color: #fff;
-    font-size: 12px;
-    border-radius: 4px;
+    background: var(--ku-bg-tooltip, #1f2329);
+    color: var(--ku-text-inverse, #ffffff);
+    font-size: var(--ku-font-size-xs, 0.75rem);
+    border-radius: var(--ku-radius-sm, 0.25rem);
     white-space: nowrap;
     pointer-events: none;
-    z-index: 9999;
+    z-index: var(--ku-z-tooltip, 1070);
     opacity: 0;
-    transition: opacity 150ms ease;
+    transition: opacity var(--ku-transition-fast, 150ms cubic-bezier(0.4, 0, 0.2, 1));
   `;
   return el;
 }

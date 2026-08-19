@@ -15,10 +15,10 @@ function injectStyles() {
   justify-content: center;
   background: var(--ku-loading-bg, rgba(255, 255, 255, 0.8));
   z-index: var(--ku-z-overlay, 1040);
-  transition: opacity var(--ku-transition-base, 200ms ease);
+  transition: opacity var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 .du-loading-spinner {
-  color: var(--ku-color-primary, #3b82f6);
+  color: var(--ku-color-primary, #3370ff);
 }
 `;
   document.head.appendChild(style);

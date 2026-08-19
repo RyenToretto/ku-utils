@@ -27,7 +27,7 @@ export default {
   padding: var(--ku-space-8, 2rem);
 }
 .du-empty-description {
-  color: var(--ku-text-placeholder, #a3a3a3);
+  color: var(--ku-text-placeholder, #8f959e);
   font-size: var(--ku-font-size-sm, 0.875rem);
 }
 .du-empty-footer {

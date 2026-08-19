@@ -17,7 +17,7 @@
           fill-rule="evenodd"
         >
           <ellipse
-            fill="#f5f5f5"
+            fill="var(--ku-neutral-100, #f5f5f5)"
             cx="32"
             cy="33"
             rx="32"
@@ -25,7 +25,7 @@
           />
           <g
             fill-rule="nonzero"
-            stroke="#d9d9d9"
+            stroke="var(--ku-neutral-300, #d4d4d4)"
           >
             <!-- eslint-disable @stylistic/max-len -->
             <path
@@ -33,7 +33,7 @@
             />
             <path
               d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
-              fill="#fafafa"
+              fill="var(--ku-neutral-50, #fafafa)"
             />
             <!-- eslint-enable @stylistic/max-len -->
           </g>
@@ -71,7 +71,7 @@ interface Props {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--ku-space-8);
+  padding: var(--ku-space-8, 2rem);
 }
 
 .du-empty-image svg,
@@ -81,12 +81,12 @@ interface Props {
 }
 
 .du-empty-description {
-  color: var(--ku-text-placeholder);
-  font-size: var(--ku-font-size-sm);
-  margin-top: var(--ku-space-2);
+  color: var(--ku-text-placeholder, #8f959e);
+  font-size: var(--ku-font-size-sm, 0.875rem);
+  margin-top: var(--ku-space-2, 0.5rem);
 }
 
 .du-empty-footer {
-  margin-top: var(--ku-space-4);
+  margin-top: var(--ku-space-4, 1rem);
 }
 </style>

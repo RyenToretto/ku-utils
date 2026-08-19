@@ -121,14 +121,14 @@ const props = withDefaults(defineProps<Props>(), {
   filterId: undefined,
   mode: 'liquid',
   disabled: false,
-  radius: 'var(--ku-radius-xl)',
+  radius: 'var(--ku-radius-xl, 1rem)',
   blur: 7,
   saturate: 1.4,
-  tint: 'color-mix(in srgb, var(--ku-bg-card) 58%, transparent)',
-  borderColor: 'color-mix(in srgb, var(--ku-border-default) 62%, transparent)',
+  tint: 'color-mix(in srgb, var(--ku-bg-card, #ffffff) 58%, transparent)',
+  borderColor: 'color-mix(in srgb, var(--ku-border-default, #dee0e3) 62%, transparent)',
   borderWidth: '1px',
   shadow:
-    'inset 0 0 2px 1px color-mix(in srgb, var(--ku-bg-card) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--ku-bg-card) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--ku-neutral-900) 8%, transparent)',
+    'inset 0 0 2px 1px color-mix(in srgb, var(--ku-bg-card, #ffffff) 68%, transparent), inset 0 0 10px 4px color-mix(in srgb, var(--ku-bg-card, #ffffff) 28%, transparent), 0 8px 28px color-mix(in srgb, var(--ku-neutral-900, #171717) 8%, transparent)',
   displacementScale: 50,
   mapBlur: undefined,
   mapAlpha: 0.93,
@@ -292,8 +292,8 @@ defineExpose({ syncGlassMap });
   border-radius: inherit;
   background: var(--ku-liquid-glass-tint);
   transition:
-    background var(--ku-transition-base),
-    opacity var(--ku-transition-base);
+    background var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1)),
+    opacity var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
   pointer-events: none;
 }
 
@@ -307,14 +307,14 @@ defineExpose({ syncGlassMap });
 }
 
 .du-liquid-glass-edge {
-  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ku-bg-card) 42%, transparent);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ku-bg-card, #ffffff) 42%, transparent);
   mask-image: linear-gradient(to bottom, transparent 0, transparent 62%, #fff 100%);
 }
 
 .du-liquid-glass-highlight {
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--ku-bg-card) 64%, transparent),
-    inset 0 -10px 30px color-mix(in srgb, var(--ku-bg-card) 12%, transparent);
+    inset 0 1px 0 color-mix(in srgb, var(--ku-bg-card, #ffffff) 64%, transparent),
+    inset 0 -10px 30px color-mix(in srgb, var(--ku-bg-card, #ffffff) 12%, transparent);
   opacity: 0.9;
 }
 
@@ -331,7 +331,7 @@ defineExpose({ syncGlassMap });
 
 @supports not (backdrop-filter: blur(1px)) {
   .du-liquid-glass-surface {
-    background: color-mix(in srgb, var(--ku-bg-card) 88%, transparent);
+    background: color-mix(in srgb, var(--ku-bg-card, #ffffff) 88%, transparent);
   }
 }
 

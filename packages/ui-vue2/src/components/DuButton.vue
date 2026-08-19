@@ -40,7 +40,7 @@ export default {
   border-radius: var(--ku-radius-base, 0.375rem);
   font-weight: var(--ku-font-weight-medium, 500);
   cursor: pointer;
-  transition: all var(--ku-transition-base, 200ms ease);
+  transition: all var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 .du-button-small {
   padding: var(--ku-space-1, 0.25rem) var(--ku-space-3, 0.75rem);
@@ -51,36 +51,36 @@ export default {
   font-size: var(--ku-font-size-sm, 0.875rem);
 }
 .du-button-large {
-  padding: var(--ku-space-3, 0.625rem) var(--ku-space-6, 1.5rem);
+  padding: var(--ku-space-3, 0.75rem) var(--ku-space-6, 1.5rem);
   font-size: var(--ku-font-size-base, 1rem);
 }
 .du-button-default {
-  background: var(--ku-bg-card, #fff);
-  border-color: var(--ku-border-hover, #d4d4d4);
+  background: var(--ku-bg-card, #ffffff);
+  border-color: var(--ku-border-hover, #c6c9ce);
   color: var(--ku-neutral-700, #404040);
 }
 .du-button-default:hover {
-  border-color: var(--ku-color-primary, #3b82f6);
-  color: var(--ku-color-primary, #3b82f6);
+  border-color: var(--ku-color-primary, #3370ff);
+  color: var(--ku-color-primary, #3370ff);
 }
 .du-button-primary {
-  background: var(--ku-color-primary, #3b82f6);
-  color: var(--ku-bg-card, #fff);
+  background: var(--ku-color-primary, #3370ff);
+  color: var(--ku-bg-card, #ffffff);
 }
 .du-button-primary:hover {
-  background: var(--ku-color-primary-hover, #2563eb);
+  background: var(--ku-color-primary-hover, #245bdb);
 }
 .du-button-success {
-  background: var(--ku-color-success, #22c55e);
-  color: var(--ku-bg-card, #fff);
+  background: var(--ku-color-success, #34c724);
+  color: var(--ku-bg-card, #ffffff);
 }
 .du-button-warning {
-  background: var(--ku-color-warning, #f59e0b);
-  color: var(--ku-bg-card, #fff);
+  background: var(--ku-color-warning, #ff8800);
+  color: var(--ku-bg-card, #ffffff);
 }
 .du-button-danger {
-  background: var(--ku-color-danger, #ef4444);
-  color: var(--ku-bg-card, #fff);
+  background: var(--ku-color-danger, #f54a45);
+  color: var(--ku-bg-card, #ffffff);
 }
 .du-button-disabled {
   opacity: 0.6;

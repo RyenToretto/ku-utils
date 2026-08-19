@@ -166,13 +166,13 @@ export default {
     .read-from-local-edit {
       right: 32px;
       &:hover {
-        color: #409eff;
+        color: var(--ku-color-primary, #3370ff);
       }
     }
     .read-from-local-delete {
       right: 10px;
       &:hover {
-        color: #f56c6c;
+        color: var(--ku-color-danger, #f54a45);
       }
     }
     &:hover {
@@ -190,9 +190,9 @@ export default {
       }
       &.active,
       &:hover {
-        background-color: #fff;
-        border-color: #409eff;
-        color: #409eff;
+        background-color: var(--ku-bg-card, #ffffff);
+        border-color: var(--ku-color-primary, #3370ff);
+        color: var(--ku-color-primary, #3370ff);
       }
       &.active {
         opacity: 1;

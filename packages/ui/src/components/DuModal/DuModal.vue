@@ -76,14 +76,18 @@ function onMaskClick() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: var(--ku-z-modal);
+  background: var(--ku-bg-overlay, rgba(31, 35, 41, 0.5));
+  z-index: var(--ku-z-modal, 1050);
 }
 
 .du-modal {
-  background: var(--ku-bg-card);
-  border-radius: var(--ku-radius-md);
-  box-shadow: var(--ku-shadow-xl);
+  background: var(--ku-bg-card, #ffffff);
+  border-radius: var(--ku-radius-md, 0.5rem);
+  box-shadow: var(
+    --ku-shadow-xl,
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1)
+  );
   max-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -93,30 +97,30 @@ function onMaskClick() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--ku-space-4) var(--ku-space-6);
-  border-bottom: 1px solid var(--ku-border-default);
+  padding: var(--ku-space-4, 1rem) var(--ku-space-6, 1.5rem);
+  border-bottom: 1px solid var(--ku-border-default, #dee0e3);
 }
 
 .du-modal-title {
-  font-size: var(--ku-font-size-base);
-  font-weight: var(--ku-font-weight-semibold);
+  font-size: var(--ku-font-size-base, 1rem);
+  font-weight: var(--ku-font-weight-semibold, 600);
 }
 
 .du-modal-close {
   background: none;
   border: none;
-  font-size: var(--ku-font-size-2xl);
+  font-size: var(--ku-font-size-2xl, 1.5rem);
   cursor: pointer;
-  color: var(--ku-text-placeholder);
+  color: var(--ku-text-placeholder, #8f959e);
   line-height: 1;
 }
 
 .du-modal-close:hover {
-  color: var(--ku-text-primary);
+  color: var(--ku-text-primary, #1f2329);
 }
 
 .du-modal-body {
-  padding: var(--ku-space-6);
+  padding: var(--ku-space-6, 1.5rem);
   overflow-y: auto;
   flex: 1;
 }
@@ -124,14 +128,14 @@ function onMaskClick() {
 .du-modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: var(--ku-space-2);
-  padding: var(--ku-space-4) var(--ku-space-6);
-  border-top: 1px solid var(--ku-border-default);
+  gap: var(--ku-space-2, 0.5rem);
+  padding: var(--ku-space-4, 1rem) var(--ku-space-6, 1.5rem);
+  border-top: 1px solid var(--ku-border-default, #dee0e3);
 }
 
 .du-modal-fade-enter-active,
 .du-modal-fade-leave-active {
-  transition: opacity var(--ku-transition-base);
+  transition: opacity var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .du-modal-fade-enter-from,

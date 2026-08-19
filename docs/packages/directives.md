@@ -33,4 +33,4 @@ app.mount('#app');
 | `vLongpress`        | 长按                    |
 | `installDirectives` | 在 `App` 上注册上述指令 |
 
-具体绑定值与修饰符以源码与类型为准。
+`vLoading` / `vTooltip` 的颜色、圆角、层级走 `@ku-utils/skin` 的 `--ku-*`（带 lark 浅色 fallback）。应用侧建议 `import '@ku-utils/skin'`，不引入时指令仍按默认皮肤显示。

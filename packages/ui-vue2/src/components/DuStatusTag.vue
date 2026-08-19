@@ -38,23 +38,23 @@ export default {
   background: currentColor;
 }
 .du-status-tag-success {
-  background: var(--ku-color-success-bg, #f0fdf4);
-  color: var(--ku-success-600, #16a34a);
+  background: var(--ku-color-success-bg, #f0faf0);
+  color: var(--ku-success-600, #2ca91f);
 }
 .du-status-tag-warning {
-  background: var(--ku-color-warning-bg, #fffbeb);
-  color: var(--ku-warning-600, #d97706);
+  background: var(--ku-color-warning-bg, #fff7e8);
+  color: var(--ku-warning-600, #d97400);
 }
 .du-status-tag-danger {
-  background: var(--ku-color-danger-bg, #fef2f2);
-  color: var(--ku-danger-600, #dc2626);
+  background: var(--ku-color-danger-bg, #fef1f1);
+  color: var(--ku-danger-600, #d03f3b);
 }
 .du-status-tag-info {
-  background: var(--ku-color-info-bg, #eff6ff);
-  color: var(--ku-primary-600, #2563eb);
+  background: var(--ku-color-info-bg, #f7f8fa);
+  color: var(--ku-primary-600, #245bdb);
 }
 .du-status-tag-default {
-  background: var(--ku-bg-sidebar, #f5f5f5);
-  color: var(--ku-text-secondary, #525252);
+  background: var(--ku-bg-sidebar, #eff0f1);
+  color: var(--ku-text-secondary, #646a73);
 }
 </style>

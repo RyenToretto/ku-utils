@@ -51,6 +51,7 @@ document.documentElement.classList.toggle('dark', isDark);
 
 - **皮肤是数据，CSS 是产物**：每套皮肤在 `src/themes/*.js` 里只维护品牌语义色（几十个 key），`scripts/generate.mjs` 现算 Element Plus 的完整色阶（`light-1..9` / `dark-2` / `rgb`），不手写第二套色板。
 - **一层语义，多套桥接**：业务和 `Du*` 组件只读 `--ku-*`；`--el-*` 全部是 `var(--ku-*)` 的转发或现算结果，不在皮肤里重复定义独立 hex。
+- **组件库带 fallback、不打皮肤 CSS**：`packages/ui` 等写成 `var(--ku-xxx, <lark 浅色值>)`，换肤由应用 `import '@ku-utils/skin'` 决定。
 - **新增皮肤零改代码**：复制 `src/themes/lark.js` 改色值即可多出一个 `dist/<name>.css`，不需要动 `scripts/generate.mjs`。
 
 ## 本地开发

@@ -68,42 +68,50 @@ interface Props {
 
 <style>
 .du-card {
-  background: var(--ku-bg-card);
-  border-radius: var(--ku-radius-md);
+  background: var(--ku-bg-card, #ffffff);
+  border-radius: var(--ku-radius-md, 0.5rem);
   overflow: hidden;
-  transition: box-shadow var(--ku-transition-base);
+  transition: box-shadow var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .du-card-bordered {
-  border: 1px solid var(--ku-border-default);
+  border: 1px solid var(--ku-border-default, #dee0e3);
 }
 
 .du-card-hoverable:hover {
-  box-shadow: var(--ku-shadow-md);
+  box-shadow: var(
+    --ku-shadow-md,
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1)
+  );
 }
 
 .du-card-shadow {
-  box-shadow: var(--ku-shadow-base);
+  box-shadow: var(
+    --ku-shadow-base,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1)
+  );
 }
 
 .du-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--ku-space-4) var(--ku-space-5);
-  border-bottom: 1px solid var(--ku-border-default);
+  padding: var(--ku-space-4, 1rem) var(--ku-space-5, 1.25rem);
+  border-bottom: 1px solid var(--ku-border-default, #dee0e3);
 }
 
 .du-card-title {
-  font-size: var(--ku-font-size-base);
-  font-weight: var(--ku-font-weight-semibold);
-  color: var(--ku-text-primary);
+  font-size: var(--ku-font-size-base, 1rem);
+  font-weight: var(--ku-font-weight-semibold, 600);
+  color: var(--ku-text-primary, #1f2329);
 }
 
 .du-card-subtitle {
-  margin-left: var(--ku-space-2);
-  font-size: var(--ku-font-size-sm);
-  color: var(--ku-text-secondary);
+  margin-left: var(--ku-space-2, 0.5rem);
+  font-size: var(--ku-font-size-sm, 0.875rem);
+  color: var(--ku-text-secondary, #646a73);
 }
 
 .du-card-extra {
@@ -111,11 +119,11 @@ interface Props {
 }
 
 .du-card-body {
-  padding: var(--ku-space-5);
+  padding: var(--ku-space-5, 1.25rem);
 }
 
 .du-card-footer {
-  padding: var(--ku-space-3) var(--ku-space-5);
-  border-top: 1px solid var(--ku-border-default);
+  padding: var(--ku-space-3, 0.75rem) var(--ku-space-5, 1.25rem);
+  border-top: 1px solid var(--ku-border-default, #dee0e3);
 }
 </style>

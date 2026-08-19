@@ -29,6 +29,7 @@ docs/                → VitePress
 4. **pnpm strict**: shamefully-hoist=false，包必须显式声明所有依赖
 5. **publishConfig**: `{ "access": "public" }`
 6. 消费方使用 `@ku-utils/xxx`；本仓 apps 用 `workspace:*`
+7. **皮肤**：`apps/*` 不自带皮肤文件；`packages/*` 的主题色用 `var(--ku-*, <lark 浅色 fallback>)`，不把 `@ku-utils/skin` CSS 打进组件产物
 
 ## 演进原则
 

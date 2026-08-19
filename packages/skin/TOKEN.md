@@ -79,6 +79,17 @@
 | `--ku-font-family-base` / `-mono`                                           | 字体栈                       |
 | `--ku-layout-aside-width`                                                   | 侧栏宽度                     |
 
+## 包内用法（必须带 fallback）
+
+`packages/ui`、`ui-vue2`、`directives`、`custom-columns`、`v2-custom-columns` 等库代码**只读** `--ku-*`，不把皮肤 CSS 打进自己的产物（换哪一套皮肤由应用 `import '@ku-utils/skin'` / `@ku-utils/skin/<name>` 决定）。
+
+每一处消费必须写成 `var(--ku-xxx, <lark 浅色 fallback>)`，fallback 取本包默认皮肤 `lark` 的 Light 值（base 层 token 取 `src/base-tokens.js`）。这样：
+
+- 应用引入了 skin：用当前皮肤（含 `html.dark`）
+- 应用没引入 skin：组件仍按 lark 浅色显示，不会掉成浏览器初始值
+
+组件私有运行时变量（`--ku-liquid-*`）由组件自己赋值，不需要皮肤 fallback。
+
 ## 明确不在契约内
 
 - `packages/ui` 组件内联样式绑定的 `--ku-liquid-glass-*`、`--ku-liquid-floating-bar-*`：组件私有、运行时由 props 计算，不是皮肤契约。
@@ -88,4 +99,4 @@
 ## 变更记录
 
 - `0.1.0`：首个版本，从 jx-dsp Lark 皮肤抽取，覆盖 `packages/ui` / `ui-vue2` / `directives` 当前用到的全部 token + Element Plus 桥接。
-- 未发版变更：把 `apps/kv3-admin` 本地保留的 10 套备选皮肤草稿（`theme-juxiao-*.scss`）迁移为 `themes/*.js` 数据 + 对应子路径导出；`apps/*` 不再保留任何本地皮肤/色板文件，统一由本包提供。发版时随 changeset 一并升版。
+- 未发版变更：把 `apps/kv3-admin` 本地保留的 10 套备选皮肤草稿迁移为 `themes/*.js`；`packages/ui` / `ui-vue2` / `directives` / `custom-columns` / `v2-custom-columns` 全面消费 `--ku-*` 且必须带 lark 浅色 fallback。发版时随 changeset 一并升版。
