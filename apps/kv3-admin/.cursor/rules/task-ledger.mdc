@@ -1,0 +1,32 @@
+---
+description: kv3-admin 任务台账（精简）— 实现类请求先登记、emoji 状态
+globs:
+  - docs/task/**
+alwaysApply: false
+---
+
+# 任务台账（kv3-admin · 精简）
+
+> 最佳实践：`docs/best-practice/rule-task-ledger/`（完整版含 wait 双队列；本仓 starter 用精简落地）。  
+> 台账目录：`apps/kv3-admin/docs/task/`。
+
+## 何时登记
+
+用户说「实现 / 开发 / 优化 / 修复」且触及 **kv3-admin 业务页/组件/Mock** → **先**在 `docs/task/` 登记并写入 `TASK.md` 索引，**再**编码。  
+纯文档/rule 同步、单行 typo 可跳过。
+
+## 状态符号（禁止 `- [ ]`）
+
+| 符号 | 含义 |
+| --- | --- |
+| `✅` | 已完成 |
+| `⚠️` | 部分完成 |
+| `⭕️` | 待实现 |
+| `⛔️` | 阻塞（须附原因） |
+| `❎` | 确认先不做 / 非本仓义务 |
+
+一次任务尽量一次 commit；提交前更新状态。
+
+## 与完整版差异
+
+本仓不强制 waitRD/waitConfirm 双队列与上游合同增量 Skill（见参考模块 `rule-fe-be-doc-sync`）。需要时再升格。

@@ -48,3 +48,15 @@ src/modules/<域>/<子业务>/
 ## Example 门控
 
 开发态 `VITE_APP_USE_EXAMPLE=1`。拷到业务仓后，生产构建应设为 `0`，并保留 `forbid-example-in-bundle` 插件。
+
+## 专题 Rules（同目录）
+
+| Rule | 用途 |
+| --- | --- |
+| `project-structure` | Layer / `_module` / DialogXxx |
+| `mock-isolation` | Mock 边界与种子；信封 `code:0`/`data` |
+| `api-contract` | `requestXxx`、`$MAPS`、禁兼容 |
+| `entity-selector` | List 双模选择器（+ skill `selector`） |
+| `user-visible-copy` | 用户可见文案禁开发态泄漏 |
+| `task-ledger` | 精简台账 `docs/task/` |
+| `custom-columns-vue3-pattern` | 自定义列 |

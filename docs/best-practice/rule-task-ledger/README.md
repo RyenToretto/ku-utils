@@ -1,9 +1,18 @@
 # rule-task-ledger — 任务台账与确认队列
 
-> **参考接入**：`docs/task` 台账、emoji 状态、waitRD/waitConfirm、上游增量。  
-> **来源**：jx-dsp 任务/wait 专节 + oversea 台账 FE/BE 分流 + `doc-backend-sync` skill。
+> **已落地（精简）**：`apps/kv3-admin/.cursor/rules/task-ledger.mdc` + `apps/kv3-admin/docs/task/TASK.md`  
+> **来源**：jx-dsp 任务/wait 专节 + oversea 台账分流。  
+> **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。  
+> **说明**：库仓/starter 不强制 wait 双队列；完整版流程仍以本文「最佳实践」为准，业务交付仓可升格。
 
 **类型**：Cursor Rule（`.mdc`）+ 可选 Skill（上游同步）
+
+## 本仓落点
+
+| 路径                                           | 说明                       |
+| ---------------------------------------------- | -------------------------- |
+| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji |
+| `apps/kv3-admin/docs/task/TASK.md`             | 台账索引                   |
 
 ## 推进接入分数
 
