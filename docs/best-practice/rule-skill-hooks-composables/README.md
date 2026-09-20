@@ -1,6 +1,7 @@
 # rule-skill-hooks-composables — Hooks 约定
 
-> **参考接入**：供本项目或其他项目接入时参考，非运行时依赖。
+> **参考接入**：供本项目或其他项目接入时参考，非运行时依赖。  
+> **本仓同步**：与 [`.cursor/rules/hooks-guide.mdc`](../../../.cursor/rules/hooks-guide.mdc) + [`.cursor/skills/hooks/SKILL.md`](../../../.cursor/skills/hooks/SKILL.md) **双向同步**（见 [SYNC.md](../SYNC.md)）。
 
 **类型**：Cursor Rule + Skill（`.mdc` + `SKILL.md`）
 
@@ -28,7 +29,9 @@ Vue 3 composables 的放置、命名、与业务页面协作方式。
 ## 本仓落点
 
 - `packages/hooks`
-- 多仓存在的 `hooks` skill（应对齐到 `@ku-utils/hooks` 文档）
+- [`.cursor/rules/hooks-guide.mdc`](../../../.cursor/rules/hooks-guide.mdc)
+- [`.cursor/skills/hooks/SKILL.md`](../../../.cursor/skills/hooks/SKILL.md)
+- kv3-admin：`src/composables/useAdminTableMaxHeight.ts` 等
 
 ## 验收清单
 

@@ -1,0 +1,41 @@
+---
+description: @ku-utils/hooks 与仓内 composables 约定。写 loading/分页/表格高度/剪贴板等时读取。
+globs:
+alwaysApply: false
+---
+
+# Hooks / Composables 规范
+
+## 分层
+
+| 能力 | 放置 |
+| --- | --- |
+| 通用、可跨仓复用 | `@ku-utils/hooks`（`packages/hooks`） |
+| 仅本应用（如管理端表格高度） | `apps/<app>/src/composables` |
+
+优先用共享包，禁止在业务页复制粘贴 loading / countdown / clipboard 逻辑。
+
+## 命名与职责
+
+- 命名：`useXxx`
+- 返回值结构稳定；避免隐式依赖未文档化的全局单例
+- **不要**在通用 hook 内做路由跳转 / `ElMessage`，除非该 hook 职责就是页面流程
+
+## 本仓高频
+
+共享包常用：`useLoading` / `useRequest` / `usePagination` / `useCountdown` / `useClipboard` / `useMaxHeight` / `useDialogState` 等（见包导出）。
+
+kv3-admin：
+
+- 页面表高：`useAdminTableMaxHeight`（基于 `useMaxHeight`）
+- 抽屉点选表高：`useDrawerPickListMaxHeight`（禁止对弹层表误用页面 maxHeight）
+- 列表查询态：`useAdminTable` 等仓内封装
+
+禁止魔法数字散落当表格高度。
+
+## 新增 hook
+
+1. 先评估能否进 `@ku-utils/hooks`
+2. 有简短 JSDoc + 从 `packages/hooks/src/index.ts` 导出
+3. 改包后 `pnpm --filter @ku-utils/hooks build`
+4. 细则见 `.cursor/skills/hooks/SKILL.md`
