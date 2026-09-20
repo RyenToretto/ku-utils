@@ -1,0 +1,46 @@
+---
+description: kv3-admin 实体选择器 — List 双模、XxxSelector、禁手填 ID
+globs:
+  - '**/*Selector*.vue'
+  - '**/DialogSelect*.vue'
+  - '**/useRowSelector.ts'
+alwaysApply: false
+---
+
+# 实体选择器（kv3-admin）
+
+> 最佳实践：`docs/best-practice/rule-skill-entity-selector/`。  
+> 金标样板：`schoolResource` 的 `SchoolResourceList`（`enableSelector`）+ `DialogSelectSchoolResource`。
+
+## 何时必须用
+
+控件在**挑业务实体**（有 list/page 合同、有展示名）→ 必须 `XxxSelector` / `DialogSelectXxx`。  
+**禁止**筛/表单手填 `*Id` / 包名；无现成选择器则**先建**再引用。  
+编辑已用选择器时，筛选同条件必须同形（可 `clearable` = 不限）。
+
+`DoSelector` 仅适合静态枚举 / 简单 remote 下拉，**不**替代分页实体选择器。
+
+## List 双模金标
+
+请求含 `pageNum`+`pageSize` 或响应含 `total` 时：
+
+| 文件 | 职责 |
+| --- | --- |
+| `XxxList.vue` | **唯一**表格逻辑；页面 CRUD + `enableSelector` 点选（`useRowSelector`） |
+| `XxxSelector.vue` | 假 `el-select`（隐藏原生下拉）+ 打开抽屉 |
+| `DialogSelectXxx.vue` | **薄壳** header/footer/`show()`，内挂 `XxxList` |
+
+**禁止**：在 `DialogSelectXxx` 内再写一套 `DoFilterPanel`+`el-table`。  
+**禁止**：`ScrollSelect` / remote `el-select` 截断首屏冒充分页实体。
+
+## 回传形状
+
+`{ id, label, item }`（单选对象/`null`，多选数组）；`id` 类型跟合同（常用 `string`）。
+
+## 抽屉表高
+
+根 class `drawer-model-selector`；`useDrawerPickListMaxHeight`；禁写死 px；禁对弹层表用页面 `useAdminTableMaxHeight`；`@opened` → `remeasureAfterLayout()`。
+
+## Demo
+
+每种选择器独立 Demo 页（`VITE_APP_USE_EXAMPLE=1`）：筛选区单选+多选；编辑弹层回填。禁止多选择器堆同一聚合页。

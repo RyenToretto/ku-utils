@@ -1,10 +1,18 @@
 # rule-skill-entity-selector — 实体选择器
 
-> **参考接入**：分页实体点选的金标。  
-> **来源**：oversea `selector-best-practices`（双模 List）+ jx-dsp 选择器专章（防漏表）。  
-> **参考模块**：本仓 kv3-admin 有部分 Demo；完整金标以 oversea / 本文为准。
+> **已落地**：`apps/kv3-admin/.cursor/rules/entity-selector.mdc` + `skills/selector/SKILL.md`  
+> **来源**：oversea `selector-best-practices` + jx-dsp 选择器专章。  
+> **同步**：改本模块或 `.cursor` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
-**类型**：Cursor Rule + Skill（`.mdc` + 可选 `SKILL.md`）
+**类型**：Cursor Rule + Skill（`.mdc` + `SKILL.md`）
+
+## 本仓落点
+
+| 路径                                                 | 说明                                             |
+| ---------------------------------------------------- | ------------------------------------------------ |
+| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`   | List 双模硬约束                                  |
+| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`    | 新建选择器步骤                                   |
+| `schoolResource` List + `DialogSelectSchoolResource` | 金标样板（可补 `SchoolResourceSelector` 触发器） |
 
 ## 推进接入分数
 
