@@ -25,6 +25,7 @@
 | `.cursor/skills/hooks/SKILL.md`                                | [rule-skill-hooks-composables](./rule-skill-hooks-composables/)                                                   |                     |
 | `.cursor/skills/tooling/SKILL.md`                              | [skill-tooling-eslint-prettier-ts](./skill-tooling-eslint-prettier-ts/)                                           |                     |
 | `apps/kv3-admin/.cursor/rules/project-structure.mdc`           | [rule-project-structure](./rule-project-structure/)                                                               | kv3-admin 目录约定  |
+| `apps/kv3-admin/.cursor/rules/mock-isolation.mdc`              | [rule-mock-isolation](./rule-mock-isolation/)                                                                     | 信封 code:0 / data  |
 
 ## 参考模块（本仓尚无独立 rule/skill）
 
@@ -32,7 +33,6 @@
 | ----------------------------------------------------------- | ---------------------- | ---------- |
 | [rule-api-contract](./rule-api-contract/)                   | API/字典/响应示例      | 同上       |
 | [rule-skill-entity-selector](./rule-skill-entity-selector/) | 选择器双模金标         | 同上       |
-| [rule-mock-isolation](./rule-mock-isolation/)               | Mock 隔离              | 同上       |
 | [rule-user-visible-copy](./rule-user-visible-copy/)         | 用户可见文案           | 同上       |
 | [rule-task-ledger](./rule-task-ledger/)                     | 任务台账               | 同上       |
 | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)               | 合同与上游增量         | 同上       |

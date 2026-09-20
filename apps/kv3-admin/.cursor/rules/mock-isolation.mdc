@@ -1,0 +1,38 @@
+---
+description: kv3-admin Mock 隔离 — 加载边界、信封 code:0/data、硬编码种子
+globs:
+  - '**/_mock/**'
+  - src/mock/**
+alwaysApply: false
+---
+
+# Mock 隔离（kv3-admin）
+
+> 最佳实践：`docs/best-practice/rule-mock-isolation/`。  
+> 信封与 `rule-api-contract` / `src/mock/utils.ts` / axios 拦截器一致。
+
+## 加载边界
+
+- Mock **只**由 Vite 插件（`dspMockPlugin` + `@example-mocks`）聚合加载；**业务 / `$MAPS` / 页面禁止** import `_mock` 当字典或种子
+- `/api/*` 未命中须回 JSON 信封，**禁止** `next()` 回落 SPA HTML
+
+## 本仓信封（冻结）
+
+| 项     | 字面量                          |
+| ------ | ------------------------------- |
+| 成功码 | `code === 0`（number）          |
+| 载荷   | `data`                          |
+| 工具   | `ok()` / `pageOk()` / `defaultSuccess`（`@/mock/utils`） |
+
+Mock、`_api`、拦截器必须同形；**禁止**双码兼容（如同时认 `0` 与 `'0000'`）或改载荷字段名。
+
+## 种子硬约束
+
+1. 表格/列表行必须**逐条硬编码**；禁 `Array.from` / `map` 工厂生成行（对已有种子 `filter`+分页除外）
+2. 默认首屏满页（`pageSize=10` → ≥10 条）；演示翻页建议 ≥ `pageSize×3`
+3. 无筛选时 `total` ≥ 3 且与过滤后条数一致
+4. 增删改默认可只回成功信封，不强制改种子（除非任务要求 CRUD 闭环）
+
+## Example 门控
+
+`VITE_APP_USE_EXAMPLE=0` 时 example mocks 走空 stub；业务仓生产构建勿打进 `_example`。
