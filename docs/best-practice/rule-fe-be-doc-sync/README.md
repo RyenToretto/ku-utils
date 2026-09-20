@@ -1,36 +1,38 @@
-# rule-fe-be-doc-sync — 前后端合同与增量文档
+# rule-fe-be-doc-sync — 前后端合同与上游增量
 
-> **参考接入**：供本项目或其他项目接入 `.cursor/rules` 时参考，非运行时依赖。
+> **参考接入**：合同真源、增量同步、wait 队列与 Agent 技能。  
+> **来源加强**：oversea `doc-backend-sync` skill；jx-dsp waitRD/waitConfirm + `docs/apis`。
 
-**类型**：Cursor Rule（`.mdc`）
-
-接口变更时同步类型/文档；避免「前端先猜字段」。
+**类型**：Cursor Rule + 可选 Skill（`doc-backend-sync`）
 
 ## 推进接入分数
 
-| 维度         | 分         | 说明                                           |
-| ------------ | ---------- | ---------------------------------------------- |
-| 覆盖度       | 12/25      | 仅部分仓有 sync rule（ai-router、picpopop 等） |
-| 可执行性     | 15/25      | 依赖团队是否有 OpenAPI/文档仓                  |
-| 可移植性     | 15/25      | 流程可移植，工具链各异                         |
-| Agent 可触发 | 8/15       | 有 rule 时好用，本仓较弱                       |
-| 单一真源     | 5/10       | 本仓尚无统一 fe-be sync rule                   |
-| **合计**     | **55/100** | 优先补齐本仓后再对外推广                       |
+| 维度         | 分         | 说明                         |
+| ------------ | ---------- | ---------------------------- |
+| 覆盖度       | 20/25      | 两仓已验证完整闭环           |
+| 可执行性     | 22/25      | 侦测→台账→逐条提交可照做     |
+| 可移植性     | 16/25      | 依赖合同仓/路径变量          |
+| Agent 可触发 | 14/15      | skill description 明确       |
+| 单一真源     | 8/10       | 合同仓 vs 实现仓角色清晰     |
+| **合计**     | **80/100** | 从 55 上修（模块化后可推广） |
 
 ## 最佳实践（精炼）
 
-1. **合同先行**：字段名、类型、枚举、错误码以约定文档或 OpenAPI 为准。
-2. 前端改 `_api` / types 时，检查是否需更新 docs 或 mock 种子。
-3. 后端改响应时，开「确认同步」清单：类型、Mock、列表展示、空态。
-4. 增量 API 文档：只记变更 delta，避免整本复制腐烂。
-5. Agent：无文档时标注「假设」，禁止把假设写成已确认合同。
+1. **合同仓 vs 实现仓**：需求/接口真源与后端实现仓分离；冲突以合同仓为准；禁止把实现仓当 PRD。
+2. **路径**：用环境变量（非业务 `VITE_` 打进包）；禁止文档散落本机绝对路径。
+3. **落地顺序**：已确认合同 → 运行时接口 → Mock → 文档示例（只读形状）。
+4. **前端 `docs/apis`（可选）**：按模块维护；与 `_api`/Mock 同形；设计稿未落地标状态。
+5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 Pn → 逐条 CDP + commit；纯 BE 标 `❎`。
+6. **wait 队列**：后端合同缺口 → waitRD；产品拍板 → waitConfirm；已确认必须消费移除，禁长期滞留。
+7. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合。
 
 ## 本仓落点
 
-- 待建：建议 `.cursor/rules/fe-be-doc-sync.mdc` + `docs/` 下 API 约定入口
-- 参考他仓：`frontend-backend-confirm-sync.mdc`、`incremental-api-docs.mdc`
+- 参考模块（ku-utils 库仓可不落地完整 wait 体系）
+- 业务仓范本：oversea `.cursor/skills/doc-backend-sync/`；jx-dsp `docs/waitRD/` + `docs/apis/`
 
 ## 验收清单
 
-- [ ] 有一份「接口合同入口」链接（哪怕是简短 markdown）
-- [ ] Agent 改 API 时会提示同步 mock/docs
+- [ ] 有合同入口（仓路径变量或 docs 链接）
+- [ ] Agent 改 API 会核对合同 / mock
+- [ ] 若启用上游同步：TASK 有快照表

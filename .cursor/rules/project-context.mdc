@@ -54,3 +54,23 @@ pnpm release   # 本地紧急发版
 ## Rules / Skills ↔ 最佳实践
 
 本仓已有的 `.cursor/rules` 与 `.cursor/skills`，须在 `docs/best-practice` 有对应模块并双向同步。对照表：`docs/best-practice/SYNC.md`；约定：`.cursor/rules/best-practice-sync.mdc`。
+
+## 管理端模块化索引（apps / 他仓参考）
+
+`project-context` **只保留壳层**（身份、门禁、索引）；专题拆到独立 rule/skill，禁止巨石 context。拆分指南：`docs/best-practice/_decomposition/README.md`。
+
+| 主题 | best-practice |
+| --- | --- |
+| 瘦身上下文 | `docs/best-practice/rule-project-context` |
+| 目录结构 | `docs/best-practice/rule-project-structure` |
+| API/字典 | `docs/best-practice/rule-api-contract` |
+| 列表筛选 | `docs/best-practice/rule-skill-admin-list-filter` |
+| 实体选择器 | `docs/best-practice/rule-skill-entity-selector` |
+| Mock | `docs/best-practice/rule-mock-isolation` |
+| 用户文案 | `docs/best-practice/rule-user-visible-copy` |
+| 任务台账 | `docs/best-practice/rule-task-ledger` |
+| 前后端增量 | `docs/best-practice/rule-fe-be-doc-sync` |
+| 自定义列 | `docs/best-practice/rule-skill-custom-columns` |
+| 皮肤 | `docs/best-practice/skill-theme-skin` |
+
+kv3-admin 列表约定仍以 `apps/kv3-admin/.cursor/rules/project-context.mdc` 为运行摘要，细则对齐上表模块。

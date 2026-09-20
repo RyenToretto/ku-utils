@@ -1,43 +1,20 @@
-# 接入 Prompt：rule-project-context
+# 接入 Prompt：rule-project-context（瘦身壳）
 
-> 本 Prompt 供 **本项目或其他项目** 参考接入用；落地目标以 `.cursor/rules` 为主。
-
-请在本仓库落实「项目上下文」最佳实践（来源：ku-utils `docs/best-practice/rule-project-context`）。
+> 来源：ku-utils `docs/best-practice/rule-project-context`。  
+> 目标：落地**瘦身** `.cursor/rules/project-context.mdc`，并把专题拆到独立 rules（见 `_decomposition`）。
 
 ## 目标
 
-新增或改写 `.cursor/rules/project-context.mdc`，让 Agent 默认知道本仓结构与硬约束。
+1. 若已有巨石 `project-context.mdc`（&gt;200 行）：**不要删业务知识**，按 [_decomposition/README.md](../_decomposition/README.md) 迁到专题文件，context 只留壳。
+2. 新建或改写 `project-context.mdc`（`alwaysApply: true`），必须含：
+   - 产品一句话 + 中文协作
+   - **合同冻结表**（成功码 / 载荷字段 / 未登录 / ID 类型 — 按本仓真实拦截器填写）
+   - 提交门禁命令
+   - 关联仓环境变量名（禁止绝对路径）
+   - **专题模块索引**（链到本仓 `.cursor/rules/*.mdc`）
+3. 禁止把列表四要素、选择器百科、Mock 种子规则继续堆在 context。
+4. 同步更新 `docs/best-practice` 对应模块或本仓 README 索引（若该仓维护 BP）。
 
-## 要求
+## 完成后
 
-1. 阅读仓库真实目录（packages/apps/src…），**不要照抄其他仓的包名**。
-2. 文件 frontmatter：`description` 写清何时读取；仓级上下文可用 `alwaysApply: true`。
-3. 正文用中文，至少包含：
-   - 项目概要（一句话 + 技术栈）
-   - 目录地图（树状即可）
-   - 硬约束（编号列表，≤10 条）
-   - 常用命令
-   - 若有 Example/Demo 门控或发版流程，写明
-4. 若是 monorepo 且存在独立 starter 应用：在应用目录再写一份更短的 `project-context.mdc`，只写应用约定，并链到根文档。
-5. 禁止写入密钥、生产账号、内网 token。
-6. 完成后用 3 个自测问题验证：目录、build 命令、一条硬约束；在回复里给出路径与摘要。
-
-## 参考结构
-
-```markdown
----
-description: <仓名> 全局上下文。了解结构/命令/硬约束时读取。
-globs:
-alwaysApply: true
----
-
-# <仓名> 全局上下文
-
-## 项目概要
-
-## 目录地图
-
-## 硬约束
-
-## 常用命令
-```
+给出：context 路径与行数、拆出的专题文件列表、合同冻结表摘要。

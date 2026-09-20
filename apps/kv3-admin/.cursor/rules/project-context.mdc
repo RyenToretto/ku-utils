@@ -11,6 +11,7 @@ alwaysApply: false
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv3-admin/docs/admin-list-page-pattern.md`
 - Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
+- **模块化最佳实践**（列表/选择器/Mock 等专题，避免巨石 context）：仓库根 `docs/best-practice/`（见 `_decomposition/README.md` 与模块地图 B 组）
 
 ## 目录骨架
 
