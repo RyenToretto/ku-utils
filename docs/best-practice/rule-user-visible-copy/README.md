@@ -1,9 +1,16 @@
 # rule-user-visible-copy — 用户可见文案
 
-> **参考接入**：Toast/空态/表单 tip 等禁止开发态泄漏。  
-> **来源**：jx-dsp / oversea `user-visible-copy.mdc`。
+> **已落地**：`apps/kv3-admin/.cursor/rules/user-visible-copy.mdc`  
+> **来源**：jx-dsp / oversea `user-visible-copy.mdc`。  
+> **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
 **类型**：Cursor Rule（`.mdc`）
+
+## 本仓落点
+
+| 路径                                                 | 说明                        |
+| ---------------------------------------------------- | --------------------------- |
+| `apps/kv3-admin/.cursor/rules/user-visible-copy.mdc` | Toast/校验/空态禁开发态泄漏 |
 
 ## 推进接入分数
 
