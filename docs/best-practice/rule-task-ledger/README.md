@@ -9,10 +9,11 @@
 
 ## 本仓落点
 
-| 路径                                           | 说明                       |
-| ---------------------------------------------- | -------------------------- |
-| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji |
-| `apps/kv3-admin/docs/task/TASK.md`             | 台账索引                   |
+| 路径                                           | 说明                                                                              |
+| ---------------------------------------------- | --------------------------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji                                                        |
+| `apps/kv3-admin/docs/task/TASK.md`             | 活跃看板（按人→按状态）                                                           |
+| `oversea-creative-web`（业务仓）               | 已对齐：历史 Pxx 只读 + 新 ID `{owner}{seq}` + 活跃看板；见该仓 `task-ledger.mdc` |
 
 ## 推进接入分数
 
