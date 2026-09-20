@@ -29,12 +29,12 @@
 | `apps/kv3-admin/.cursor/rules/entity-selector.mdc`             | [rule-skill-entity-selector](./rule-skill-entity-selector/)                                                       | List 双模           |
 | `apps/kv3-admin/.cursor/skills/selector/SKILL.md`              | [rule-skill-entity-selector](./rule-skill-entity-selector/)                                                       |                     |
 | `apps/kv3-admin/.cursor/rules/user-visible-copy.mdc`           | [rule-user-visible-copy](./rule-user-visible-copy/)                                                               |                     |
+| `apps/kv3-admin/.cursor/rules/api-contract.mdc`                | [rule-api-contract](./rule-api-contract/)                                                                         |                     |
 
 ## 参考模块（本仓尚无独立 rule/skill）
 
 | best-practice 模块                            | 说明                   | 落地后动作 |
 | --------------------------------------------- | ---------------------- | ---------- |
-| [rule-api-contract](./rule-api-contract/)     | API/字典/响应示例      | 同上       |
 | [rule-task-ledger](./rule-task-ledger/)       | 任务台账               | 同上       |
 | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/) | 合同与上游增量         | 同上       |
 | [_decomposition](./_decomposition/)           | 拆分指南（非接入模块） | —          |

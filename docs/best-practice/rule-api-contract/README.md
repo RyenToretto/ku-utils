@@ -1,9 +1,18 @@
 # rule-api-contract — API / 字典 / 响应示例边界
 
-> **参考接入**：请求入口、信封、禁兼容、`$MAPS`、响应示例只读形状。  
-> **来源**：jx-dsp / oversea `project-context` 中 API / `$MAPS` / 响应示例专节。
+> **已落地**：`apps/kv3-admin/.cursor/rules/api-contract.mdc`  
+> **来源**：jx-dsp / oversea `project-context` 中 API / `$MAPS` / 响应示例专节。  
+> **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
 **类型**：Cursor Rule（`.mdc`）
+
+## 本仓落点
+
+| 路径                                            | 说明                                        |
+| ----------------------------------------------- | ------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/api-contract.mdc` | 信封 `code:0`/`data`、`requestXxx`、`$MAPS` |
+| `apps/kv3-admin/src/plugins/axios.ts`           | 拦截器成功判定                              |
+| `apps/kv3-admin/src/mock/utils.ts`              | Mock 信封工具                               |
 
 ## 推进接入分数
 
@@ -26,11 +35,13 @@
 
 ### 合同冻结与禁兼容
 
-在 `project-context` 写死本仓成功码/载荷/未登录码后：
+**本仓 kv3-admin 冻结表**：成功 `code === 0`（拦截器兼容同码字符串 `'0'`）、载荷 `data`、分页 `lists`+`total`。
+
+写入后：
 
 - 禁 `@deprecated` 双轨 API 长期共存 → 直接删旧
 - 禁双字段兜底（`id ?? userId`、`message`/`msg` 双认）
-- 禁「先顶住联调再删」的兼容解析
+- 禁「先顶住联调再删」的兼容解析；禁异合同码（如 `'0000'`/`result`）
 
 ### 响应示例边界
 
