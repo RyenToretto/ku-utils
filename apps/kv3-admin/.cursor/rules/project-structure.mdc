@@ -1,0 +1,44 @@
+---
+description: kv3-admin 目录结构与命名 — Layer/_module、DialogXxx、就近原则
+globs:
+  - src/modules/**/*
+alwaysApply: false
+---
+
+# 目录结构与命名（kv3-admin）
+
+> 与列表细则见 `project-context.mdc`、`docs/admin-list-page-pattern.md`。  
+> 最佳实践：`docs/best-practice/rule-project-structure/`。
+
+## 就近原则
+
+`_` 前缀目录放在**最小共享范围**：单页 → `_module`；子域多处 → 子域 `_xxx`；整域 → 域根；跨域 → `src/components|api|composables|maps`。先就近，第二使用方再上提。
+
+## 子业务骨架
+
+```text
+src/modules/<域>/<子业务>/
+├── _api/          # requestXxx
+├── _map/          # 可选 → $MAPS
+├── _mock/         # 仅 Mock 插件加载
+├── _module/       # XxxList / DialogXxx / XxxSelector
+└── XxxLayer.vue   # 薄壳 page-*；只挂 List + 根内 Dialog
+```
+
+- `_router` 在域根；禁止为空壳旧 path 保留空域目录
+- Example 仅 `VITE_APP_USE_EXAMPLE=1`；业务禁静态 import `_example`
+
+## 命名
+
+| 用途 | 命名 |
+| --- | --- |
+| 路由落点 | `XxxLayer.vue` |
+| 表格 | `_module/XxxList.vue` |
+| 弹层（含 drawer） | `DialogXxx.vue`（禁 `DrawerXxx`） |
+| 选择器 | `XxxSelector` + `DialogSelectXxx` |
+| HTTP | `_api` 内 `requestXxx` |
+
+## 具象化变量名
+
+`form`→`*Form`，`filters`→`listFilters`，`loading`→`tableLoading`/`submitLoading`，`visible`→`dialogVisible`。  
+`v-loading` 绑在 `el-table` 上，禁挂 `TableWrap`。

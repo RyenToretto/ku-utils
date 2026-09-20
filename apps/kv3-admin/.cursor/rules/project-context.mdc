@@ -15,14 +15,12 @@ alwaysApply: false
 
 ## 目录骨架
 
+细则见同目录 `project-structure.mdc`（就近原则、命名、`v-loading`）。摘要：
+
 ```text
 src/modules/<域>/<子业务>/
-├── _router/
-├── _api/
-├── _map/
-├── _mock/
-├── _module/          # XxxList.vue、DialogXxx.vue
-└── XxxLayer.vue
+├── _api/ _map/ _mock/ _module/
+└── XxxLayer.vue          # 薄壳；List / DialogXxx 在 _module
 ```
 
 ## 列表页硬约束

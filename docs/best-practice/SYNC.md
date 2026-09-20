@@ -23,20 +23,20 @@
 | `.cursor/skills/theme-skin/SKILL.md`                           | [skill-theme-skin](./skill-theme-skin/)                                                                           | `@ku-utils/skin`    |
 | `.cursor/rules/hooks-guide.mdc`                                | [rule-skill-hooks-composables](./rule-skill-hooks-composables/)                                                   |                     |
 | `.cursor/skills/hooks/SKILL.md`                                | [rule-skill-hooks-composables](./rule-skill-hooks-composables/)                                                   |                     |
+| `.cursor/skills/tooling/SKILL.md`                              | [skill-tooling-eslint-prettier-ts](./skill-tooling-eslint-prettier-ts/)                                           |                     |
+| `apps/kv3-admin/.cursor/rules/project-structure.mdc`           | [rule-project-structure](./rule-project-structure/)                                                               | kv3-admin 目录约定  |
 
 ## 参考模块（本仓尚无独立 rule/skill）
 
-| best-practice 模块                                                      | 说明                                | 落地后动作                  |
-| ----------------------------------------------------------------------- | ----------------------------------- | --------------------------- |
-| [rule-project-structure](./rule-project-structure/)                     | 目录 Layer/_module；来源 oversea/jx | 落地 `.mdc` → 上表          |
-| [rule-api-contract](./rule-api-contract/)                               | API/字典/响应示例                   | 同上                        |
-| [rule-skill-entity-selector](./rule-skill-entity-selector/)             | 选择器双模金标                      | 同上                        |
-| [rule-mock-isolation](./rule-mock-isolation/)                           | Mock 隔离                           | 同上                        |
-| [rule-user-visible-copy](./rule-user-visible-copy/)                     | 用户可见文案                        | 同上                        |
-| [rule-task-ledger](./rule-task-ledger/)                                 | 任务台账                            | 同上                        |
-| [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)                           | 合同与上游增量                      | 同上                        |
-| [skill-tooling-eslint-prettier-ts](./skill-tooling-eslint-prettier-ts/) | 工程配置                            | 若新增 tooling skill → 上表 |
-| [_decomposition](./_decomposition/)                                     | 拆分指南（非接入模块）              | —                           |
+| best-practice 模块                                          | 说明                   | 落地后动作 |
+| ----------------------------------------------------------- | ---------------------- | ---------- |
+| [rule-api-contract](./rule-api-contract/)                   | API/字典/响应示例      | 同上       |
+| [rule-skill-entity-selector](./rule-skill-entity-selector/) | 选择器双模金标         | 同上       |
+| [rule-mock-isolation](./rule-mock-isolation/)               | Mock 隔离              | 同上       |
+| [rule-user-visible-copy](./rule-user-visible-copy/)         | 用户可见文案           | 同上       |
+| [rule-task-ledger](./rule-task-ledger/)                     | 任务台账               | 同上       |
+| [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)               | 合同与上游增量         | 同上       |
+| [_decomposition](./_decomposition/)                         | 拆分指南（非接入模块） | —          |
 
 ## 全局机配置（`glb-*`）
 

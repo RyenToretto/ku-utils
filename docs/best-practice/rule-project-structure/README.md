@@ -1,10 +1,17 @@
 # rule-project-structure — 目录结构与命名
 
-> **参考接入**：管理端 Vue 仓目录约定。  
+> **已落地**：`apps/kv3-admin/.cursor/rules/project-structure.mdc`  
 > **来源**：oversea `project-structure.mdc` + jx-dsp 模块组织节。  
-> **参考模块**：本仓 ku-utils 未独立落地；落地后登记 [SYNC.md](../SYNC.md)。
+> **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
 **类型**：Cursor Rule（`.mdc`）
+
+## 本仓落点
+
+| 路径                                                 | 说明                                                          |
+| ---------------------------------------------------- | ------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/project-structure.mdc` | glob `src/modules/**/*`；就近原则 + Layer/_module + DialogXxx |
+| `apps/kv3-admin/.cursor/rules/project-context.mdc`   | 瘦身壳仍保留骨架摘要，细则以本 rule 为准                      |
 
 ## 推进接入分数
 
