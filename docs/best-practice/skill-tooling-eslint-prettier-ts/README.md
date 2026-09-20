@@ -1,6 +1,7 @@
 # skill-tooling-eslint-prettier-ts — 工程配置共享
 
-> **参考接入**：供本项目或其他项目接入 `.cursor/skills` 时参考，非运行时依赖。
+> **参考接入**：供本项目或其他项目接入 `.cursor/skills` 时参考，非运行时依赖。  
+> **本仓同步**：与 [`.cursor/skills/tooling/SKILL.md`](../../../.cursor/skills/tooling/SKILL.md) **双向同步**（见 [SYNC.md](../SYNC.md)）。
 
 **类型**：Cursor Skill（`SKILL.md`）
 
@@ -28,7 +29,7 @@ ESLint Flat Config、Prettier、tsconfig 分层；pnpm strict 下显式依赖。
 ## 本仓落点
 
 - `packages/eslint-config` / `prettier-config` / `tsconfig`
-- 历史仓内 `eslint-config` / `prettier-config` / `tsconfig` skills
+- [`.cursor/skills/tooling/SKILL.md`](../../../.cursor/skills/tooling/SKILL.md)
 
 ## 验收清单
 
