@@ -20,6 +20,7 @@
 | `apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc` | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                         |                     |
 | `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`        | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                         |                     |
 | `apps/kv3-admin/.cursor/skills/filter-panel-demo/SKILL.md`     | [rule-skill-admin-list-filter](./rule-skill-admin-list-filter/)                                                   |                     |
+| `.cursor/skills/theme-skin/SKILL.md`                           | [skill-theme-skin](./skill-theme-skin/)                                                                           | `@ku-utils/skin`    |
 
 ## 参考模块（本仓尚无独立 rule/skill）
 
@@ -33,7 +34,6 @@
 | [rule-task-ledger](./rule-task-ledger/)                                 | 任务台账                            | 同上                        |
 | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)                           | 合同与上游增量                      | 同上                        |
 | [skill-tooling-eslint-prettier-ts](./skill-tooling-eslint-prettier-ts/) | 工程配置                            | 若新增 tooling skill → 上表 |
-| [skill-theme-skin](./skill-theme-skin/)                                 | 皮肤                                | 若新增 skill → 上表         |
 | [rule-skill-hooks-composables](./rule-skill-hooks-composables/)         | hooks                               | 若新增 → 上表               |
 | [_decomposition](./_decomposition/)                                     | 拆分指南（非接入模块）              | —                           |
 

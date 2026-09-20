@@ -1,6 +1,7 @@
 # skill-theme-skin — 统一皮肤 / Token
 
-> **参考接入**：供本项目或其他项目接入 `.cursor/skills` 时参考，非运行时依赖。
+> **参考接入**：供本项目或其他项目接入 `.cursor/skills` 时参考，非运行时依赖。  
+> **本仓同步**：与 [`.cursor/skills/theme-skin/SKILL.md`](../../../.cursor/skills/theme-skin/SKILL.md) **双向同步**（见 [SYNC.md](../SYNC.md)）。
 
 **类型**：Cursor Skill（`SKILL.md`）
 
@@ -28,7 +29,8 @@
 ## 本仓落点
 
 - `packages/skin` + `TOKEN.md`
-- 历史 `theme-skin` skills（应对齐到本包）
+- [`.cursor/skills/theme-skin/SKILL.md`](../../../.cursor/skills/theme-skin/SKILL.md)
+- 约束摘要亦见根 `project-context` / `vue-standards`（`--ku-*` fallback）
 
 ## 验收清单
 
