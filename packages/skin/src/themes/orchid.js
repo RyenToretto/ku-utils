@@ -103,6 +103,7 @@ export default {
     'shadow-nav-active': '0 2px 12px rgba(112, 120, 153, 0.14)',
     'shadow-modal': '0 12px 32px rgba(26, 29, 40, 0.16)',
     'shadow-dropdown': '0 4px 16px rgba(26, 29, 40, 0.1)',
+    'loading-bg': 'rgba(255, 255, 255, 0.8)',
     'font-family-base':
       "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif",
     'font-family-mono': "'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace",
@@ -128,6 +129,7 @@ export default {
     'bg-active': 'rgba(139, 147, 176, 0.2)',
     'bg-tag': 'rgba(139, 147, 176, 0.14)',
     'bg-overlay': 'rgba(0, 0, 0, 0.74)',
+    'loading-bg': 'rgba(23, 23, 23, 0.8)',
     'bg-tooltip': '#eef0f2',
     'top-header-bg': '#3d4258',
     'top-header-text': '#e8e9ed',

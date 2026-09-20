@@ -155,8 +155,9 @@ const EL_STRUCTURAL_BLOCK = `\
   --el-box-shadow: var(--ku-shadow-modal);
   --el-box-shadow-light: var(--ku-shadow-dropdown);
   --el-box-shadow-base: var(--ku-shadow-dropdown);
-  --el-mask-color: var(--ku-bg-overlay);
-  --el-mask-color-extra-light: var(--ku-bg-overlay);
+  /* v-loading 用浅色磨砂；弹层遮罩走 --el-overlay-color → --ku-bg-overlay */
+  --el-mask-color: var(--ku-loading-bg);
+  --el-mask-color-extra-light: var(--ku-loading-bg);
 
   --el-menu-bg-color: transparent;
   --el-menu-text-color: var(--ku-text-secondary);
