@@ -56,3 +56,11 @@ feat(utils): add formatCurrency function     ← 禁止英文描述
 Fix bug                                       ← 禁止无 type 格式
 feat: 新增功能新增功能新增功能...              ← 禁止超过 100 字符
 ```
+
+- **禁止**在 commit message 中加入 AI / 工具署名 trailer，尤其是：
+  ```
+  Co-authored-by: Cursor <cursoragent@cursor.com>
+  ```
+  以及任意 `Co-authored-by: …Cursor…` / `cursoragent@` 形式。
+  - commitlint 规则 `forbid-ai-coauthor` 硬拒绝。
+  - husky `commit-msg` 会先剥离 Cursor Agent 自动注入的该行，再跑 commitlint（避免 Agent 提交被平台强行注入拦死）。

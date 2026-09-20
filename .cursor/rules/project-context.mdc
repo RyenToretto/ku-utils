@@ -50,3 +50,7 @@ pnpm release   # 本地紧急发版
 - 改了包源码 → `pnpm build`（或对应 filter）
 - 新增包 → `packages/<name>`，含 README + package.json（publishConfig.access=public）+ commitlint scope
 - 详细流程见 `docs/npm-publish.md` 与 `docs/contributing.md`
+
+## Rules / Skills ↔ 最佳实践
+
+本仓已有的 `.cursor/rules` 与 `.cursor/skills`，须在 `docs/best-practice` 有对应模块并双向同步。对照表：`docs/best-practice/SYNC.md`；约定：`.cursor/rules/best-practice-sync.mdc`。

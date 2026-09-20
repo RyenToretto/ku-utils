@@ -1,5 +1,22 @@
+const FORBIDDEN_AI_COAUTHOR =
+  /Co-authored-by:.*Cursor|cursoragent@|Co-authored-by:.*<[^>]*cursor[^>]*>/i;
+
 export default {
   extends: ['@commitlint/config-conventional'],
+  plugins: [
+    {
+      rules: {
+        'forbid-ai-coauthor': ({ raw }) => {
+          const text = raw ?? '';
+          const ok = !FORBIDDEN_AI_COAUTHOR.test(text);
+          return [
+            ok,
+            '禁止包含 AI 署名 trailer（如 Co-authored-by: Cursor <cursoragent@cursor.com>）',
+          ];
+        },
+      },
+    },
+  ],
   rules: {
     'type-enum': [
       2,
@@ -49,5 +66,6 @@ export default {
       ],
     ],
     'subject-max-length': [2, 'always', 100],
+    'forbid-ai-coauthor': [2, 'always'],
   },
 };

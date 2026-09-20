@@ -1,0 +1,24 @@
+---
+description: 本仓 .cursor rules/skills 与 docs/best-practice 必须双向同步。改任一侧时读取。
+globs:
+alwaysApply: true
+---
+
+# best-practice 同步
+
+## 硬约束
+
+1. **本仓库已有的** `.cursor/rules/*.mdc` 与 `.cursor/skills/**/SKILL.md`，必须在 `docs/best-practice/` 有对应模块，且与 [docs/best-practice/SYNC.md](../../docs/best-practice/SYNC.md) 登记一致。
+2. 修改上述 `.cursor` 文件时：**同一任务内**更新对应 `docs/best-practice/<模块>/`（至少 `README.md` 的精炼实践 + 本仓落点；必要时 `INTEGRATION_PROMPT.md`）。
+3. 修改已落地模块的 `docs/best-practice/<模块>/` 时：**同一任务内**回写对应 `.cursor` 真源，禁止文档与 rule/skill 互相矛盾。
+4. **新增** rule/skill：先（或同时）建/扩 best-practice 模块，并在 `SYNC.md` 与 `docs/best-practice/README.md` 模块地图登记。
+5. **删除** rule/skill：更新 `SYNC.md`；模块降为「参考」或删除并在 README 说明。
+
+## 不必强行回写 `.cursor` 的情况
+
+- 仅存在于 `docs/best-practice`、本仓尚未落地的参考模块（见 `SYNC.md`「参考模块」表）。
+- 一旦落地成 `.cursor` 文件，立即按上表升级为「必须双向同步」。
+
+## 查表
+
+对应关系唯一真源：`docs/best-practice/SYNC.md`。

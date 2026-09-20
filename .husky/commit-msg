@@ -1,1 +1,21 @@
-pnpm commitlint --edit $1
+#!/usr/bin/env sh
+# Cursor Agent 会在提交时自动追加 Co-authored-by: Cursor；本仓禁止该 trailer。
+# 在 commitlint 之前剥离，保证最终 commit 干净且 hook 可通过。
+MSG_FILE="$1"
+if [ -n "$MSG_FILE" ] && [ -f "$MSG_FILE" ]; then
+  tmp="${MSG_FILE}.strip-ai"
+  # 删除 Cursor / cursoragent 署名行，并压缩文末多余空行
+  awk '
+    BEGIN { skipblank=0 }
+    /^Co-authored-by:[[:space:]]*Cursor[[:space:]]*</ { next }
+    /cursoragent@/ { next }
+    /^Co-authored-by:.*[Cc]ursor/ { next }
+    { lines[++n] = $0 }
+    END {
+      while (n > 0 && lines[n] ~ /^[[:space:]]*$/) n--
+      for (i = 1; i <= n; i++) print lines[i]
+    }
+  ' "$MSG_FILE" > "$tmp" && mv "$tmp" "$MSG_FILE"
+fi
+
+pnpm commitlint --edit "$MSG_FILE"
