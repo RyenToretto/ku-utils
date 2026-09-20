@@ -60,10 +60,11 @@
   1. 筛选项统一包在 inline el-form 内，并使用 @submit.prevent 阻止原生提交。
   2. 搜索、回车、清空和选项变化统一调用 search(true)，确保回到第一页。
   3. 页面请求态通过 loading 传入，组件会禁用主搜索按钮，避免重复请求。
-  4. 附加操作放入 #ctl；右侧操作区纵向排列（重置在上、搜索在下）。
+  4. #ctl 放附加操作；按钮与末行筛选项同排贴卡片右下角，横向「搜索 | 重置 | …」。
   5. 单行筛选使用 :line="1"；多行筛选用 :line="2" 并支持折叠。
   6. handleReset 先重置 filters，再调用 search(true)；列表页优先复用 useAdminTable。
-  7. 日期范围用 DateRange（禁止裸 el-date-picker 范围）；日期类筛选项必须排在所有筛选项最前；筛选日期默认可清空（`DateRange` 默认 clearable，仅合同要求必填时 `:clearable="false"`）。
+  7. 日期范围用 DateRange（禁止裸 el-date-picker 范围）；日期类筛选项必须排在所有筛选项最前；
+     筛选日期默认可清空（DateRange 默认 clearable，仅合同要求必填时 :clearable="false"）。
 -->
 <template>
   <section
@@ -128,6 +129,11 @@ import type { CSSProperties } from 'vue';
 const props = withDefaults(
   defineProps<{
     line?: number | string;
+    /**
+     * 分组式筛选 / slot 含非表单节点时关掉按行折叠：
+     * 按行高估算会把 tag 行等裁掉；此时交给内容自然撑开。
+     */
+    disableFold?: boolean;
     eachLineHeight?: number | string;
     maxCtlWidth?: string;
     hideSearch?: boolean;
@@ -136,6 +142,7 @@ const props = withDefaults(
   }>(),
   {
     line: 2,
+    disableFold: false,
     eachLineHeight: 52,
     maxCtlWidth: undefined,
     hideSearch: false,
@@ -159,10 +166,11 @@ const timer = ref<ReturnType<typeof setTimeout> | undefined>(undefined);
 const stopObserver = ref<(() => void) | null>(null);
 const refFilterContent = ref<HTMLDivElement | null>(null);
 
-const canFold = computed(() => lineCount.value > +props.line);
+const canFold = computed(() => !props.disableFold && lineCount.value > +props.line);
 
 const PANEL_GAP = 18;
 const wrapperHeight = computed<CSSProperties['height']>(() => {
+  if (props.disableFold) return 'auto';
   return `${+(canFold.value && isFold.value ? props.line : lineCount.value) * +props.eachLineHeight - PANEL_GAP}px`;
 });
 
@@ -223,21 +231,22 @@ onBeforeUnmount(() => {
   width: 100%;
 
   .do-filter-box {
-    display: flex;
-    align-items: stretch;
-    gap: 12px;
     position: relative;
+    display: flex;
+    gap: 18px;
+    align-items: stretch;
+    padding-right: 18px;
+    background-color: var(--el-card-bg-color);
+    border: 1px solid var(--el-border-color-light);
+    border-radius: var(--el-card-border-radius, 4px);
+    box-shadow: var(--el-box-shadow-light);
   }
 
   .do-filter-body {
+    position: relative;
     flex: 1;
     min-width: 0;
-    position: relative;
     padding: 18px 0;
-    box-shadow: var(--el-box-shadow-light);
-    border-radius: var(--el-card-border-radius, 4px);
-    border: 1px solid var(--el-border-color-light);
-    background-color: var(--el-card-bg-color);
   }
 
   .do-filter-wrapper {
@@ -247,7 +256,6 @@ onBeforeUnmount(() => {
 
     .do-filter-content {
       box-sizing: border-box;
-      padding-right: 18px;
       padding-left: 18px;
     }
 
@@ -266,53 +274,59 @@ onBeforeUnmount(() => {
   }
 
   .do-filter-ctl {
+    /* 与筛选项末行对齐：横向「搜索 | 重置 | …」，贴卡片右下角 */
+    --do-filter-ctl-gap: 12px;
+
     box-sizing: border-box;
+    display: flex;
     flex-shrink: 0;
-    align-self: center;
-    display: grid;
-    grid-template-rows: repeat(2, minmax(32px, auto));
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(80px, max-content);
-    gap: 8px;
-    padding: 0;
-    direction: rtl;
+    flex-wrap: wrap;
+    gap: var(--do-filter-ctl-gap);
+    align-items: center;
+    align-self: flex-end;
+    padding: 0 0 18px;
+
     :deep(.el-button) {
       position: relative;
+      min-width: 76px;
       margin: 0;
-      min-width: 76.46px;
-      width: 100%;
       padding-inline: 24px;
-      direction: ltr;
     }
-    :deep(.el-button .el-icon) {
+
+    /*
+     * EP loading 会把 spinner 插入文档流导致按钮变宽跳动。
+     * 把 ico 绝对定位进左侧 padding（24px 够放下 1em 图标），宽度与文案态一致。
+     */
+    :deep(.el-button.is-loading > .el-icon) {
       position: absolute;
       left: 8px;
-      margin-right: 0;
+      margin: 0;
     }
-    :deep(.el-button .el-icon + span) {
+
+    :deep(.el-button.is-loading > .el-icon + span) {
       margin-left: 0;
     }
   }
 
   .more-filter-option {
-    box-sizing: border-box;
-    padding: 2px 6px;
-    border: 0;
-    border-bottom-color: transparent;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    font-size: 12px;
-    color: var(--el-color-primary);
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--el-color-primary-light-9);
+    box-sizing: border-box;
     display: inline-flex;
-    align-items: center;
     gap: 4px;
+    align-items: center;
+    padding: 2px 6px;
+    border: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-color: transparent;
+    background-color: var(--el-color-primary-light-9);
+    color: var(--el-color-primary);
     font-family: inherit;
+    font-size: 12px;
     cursor: pointer;
+    transform: translateX(-50%);
   }
 }
 

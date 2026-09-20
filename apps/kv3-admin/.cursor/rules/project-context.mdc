@@ -8,8 +8,9 @@ alwaysApply: false
 
 - 对话与 commit message 使用中文
 - 本目录是 Vue 3 + Vite + Element Plus 管理端 starter，workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/custom-columns`
-- 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`
+- 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv3-admin/docs/admin-list-page-pattern.md`
+- Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
 
 ## 目录骨架
 
@@ -29,11 +30,21 @@ src/modules/<域>/<子业务>/
 2. 表格用 `<TableWrap>` 包裹
 3. 表格 class：`do-inner-scroller page-table hide-table-border`
 4. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks` 的 `useMaxHeight`）
-5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后
+5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；分组筛选 / 非表单节点用 `disableFold`
 6. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）
 7. 自定义列：`@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
 
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange` 等，见 `plugins/globalComponents.ts`。
+
+局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。
+
+## Demo 模块索引
+
+| 侧栏 | 路径前缀 | 说明 |
+|------|----------|------|
+| 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
+| 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
+| 自定义列 | `/example/custom-columns/*` | 01–08 |
 
 ## Example 门控
 

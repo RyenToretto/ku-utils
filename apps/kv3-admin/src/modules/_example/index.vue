@@ -1,29 +1,16 @@
 <template>
-  <main class="main-container">
-    <aside class="base-aside">
-      <div class="base-aside-body">
-        <SideMenu :data="menus" />
-      </div>
-    </aside>
-    <div
-      class="main-container-inner"
-      :class="{ 'use-full-view': route.meta.useFullView }"
-    >
-      <RouterView />
-    </div>
-  </main>
+  <DomainModuleShell
+    :menus="menus"
+    module-root-path="/example"
+  />
 </template>
 
 <script setup lang="ts">
-import { Collection, Grid, Menu, Share } from '@element-plus/icons-vue';
-import { markRaw, onMounted, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { Collection, Filter, Grid, Menu, Share } from '@element-plus/icons-vue';
+import { markRaw, ref } from 'vue';
 
-import SideMenu from '@/layouts/sideMenu/index.vue';
+import DomainModuleShell from '@/layouts/DomainModuleShell.vue';
 import type { SideMenuNode } from '@/layouts/sideMenu/SideMenuItem.vue';
-
-const route = useRoute();
-const router = useRouter();
 
 const menus = ref<SideMenuNode[]>([
   {
@@ -41,7 +28,32 @@ const menus = ref<SideMenuNode[]>([
     path: '/example/ui-kit',
     title: '基础组件',
     icon: markRaw(Grid),
-    children: ['/example/ui-kit/panel', '/example/ui-kit/cells'],
+    children: [
+      '/example/ui-kit/panel',
+      '/example/ui-kit/cells',
+      '/example/ui-kit/max-height',
+      '/example/ui-kit/name-pattern',
+      '/example/ui-kit/selector',
+      '/example/ui-kit/words-tag',
+      '/example/ui-kit/preview-video',
+      '/example/ui-kit/schedule-week',
+    ],
+  },
+  {
+    path: '/example/do-filter-panel',
+    title: '筛选面板',
+    icon: markRaw(Filter),
+    children: [
+      '/example/do-filter-panel/buttons-1',
+      '/example/do-filter-panel/buttons-2',
+      '/example/do-filter-panel/buttons-3',
+      '/example/do-filter-panel/buttons-4',
+      '/example/do-filter-panel/rows-1',
+      '/example/do-filter-panel/rows-2',
+      '/example/do-filter-panel/rows-3',
+      '/example/do-filter-panel/rows-50',
+      '/example/do-filter-panel/layout-fold',
+    ],
   },
   {
     path: '/example/custom-columns',
@@ -93,69 +105,4 @@ const menus = ref<SideMenuNode[]>([
     ],
   },
 ]);
-
-function firstLeafPath(node: string | SideMenuNode | undefined): string | undefined {
-  if (!node) return undefined;
-  if (typeof node === 'string') return node;
-  if (node.children?.length) return firstLeafPath(node.children[0]);
-  return node.path;
-}
-
-function triggerMenu() {
-  if (route.meta.isHeaderTab) {
-    const leaf = firstLeafPath(menus.value[0]);
-    if (leaf && route.path === '/example') {
-      router.replace(leaf).catch(console.error);
-    }
-  }
-}
-
-watch(
-  () => route.fullPath,
-  () => triggerMenu(),
-);
-
-onMounted(() => triggerMenu());
 </script>
-
-<style lang="scss" scoped>
-.main-container {
-  display: flex;
-  height: 100%;
-  overflow: hidden;
-  background: var(--ku-bg-sidebar);
-}
-
-.base-aside {
-  width: var(--ku-layout-aside-width, 220px);
-  flex-shrink: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: var(--ku-bg-sidebar);
-  border-right: 1px solid var(--ku-border-light);
-}
-
-.base-aside-body {
-  flex: 1;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 12px 0;
-}
-
-.main-container-inner {
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  overflow: auto;
-  padding: 0 20px 20px;
-  background: var(--ku-bg-page-gradient);
-  background-attachment: local;
-}
-
-.use-full-view {
-  padding: 0;
-}
-</style>
