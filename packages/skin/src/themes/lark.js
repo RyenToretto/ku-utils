@@ -112,10 +112,6 @@ export default {
     'shadow-dropdown': '0 4px 16px rgba(31, 35, 41, 0.08)',
 
     'loading-bg': 'rgba(255, 255, 255, 0.8)',
-
-    'font-family-base':
-      "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif",
-    'font-family-mono': "'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace",
   },
 
   // 只列出相对 light 变化的键，未出现的键沿用 light（html.dark 与 :root 同为 <html>，

@@ -104,9 +104,6 @@ export default {
     'shadow-modal': '0 12px 32px rgba(26, 29, 40, 0.16)',
     'shadow-dropdown': '0 4px 16px rgba(26, 29, 40, 0.1)',
     'loading-bg': 'rgba(255, 255, 255, 0.8)',
-    'font-family-base':
-      "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif",
-    'font-family-mono': "'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace",
   },
 
   // 只列出相对 light 变化的键，未出现的键沿用 light。

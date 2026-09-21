@@ -70,15 +70,15 @@
 
 ### 其它品牌层
 
-| 变量                                                                        | 说明                         |
-| --------------------------------------------------------------------------- | ---------------------------- |
-| `--ku-chart-ring-1` … `-4` / `--ku-chart-ring-track`                        | 图表环形色                   |
-| `--ku-scrollbar-width` / `-track` / `-thumb` / `-thumb-hover`               | 滚动条                       |
-| `--ku-selection-bg` / `-text`                                               | 文本选中态                   |
-| `--ku-shadow-card` / `-card-hover` / `-nav-active` / `-modal` / `-dropdown` | 品牌阴影                     |
-| `--ku-loading-bg`                                                           | Loading 遮罩底色（明暗不同） |
-| `--ku-font-family-base` / `-mono`                                           | 字体栈                       |
-| `--ku-layout-aside-width`                                                   | 侧栏宽度                     |
+| 变量                                                                        | 说明                                                                                      |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `--ku-chart-ring-1` … `-4` / `--ku-chart-ring-track`                        | 图表环形色                                                                                |
+| `--ku-scrollbar-width` / `-track` / `-thumb` / `-thumb-hover`               | 滚动条                                                                                    |
+| `--ku-selection-bg` / `-text`                                               | 文本选中态                                                                                |
+| `--ku-shadow-card` / `-card-hover` / `-nav-active` / `-modal` / `-dropdown` | 品牌阴影                                                                                  |
+| `--ku-loading-bg`                                                           | Loading 遮罩底色（明暗不同）                                                              |
+| `--ku-font-family-base` / `-mono`                                           | 正文字体 / 等宽。真源在 `base-tokens.js`（系统 UI 无衬线），皮肤勿覆盖成未托管的宋体/衬线 |
+| `--ku-layout-aside-width`                                                   | 侧栏宽度                                                                                  |
 
 ## 包内用法（必须带 fallback）
 

@@ -121,10 +121,6 @@ export default {
     'shadow-dropdown': '0 6px 20px rgba(46, 39, 43, 0.12)',
 
     'loading-bg': 'rgba(247, 243, 235, 0.88)',
-
-    'font-family-base':
-      "'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'PingFang SC', 'Microsoft YaHei', Georgia, serif",
-    'font-family-mono': "'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace",
   },
 
   dark: {

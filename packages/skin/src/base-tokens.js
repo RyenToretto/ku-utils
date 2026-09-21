@@ -43,6 +43,16 @@ export default {
   'font-weight-medium': '500',
   'font-weight-semibold': '600',
 
+  /*
+   * 正文字体：系统 UI 无衬线（与后台可读性对齐）。
+   * 禁止把未托管的展示字体（如 Noto Serif / Songti）放进 body 栈首位。
+   * 全局正文不引入第三方品牌字体文件。
+   */
+  'font-family-base':
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+  'font-family-mono':
+    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+
   /* ---- 通用阴影（组件用，区别于皮肤的 shadow-card 等品牌阴影） ---- */
   'shadow-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
   'shadow-base': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',

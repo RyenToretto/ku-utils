@@ -5,7 +5,7 @@ import { closeSplashGate, getSplashShownAt } from '@/bootstrap/splashGate';
 
 /** 最短展示，保证底部 indeterminate 进度条至少能看清一轮滑动 */
 const SPLASH_MIN_VISIBLE_MS = 720;
-/** 等字体就绪上限，避免拖死启动；配合 preload + font-display:optional */
+/** 等字体就绪上限，避免拖死启动（系统字体通常即时可用） */
 const SPLASH_FONT_WAIT_MS = 800;
 
 function waitWithTimeout(promise: Promise<unknown>, ms: number): Promise<void> {

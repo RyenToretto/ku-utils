@@ -28,6 +28,12 @@ description: >-
 
 `--el-fill-color` / `-light` 是内容区中性底（表格斑马纹 / 表头），禁止指到 `--ku-bg-sidebar`。深色侧栏会让文字按钮和表格行的 hover 底变深、字色仍是正文色。
 
+## 字体（强制）
+
+- 正文只用系统 UI 无衬线栈（`--ku-font-family-base`，真源 `base-tokens.js`）：`-apple-system` → `PingFang SC` → `Microsoft YaHei` …
+- **禁止**把未托管的展示字体（Noto Serif / Songti / Georgia serif）放进全局 body 栈。
+- **禁止**为正文引入第三方品牌字体文件；等宽用 `--ku-font-family-mono`（代码、ID、日志）。
+
 ## 何时读 TOKEN.md
 
 - 新增组件要用颜色/间距/圆角/阴影/层级
