@@ -3,7 +3,8 @@
 > 约定见 `.cursor/rules/task-ledger.mdc`。  
 > **按人分节 → 按状态分子节**；每人只改自己的 `## {owner}`。  
 > 只列 `⭕️` / `⚠️` / `⛔️`；`✅` / `❎` 出表，档案在 `./{id}.md`。  
-> **ID**：`{owner}{seq}`；取号扫同前缀 `.md`，禁止全局 `Pxx`。
+> **ID**：`{owner}{seq}-{slug}`（如 `koujianfeng1-batch-select`）；取号扫 `{owner}{数字}-*.md`。  
+> **禁止**全局 `Pxx` / `Pnn`，**禁止**无 slug 的 `koujianfeng1.md`。
 
 ## koujianfeng
 

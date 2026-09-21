@@ -22,9 +22,9 @@
 2. **路径**：用环境变量（非业务 `VITE_` 打进包）；禁止文档散落本机绝对路径。
 3. **落地顺序**：已确认合同 → 运行时接口 → Mock → 文档示例（只读形状）。
 4. **前端 `docs/apis`（可选）**：按模块维护；与 `_api`/Mock 同形；设计稿未落地标状态。
-5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 Pn → 逐条 CDP + commit；纯 BE 标 `❎`。
+5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 `{owner}{seq}-{slug}` → 逐条 CDP + commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
 6. **wait 队列**：后端合同缺口 → waitRD；产品拍板 → waitConfirm；已确认必须消费移除，禁长期滞留。
-7. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合。
+7. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合（台账 ID 约定以 task-ledger 为准）。
 
 ## 本仓落点
 

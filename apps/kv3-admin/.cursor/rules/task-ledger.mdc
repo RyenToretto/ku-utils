@@ -1,5 +1,5 @@
 ---
-description: kv3-admin 任务台账（精简）— owner 序号 ID、按人/状态分节活跃看板
+description: kv3-admin 任务台账（精简）— {owner}{seq}-{slug}、按人/状态活跃看板
 globs:
   - docs/task/**
 alwaysApply: false
@@ -8,7 +8,8 @@ alwaysApply: false
 # 任务台账（kv3-admin · 精简）
 
 > 最佳实践：`docs/best-practice/rule-task-ledger/`（完整版含 wait 双队列；本仓 starter 用精简落地）。  
-> 台账目录：`apps/kv3-admin/docs/task/`。
+> 台账目录：`apps/kv3-admin/docs/task/`。  
+> 上游增量 Skill 见参考模块 `rule-fe-be-doc-sync`（业务仓范本：oversea `doc-backend-sync`）。
 
 ## 何时登记
 
@@ -17,14 +18,16 @@ alwaysApply: false
 
 ## 任务 ID（多人防冲突 · 强制）
 
-**禁止**全局递增 `P1` / `P2`。
-
 | 规则 | 说明 |
 | --- | --- |
-| 格式 | `{owner}{seq}`，全小写，无分隔符 |
-| `owner` | `git config user.name` 转小写并去掉非 `[a-z0-9]`；也可用 GitHub login |
-| `seq` | 扫 `docs/task/{owner}*.md` 的最大序号 + 1（**以文件为准**） |
-| 示例 | `koujianfeng1`、`koujianfeng2`、`alice3` |
+| **新任务** | `{owner}{seq}-{slug}`（例：`koujianfeng1-batch-select`）。**禁止**只写 `koujianfeng1` |
+| `owner` | `git config user.name` 规范化（小写、仅 `[a-z0-9]`）；也可用 GitHub login |
+| `seq` | 扫 `docs/task/{owner}{数字}-*.md`，取 owner 后、第一个 `-` 前的数字，最大号 + 1（`koujianfeng10-…` 大于 `koujianfeng1-…`） |
+| `slug` | 英文 kebab，2～4 个词，看文件名就知道做什么；**禁止**空 slug、禁止中文、禁止再堆一句长标题 |
+| **禁止** | 全局 `Pnn` / `Pnn-<slug>.md` / `Pxx` 等任意不符形式；**禁止** `{owner}{seq}.md`（无 slug） |
+| **历史** | 若有旧 `Pxx-*` 或无 slug 文件，**只读保留**；继续收口仍改原文件，**不要**改号或迁文件名 |
+
+子任务行号：`{id}-01`、`{id}-02`（id 已含 slug，例：`koujianfeng1-batch-select-01`）。一次 commit 一条。
 
 ## `TASK.md`：按人 → 按状态（降冲突 + 防膨胀）
 
@@ -38,7 +41,7 @@ alwaysApply: false
 ### ⭕️ 待实现
 | ID | 标题 | 路径 |
 | --- | --- | --- |
-| koujianfeng1 | … | ./koujianfeng1.md |
+| koujianfeng1-batch-select | … | ./koujianfeng1-batch-select.md |
 
 ### ⚠️ 部分完成
 | ID | 标题 | 路径 |
@@ -68,8 +71,9 @@ alwaysApply: false
 | `✅` | 已完成 | 否（仅 `{id}.md`） |
 | `❎` | 确认先不做 / 非本仓义务 | 否（仅 `{id}.md`） |
 
-一次任务尽量一次 commit；收工时同步：更新 `{id}.md` + 从本人节移除。
+一次任务尽量一次 commit；收工时同步：更新 `{id}.md` + 从本人节移除。  
+Commit 前缀：`docs|feat|fix|chore({id}[-nn]): 中文摘要`。
 
 ## 与完整版差异
 
-本仓不强制 waitRD/waitConfirm 双队列与上游合同增量 Skill（见参考模块 `rule-fe-be-doc-sync`）。需要时再升格。
+本仓不强制 waitRD/waitConfirm 双队列与上游合同增量 Skill（见参考模块 `rule-fe-be-doc-sync`）。需要时再升格；升格后开账同样用 `{owner}{seq}-{slug}`，禁止 `Pnn`。

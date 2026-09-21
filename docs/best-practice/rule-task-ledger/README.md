@@ -9,11 +9,11 @@
 
 ## 本仓落点
 
-| 路径                                           | 说明                                                                              |
-| ---------------------------------------------- | --------------------------------------------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji                                                        |
-| `apps/kv3-admin/docs/task/TASK.md`             | 活跃看板（按人→按状态）                                                           |
-| `oversea-creative-web`（业务仓）               | 已对齐：历史 Pxx 只读 + 新 ID `{owner}{seq}` + 活跃看板；见该仓 `task-ledger.mdc` |
+| 路径                                           | 说明                                                                                                          |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji                                                                                    |
+| `apps/kv3-admin/docs/task/TASK.md`             | 活跃看板（按人→按状态）                                                                                       |
+| `oversea-creative-web`（业务仓）               | 已对齐：历史 Pxx 只读 + 新 ID `{owner}{seq}-{slug}` + 活跃看板；见该仓 `task-ledger.mdc` / `doc-backend-sync` |
 
 ## 推进接入分数
 
@@ -35,14 +35,16 @@
 
 ### 任务 ID（多人防冲突 · 强制）
 
-**禁止**全局递增 `P1` / `P2`（多人并行会撞号、合并紊乱）。
+| 规则       | 说明                                                                                                                       |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **新任务** | `{owner}{seq}-{slug}`（例：`koujianfeng1-use-now`）。**禁止**只写 `koujianfeng1`                                           |
+| `owner`    | `git config user.name` 规范化（小写、仅 `[a-z0-9]`）；也可用 GitHub login                                                  |
+| `seq`      | 扫 `docs/task/{owner}{数字}-*.md`，取 owner 后、第一个 `-` 前的数字，最大号 + 1（`koujianfeng10-…` 大于 `koujianfeng1-…`） |
+| `slug`     | 英文 kebab，2～4 个词，看文件名就知道做什么；禁止空 slug、禁止中文                                                         |
+| **禁止**   | 全局 `Pnn` / `Pnn-<slug>.md` / `Pxx` 等不符形式；**禁止** `{owner}{seq}.md`（无 slug）                                     |
+| **历史**   | 已有 `Pxx-*` 或无 slug 文件只读保留；继续收口改原文件，不要改号迁名                                                        |
 
-| 规则    | 说明                                                                      |
-| ------- | ------------------------------------------------------------------------- |
-| 格式    | `{owner}{seq}`，全小写，无分隔符                                          |
-| `owner` | `git config user.name` 规范化（小写、仅 `[a-z0-9]`）；也可用 GitHub login |
-| `seq`   | 扫 `docs/task/{owner}*.md` 最大序号 + 1（**以文件为准**，不依赖索引）     |
-| 示例    | `koujianfeng1`、`koujianfeng2`                                            |
+子任务行号：`{id}-01`、`{id}-02`（id 已含 slug）。
 
 ### `TASK.md`：按人 → 按状态（降冲突 + 防膨胀）
 
@@ -56,9 +58,9 @@
 
 ### ⭕️ 待实现
 
-| ID           | 标题 | 路径              |
-| ------------ | ---- | ----------------- |
-| koujianfeng1 | …    | ./koujianfeng1.md |
+| ID                        | 标题 | 路径                           |
+| ------------------------- | ---- | ------------------------------ |
+| koujianfeng1-batch-select | …    | ./koujianfeng1-batch-select.md |
 
 ### ⚠️ 部分完成
 
@@ -95,7 +97,7 @@
 
 ### 上游文档增量（Skill）
 
-合同仓有新 commit → 侦测快照 → 开 `{owner}{seq}` → 逐条实现+CDP+commit。见 [rule-fe-be-doc-sync](../rule-fe-be-doc-sync/) 与 glb chrome-debug。
+合同仓有新 commit → 侦测快照 → 开 `{owner}{seq}-{slug}` → 逐条实现+CDP+commit。见 [rule-fe-be-doc-sync](../rule-fe-be-doc-sync/) 与 glb chrome-debug。开账**禁止** `Pnn`，**禁止**无 slug。
 
 ### create/update 字段检查（可选加强）
 
@@ -104,7 +106,7 @@
 ## 验收清单
 
 - [ ] 「实现」类请求会先建 `{id}.md`
-- [ ] ID 为 `{owner}{seq}`，取号扫文件，无全局 `Pxx`
+- [ ] ID 为 `{owner}{seq}-{slug}`，取号扫 `{owner}{数字}-*.md`，无全局 `Pxx`、无「仅序号」文件名
 - [ ] `TASK.md` 按人→按状态分节，且仅活跃项；`✅`/`❎` 出索引、文件留档
 - [ ] 状态只用约定 emoji
 - [ ] FE/BE 边界不被 `⛔️` 误阻塞
