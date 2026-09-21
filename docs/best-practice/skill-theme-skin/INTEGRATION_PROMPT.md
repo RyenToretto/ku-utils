@@ -6,7 +6,7 @@
 
 ## 目标
 
-1. 若可使用 `@ku-utils/skin`：在应用入口引入对应主题 CSS；删除 apps 内重复的皮肤/色板文件（先列清单再删，危险操作需确认）。
+1. 若可使用 `@ku-utils/skin`：在应用入口引入金标皮肤（`import '@ku-utils/skin'` = `tome`）；删除 apps 内重复的皮肤/色板文件（先列清单再删，危险操作需确认）。
 2. 添加 `.cursor/skills/theme-skin/SKILL.md`：如何选 token、packages fallback 写法、禁止第二套变量。
 3. 检查 Element Plus 相关 CSS 变量：
    - `v-loading` / `--el-mask-color` 必须指向**浅色 loading** token

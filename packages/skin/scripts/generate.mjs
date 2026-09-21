@@ -1,9 +1,9 @@
 /**
  * @ku-utils/skin 生成器
  *
- * 皮肤是数据（src/themes/*.js），CSS 是产物。本脚本：
+ * 皮肤是数据（src/themes/tome.js），CSS 是产物。本脚本：
  * 1. 读 src/base-tokens.js + src/el-base.css，拼成与皮肤无关的基础层；
- * 2. 读每套 src/themes/*.js 的品牌语义色（light/dark 各一份），转成 --ku-*；
+ * 2. 读金标皮肤 src/themes/tome.js 的品牌语义色（light/dark），转成 --ku-*；
  * 3. 用 mix() 从品牌基色现算 Element Plus 的 --el-color-* 全套色阶（light-1..9 /
  *    dark-2 / rgb），不手写第二套色板；
  * 4. Element Plus 的结构类变量（bg/text/border/fill/menu/table/... ）统一写成
@@ -11,8 +11,7 @@
  *    --ku-* 原值，这些 --el-* 会通过变量引用自动跟着换，不必在 html.dark 里
  *    重复声明第二遍。
  *
- * 新增皮肤：新建 src/themes/<name>.js（照抄 lark.js 的形状改色值），重跑本脚本即可
- * 多出一个 dist/<name>.css，不需要改这个文件。
+ * 唯一金标皮肤：tome。新增皮肤需明确产品需求后再扩 THEME_FILES。
  */
 import { mkdirSync, readFileSync, watch, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -23,21 +22,9 @@ const srcDir = resolve(__dirname, '..', 'src');
 const distDir = resolve(__dirname, '..', 'dist');
 const watchMode = process.argv.includes('--watch');
 
-const THEME_FILES = [
-  'lark',
-  'breeze',
-  'dusk',
-  'ember',
-  'glen',
-  'hextech',
-  'honey',
-  'indigo',
-  'iris',
-  'orchid',
-  'sky',
-  'tome',
-];
-const DEFAULT_THEME = 'lark';
+/** 当前唯一皮肤；包默认导出 index.css = tome */
+const THEME_FILES = ['tome'];
+const DEFAULT_THEME = 'tome';
 
 /* ---------------------------------------------------------------- */
 /* 颜色工具：纯 RGB 线性混合，用来现算 Element Plus 的色阶            */

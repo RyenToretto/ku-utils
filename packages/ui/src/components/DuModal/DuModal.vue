@@ -81,7 +81,7 @@ function onMaskClick() {
 }
 
 .du-modal {
-  background: var(--ku-bg-card, #ffffff);
+  background: var(--ku-bg-card, #f7f3eb);
   border-radius: var(--ku-radius-md, 0.5rem);
   box-shadow: var(
     --ku-shadow-xl,
@@ -98,7 +98,7 @@ function onMaskClick() {
   align-items: center;
   justify-content: space-between;
   padding: var(--ku-space-4, 1rem) var(--ku-space-6, 1.5rem);
-  border-bottom: 1px solid var(--ku-border-default, #dee0e3);
+  border-bottom: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .du-modal-title {
@@ -111,12 +111,12 @@ function onMaskClick() {
   border: none;
   font-size: var(--ku-font-size-2xl, 1.5rem);
   cursor: pointer;
-  color: var(--ku-text-placeholder, #8f959e);
+  color: var(--ku-text-placeholder, #8a8172);
   line-height: 1;
 }
 
 .du-modal-close:hover {
-  color: var(--ku-text-primary, #1f2329);
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .du-modal-body {
@@ -130,7 +130,7 @@ function onMaskClick() {
   justify-content: flex-end;
   gap: var(--ku-space-2, 0.5rem);
   padding: var(--ku-space-4, 1rem) var(--ku-space-6, 1.5rem);
-  border-top: 1px solid var(--ku-border-default, #dee0e3);
+  border-top: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .du-modal-fade-enter-active,

@@ -692,7 +692,7 @@ export default {
     .cfg-panels {
       display: flex;
       flex: 1;
-      border: 1px solid var(--ku-border-light, #e5e6eb);
+      border: 1px solid var(--ku-border-light, #ddd4c6);
       border-radius: 2px;
       overflow: hidden;
 
@@ -700,14 +700,14 @@ export default {
         width: 240px;
         flex-shrink: 0;
         overflow-y: auto;
-        border-right: 1px solid var(--ku-border-light, #e5e6eb);
+        border-right: 1px solid var(--ku-border-light, #ddd4c6);
         background: var(--ku-neutral-50, #fafafa);
         padding: 8px 0;
 
         .nav-link {
           padding: 8px 16px;
           font-size: 13px;
-          color: var(--ku-text-secondary, #646a73);
+          color: var(--ku-text-secondary, #6d655a);
           cursor: pointer;
           line-height: 1.4;
           transition:
@@ -715,13 +715,13 @@ export default {
             color 0.15s;
 
           &:hover {
-            background: var(--ku-bg-hover, rgba(51, 112, 255, 0.06));
-            color: var(--ku-text-primary, #1f2329);
+            background: var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
+            color: var(--ku-text-primary, #4e4540);
           }
 
           &.is-active {
-            color: var(--ku-color-primary, #3370ff);
-            background: var(--ku-color-primary-bg, #f0f4ff);
+            color: var(--ku-color-primary, #9a6328);
+            background: var(--ku-color-primary-bg, #fbf6ec);
             font-weight: 500;
           }
         }
@@ -740,13 +740,13 @@ export default {
             padding: 12px 10px 8px;
             position: sticky;
             top: 0;
-            background: var(--ku-bg-card, #ffffff);
+            background: var(--ku-bg-card, #f7f3eb);
             z-index: 9;
 
             .grp-label {
               font-size: 13px;
               font-weight: 600;
-              color: var(--ku-text-primary, #1f2329);
+              color: var(--ku-text-primary, #4e4540);
             }
 
             .grp-actions {
@@ -755,7 +755,7 @@ export default {
 
               a {
                 font-size: 12px;
-                color: var(--ku-color-primary, #3370ff);
+                color: var(--ku-color-primary, #9a6328);
                 text-decoration: none;
 
                 &:hover {
@@ -782,7 +782,7 @@ export default {
 
                 .el-checkbox__label {
                   font-size: 13px;
-                  color: var(--ku-text-secondary, #646a73);
+                  color: var(--ku-text-secondary, #6d655a);
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
@@ -795,7 +795,7 @@ export default {
         .grp-empty {
           padding: 48px 16px;
           text-align: center;
-          color: var(--ku-text-placeholder, #8f959e);
+          color: var(--ku-text-placeholder, #8a8172);
           font-size: 13px;
         }
       }
@@ -803,29 +803,29 @@ export default {
       .cfg-right {
         width: 280px;
         flex-shrink: 0;
-        border-left: 1px solid var(--ku-border-light, #e5e6eb);
+        border-left: 1px solid var(--ku-border-light, #ddd4c6);
         display: flex;
         flex-direction: column;
-        background: var(--ku-bg-card, #ffffff);
+        background: var(--ku-bg-card, #f7f3eb);
 
         .sel-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 10px 12px;
-          border-bottom: 1px solid var(--ku-border-light, #e5e6eb);
-          background: var(--ku-table-header-bg, #f5f6f7);
+          border-bottom: 1px solid var(--ku-border-light, #ddd4c6);
+          background: var(--ku-table-header-bg, #ebe3d4);
           flex-shrink: 0;
 
           .sel-count {
             font-size: 13px;
-            color: var(--ku-text-secondary, #646a73);
+            color: var(--ku-text-secondary, #6d655a);
             font-weight: 500;
           }
 
           .sel-reset {
             font-size: 12px;
-            color: var(--ku-color-primary, #3370ff);
+            color: var(--ku-color-primary, #9a6328);
             text-decoration: none;
 
             &:hover {
@@ -848,19 +848,19 @@ export default {
               align-items: center;
               padding: 0 12px;
               height: 36px;
-              background: var(--ku-table-header-bg, #f5f6f7);
-              border-bottom: 1px solid var(--ku-bg-hover, rgba(51, 112, 255, 0.06));
+              background: var(--ku-table-header-bg, #ebe3d4);
+              border-bottom: 1px solid var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
 
               .sel-lock {
                 font-size: 12px;
-                color: var(--ku-text-disabled, #bbbfc4);
+                color: var(--ku-text-disabled, #a89f90);
                 margin-right: 8px;
                 flex-shrink: 0;
               }
 
               .sel-fix-name {
                 font-size: 13px;
-                color: var(--ku-text-secondary, #646a73);
+                color: var(--ku-text-secondary, #6d655a);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -873,19 +873,19 @@ export default {
             align-items: center;
             padding: 6px 12px;
             flex-shrink: 0;
-            background: var(--ku-bg-card, #ffffff);
+            background: var(--ku-bg-card, #f7f3eb);
 
             &::before,
             &::after {
               content: '';
               flex: 1;
-              border-top: 1px dashed var(--ku-border-default, #dee0e3);
+              border-top: 1px dashed var(--ku-border-default, #c5bcb0);
             }
 
             .sel-septip {
               padding: 0 8px;
               font-size: 11px;
-              color: var(--ku-text-disabled, #bbbfc4);
+              color: var(--ku-text-disabled, #a89f90);
               white-space: nowrap;
             }
           }
@@ -898,11 +898,11 @@ export default {
               align-items: center;
               height: 36px;
               padding: 0 4px 0 8px;
-              border-bottom: 1px solid var(--ku-table-header-bg, #f5f6f7);
+              border-bottom: 1px solid var(--ku-table-header-bg, #ebe3d4);
               transition: background 0.12s;
 
               &:hover {
-                background: var(--ku-table-header-bg, #f5f6f7);
+                background: var(--ku-table-header-bg, #ebe3d4);
               }
 
               .sel-drag-handle {
@@ -913,7 +913,7 @@ export default {
                 height: 100%;
                 cursor: grab;
                 flex-shrink: 0;
-                color: var(--ku-text-disabled, #bbbfc4);
+                color: var(--ku-text-disabled, #a89f90);
 
                 &:active {
                   cursor: grabbing;
@@ -932,7 +932,7 @@ export default {
               .sel-drag-name {
                 flex: 1;
                 font-size: 13px;
-                color: var(--ku-text-primary, #1f2329);
+                color: var(--ku-text-primary, #4e4540);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -947,7 +947,7 @@ export default {
                 align-items: center;
                 justify-content: center;
                 font-size: 12px;
-                color: var(--ku-text-disabled, #bbbfc4);
+                color: var(--ku-text-disabled, #a89f90);
                 cursor: pointer;
                 border-radius: 3px;
                 transition:
@@ -955,8 +955,8 @@ export default {
                   background 0.15s;
 
                 &:hover {
-                  color: var(--ku-color-danger, #f54a45);
-                  background: var(--ku-color-danger-bg, #fef1f1);
+                  color: var(--ku-color-danger, #9f6559);
+                  background: var(--ku-color-danger-bg, #fdf2f0);
                 }
               }
             }
@@ -965,7 +965,7 @@ export default {
               padding: 24px 12px;
               text-align: center;
               font-size: 13px;
-              color: var(--ku-text-disabled, #bbbfc4);
+              color: var(--ku-text-disabled, #a89f90);
             }
           }
         }
@@ -980,7 +980,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    border-top: 1px solid var(--ku-border-light, #e5e6eb);
+    border-top: 1px solid var(--ku-border-light, #ddd4c6);
 
     .left-btn-group {
       > span {
@@ -1009,13 +1009,13 @@ export default {
     &::-webkit-scrollbar-thumb {
       border-radius: 5px;
       -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      background: var(--ku-scrollbar-thumb, #c6c9ce);
+      background: var(--ku-scrollbar-thumb, #b8ad96);
     }
 
     &::-webkit-scrollbar-track {
       -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: 0;
-      background: var(--ku-border-light, #e5e6eb);
+      background: var(--ku-border-light, #ddd4c6);
     }
   }
 }

@@ -20,13 +20,14 @@
 
 ## 最佳实践（精炼）
 
-1. 应用引入一套皮肤 CSS；**apps 不自建第二套色板**。
-2. 组件写 `var(--ku-token, <默认浅色 fallback>)`，不把皮肤 CSS 打进 library 产物。
+1. 应用引入金标皮肤 CSS（`@ku-utils/skin` = `tome`）；**apps 不自建第二套色板**。
+2. 组件写 `var(--ku-token, <tome 浅色 fallback>)`，不把皮肤 CSS 打进 library 产物。
 3. Element Plus：结构变量转发 `--ku-*`；色阶由脚本从品牌色生成。
 4. **`--el-mask-color` → loading 浅色**（`--ku-loading-bg`）；**`--el-overlay-color` → 弹层深色**（`--ku-bg-overlay`）。勿混用。
 5. 契约变更：新增 token 走 minor；改名删除走 major（见 TOKEN.md）。
 6. **`--el-fill-color` / `-light` 用内容区中性底**（斑马纹 / 表头），不要指到侧栏。深色侧栏会让文字按钮和表格 hover 字色消失。
 7. **正文字体用系统 UI 无衬线**（`base-tokens` 的 `--ku-font-family-base`）。禁止未托管宋体/衬线进 body；不引入第三方品牌字体文件。
+8. **唯一金标 `tome`**，不维护多套备选皮肤。
 
 ## 本仓落点
 

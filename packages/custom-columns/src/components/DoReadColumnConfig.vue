@@ -153,7 +153,7 @@ defineExpose({ getColumnConfigFromLocal });
 }
 
 .read-from-local-delete:hover {
-  color: var(--ku-color-danger, #f54a45);
+  color: var(--ku-color-danger, #9f6559);
 }
 
 .read-from-local-line:hover .read-from-local-delete {
@@ -168,9 +168,9 @@ defineExpose({ getColumnConfigFromLocal });
 
 .read-from-local-config.active,
 .read-from-local-config:hover {
-  background-color: var(--ku-bg-card, #ffffff);
-  border-color: var(--ku-color-primary, #3370ff);
-  color: var(--ku-color-primary, #3370ff);
+  background-color: var(--ku-bg-card, #f7f3eb);
+  border-color: var(--ku-color-primary, #9a6328);
+  color: var(--ku-color-primary, #9a6328);
 }
 
 .read-from-local-config.active {

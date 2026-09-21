@@ -16,7 +16,7 @@ pnpm add @ku-utils/ui
 
 ```ts
 import { install } from '@ku-utils/ui';
-import '@ku-utils/skin'; // 换肤；不引入时组件会走 lark 浅色 fallback
+import '@ku-utils/skin'; // 金标 tome；不引入时组件会走 tome 浅色 fallback
 import '@ku-utils/ui/style';
 
 app.use(install);

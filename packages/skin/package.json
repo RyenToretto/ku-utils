@@ -4,21 +4,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "ku-utils 团队统一皮肤：--ku-* 语义变量 + Element Plus --el-* 桥接",
+  "description": "ku-utils 团队统一皮肤：--ku-* 语义变量 + Element Plus --el-* 桥接（唯一金标 tome）",
   "type": "module",
   "exports": {
     ".": "./dist/index.css",
-    "./lark": "./dist/lark.css",
-    "./breeze": "./dist/breeze.css",
-    "./dusk": "./dist/dusk.css",
-    "./ember": "./dist/ember.css",
-    "./glen": "./dist/glen.css",
-    "./hextech": "./dist/hextech.css",
-    "./honey": "./dist/honey.css",
-    "./indigo": "./dist/indigo.css",
-    "./iris": "./dist/iris.css",
-    "./orchid": "./dist/orchid.css",
-    "./sky": "./dist/sky.css",
     "./tome": "./dist/tome.css",
     "./base": "./dist/base.css"
   },

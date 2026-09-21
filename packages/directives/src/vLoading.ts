@@ -13,12 +13,12 @@ function injectStyles() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ku-loading-bg, rgba(255, 255, 255, 0.8));
+  background: var(--ku-loading-bg, rgba(247, 243, 235, 0.88));
   z-index: var(--ku-z-overlay, 1040);
   transition: opacity var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 .du-loading-spinner {
-  color: var(--ku-color-primary, #3370ff);
+  color: var(--ku-color-primary, #9a6328);
 }
 `;
   document.head.appendChild(style);

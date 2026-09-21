@@ -166,13 +166,13 @@ export default {
     .read-from-local-edit {
       right: 32px;
       &:hover {
-        color: var(--ku-color-primary, #3370ff);
+        color: var(--ku-color-primary, #9a6328);
       }
     }
     .read-from-local-delete {
       right: 10px;
       &:hover {
-        color: var(--ku-color-danger, #f54a45);
+        color: var(--ku-color-danger, #9f6559);
       }
     }
     &:hover {
@@ -190,9 +190,9 @@ export default {
       }
       &.active,
       &:hover {
-        background-color: var(--ku-bg-card, #ffffff);
-        border-color: var(--ku-color-primary, #3370ff);
-        color: var(--ku-color-primary, #3370ff);
+        background-color: var(--ku-bg-card, #f7f3eb);
+        border-color: var(--ku-color-primary, #9a6328);
+        color: var(--ku-color-primary, #9a6328);
       }
       &.active {
         opacity: 1;

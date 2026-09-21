@@ -13,8 +13,8 @@ description: >-
 ## 核心原则
 
 1. **唯一语义前缀** `--ku-*`；apps **不自建**第二套色板文件。
-2. **packages 内必须带 fallback**：`var(--ku-xxx, <lark 浅色值>)`，不把 skin CSS 打进组件库产物。
-3. 应用入口只 import **一套**生成后的皮肤 CSS（如 lark）；换肤改 import，不搞运行时多皮肤切换除非产品明确要求。
+2. **packages 内必须带 fallback**：`var(--ku-xxx, <tome 浅色值>)`，不把 skin CSS 打进组件库产物。
+3. **唯一金标皮肤 `tome`**：应用入口 `import '@ku-utils/skin'`（= tome）；不维护多套备选皮肤，不搞运行时多皮肤切换。
 4. 明暗只认 `html.dark`（禁止 `data-theme` / 页面自造暗色选择器当主方案）。
 
 ## mask ≠ overlay（强制）
@@ -46,7 +46,7 @@ description: >-
 pnpm --filter @ku-utils/skin build   # 或包内 generate 脚本
 ```
 
-改 `src/themes/*.js` / base tokens 后必须重新生成 CSS，再在 playground / kv3-admin 看 loading 与弹层。
+改 `src/themes/tome.js` / base tokens 后必须重新生成 CSS，再在 playground / kv3-admin 看 loading 与弹层。
 
 ## 禁止
 

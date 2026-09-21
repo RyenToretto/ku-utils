@@ -68,14 +68,14 @@ interface Props {
 
 <style>
 .du-card {
-  background: var(--ku-bg-card, #ffffff);
+  background: var(--ku-bg-card, #f7f3eb);
   border-radius: var(--ku-radius-md, 0.5rem);
   overflow: hidden;
   transition: box-shadow var(--ku-transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .du-card-bordered {
-  border: 1px solid var(--ku-border-default, #dee0e3);
+  border: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .du-card-hoverable:hover {
@@ -99,19 +99,19 @@ interface Props {
   align-items: center;
   justify-content: space-between;
   padding: var(--ku-space-4, 1rem) var(--ku-space-5, 1.25rem);
-  border-bottom: 1px solid var(--ku-border-default, #dee0e3);
+  border-bottom: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .du-card-title {
   font-size: var(--ku-font-size-base, 1rem);
   font-weight: var(--ku-font-weight-semibold, 600);
-  color: var(--ku-text-primary, #1f2329);
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .du-card-subtitle {
   margin-left: var(--ku-space-2, 0.5rem);
   font-size: var(--ku-font-size-sm, 0.875rem);
-  color: var(--ku-text-secondary, #646a73);
+  color: var(--ku-text-secondary, #6d655a);
 }
 
 .du-card-extra {
@@ -124,6 +124,6 @@ interface Props {
 
 .du-card-footer {
   padding: var(--ku-space-3, 0.75rem) var(--ku-space-5, 1.25rem);
-  border-top: 1px solid var(--ku-border-default, #dee0e3);
+  border-top: 1px solid var(--ku-border-default, #c5bcb0);
 }
 </style>

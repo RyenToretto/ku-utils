@@ -18,8 +18,8 @@
     >
       <h3>@ku-utils/ui（模块自动注册）</h3>
       <p class="pg-hint">
-        主色应为 Lark 蓝
-        <code class="pg-code">#3370ff</code>
+        主色应为 tome 金
+        <code class="pg-code">#9a6328</code>
         。Du* 无需手动 import。液态玻璃见左侧固定栏。
       </p>
       <div class="pg-row">

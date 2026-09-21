@@ -7,8 +7,8 @@
     <p class="pg-hint">
       入口已
       <code class="pg-code">import '@ku-utils/skin'</code>
-      ，主色应为 Lark 蓝
-      <code class="pg-code">#3370ff</code>
+      ，主色应为 tome 金
+      <code class="pg-code">#9a6328</code>
       。液态玻璃见左侧固定栏。
     </p>
 

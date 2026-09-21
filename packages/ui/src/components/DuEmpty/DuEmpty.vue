@@ -81,7 +81,7 @@ interface Props {
 }
 
 .du-empty-description {
-  color: var(--ku-text-placeholder, #8f959e);
+  color: var(--ku-text-placeholder, #8a8172);
   font-size: var(--ku-font-size-sm, 0.875rem);
   margin-top: var(--ku-space-2, 0.5rem);
 }

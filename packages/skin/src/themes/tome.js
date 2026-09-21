@@ -1,15 +1,13 @@
 /**
- * 巨效典籍 Tome — kv3-admin 默认皮肤。
+ * 巨效典籍 Tome — @ku-utils/skin 唯一金标皮肤。
  * 灵感：冒险手记商店 / 羊皮纸叠层（深褐炭顶栏 + 石板蓝侧栏 + 羊皮纸货架）。
- * 浅色实心主色控件：深金 + 白字（对齐 Featured）；暗色烛金 + 墨字。
- * 色值对齐 `.playwright-mcp/logs/design/tome-reference.md` 取样。
+ * 浅色实心主色控件：深金 + 白字；暗色烛金 + 墨字。
  *
  * 这里只放「品牌语义色」数据；间距 / 圆角 / 字号等通用 token 在 ../base-tokens.js。
  * Element Plus 的 --el-color-* 完整色阶由 scripts/generate.mjs 通过 mix() 从
  * 下面的基色算出，不在这里手写第二套色板。
  *
- * 要启用：跑一次 `pnpm --filter @ku-utils/skin build`，再 `import '@ku-utils/skin/tome'`。
- * kv3-admin 已默认引用本皮肤。
+ * 应用入口：`import '@ku-utils/skin'`（= tome）或 `import '@ku-utils/skin/tome'`。
  */
 export default {
   id: 'tome',

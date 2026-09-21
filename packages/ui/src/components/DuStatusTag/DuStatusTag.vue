@@ -43,27 +43,27 @@ interface Props {
 }
 
 .du-status-tag-success {
-  background: var(--ku-color-success-bg, #f0faf0);
-  color: var(--ku-success-600, #2ca91f);
+  background: var(--ku-color-success-bg, #f0f7f2);
+  color: var(--ku-success-600, #34834e);
 }
 
 .du-status-tag-warning {
-  background: var(--ku-color-warning-bg, #fff7e8);
-  color: var(--ku-warning-600, #d97400);
+  background: var(--ku-color-warning-bg, #fff9e8);
+  color: var(--ku-warning-600, #b48814);
 }
 
 .du-status-tag-danger {
-  background: var(--ku-color-danger-bg, #fef1f1);
-  color: var(--ku-danger-600, #d03f3b);
+  background: var(--ku-color-danger-bg, #fdf2f0);
+  color: var(--ku-danger-600, #87564c);
 }
 
 .du-status-tag-info {
-  background: var(--ku-color-info-bg, #f7f8fa);
-  color: var(--ku-primary-600, #245bdb);
+  background: var(--ku-color-info-bg, #f4f1ea);
+  color: var(--ku-primary-600, #8b572a);
 }
 
 .du-status-tag-default {
-  background: var(--ku-bg-sidebar, #eff0f1);
-  color: var(--ku-text-secondary, #646a73);
+  background: var(--ku-bg-sidebar, #4a596b);
+  color: var(--ku-text-secondary, #6d655a);
 }
 </style>

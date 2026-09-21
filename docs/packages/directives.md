@@ -36,4 +36,4 @@ app.mount('#app');
 | `vWatermark`        | 水印                                     |
 | `installDirectives` | 在 `App` 上注册上述指令（不含 vLoading） |
 
-`vLoading` / `vTooltip` 的颜色、圆角、层级走 `@ku-utils/skin` 的 `--ku-*`（带 lark 浅色 fallback）。应用侧建议 `import '@ku-utils/skin'`，不引入时指令仍按默认皮肤显示。
+`vLoading` / `vTooltip` 的颜色、圆角、层级走 `@ku-utils/skin` 的 `--ku-*`（带 tome 浅色 fallback）。应用侧建议 `import '@ku-utils/skin'`，不引入时指令仍按金标浅色显示。

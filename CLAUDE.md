@@ -117,10 +117,10 @@ pnpm release              # 构建 packages+tools 并 publish 到 npm
 
 ### 统一皮肤 `@ku-utils/skin`
 
-- 唯一语义变量前缀 `--ku-*`；`packages/ui`、`ui-vue2`、`directives`、`custom-columns`、`v2-custom-columns` 全部消费它，组件里写成 `var(--ku-*, <lark 浅色 fallback>)`，不把皮肤 CSS 打进组件产物
-- 皮肤是数据（`src/themes/*.js`），CSS 是产物：`scripts/generate.mjs` 用 `mix()` 从品牌基色现算 Element Plus 的 `--el-color-*` 完整色阶，不手写第二套色板
+- 唯一语义变量前缀 `--ku-*`；`packages/ui`、`ui-vue2`、`directives`、`custom-columns`、`v2-custom-columns` 全部消费它，组件里写成 `var(--ku-*, <tome 浅色 fallback>)`，不把皮肤 CSS 打进组件产物
+- 皮肤是数据（唯一金标 `src/themes/tome.js`），CSS 是产物：`scripts/generate.mjs` 用 `mix()` 从品牌基色现算 Element Plus 的 `--el-color-*` 完整色阶，不手写第二套色板
 - Element Plus 结构类变量（`--el-bg-color` 等）统一写成 `var(--ku-*)` 转发，只需在 `:root` 声明一次，`html.dark` 覆写对应 `--ku-*` 即可联动
-- 包默认导出是 `lark`；`kv3-admin` 默认 `@ku-utils/skin/tome`。另有备选皮肤数据（`breeze`/`dusk`/`ember`/`glen`/`hextech`/`honey`/`indigo`/`iris`/`orchid`/`sky`），尚未在其它应用启用；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
+- 包默认导出即 `tome`；不维护多套备选皮肤；变量契约见 [`packages/skin/TOKEN.md`](packages/skin/TOKEN.md)
 - `apps/*` 下不应该有自己的皮肤定义，统一来自 `packages/skin`；`kv3-admin` 已全量直连 `--ku-*`
 
 ### pnpm strict hoisting

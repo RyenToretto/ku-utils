@@ -28,7 +28,7 @@ function createTooltipEl(content: string): HTMLDivElement {
   el.style.cssText = `
     position: fixed;
     padding: 6px 10px;
-    background: var(--ku-bg-tooltip, #1f2329);
+    background: var(--ku-bg-tooltip, #2e272b);
     color: var(--ku-text-inverse, #ffffff);
     font-size: var(--ku-font-size-xs, 0.75rem);
     border-radius: var(--ku-radius-sm, 0.25rem);

@@ -127,7 +127,7 @@ function onOutside() {
 }
 
 const lazySrc = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64"><rect fill="#3370ff" width="160" height="64"/><text x="80" y="38" text-anchor="middle" fill="#fff" font-size="14">lazy</text></svg>',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64"><rect fill="#9a6328" width="160" height="64"/><text x="80" y="38" text-anchor="middle" fill="#fff" font-size="14">lazy</text></svg>',
 )}`;
 </script>
 

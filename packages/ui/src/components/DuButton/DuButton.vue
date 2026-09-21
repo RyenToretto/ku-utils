@@ -71,50 +71,50 @@ interface Props {
 }
 
 .du-button-default {
-  background: var(--ku-bg-card, #ffffff);
-  border-color: var(--ku-border-hover, #c6c9ce);
+  background: var(--ku-bg-card, #f7f3eb);
+  border-color: var(--ku-border-hover, #b0a494);
   color: var(--ku-neutral-700, #404040);
 }
 
 .du-button-default:hover {
-  border-color: var(--ku-color-primary, #3370ff);
-  color: var(--ku-color-primary, #3370ff);
+  border-color: var(--ku-color-primary, #9a6328);
+  color: var(--ku-color-primary, #9a6328);
 }
 
 .du-button-primary {
-  background: var(--ku-color-primary, #3370ff);
-  color: var(--ku-bg-card, #ffffff);
+  background: var(--ku-color-primary, #9a6328);
+  color: var(--ku-bg-card, #f7f3eb);
 }
 
 .du-button-primary:hover {
-  background: var(--ku-color-primary-hover, #245bdb);
+  background: var(--ku-color-primary-hover, #8b572a);
 }
 
 .du-button-success {
-  background: var(--ku-color-success, #34c724);
-  color: var(--ku-bg-card, #ffffff);
+  background: var(--ku-color-success, #3d9a5c);
+  color: var(--ku-bg-card, #f7f3eb);
 }
 
 .du-button-success:hover {
-  background: var(--ku-success-600, #2ca91f);
+  background: var(--ku-success-600, #34834e);
 }
 
 .du-button-warning {
-  background: var(--ku-color-warning, #ff8800);
-  color: var(--ku-bg-card, #ffffff);
+  background: var(--ku-color-warning, #d4a017);
+  color: var(--ku-bg-card, #f7f3eb);
 }
 
 .du-button-warning:hover {
-  background: var(--ku-warning-600, #d97400);
+  background: var(--ku-warning-600, #b48814);
 }
 
 .du-button-danger {
-  background: var(--ku-color-danger, #f54a45);
-  color: var(--ku-bg-card, #ffffff);
+  background: var(--ku-color-danger, #9f6559);
+  color: var(--ku-bg-card, #f7f3eb);
 }
 
 .du-button-danger:hover {
-  background: var(--ku-danger-600, #d03f3b);
+  background: var(--ku-danger-600, #87564c);
 }
 
 .du-button-disabled {
