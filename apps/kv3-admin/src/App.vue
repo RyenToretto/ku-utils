@@ -1,5 +1,8 @@
 <template>
-  <el-config-provider :locale="zhCn">
+  <el-config-provider
+    :locale="zhCn"
+    :dialog="dialogConfig"
+  >
     <div
       class="app-entry"
       :class="{
@@ -31,6 +34,9 @@ import BaseHeader from '@/layouts/BaseHeader.vue';
 import router from '@/router';
 import { registerPreviewVideoHost } from '@/utils/previewMedia';
 import { fetchStaticVersion } from '@/utils/version';
+
+/** 表单弹层默认视口居中（Element Plus alignCenter） */
+const dialogConfig = { alignCenter: true };
 
 const route = useRoute();
 const previewVideoRef = ref<InstanceType<typeof DialogPreviewVideo> | null>(null);

@@ -30,7 +30,7 @@ src/modules/<域>/<子业务>/
 3. 表格 class：`do-inner-scroller page-table hide-table-border`
 4. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks` 的 `useMaxHeight`）
 5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；分组筛选 / 非表单节点用 `disableFold`
-6. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）
+6. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
 7. 自定义列：`@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
 
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange` 等，见 `plugins/globalComponents.ts`。

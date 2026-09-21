@@ -27,7 +27,7 @@ src/modules/<域>/<子业务>/
 - 加载：`v-loading="tableLoading"` 绑在 `el-table`，禁止绑 TableWrap
 - 筛选：`DoFilterPanel`；placeholder「不限」；单选且选项 ≤3 用 `el-radio-button`；日期在前、radio 在后；分组筛选用 `disableFold`
 - 日期范围：`DateRange`，禁止裸 `el-date-picker` 做范围
-- 弹层：`DialogXxx.vue`；关闭时若清空主键，禁止再自动 search
+- 弹层：`DialogXxx.vue`；`el-dialog` 默认视口居中（根 `ElConfigProvider` 的 `dialog.alignCenter`）；关闭时若清空主键，禁止再自动 search
 - 自定义列：`@ku-utils/custom-columns` + `useSchemaColumnConfig`
 
 ## 3. 选择器

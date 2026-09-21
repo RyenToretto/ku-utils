@@ -232,13 +232,16 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* ─── 全局响应式约束 ─────────────────────────────────────────── */
 
-/* 弹窗不超出视口（兜底约束，优先由 width prop 的 min() 表达式控制） */
+/* 弹窗不超出视口；垂直居中走 ElConfigProvider dialog.alignCenter（勿再写死 margin-top） */
 .el-overlay-dialog .el-dialog {
   display: flex;
   flex-direction: column;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
-  margin: 16px auto;
+}
+
+.el-overlay-dialog .el-dialog.is-align-center {
+  margin: auto;
 }
 
 .el-overlay-dialog .el-dialog__body {
