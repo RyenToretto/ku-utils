@@ -86,3 +86,52 @@
     }
   }
 }
+
+/*
+ * 表外全选（TableWrap #batch）：扩大热区 + 文案，避免孤零零 14px 方块。
+ * 金标仍是表头选择列；确需 #batch 时必须包一层 .batch-select-control。
+ */
+.batch-select-control {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 4px 10px 4px 6px;
+  border-radius: var(--ku-radius-base, 4px);
+  cursor: pointer;
+  user-select: none;
+  color: var(--ku-text-secondary, #6d655a);
+  outline: none;
+
+  &:hover {
+    background: var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
+    color: var(--ku-text-primary, #4e4540);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--ku-color-primary-bg, #fbf6ec);
+  }
+
+  &.is-active {
+    color: var(--ku-text-primary, #4e4540);
+  }
+
+  .do-select-cell.batch-select-box {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .batch-select-label {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .batch-select-count {
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--ku-color-primary, #9a6328);
+    white-space: nowrap;
+  }
+}

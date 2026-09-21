@@ -46,6 +46,8 @@
 **禁止**：在 `DialogSelectXxx` 内再写一套 `DoFilterPanel`+`el-table`+query hook。  
 **禁止**：`ScrollSelect` / remote `el-select` 截断首屏冒充分页。
 
+勾选与 CRUD：全选框金标在表格选择列 header；若放 `TableWrap` `#batch`，必须用 `.batch-select-control`（Demo：`/example/simple/batch-select`）。选择器模式不屏蔽已有新建/编辑/删除（及行内状态切换）入口。
+
 ### 回传形状
 
 `{ id, label, item }`（单选对象/`null`，多选数组）；`id` 类型跟合同（常用 `string`）。
@@ -63,3 +65,5 @@
 - [ ] 外键筛选项无手填 ID
 - [ ] 分页实体选择器只有一份 List 逻辑
 - [ ] 每选择器有独立 Demo
+- [ ] 多选全选：表头选择列，或 `#batch` + `.batch-select-control`（勿裸方块）
+- [ ] 选择器模式仍可走已有增删改入口

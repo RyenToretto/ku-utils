@@ -12,11 +12,11 @@ description: 在 kv3-admin 新建或改造分页实体选择器（List 双模）
 ## 步骤
 
 1. **确认合同**：list 是否分页（`pageNum`/`pageSize`/`total`）。是 → 双模；否 → 评估是否误用分页实体模式。
-2. **复用 List**：在既有 `XxxList.vue` 加 `enableSelector` + `useRowSelector`；**禁止**在 Dialog 内复制第二套表。
+2. **复用 List**：在既有 `XxxList.vue` 加 `enableSelector` + `useRowSelector`；**禁止**在 Dialog 内复制第二套表。全选框优先放选择列 header；若放 `#batch` 必须用 `.batch-select-control`。有 CRUD 时选择器模式勿屏蔽入口。
 3. **薄壳 Dialog**：`DialogSelectXxx.vue` — `el-drawer.drawer-model-selector` + header/footer + 内挂 List；对外 `show()` / confirm 回传 `{ id, label, item }`。
 4. **触发器**：`XxxSelector.vue` — 假 select 打开 Dialog；筛选项可 `clearable`。
 5. **表高**：List 在 drawer 内用 `useDrawerPickListMaxHeight`，`@opened` 调 `remeasureAfterLayout()`。
-6. **Demo**：Example 下独立页验证单选/多选/回填；业务页禁止手填 ID。
+6. **Demo**：Example 下独立页验证单选/多选/回填；业务页禁止手填 ID。表外全选见 `/example/simple/batch-select`。
 7. **对照金标**：`src/modules/_example/schoolResource/_module/`。
 
 ## 禁止项速查
@@ -25,3 +25,5 @@ description: 在 kv3-admin 新建或改造分页实体选择器（List 双模）
 - 手填 `*Id` 代替选择器
 - 写死 drawer 表 `max-height` px
 - 用页面 `useAdminTableMaxHeight` 量 drawer 表
+- `#batch` 里只放裸 `.do-select-cell`（无文案/热区）
+- 选择器模式无故隐藏已有增删改入口

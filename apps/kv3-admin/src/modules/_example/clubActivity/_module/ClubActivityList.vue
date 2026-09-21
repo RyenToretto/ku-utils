@@ -56,12 +56,29 @@
       <template #batch>
         <div class="batch-control">
           <div
-            class="do-select-cell batch-select-box"
-            :class="[statusOfSelect, { active: statusOfSelect !== 'none-selected' }]"
+            class="batch-select-control"
+            :class="{ 'is-active': statusOfSelect !== 'none-selected' }"
+            role="checkbox"
+            :aria-checked="
+              statusOfSelect === 'all-selected'
+                ? 'true'
+                : statusOfSelect === 'half-selected'
+                  ? 'mixed'
+                  : 'false'
+            "
+            tabindex="0"
             @click="toggleBatchSelect"
+            @keydown.enter.prevent="toggleBatchSelect"
+            @keydown.space.prevent="toggleBatchSelect"
           >
-            <el-icon v-if="statusOfSelect === 'all-selected'"><Check /></el-icon>
-            <el-icon v-if="statusOfSelect === 'half-selected'"><Minus /></el-icon>
+            <div
+              class="do-select-cell batch-select-box"
+              :class="[statusOfSelect, { active: statusOfSelect !== 'none-selected' }]"
+            >
+              <el-icon v-if="statusOfSelect === 'all-selected'"><Check /></el-icon>
+              <el-icon v-if="statusOfSelect === 'half-selected'"><Minus /></el-icon>
+            </div>
+            <span class="batch-select-label">全选本页</span>
           </div>
           <span>批量操作：</span>
           <el-button

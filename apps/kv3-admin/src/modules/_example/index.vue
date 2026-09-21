@@ -19,6 +19,7 @@ const menus = ref<SideMenuNode[]>([
     icon: markRaw(Collection),
     children: [
       '/example/simple/list',
+      '/example/simple/batch-select',
       '/example/school/list',
       '/example/clazz/list',
       '/example/club/list',

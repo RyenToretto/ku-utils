@@ -41,6 +41,7 @@ src/modules/<域>/<子业务>/
 
 | 侧栏 | 路径前缀 | 说明 |
 |------|----------|------|
+| 示例管理 | `/example/simple/*` 等 | list；`batch-select` 表外全选 Demo；school/clazz/club |
 | 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
 | 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
 | 自定义列 | `/example/custom-columns/*` | 01–08 |

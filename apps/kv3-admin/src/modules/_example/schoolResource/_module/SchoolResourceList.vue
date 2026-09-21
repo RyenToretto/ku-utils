@@ -61,26 +61,13 @@
 
     <TableWrap
       :class="{ 'drawer-pick-table-wrap': inDialog }"
-      :enable-do-header="!enableSelector || isMultiple"
+      :enable-do-header="!enableSelector"
     >
       <template
-        v-if="!enableSelector || isMultiple"
+        v-if="!enableSelector"
         #batch
       >
-        <div
-          v-if="isMultiple && enableSelector"
-          class="do-select-cell batch-select-box"
-          :class="[statusOfSelect, { active: statusOfSelect !== 'none-selected' }]"
-          @click="toggleBatchSelect"
-        >
-          <el-icon v-if="statusOfSelect === 'all-selected'"><Check /></el-icon>
-          <el-icon v-if="statusOfSelect === 'half-selected'"><Minus /></el-icon>
-        </div>
-
-        <div
-          v-if="!enableSelector"
-          class="batch-control"
-        >
+        <div class="batch-control">
           <span>批量操作：</span>
           <el-button
             class="ml-5"
@@ -125,10 +112,10 @@
         >
           <template #header>
             <div
-              v-if="!enableSelector"
+              v-if="isMultiple"
               class="do-select-cell batch-select-box"
               :class="[statusOfSelect, { active: statusOfSelect !== 'none-selected' }]"
-              @click="toggleBatchSelect"
+              @click.stop="toggleBatchSelect"
             >
               <el-icon v-if="statusOfSelect === 'all-selected'"><Check /></el-icon>
               <el-icon v-if="statusOfSelect === 'half-selected'"><Minus /></el-icon>
@@ -180,7 +167,7 @@
               :inactive-label="
                 $MAPS.example.schoolResource.schoolStatus.getLabel(SCHOOL_STATUS_DISABLED)
               "
-              :switchable="!enableSelector"
+              switchable
               :switching="isStatusSwitching(row.id)"
               active-tips="确认启用该学校？"
               inactive-tips="确认停用该学校？"
@@ -205,7 +192,6 @@
         </el-table-column>
 
         <el-table-column
-          v-if="!enableSelector"
           width="140"
           fixed="right"
           class-name="ops-column"
@@ -214,7 +200,7 @@
             <el-button
               type="primary"
               size="small"
-              @click="openCreate"
+              @click.stop="openCreate"
             >
               新建学校
             </el-button>
@@ -257,7 +243,6 @@
     </TableWrap>
 
     <DialogEditSchoolResource
-      v-if="!enableSelector"
       ref="dialogEditRef"
       @success="search(false)"
     />
