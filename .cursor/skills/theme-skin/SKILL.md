@@ -26,6 +26,8 @@ description: >-
 
 禁止把 loading mask 指到深色 overlay（会出大黑罩）。
 
+`--el-fill-color` / `-light` 是内容区中性底（表格斑马纹 / 表头），禁止指到 `--ku-bg-sidebar`。深色侧栏会让文字按钮和表格行的 hover 底变深、字色仍是正文色。
+
 ## 何时读 TOKEN.md
 
 - 新增组件要用颜色/间距/圆角/阴影/层级

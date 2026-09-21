@@ -25,6 +25,7 @@
 3. Element Plus：结构变量转发 `--ku-*`；色阶由脚本从品牌色生成。
 4. **`--el-mask-color` → loading 浅色**（`--ku-loading-bg`）；**`--el-overlay-color` → 弹层深色**（`--ku-bg-overlay`）。勿混用。
 5. 契约变更：新增 token 走 minor；改名删除走 major（见 TOKEN.md）。
+6. **`--el-fill-color` / `-light` 用内容区中性底**（斑马纹 / 表头），不要指到侧栏。深色侧栏会让文字按钮和表格 hover 字色消失。
 
 ## 本仓落点
 

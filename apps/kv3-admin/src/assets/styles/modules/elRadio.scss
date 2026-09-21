@@ -41,7 +41,7 @@
     z-index: 1;
     background-color: var(--el-radio-button-checked-bg-color, var(--el-color-primary)) !important;
     border-color: var(--el-radio-button-checked-border-color, var(--el-color-primary)) !important;
-    color: var(--el-radio-button-checked-text-color, var(--el-color-white)) !important;
+    color: var(--ku-text-on-primary, var(--el-color-white)) !important;
     box-shadow: -1px 0 0 0 var(--el-radio-button-checked-border-color, var(--el-color-primary)) !important;
   }
 

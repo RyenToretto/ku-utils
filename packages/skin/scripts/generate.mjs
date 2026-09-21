@@ -35,6 +35,7 @@ const THEME_FILES = [
   'iris',
   'orchid',
   'sky',
+  'tome',
 ];
 const DEFAULT_THEME = 'lark';
 
@@ -148,9 +149,10 @@ const EL_STRUCTURAL_BLOCK = `\
   --el-border-color-lighter: var(--ku-border-light);
   --el-border-color-extra-light: var(--ku-border-light);
   --el-border-color-hover: var(--ku-border-hover);
-  --el-fill-color: var(--ku-bg-sidebar);
-  --el-fill-color-light: var(--ku-bg-sidebar);
-  --el-fill-color-lighter: var(--ku-table-stripe-bg);
+  /* 中性填充是内容区浅底，不能用侧栏：侧栏是饰带，深色侧栏会让文字按钮 / 表格 hover 字色消失 */
+  --el-fill-color: var(--ku-table-header-bg);
+  --el-fill-color-light: var(--ku-table-stripe-bg);
+  --el-fill-color-lighter: var(--ku-bg-card);
   --el-fill-color-blank: var(--el-bg-color);
   --el-box-shadow: var(--ku-shadow-modal);
   --el-box-shadow-light: var(--ku-shadow-dropdown);

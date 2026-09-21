@@ -96,7 +96,7 @@
   &.page-table {
     --page-even-color: var(--ku-primary-50);
     .el-table__row.hover-row {
-      --page-even-color: var(--el-fill-color-light);
+      --page-even-color: var(--el-table-row-hover-bg-color);
     }
     .el-table__empty-block {
       min-height: calc(100vh - 420px);
@@ -145,7 +145,8 @@
       --major-table-cell-bg: #fcffec;
     }
     .el-table__body tr.hover-row > td.el-table__cell {
-      background-color: var(--el-fill-color-light);
+      background-color: var(--el-table-row-hover-bg-color);
+      color: var(--ku-text-primary);
     }
     // 隐藏表格纵向线条
     > .el-table.el-table--border,
@@ -265,12 +266,24 @@
   }
 }
 
+// EP 组件 CSS 按需注入，会在 .el-table 上把 hover 底色写成 fill-color-light，且晚于全局样式。
+// 双类提高优先级，保证仍是皮肤的内容区 hover，而不是中性填充。
+.el-table.el-table {
+  --el-table-row-hover-bg-color: var(--ku-bg-hover);
+}
+
 // 隔行变色：皮肤 --ku-table-stripe-bg（比 EP 默认多一层 .el-table，压过按需注入的 fill-color-lighter）
 .el-table.el-table--striped {
   .el-table__body tr.el-table__row--striped {
     td.el-table__cell {
       background-color: var(--ku-table-stripe-bg);
     }
+  }
+
+  .el-table__body tr.el-table__row--striped.hover-row > td.el-table__cell,
+  .el-table__body tr.el-table__row--striped:hover > td.el-table__cell {
+    background-color: var(--el-table-row-hover-bg-color);
+    color: var(--ku-text-primary);
   }
 }
 
@@ -279,8 +292,10 @@
   background-color: var(--el-table-tr-bg-color, var(--el-bg-color));
 }
 
-.el-table__body tr:hover > td.el-table__cell {
+.el-table__body tr:hover > td.el-table__cell,
+.el-table__body tr.hover-row > td.el-table__cell {
   background-color: var(--el-table-row-hover-bg-color);
+  color: var(--ku-text-primary);
 }
 
 .el-table__body tr.current-row > td {

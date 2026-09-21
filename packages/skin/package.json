@@ -19,6 +19,7 @@
     "./iris": "./dist/iris.css",
     "./orchid": "./dist/orchid.css",
     "./sky": "./dist/sky.css",
+    "./tome": "./dist/tome.css",
     "./base": "./dist/base.css"
   },
   "files": [

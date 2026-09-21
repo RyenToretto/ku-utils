@@ -1,11 +1,5 @@
-// P41 视觉契约：仅 top-header 固定深色；Mega Panel、Popover、Drawer 继续消费全局主题变量。
-// 禁止把 --top-header-* 下沉到 .layout-top 或浮层容器，避免 Light 模式浮层被误改为深色。
-
-// 顶栏底色：壳层固定纯黑，覆盖皮肤 `--ku-top-header-bg`（index.scss 晚于皮肤加载）
-:root,
-html.dark {
-  --ku-top-header-bg: #000000;
-}
+// 顶栏只消费皮肤 `--ku-top-header-*`，Light / Dark 由主题各自给出，壳层不再覆盖底色。
+// Mega Panel、Popover、Drawer 继续走页面主题变量，不要套用顶栏 token。
 
 // ─── 用户菜单 popover（teleport 出 DOM，需全局样式）─────────────
 .profile-menu-popover {
@@ -21,7 +15,7 @@ html.dark {
   .profile-menu-avatar {
     flex-shrink: 0;
     background: linear-gradient(135deg, var(--ku-color-primary), var(--ku-color-primary-hover));
-    color: #fff;
+    color: var(--ku-text-on-primary, #fff);
     font-weight: 700;
     font-size: 15px;
     box-shadow: 0 2px 8px rgba(var(--el-color-primary-rgb), 0.32);
@@ -253,11 +247,11 @@ html.dark {
   gap: 16px;
   min-height: 64px;
   padding: 0 20px;
-  background: #000000;
+  background: var(--ku-top-header-bg);
   color: var(--ku-top-header-text);
 }
 
-// 全局 ::selection 按浅底设计，落在固定深色顶栏上会失去对比度
+// 顶栏底色由皮肤决定，选区单独用顶栏 token，避免落到页面浅底选区色上
 .top-header ::selection,
 .top-header::selection {
   background: var(--ku-top-header-selection-bg);
@@ -349,7 +343,7 @@ html.dark {
     }
 
     .logo-update-dot {
-      border-color: #000000;
+      border-color: var(--ku-top-header-bg);
     }
 
     .logo-update-badge {
@@ -777,7 +771,7 @@ html.dark {
 
     .mega-nav-tile-icon {
       background: var(--el-color-primary);
-      color: #fff;
+      color: var(--ku-text-on-primary, #fff);
     }
 
     .mega-nav-tile-label {
@@ -1154,7 +1148,7 @@ html.dark {
   margin: 2px 0 8px;
 }
 
-/* 一级：分组标题（含图标）— 字重更大、主色更实 */
+/* 一级：分组标题（含图标）— 字色走侧栏专用 token，避免深色侧栏上仍用页面墨色 */
 .sidebar-nav .el-sub-menu__title,
 .side-menu .el-sub-menu__title {
   height: 42px;
@@ -1162,7 +1156,7 @@ html.dark {
   margin: 0 10px;
   padding: 0 10px !important;
   border-radius: 8px;
-  color: var(--ku-text-primary);
+  color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   font-size: 14px;
   font-weight: 600;
   transition:
@@ -1174,32 +1168,32 @@ html.dark {
     width: 18px;
     min-width: 18px;
     margin-right: 10px;
-    color: var(--ku-text-secondary);
+    color: var(--ku-text-on-sidebar-muted, var(--ku-text-secondary));
     flex-shrink: 0;
   }
 
   .el-sub-menu__icon-arrow {
-    color: var(--ku-text-placeholder);
+    color: var(--ku-text-on-sidebar-muted, var(--ku-text-placeholder));
     font-size: 12px;
     margin-right: 2px;
   }
 
   &:hover {
     background-color: var(--ku-bg-sidebar-hover) !important;
-    color: var(--ku-text-primary);
+    color: var(--ku-text-on-sidebar, var(--ku-text-primary));
 
     .el-icon {
-      color: var(--ku-color-primary);
+      color: var(--ku-text-on-sidebar, var(--ku-text-primary));
     }
   }
 }
 
 .sidebar-nav .el-sub-menu.is-active > .el-sub-menu__title,
 .side-menu .el-sub-menu.is-active > .el-sub-menu__title {
-  color: var(--ku-color-primary);
+  color: var(--ku-text-on-sidebar, var(--ku-text-primary));
 
   .el-icon {
-    color: var(--ku-color-primary);
+    color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   }
 }
 
@@ -1240,7 +1234,7 @@ html.dark {
   margin: 0 10px 4px;
   padding: 0 10px !important;
   border-radius: 8px;
-  color: var(--ku-text-primary);
+  color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   font-size: 14px;
   font-weight: 600;
 
@@ -1249,25 +1243,25 @@ html.dark {
     width: 18px;
     min-width: 18px;
     margin-right: 10px;
-    color: var(--ku-text-secondary);
+    color: var(--ku-text-on-sidebar-muted, var(--ku-text-secondary));
     flex-shrink: 0;
   }
 
   &:hover {
     background-color: var(--ku-bg-sidebar-hover);
-    color: var(--ku-text-primary);
+    color: var(--ku-text-on-sidebar, var(--ku-text-primary));
 
     .el-icon {
-      color: var(--ku-color-primary);
+      color: var(--ku-text-on-sidebar, var(--ku-text-primary));
     }
   }
 
   &.is-active {
     background-color: var(--ku-bg-sidebar-active) !important;
-    color: var(--ku-color-primary) !important;
+    color: var(--ku-text-on-sidebar-active, var(--ku-color-primary)) !important;
 
     .el-icon {
-      color: var(--ku-color-primary);
+      color: var(--ku-text-on-sidebar-active, var(--ku-color-primary));
     }
   }
 }
@@ -1280,7 +1274,7 @@ html.dark {
   margin: 1px 10px 1px 22px;
   padding: 0 12px 0 18px !important;
   border-radius: 6px;
-  color: var(--ku-text-secondary);
+  color: var(--ku-text-on-sidebar-muted, var(--ku-text-secondary));
   font-size: 13px;
   font-weight: 400;
   transition:
@@ -1289,12 +1283,12 @@ html.dark {
 
   &:hover {
     background-color: var(--ku-bg-sidebar-hover);
-    color: var(--ku-text-primary);
+    color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   }
 
   &.is-active {
     background-color: var(--ku-bg-sidebar-active) !important;
-    color: var(--ku-color-primary) !important;
+    color: var(--ku-text-on-sidebar-active, var(--ku-color-primary)) !important;
     font-weight: 600;
   }
 }
@@ -1307,7 +1301,7 @@ html.dark {
   margin: 1px 10px 1px 22px;
   padding: 0 12px 0 18px !important;
   border-radius: 6px;
-  color: var(--ku-text-primary);
+  color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   font-size: 13px;
   font-weight: 600;
 
@@ -1347,7 +1341,7 @@ html.dark {
   margin: 1px 10px 1px 34px;
   padding: 0 12px 0 18px !important;
   border-radius: 6px;
-  color: var(--ku-text-primary);
+  color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   font-size: 12.5px;
   font-weight: 600;
 
@@ -1431,7 +1425,7 @@ html.dark {
   background: var(--ku-bg-sidebar);
   border-radius: 8px;
   cursor: pointer;
-  color: var(--ku-text-secondary);
+  color: var(--ku-text-on-sidebar-muted, var(--ku-text-secondary));
   font-size: 14px;
   padding: 0;
   z-index: 1;
@@ -1449,7 +1443,7 @@ html.dark {
 .el-avatar.profile-avatar {
   flex-shrink: 0;
   background: linear-gradient(135deg, var(--ku-color-primary), var(--ku-color-primary-hover));
-  color: #fff;
+  color: var(--ku-text-on-primary, #fff);
   font-weight: 700;
   font-size: 15px;
   box-shadow: 0 2px 8px rgba(var(--el-color-primary-rgb), 0.28);
@@ -1543,6 +1537,33 @@ html.dark {
   .sidebar-profile .profile-more-btn {
     transition: none;
   }
+}
+
+/* 实心主按钮：hover 走 primary-hover，字色保持 text-on-primary。
+ * 不用 EP 的 light-3，深琥珀变浅后浅色字会看不清。 */
+.el-button--primary:not(.is-plain):not(.is-link):not(.is-text) {
+  --el-button-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  --el-button-hover-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  --el-button-active-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  --el-button-disabled-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  --el-button-hover-bg-color: var(--ku-color-primary-hover);
+  --el-button-hover-border-color: var(--ku-color-primary-hover);
+  --el-button-active-bg-color: var(--ku-color-primary-hover);
+  --el-button-active-border-color: var(--ku-color-primary-hover);
+}
+
+.el-button--primary.is-plain:not(.is-disabled):hover,
+.el-button--primary.is-plain:not(.is-disabled):active {
+  --el-button-hover-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  --el-button-active-text-color: var(--ku-text-on-primary, var(--el-color-white));
+  color: var(--ku-text-on-primary, var(--el-color-white));
+}
+
+/* 文字按钮（如确认气泡里的「取消」）：hover 用主色浅底 + 更深一档的主色字 */
+.el-button.is-text:not(.is-disabled):hover,
+.el-button.is-text:not(.is-disabled):focus-visible {
+  color: var(--ku-color-primary-hover);
+  background-color: var(--el-color-primary-light-9);
 }
 
 // ─── 1280px 窄屏适配 ──────────────────────────────────────────

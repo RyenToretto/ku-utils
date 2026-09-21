@@ -24,7 +24,7 @@
           font-weight: 400;
           text-decoration: none;
           transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-          color: #afafaf;
+          color: var(--ku-text-placeholder);
           cursor: pointer;
         }
       }
@@ -37,7 +37,7 @@
         font-size: 20px;
         line-height: 1.42857143;
         font-weight: 400;
-        color: #000000;
+        color: var(--ku-text-primary);
         cursor: text;
       }
     }
@@ -60,7 +60,7 @@
       border-radius: 0;
       font-size: 20px;
       font-weight: 400;
-      color: #595959;
+      color: var(--ku-text-secondary);
       line-height: 40px;
       outline: none !important;
       box-shadow: none !important;
@@ -77,12 +77,12 @@
     &.is-active {
       .el-radio-button__inner {
         background-color: transparent;
-        color: #409eff;
+        color: var(--ku-color-primary);
         outline: none !important;
         box-shadow: none !important;
       }
       &::after {
-        background-color: #409eff;
+        background-color: var(--ku-color-primary);
       }
     }
   }

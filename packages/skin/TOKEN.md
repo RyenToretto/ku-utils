@@ -39,15 +39,15 @@
 
 ### 背景 / 表面
 
-| 变量                                                                      | 说明                                                        |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| `--ku-bg-page-from` / `-to` / `--ku-bg-page` / `-gradient`                | 页面底色（渐变起止 + 兜底纯色 + 渐变简写）                  |
-| `--ku-bg-card` / `-card-elevated`                                         | 卡片底色 / 悬浮态卡片底色                                   |
-| `--ku-bg-sidebar` / `-sidebar-active` / `-sidebar-hover`                  | 侧栏底色及选中/hover                                        |
-| `--ku-table-stripe-bg` / `--ku-table-header-bg`                           | 表格斑马纹 / 表头底色                                       |
-| `--ku-bg-input` / `-hover` / `-active` / `-tag` / `-overlay` / `-tooltip` | 输入框 / 通用 hover-active 底色 / Tag 底色 / 遮罩 / Tooltip |
+| 变量                                                                      | 说明                                                           |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `--ku-bg-page-from` / `-to` / `--ku-bg-page` / `-gradient`                | 页面底色（渐变起止 + 兜底纯色 + 渐变简写）                     |
+| `--ku-bg-card` / `-card-elevated`                                         | 卡片底色 / 悬浮态卡片底色                                      |
+| `--ku-bg-sidebar` / `-sidebar-active` / `-sidebar-hover`                  | 侧栏底色及选中/hover。只给侧栏，不要拿去当按钮或表格的中性填充 |
+| `--ku-table-stripe-bg` / `--ku-table-header-bg`                           | 表格斑马纹 / 表头。同时桥接 `--el-fill-color*`，不能改用侧栏色 |
+| `--ku-bg-input` / `-hover` / `-active` / `-tag` / `-overlay` / `-tooltip` | 输入框 / 通用 hover-active 底色 / Tag 底色 / 遮罩 / Tooltip    |
 
-### 顶栏（壳层专用，业务壳可覆盖）
+### 顶栏（跟随皮肤，Light / Dark 各自声明，应用不要写死底色）
 
 | 变量                                                                                            | 说明                       |
 | ----------------------------------------------------------------------------------------------- | -------------------------- |
@@ -59,13 +59,14 @@
 
 ### 文字 / 边框
 
-| 变量                                                              | 说明                                                   |
-| ----------------------------------------------------------------- | ------------------------------------------------------ |
-| `--ku-text-primary` / `-secondary` / `-disabled` / `-placeholder` | 正文层级                                               |
-| `--ku-text-link` / `-link-hover` / `-inverse`                     | 链接 / 深色底上的反色文字                              |
-| `--ku-text-on-sidebar` / `-on-sidebar-muted`                      | 侧栏专用文字（侧栏底色特殊时可与 `text-primary` 不同） |
-| `--ku-border-default` / `-hover` / `-focus` / `-light`            | 边框四态                                               |
-| `--ku-divider`                                                    | 分割线                                                 |
+| 变量                                                                | 说明                                                           |
+| ------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `--ku-text-primary` / `-secondary` / `-disabled` / `-placeholder`   | 正文层级                                                       |
+| `--ku-text-link` / `-link-hover` / `-inverse`                       | 链接 / 深色底上的反色文字                                      |
+| `--ku-text-on-sidebar` / `-on-sidebar-muted` / `-on-sidebar-active` | 侧栏默认 / 次级 / 选中底上的文字（选中底较实的皮肤必须单独给） |
+| `--ku-text-on-primary`                                              | 实心主色按钮、选中 radio、当前页码上的文字                     |
+| `--ku-border-default` / `-hover` / `-focus` / `-light`              | 边框四态                                                       |
+| `--ku-divider`                                                      | 分割线                                                         |
 
 ### 其它品牌层
 
@@ -94,7 +95,7 @@
 
 - `packages/ui` 组件内联样式绑定的 `--ku-liquid-glass-*`、`--ku-liquid-floating-bar-*`：组件私有、运行时由 props 计算，不是皮肤契约。
 - `apps/kv3-admin` 业务代码已全量直连 `--ku-*`，不保留旧无前缀变量（`--primary-color`、`--bg-page` 等）的别名/桥接层。
-- 默认在用的只有 `lark`；`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 是已迁移好数据、但还没有应用启用的备选皮肤（`themes/*.js`），启用只需改一行 import，不需要改 `generate.mjs`。
+- 包默认导出仍是 `lark`。`kv3-admin` 默认 `@ku-utils/skin/tome`（典籍风）。`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 尚未在应用启用。启用改一行 import；新增皮肤需写入 `THEME_FILES` 并 `pnpm --filter @ku-utils/skin build`。
 
 ## 变更记录
 

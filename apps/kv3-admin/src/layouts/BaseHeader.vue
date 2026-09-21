@@ -66,8 +66,7 @@ function handleLogout() {
   flex-shrink: 0;
   z-index: 100;
   height: 56px;
-  /* 壳层固定纯黑：不走皮肤，不随 Light/Dark */
-  background: #000000;
+  background: var(--ku-top-header-bg);
   color: var(--ku-top-header-text);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }

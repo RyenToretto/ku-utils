@@ -17,12 +17,12 @@ import '@ku-utils/skin'; // 默认皮肤 = lark
 import '@ku-utils/ui/style';
 ```
 
-按需显式引入某一套皮肤（默认 = `lark`，另有 10 套备选皮肤数据，尚未在任何应用里启用）：
+按需显式引入某一套皮肤（包默认导出 = `lark`；`kv3-admin` 已默认 `@ku-utils/skin/tome`）：
 
 ```ts
 import '@ku-utils/skin/lark';
-// 或者切到备选皮肤之一：breeze / dusk / ember / glen / hextech / honey / indigo / iris / orchid / sky
-import '@ku-utils/skin/breeze';
+// 备选：breeze / dusk / ember / glen / hextech / honey / indigo / iris / orchid / sky / tome
+import '@ku-utils/skin/tome';
 ```
 
 只要通用间距/圆角/字号等 token，不要品牌色（例如自己实现的皮肤系统，只想借用 `--ku-space-*` / `--ku-radius-*`）：
@@ -41,7 +41,7 @@ document.documentElement.classList.toggle('dark', isDark);
 
 ## 换肤（compile-time）
 
-`@ku-utils/skin` 默认导出即 `lark`（当前唯一在用的皮肤）；`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 是从 jx-dsp 迁移过来的备选色板，已经是本包的子路径导出，还没有任何应用启用。业务方换肤只需要改一行 import（`@ku-utils/skin` → `@ku-utils/skin/<name>`），不需要在应用自己的目录下另外维护一份皮肤文件。
+`@ku-utils/skin` 默认导出即 `lark`；`kv3-admin` 默认引用 `@ku-utils/skin/tome`。其余 `breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` 仍为未启用备选。业务方换肤只改一行 import（`@ku-utils/skin` → `@ku-utils/skin/<name>`）。
 
 ## Token 契约
 
@@ -52,7 +52,7 @@ document.documentElement.classList.toggle('dark', isDark);
 - **皮肤是数据，CSS 是产物**：每套皮肤在 `src/themes/*.js` 里只维护品牌语义色（几十个 key），`scripts/generate.mjs` 现算 Element Plus 的完整色阶（`light-1..9` / `dark-2` / `rgb`），不手写第二套色板。
 - **一层语义，多套桥接**：业务和 `Du*` 组件只读 `--ku-*`；`--el-*` 全部是 `var(--ku-*)` 的转发或现算结果，不在皮肤里重复定义独立 hex。
 - **组件库带 fallback、不打皮肤 CSS**：`packages/ui` 等写成 `var(--ku-xxx, <lark 浅色值>)`，换肤由应用 `import '@ku-utils/skin'` 决定。
-- **新增皮肤零改代码**：复制 `src/themes/lark.js` 改色值即可多出一个 `dist/<name>.css`，不需要动 `scripts/generate.mjs`。
+- **新增皮肤**：复制 `src/themes/lark.js` 改色值，把 `id` 写入 `scripts/generate.mjs` 的 `THEME_FILES` 与 `package.json` exports，再 `pnpm --filter @ku-utils/skin build`。
 
 ## 本地开发
 

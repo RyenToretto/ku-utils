@@ -29,12 +29,12 @@ document.documentElement.classList.toggle('dark', isDark);
 
 ## 导出
 
-| 子路径                  | 说明                                                                                                                                        |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@ku-utils/skin`        | 默认皮肤（= `lark`）                                                                                                                        |
-| `@ku-utils/skin/lark`   | 显式引用 `lark` 皮肤（当前唯一在用）                                                                                                        |
-| `@ku-utils/skin/<name>` | 备选皮肤：`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky`，数据已就位但尚未在任何应用启用 |
-| `@ku-utils/skin/base`   | 只要间距/圆角/字号等通用 token，不含品牌色                                                                                                  |
+| 子路径                  | 说明                                                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@ku-utils/skin`        | 默认皮肤（= `lark`）                                                                                                                                          |
+| `@ku-utils/skin/lark`   | 显式引用 `lark` 皮肤（当前唯一在用）                                                                                                                          |
+| `@ku-utils/skin/<name>` | 备选：`breeze` / `dusk` / `ember` / `glen` / `hextech` / `honey` / `indigo` / `iris` / `orchid` / `sky` / `tome`（`tome`=冒险手记羊皮纸风，`kv3-admin` 默认） |
+| `@ku-utils/skin/base`   | 只要间距/圆角/字号等通用 token，不含品牌色                                                                                                                    |
 
 ## 设计原则
 

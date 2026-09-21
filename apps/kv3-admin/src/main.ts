@@ -9,8 +9,8 @@ import 'element-plus/es/components/message-box/style/css';
 
 import '@/assets/styles/fonts.css';
 import 'element-plus/theme-chalk/dark/css-vars.css';
-// 品牌皮肤（--ku-* + --el-* 桥接）统一交给 @ku-utils/skin，v1 只有 lark 一套
-import '@ku-utils/skin';
+// 品牌皮肤（--ku-* + --el-* 桥接）。本 starter 默认典籍风 tome，可改回 @ku-utils/skin（lark）
+import '@ku-utils/skin/tome';
 import '@/assets/styles/index.scss';
 
 import App from './App.vue';
