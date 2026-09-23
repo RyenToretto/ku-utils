@@ -22,17 +22,19 @@
 2. **路径**：用环境变量（非业务 `VITE_` 打进包）；禁止文档散落本机绝对路径。
 3. **落地顺序**：已确认合同 → 运行时接口 → Mock → 文档示例（只读形状）。
 4. **前端 `docs/apis`（可选）**：按模块维护；与 `_api`/Mock 同形；设计稿未落地标状态。
-5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 `{owner}{seq}-{slug}` → 逐条 CDP + commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
-6. **wait 队列**：后端合同缺口 → waitRD；产品拍板 → waitConfirm；已确认必须消费移除，禁长期滞留。
-7. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合（台账 ID 约定以 task-ledger 为准）。
+5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 `{owner}{seq}-{slug}` → 逐条 CDP（`report.ok=true`）+ commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
+6. **Phase E 完成度表（强制）**：收口后对话须输出 Markdown 主表（编号 / 摘要 / FE 边界 / 状态 / 落点 / CDP 留证），禁止只写散文；可选对照表（纯 BE）；附台账路径、commit 短 SHA、快照是否已对齐。
+7. **wait 队列**：后端合同缺口 → waitRD；产品拍板 → waitConfirm；已确认必须消费移除，禁长期滞留。
+8. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合（台账 ID 约定以 task-ledger 为准）。
 
 ## 本仓落点
 
 - 参考模块（ku-utils 库仓可不落地完整 wait 体系）
-- 业务仓范本：oversea `.cursor/skills/doc-backend-sync/`；jx-dsp `docs/waitRD/` + `docs/apis/`
+- 业务仓范本：oversea / ai-router `.cursor/skills/doc-backend-sync/`；jx-dsp `docs/waitRD/` + `docs/apis/`
 
 ## 验收清单
 
 - [ ] 有合同入口（仓路径变量或 docs 链接）
 - [ ] Agent 改 API 会核对合同 / mock
 - [ ] 若启用上游同步：TASK 有快照表
+- [ ] 若启用上游同步：skill Phase E 含完成度表模板；CDP 要求 `report.ok=true`
