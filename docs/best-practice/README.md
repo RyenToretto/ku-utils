@@ -33,7 +33,7 @@
 | 1    | [rule-project-context](./rule-project-context/)                         | rule  | **瘦身**上下文 + 专题索引 | 93   |
 | 2    | [rule-project-structure](./rule-project-structure/)                     | rule  | Layer/_module/Dialog 命名 | 88   |
 | 3    | [rule-commit-message](./rule-commit-message/)                           | rule  | `type(scope): 中文`       | 95   |
-| 4    | [rule-agent-guardrails](./rule-agent-guardrails/)                       | rule  | 禁兼容层、护栏            | 82   |
+| 4    | [rule-agent-guardrails](./rule-agent-guardrails/)                       | rule  | 禁兼容层、澄清提问、护栏  | 89   |
 | 5    | [rule-monorepo-dev](./rule-monorepo-dev/)                               | rule  | 依赖/新包/发版            | 85   |
 | 6    | [skill-tooling-eslint-prettier-ts](./skill-tooling-eslint-prettier-ts/) | skill | ESLint/Prettier/tsconfig  | 90   |
 | 7    | [rule-vue-sfc-standards](./rule-vue-sfc-standards/)                     | rule  | Vue SFC + CSS             | 90   |
