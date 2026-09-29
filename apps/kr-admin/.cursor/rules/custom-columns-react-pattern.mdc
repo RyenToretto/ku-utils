@@ -1,0 +1,12 @@
+---
+description: React 自定义列模式约束（@ku-utils/r-custom-columns）
+globs: apps/kr-admin/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# 自定义列（React）
+
+- 使用 `useSchemaColumnConfig` + `schemasToColumns` + `DoTableHeader` / `DoConfigColumnDialog`
+- `storageKey` 全局唯一；破坏性 schema 变更递增 `schemaVersion`
+- 用 `SchemaColumnConfigContext.Provider` 包裹表格工具栏与弹层
+- 禁止给 Vue 包加 React 双轨；新能力只进 `@ku-utils/r-custom-columns`

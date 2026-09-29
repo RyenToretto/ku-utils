@@ -18,6 +18,7 @@
     "dev:n4": "pnpm --filter @ku-utils/playground-nuxt4 dev",
     "dev:admin": "pnpm --filter @ku-utils/kv3-admin dev",
     "dev:admin:v2": "pnpm --filter @ku-utils/kv2-admin dev",
+    "dev:admin:react": "pnpm --filter @ku-utils/kr-admin dev",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
@@ -43,9 +44,12 @@
     "eslint": "^9.27.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
+    "playwright": "1.51.0",
     "prettier": "^3.5.3",
+    "puppeteer-core": "24.2.0",
     "turbo": "^2.5.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "websocket": "^1.0.35"
   },
   "lint-staged": {
     "packages/**/*.{ts,tsx,js,jsx,vue}": [

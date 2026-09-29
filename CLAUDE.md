@@ -151,8 +151,9 @@ type(scope): 中文描述
 
 ## 关联项目
 
-- **kv3-admin**: `apps/kv3-admin`，本仓 Vue 3 管理端 starter，workspace 消费 `@ku-utils/*`
-- **kv2-admin**: `apps/kv2-admin`，Vue 2.7 管理端 starter，与 kv3 功能/规则 1:1 双生（见 `docs/best-practice/kv2-kv3-admin-parity/`）
+- **kv3-admin**: `apps/kv3-admin`，本仓 Vue 3 管理端 starter，workspace 消费 `@ku-utils/*`，端口 **3111**
+- **kv2-admin**: `apps/kv2-admin`，Vue 2.7 管理端 starter，与 kv3 功能/规则 1:1（见 `docs/best-practice/kv2-kv3-kr-admin-parity/`），端口 **3222**
+- **kr-admin**: `apps/kr-admin`，React 19 + Ant Design 管理端 starter，三生第三极，端口 **3333**（`pnpm dev:admin:react`）
 
 ## 已知注意事项
 

@@ -1,0 +1,15 @@
+{
+  "extends": "@ku-utils/tsconfig/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@example-routes": ["./src/modules/_example/_router/index.tsx"],
+      "@example-maps": ["./src/modules/_example/_maps/index.ts"],
+      "@example-mocks": ["./src/modules/_example/_mock/index.ts"],
+      "@header-example-tab": ["./src/layouts/headerExampleTabEntry.ts"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"]
+}

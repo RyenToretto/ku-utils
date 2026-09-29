@@ -53,3 +53,4 @@ coverage
 
 # Offline tarballs (generated)
 tarballs
+.playwright-mcp/chrome-profile-kr/

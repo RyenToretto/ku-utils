@@ -1,0 +1,157 @@
+/**
+ * CSS 文件夹造型（do-folder）。
+ *
+ * 色值注意：
+ * 若写 `linear-gradient(center top, #FFA000 … #F57F17 60%)`，`center top` 在现代 CSS
+ * 中是非法方向，渐变会被丢弃，实际接近纯色 `#FFA000` / `#FFCA27`。
+ * 本仓库用合法 `to bottom`，但停在亮黄/橙区，避免落到深琥珀 `#F57F17` 导致发脏发橙。
+ */
+
+.do-folder-wrapper {
+  /* 背面 / 页签：橙 */
+  --do-folder-back-bg: #ffa000;
+  --do-folder-back-image: linear-gradient(to bottom, #ffa000 0%, #ff9800 100%);
+  --do-folder-back-shadow: 0 -1px 1px rgba(0, 0, 0, 0.15);
+
+  /* 正面 flap：亮黄（对齐截图像素簇 ~#f8c830 / 源码 #FFCA27） */
+  --do-folder-front-bg: #ffca27;
+  --do-folder-front-image: linear-gradient(to bottom, #ffd54f 0%, #ffca27 55%, #fbc02d 100%);
+  --do-folder-front-shadow: 0 -1px 1px rgba(0, 0, 0, 0.15);
+
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 1.2em;
+  padding-bottom: 0.4em;
+  font-size: 80px;
+}
+
+.do-folder-footer {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 0.4em;
+}
+
+.do-folder-name {
+  overflow: hidden;
+  font-size: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.do-folder-core {
+  position: relative;
+  width: 1em;
+  height: 0.875em;
+  transform-style: preserve-3d;
+  perspective: 600px;
+}
+
+.do-back-folder,
+.do-front-folder {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.9375em;
+  max-width: 0.9375em;
+  height: 0.75em;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.do-back-folder {
+  border-radius: 0 5px 0 0;
+  background-color: var(--do-folder-back-bg);
+  background-image: var(--do-folder-back-image);
+  box-shadow: var(--do-folder-back-shadow);
+}
+
+/* 页签 */
+.do-back-folder::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -0.062em;
+  width: 0.375em;
+  height: 0.064em;
+  border-radius: 4px 16px 0 0;
+  clip-path: polygon(0% 0%, calc(100% - 6px) 0%, 100% 100%, 0% 100%);
+  background-color: var(--do-folder-back-bg);
+}
+
+.do-front-folder {
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--do-folder-front-bg);
+  background-image: var(--do-folder-front-image);
+  box-shadow: var(--do-folder-front-shadow);
+  /* 正面整体 0.95，封面可透过亮黄 flap */
+  opacity: 0.95;
+  transform: translate3d(-50%, -50%, 0) rotateX(-30deg);
+  transform-origin: 50% 100% 0;
+  transition: transform 1s ease;
+}
+
+.do-folder-core:not(.do-folder-static):hover {
+  z-index: 9;
+}
+
+.do-folder-core:not(.do-folder-static):hover > .do-front-folder {
+  transform: translate3d(-50%, -50%, 0) rotateX(-50deg);
+  cursor: pointer;
+}
+
+/**
+ * 静态模式：正面容器透明，flap 由 .front-folder-wrapper 承担；
+ * 贴底且最高 85%，顶部露出背面封面 / 页签。
+ */
+.do-folder-core.do-folder-static > .do-front-folder {
+  justify-content: flex-end;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  /* 透明度改挂在 wrapper，避免透明容器再乘一层 */
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 0) rotateX(0);
+}
+
+.do-folder-core.do-folder-static > .do-front-folder > .front-folder-wrapper {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  max-height: 85%;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--do-folder-front-bg);
+  background-image: var(--do-folder-front-image);
+  box-shadow: var(--do-folder-front-shadow);
+  opacity: 0.95;
+  font-size: 14px;
+}
+
+.do-folder-wrapper.do-folder-blue {
+  /* 蓝色变体用固定蓝，不用主题 primary（色相不同） */
+  --do-folder-back-bg: #42a5f5;
+  --do-folder-back-image: linear-gradient(to bottom, #42a5f5 0%, #1e88e5 100%);
+  --do-folder-back-shadow: 0 -1px 1px rgba(0, 0, 0, 0.15);
+
+  --do-folder-front-bg: #64b5f6;
+  --do-folder-front-image: linear-gradient(to bottom, #90caf9 0%, #64b5f6 55%, #42a5f5 100%);
+  --do-folder-front-shadow: 0 -1px 1px rgba(0, 0, 0, 0.15);
+}

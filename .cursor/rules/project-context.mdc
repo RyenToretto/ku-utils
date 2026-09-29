@@ -8,17 +8,18 @@ alwaysApply: true
 
 ## 项目概要
 
-前端公共库 Monorepo，pnpm v10 + Turborepo v2，覆盖 Vue 2 / Vue 3 / Nuxt 4。包以 `@ku-utils/*` **public** 发布到 npmjs.org。升版与 tag 走 Changesets + GitHub Actions。
+前端公共库 Monorepo，pnpm v10 + Turborepo v2，覆盖 Vue 2 / Vue 3 / Nuxt 4 / React。包以 `@ku-utils/*` **public** 发布到 npmjs.org。升版与 tag 走 Changesets + GitHub Actions。
 
 ## 目录地图
 
 ```
-packages/            → 可发布库（utils/hooks/ui/custom-columns/…）
+packages/            → 可发布库（utils/hooks/ui/custom-columns/r-custom-columns/hooks-react/…）
 tools/               → cli / create-app
 apps/
   playground-vue3|vue2|nuxt4
-  kv3-admin          → Vue3 + Element Plus starter（private）
-  kv2-admin          → Vue2.7 + Element UI starter（private；与 kv3 1:1 双生）
+  kv3-admin          → Vue3 + Element Plus starter（private；端口 3111）
+  kv2-admin          → Vue2.7 + Element UI starter（private；端口 3222；与 kv3 1:1）
+  kr-admin           → React19 + Ant Design starter（private；端口 3333；三生）
 docs/                → VitePress
 ```
 
@@ -75,4 +76,4 @@ pnpm release   # 本地紧急发版
 | 自定义列 | `docs/best-practice/rule-skill-custom-columns` |
 | 皮肤 | `docs/best-practice/skill-theme-skin` |
 
-kv3-admin / kv2-admin 列表约定分别以各自 `apps/*/ .cursor/rules/project-context.mdc` 为运行摘要；成对同步见 `docs/best-practice/kv2-kv3-admin-parity/`，细则对齐上表模块。
+kv3-admin / kv2-admin / kr-admin 列表约定分别以各自 `apps/*/.cursor/rules/project-context.mdc` 为运行摘要；三生同步见 `docs/best-practice/kv2-kv3-kr-admin-parity/`，细则对齐上表模块。开发端口：kv3=`3111`，kv2=`3222`，kr=`3333`（`pnpm dev:admin` / `dev:admin:v2` / `dev:admin:react`）。

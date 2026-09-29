@@ -1,0 +1,42 @@
+{
+  "name": "@ku-utils/kr-admin",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "React 19 + Ant Design 5 管理端 starter，workspace 消费 @ku-utils/*",
+  "scripts": {
+    "dev": "vite --host",
+    "predev": "node ./scripts/generate-static-version.mjs",
+    "prebuild": "node ./scripts/generate-static-version.mjs",
+    "build": "tsc -p tsconfig.app.json --noEmit && vite build",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@ku-utils/hooks-react": "workspace:*",
+    "@ku-utils/r-custom-columns": "workspace:*",
+    "@ku-utils/skin": "workspace:*",
+    "@ku-utils/utils": "workspace:*",
+    "antd": "^5.24.2",
+    "axios": "^1.17.0",
+    "dayjs": "^1.11.21",
+    "nprogress": "^0.2.0",
+    "qs": "^6.14.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@ku-utils/tsconfig": "workspace:*",
+    "@types/nprogress": "^0.2.3",
+    "@types/qs": "^6.9.18",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.5.2",
+    "sass": "^1.100.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.3.5"
+  }
+}

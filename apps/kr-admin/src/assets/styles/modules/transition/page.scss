@@ -1,0 +1,96 @@
+// 前进动画（向左滑动）
+.go-enter-from {
+  transform: translate3d(100%, 0, 0);
+}
+
+.go-enter-to,
+.go-leave-from {
+  transform: translate3d(0, 0, 0);
+}
+
+.go-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.go-enter-active,
+.go-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+// 后退动画（向右滑动）
+.back-enter-from {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.back-enter-to,
+.back-leave-from {
+  transform: translate3d(0, 0, 0);
+}
+
+.back-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
+
+.back-enter-active,
+.back-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+// 淡入淡出动画
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+// Nuxt page / layout（与 nuxt.config 中 pageTransition / layoutTransition 名称一致）
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active,
+  .layout-enter-active,
+  .layout-leave-active,
+  .go-enter-active,
+  .go-leave-active,
+  .back-enter-active,
+  .back-leave-active,
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+  }
+}

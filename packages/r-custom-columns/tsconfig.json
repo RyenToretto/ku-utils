@@ -1,0 +1,11 @@
+{
+  "extends": "@ku-utils/tsconfig/react.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true
+  },
+  "include": ["src"]
+}
