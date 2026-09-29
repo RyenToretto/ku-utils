@@ -1,6 +1,5 @@
 <template>
   <div class="page-fixed-cols">
-    <PageHeader subtitle="固定列" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

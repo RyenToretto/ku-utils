@@ -1,7 +1,5 @@
 <template>
   <div class="page-ui-kit-preview-video">
-    <PageHeader subtitle="通过 openPreviewVideo 打开全局 DialogPreviewVideo 宿主。" />
-
     <el-card
       shadow="never"
       class="ui-kit-demo-card"

@@ -1,6 +1,5 @@
 <template>
   <div class="page-version-columns">
-    <PageHeader subtitle="schemaVersion 缓存失效" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

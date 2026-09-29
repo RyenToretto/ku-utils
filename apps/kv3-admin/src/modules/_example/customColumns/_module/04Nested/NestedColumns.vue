@@ -1,6 +1,5 @@
 <template>
   <div class="page-nested-columns">
-    <PageHeader subtitle="嵌套表头：使用 SchemaColumn 递归渲染 children。" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

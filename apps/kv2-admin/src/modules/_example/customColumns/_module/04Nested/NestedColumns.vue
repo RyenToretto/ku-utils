@@ -1,6 +1,5 @@
 <template>
   <div class="page-nested-columns">
-    <PageHeader subtitle="嵌套表头（扁平对齐 Vue2）" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

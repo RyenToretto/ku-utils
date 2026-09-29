@@ -3,11 +3,6 @@
     class="page-simple-example-list"
     :class="{ 'fill-viewport': fillViewportLayout }"
   >
-    <PageHeader
-      :subtitle="pageDescription"
-      :breadcrumbs="pageTitle ? [{ label: pageTitle }] : undefined"
-    />
-
     <DoFilterPanel
       :line="resolvedFilterLine"
       :loading="tableLoading"
@@ -289,9 +284,6 @@ defineOptions({ name: 'SimpleExampleList' });
 
 const props = withDefaults(
   defineProps<{
-    /** 覆盖 PageHeader 标题（DoFilterPanel Demo 传入场景名） */
-    pageTitle?: string;
-    pageDescription?: string;
     /** 主搜索 + #ctl 附加按钮数；1=仅搜索 */
     filterButtonCount?: 1 | 2 | 3 | 4;
     /**
@@ -308,8 +300,6 @@ const props = withDefaults(
     fillViewportLayout?: boolean;
   }>(),
   {
-    pageTitle: undefined,
-    pageDescription: '',
     filterButtonCount: undefined,
     filterFieldCount: undefined,
     filterLine: undefined,
@@ -317,7 +307,7 @@ const props = withDefaults(
   },
 );
 
-const { pageTitle, pageDescription, fillViewportLayout } = toRefs(props);
+const { fillViewportLayout } = toRefs(props);
 
 type ExampleRow = {
   id: number;
@@ -443,7 +433,6 @@ async function switchExampleStatus(row: ExampleRow, nextStatus: string | number 
     min-height: 0;
     overflow-y: auto;
 
-    :deep(.page-header),
     :deep(.do-filter-panel) {
       flex-shrink: 0;
     }

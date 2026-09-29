@@ -1,9 +1,5 @@
 <template>
   <div class="page-ui-kit-panel">
-    <PageHeader
-      subtitle="DoFilterPanel（折叠筛选）+ TableWrap（#control / #ft）+ BasePagination + DateRange + DoSelector。"
-    />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"

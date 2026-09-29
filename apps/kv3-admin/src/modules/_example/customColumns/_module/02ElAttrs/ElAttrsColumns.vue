@@ -1,8 +1,5 @@
 <template>
   <div class="page-el-attrs-columns">
-    <PageHeader
-      subtitle="通过 schema.elAttrs 透传 Element Plus TableColumn 属性（如 show-overflow-tooltip）。"
-    />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

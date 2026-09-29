@@ -1,7 +1,5 @@
 <template>
   <div class="page-ui-kit-schedule-week">
-    <PageHeader subtitle="336 位半小时位图（7×48）；拖拽选择，mouseup 提交。" />
-
     <el-card
       shadow="never"
       class="ui-kit-demo-card"

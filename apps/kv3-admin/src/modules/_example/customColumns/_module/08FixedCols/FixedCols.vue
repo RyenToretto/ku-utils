@@ -1,8 +1,5 @@
 <template>
   <div class="page-fixed-cols">
-    <PageHeader
-      subtitle="身份列写在 schema 外（el-table fixed）；「数量」使用 schema.fixed，弹窗中不可取消勾选，并配合 alwaysVisibleColumns 提示。"
-    />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

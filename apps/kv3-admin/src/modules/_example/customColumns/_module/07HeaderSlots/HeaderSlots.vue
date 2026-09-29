@@ -1,8 +1,5 @@
 <template>
   <div class="page-header-slots">
-    <PageHeader
-      subtitle="表头三种写法：① headerTooltip ② renderHeader（VNode）③ 模板 #header。本页前两列走 SchemaColumn，后两列用模板插槽对照。"
-    />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

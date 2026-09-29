@@ -1,6 +1,5 @@
 <template>
   <div class="page-slots-columns">
-    <PageHeader subtitle="插槽列 Demo" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

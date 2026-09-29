@@ -1,7 +1,5 @@
 <template>
   <div class="page-ui-kit-do-selector">
-    <PageHeader subtitle="静态 options 与 remote payload；业务页优先用专用 Selector。" />
-
     <el-alert
       type="warning"
       :closable="false"

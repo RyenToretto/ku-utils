@@ -1,6 +1,5 @@
 <template>
   <div class="page-slots-columns">
-    <PageHeader subtitle="自定义 cell 插槽：对 ROI 使用颜色强调。" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

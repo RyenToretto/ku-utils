@@ -1,9 +1,5 @@
 <template>
   <div class="page-ui-kit-max-height">
-    <PageHeader
-      subtitle="多筛选项 + 宽表 + useAdminTableMaxHeight；折叠筛选后表格高度应重新收敛。"
-    />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"

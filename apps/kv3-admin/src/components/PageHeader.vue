@@ -66,6 +66,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 页头组件（面包屑 / subtitle）。
+ * 默认禁止业务与 Demo 页使用；非产品明确拍板不得挂载 title/subtitle。
+ * 顶栏 + 侧栏已表达页面身份。见 project-context / admin-list-page-pattern。
+ */
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 

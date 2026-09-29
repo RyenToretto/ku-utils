@@ -1,7 +1,5 @@
 <template>
   <div class="page-ui-kit-words-tag">
-    <PageHeader subtitle="侧栏推荐与行内推荐两种布局；max / tagLength 约束。" />
-
     <el-card
       shadow="never"
       class="ui-kit-demo-card"

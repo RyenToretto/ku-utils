@@ -1,9 +1,5 @@
 <template>
   <div class="page-ui-kit-cells">
-    <PageHeader
-      subtitle="CellState 只读 / 开关、CellDateTime 多种布局、DateRange、DoSelector、DoNumberSetter、DoTxtSetter。"
-    />
-
     <el-card
       shadow="never"
       class="demo-card"

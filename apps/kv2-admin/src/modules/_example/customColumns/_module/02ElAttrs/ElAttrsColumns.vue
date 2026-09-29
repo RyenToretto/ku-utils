@@ -1,6 +1,5 @@
 <template>
   <div class="page-el-attrs-columns">
-    <PageHeader subtitle="列属性透传 Demo" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

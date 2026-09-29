@@ -1,6 +1,5 @@
 <template>
   <div class="page-slot-components">
-    <PageHeader subtitle="单元格组件（扁平）" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

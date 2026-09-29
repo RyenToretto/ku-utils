@@ -1,9 +1,5 @@
 <template>
   <div class="page-simple-example-batch-select">
-    <PageHeader
-      subtitle="演示全选框放在 TableWrap #batch（表外）时的友好交互；金标仍是表头选择列，本页专门验收表外形态。"
-    />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"

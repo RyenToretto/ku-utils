@@ -1,7 +1,5 @@
 <template>
   <div class="page-ui-kit-name-pattern">
-    <PageHeader subtitle="点选通配符插入光标处；底栏芯片 / 浮层 / textarea / useOnly。" />
-
     <el-card
       shadow="never"
       class="ui-kit-demo-card"

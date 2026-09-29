@@ -31,13 +31,14 @@ type DoFilterPanelDemoScenario = {
 
 ## SimpleExampleList 演示 props
 
-| prop                            | 作用                     |
-| ------------------------------- | ------------------------ |
-| `pageTitle` / `pageDescription` | 覆盖 PageHeader          |
-| `filterButtonCount`             | #ctl 按钮规模            |
-| `filterFieldCount`              | 传入则工厂字段 Demo      |
-| `filterLine`                    | 折叠行数                 |
-| `fillViewportLayout`            | 根 class `fill-viewport` |
+| prop                 | 作用                     |
+| -------------------- | ------------------------ |
+| `filterButtonCount`  | #ctl 按钮规模            |
+| `filterFieldCount`   | 传入则工厂字段 Demo      |
+| `filterLine`         | 折叠行数                 |
+| `fillViewportLayout` | 根 class `fill-viewport` |
+
+**禁止**再传 `pageTitle` / `pageDescription` 或挂 `PageHeader`（见 project-context）。
 
 业务列表页不传上述 props，保持内置 3 项筛选。
 

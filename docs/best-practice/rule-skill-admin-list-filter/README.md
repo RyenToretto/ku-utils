@@ -25,7 +25,7 @@
 2. 列表状态：`useTableQuery`（abort / `tableLoadFailed` / `refresh`）；失败 `#empty` 有出口；有分页挂 `BasePagination` `enable-refresh`。
 3. **表格四要素**：`TableWrap`（Dialog 内嵌可省）+ `class="do-inner-scroller page-table hide-table-border"` + `border`/`stripe` + `:max-height`（页面用 admin maxHeight hook；**弹层表**用 drawer 专用 hook，禁写死 px）。
 4. 两种滚动（可选）：区内滚动（默认）vs 整页滚动（高筛选页，表不传 max-height）。
-5. **默认禁止业务列表 `PageHeader`**（Demo 说明性页可保留）。
+5. **禁止业务/Demo 页挂 `PageHeader`，禁止页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回。
 
 ### 筛选 `DoFilterPanel`
 
@@ -41,7 +41,7 @@
 - `ops-column` 语义标记；对齐交给 EP `align`
 - 行内：`plain` + `small`；**禁 link**；icon 在前、文字在后；删除用 icon、禁再写「删除」文案
 - loading 按钮行内紧凑 `min-width`
-- 表头「新建」；**批量**→ `#batch`；**页级**→ `#control`（勿默认再挂 PageHeader）
+- 表头「新建」；**批量**→ `#batch`；**页级**→ `#control`（禁止再挂 PageHeader / title / subtitle）
 
 ### Cell
 

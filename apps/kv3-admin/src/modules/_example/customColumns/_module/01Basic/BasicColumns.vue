@@ -1,9 +1,5 @@
 <template>
   <div class="page-basic-columns">
-    <PageHeader
-      subtitle="最简接入：columnSchemas + visibleSchemas + formatSchemaCell；点击表头可前端排序。"
-    />
-
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

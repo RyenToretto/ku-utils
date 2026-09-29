@@ -1,8 +1,5 @@
 <template>
   <div class="page-version-columns">
-    <PageHeader
-      subtitle="相对基础 schema：删除「评分」、将转化率字段 prop 从 rate 改为 cvtRate，并递增 schemaVersion=2，使旧 localStorage 配置失效。"
-    />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

@@ -1,8 +1,5 @@
 <template>
   <div class="page-slot-components">
-    <PageHeader
-      subtitle="单元格三种写法对照：① 模板插槽（ROI 着色）② schema.cellComponent（数量/评分）③ formatSchemaCell 默认格式化（成本）。"
-    />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

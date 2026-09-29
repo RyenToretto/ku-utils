@@ -1,7 +1,5 @@
 <template>
   <SimpleExampleList
-    :page-title="pageTitle"
-    :page-description="pageDesc"
     :filter-button-count="scenario.buttonCount"
     :filter-field-count="scenario.filterCount"
     :filter-line="scenario.line"
@@ -36,9 +34,4 @@ const scenario = computed<DoFilterPanelDemoScenario>(() => {
     fillViewportLayout: !!raw.fillViewportLayout,
   };
 });
-
-const pageTitle = computed(() =>
-  typeof route.meta.title === 'string' ? route.meta.title : '筛选面板',
-);
-const pageDesc = computed(() => (typeof route.meta.desc === 'string' ? route.meta.desc : ''));
 </script>

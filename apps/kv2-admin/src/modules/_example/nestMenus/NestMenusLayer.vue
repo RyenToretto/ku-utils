@@ -1,10 +1,5 @@
 <template>
   <div class="page-nest-menus">
-    <PageHeader
-      subtitle="侧栏一级 → 二级 → 三级 → 四级嵌套示例，用于验证递归菜单与层级样式。"
-      :breadcrumbs="headerCrumbs"
-    />
-
     <section class="nest-menus-card">
       <h2 class="nest-menus-card-title">当前路径层级</h2>
       <el-breadcrumb separator="/">
@@ -43,13 +38,13 @@ import { useRoute } from '@/shims/vue-router-composables';
 
 const route = useRoute();
 
-const pageTitle = computed(() => (route.meta.title as string) || '多级导航');
 const nestLevel = computed(() => Number(route.meta.nestLevel) || 4);
 const nestTrail = computed(() => {
   const trail = route.meta.nestTrail;
-  return Array.isArray(trail) ? (trail as string[]) : [pageTitle.value];
+  if (Array.isArray(trail) && trail.length) return trail as string[];
+  const fallback = typeof route.meta.title === 'string' ? route.meta.title : '多级导航';
+  return [fallback];
 });
-const headerCrumbs = computed(() => [{ label: pageTitle.value }]);
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +53,7 @@ const headerCrumbs = computed(() => [{ label: pageTitle.value }]);
 }
 
 .nest-menus-card {
-  margin-top: 16px;
+  margin-top: 0;
   padding: 20px 24px;
   border-radius: 12px;
   background: var(--ku-bg-card, #fff);

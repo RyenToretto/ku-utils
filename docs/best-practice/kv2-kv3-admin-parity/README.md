@@ -37,6 +37,7 @@
 | 跨文件 type alias / `HTMLElement` 勿直接进 props | 同文件内联类型；`HTMLElement` 仅允许运行时 props + eslint 例外   |
 | Pinia：`ensure-vue-demi-vue27` 锁 vue-demi 2.7   | 默认 isVue3 会使 Options Store state 以 Ref 暴露 + `toRefs` 警告 |
 | 勿 `Vue.component('Filter'/'Menu')`              | 与 HTML/SVG 保留标签冲突；改 import 使用                         |
+| **禁止**页级 `PageHeader` / title / subtitle     | 两侧一致；非产品明确拍板不得加回                                 |
 
 ## 必须成对的资产
 

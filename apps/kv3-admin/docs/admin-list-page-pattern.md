@@ -33,7 +33,7 @@ src/modules/<域>/<子业务>/
 | 筛选即查     | 离散完成立刻 `search(true)`；关键字打字不查；禁 `watch(listFilters)`                                                                                                      |
 | 刷新         | 有分页 → `BasePagination` `enable-refresh` + `@refresh`（留当前页）；`search(true)` ≠ `refresh()`                                                                         |
 | 轮询         | `refresh({ silent: true })`；fetcher 把 `ctx.silent` 传给 request；用户主动操作禁止静默                                                                                   |
-| 页头         | **默认禁止**业务列表挂 `PageHeader`（Demo 说明性页可保留）                                                                                                                |
+| 页头         | **禁止**挂 `PageHeader` / 页级 title / subtitle（**非产品明确拍板**不得加回；顶栏+侧栏已表达身份）                                                                        |
 | 日期范围     | `DateRange`；禁止裸 `el-date-picker` 做范围                                                                                                                               |
 | 弹层         | `DialogXxx.vue`；关闭清空主键时勿再自动 search                                                                                                                            |
 | 操作列       | 行内 `plain` + `size="small"`；禁 `link`；表头「新建」；批量 → `#batch`                                                                                                   |

@@ -1,6 +1,5 @@
 <template>
   <div class="page-basic-columns">
-    <PageHeader subtitle="最简接入：mixin useSchemaColumnConfig" />
     <TableWrap
       enable-do-header
       :disabled-column-config="false"

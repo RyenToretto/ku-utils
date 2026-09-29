@@ -87,7 +87,7 @@ XxxSelector ──► DialogSelectXxx.show()
 
 **行为分叉**
 
-- `!enableSelector`：`#batch`、操作列表头「新建」文案按钮、`useAdminTableMaxHeight`；`useTableQuery.immediate: true`；**禁止**页面态再挂默认 `PageHeader`（见 project-context）
+- `!enableSelector`：`#batch`、操作列表头「新建」文案按钮、`useAdminTableMaxHeight`；`useTableQuery.immediate: true`；**禁止**页面态 `PageHeader` / title / subtitle（见 project-context）
 - `enableSelector`：勾选列始终渲染；`#batch` 仍仅页面态；`CellState` 等 `:switchable="false"`；`inDialog` 时 `useDrawerPickListMaxHeight`；`immediate: false`，由 Dialog `show()` 触发 `search(true)`；`refreshOnActivated: !enableSelector`
 
 **筛选项可见（选择器态强制）**
