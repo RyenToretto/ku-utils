@@ -1,0 +1,67 @@
+---
+description: kv2-admin starter 约定。写列表页、表格、筛选、弹层、自定义列时读取。
+globs:
+alwaysApply: false
+---
+
+# kv2-admin starter
+
+- 对话与 commit message 使用中文
+- 本目录是 Vue 2.7 + Vite + Element UI 管理端 starter，workspace 消费 `@ku-utils/utils`、`仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate``、`@ku-utils/v2-custom-columns`
+- **控制台零异常**：`predev`/`prebuild` 跑 `ensure-vue-demi-vue27`（Pinia 的 vue-demi 必须 isVue2）；跨文件 type alias props 用运行时 `PropType`，禁 `| null`（详见 `docs/best-practice/kv2-kv3-admin-parity/`）
+- 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
+- 文档真源：`apps/kv2-admin/docs/admin-list-page-pattern.md`
+- Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
+- **模块化最佳实践**（列表/选择器/Mock 等专题，避免巨石 context）：仓库根 `docs/best-practice/`（见 `_decomposition/README.md` 与模块地图 B 组）
+
+## 目录骨架
+
+细则见同目录 `project-structure.mdc`（就近原则、命名、`v-loading`）。摘要：
+
+```text
+src/modules/<域>/<子业务>/
+├── _api/ _map/ _mock/ _module/
+└── XxxLayer.vue          # 薄壳；List / DialogXxx 在 _module
+```
+
+## 列表页硬约束
+
+1. 页面根 class：`page-<业务>`
+2. 列表状态：`useTableQuery`（`listFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `refresh`）；fetcher 传 `AbortSignal`；有分页用 `BasePagination` `enable-refresh` + `@refresh`
+3. 表格用 `<TableWrap>` 包裹
+4. 表格 class：`do-inner-scroller page-table hide-table-border`
+5. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate`` 的 `useMaxHeight`）
+6. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查；禁 `watch(listFilters)`；分组筛选 / 非表单节点用 `disableFold`
+7. **默认禁止页面态 `PageHeader`**（顶栏+侧栏已表达身份；Demo 说明性页可保留 subtitle）
+8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
+9. 自定义列：`@ku-utils/v2-custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
+10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
+
+全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
+
+局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。
+
+## Demo 模块索引
+
+| 侧栏 | 路径前缀 | 说明 |
+|------|----------|------|
+| 示例管理 | `/example/simple/*` 等 | list；`batch-select` 表外全选 Demo；school/clazz/club |
+| 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
+| 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
+| 自定义列 | `/example/custom-columns/*` | 01–08 |
+
+## Example 门控
+
+开发态 `VITE_APP_USE_EXAMPLE=1`。拷到业务仓后，生产构建应设为 `0`，并保留 `forbid-example-in-bundle` 插件。
+
+## 专题 Rules（同目录）
+
+| Rule | 用途 |
+| --- | --- |
+| `project-structure` | Layer / `_module` / DialogXxx |
+| `mock-isolation` | Mock 边界与种子；信封 `code:0`/`data` |
+| `api-contract` | `requestXxx`、`$MAPS`、禁兼容 |
+| `entity-selector` | List 双模选择器（+ skill `selector`） |
+| `user-visible-copy` | 用户可见文案禁开发态泄漏 |
+| `task-ledger` | 精简台账 `docs/task/` |
+| `custom-columns-vue2-pattern` | 自定义列 |

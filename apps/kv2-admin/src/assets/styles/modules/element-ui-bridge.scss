@@ -1,0 +1,424 @@
+/**
+ * Element UI chalk → skin token 覆盖层
+ *
+ * chalk 把主色写死为 #409EFF、圆角 3px、危险色 #F56C6C；
+ * @ku-utils/skin 已提供 --el-color-* / --ku-*。
+ * 本文件在 chalk 之后加载，把尺寸 / 圆角 / 色态绑回 token，
+ * 使 kv2 与 kv3（Element Plus 原生读 CSS 变量）视觉一致。
+ */
+
+/* —— 全局圆角 / 尺寸（盖过 chalk 写死的 3px / 偏高默认钮） —— */
+.el-button {
+  box-sizing: border-box;
+  height: var(--el-component-size, 32px);
+  padding: 8px 15px;
+  border-radius: var(--el-border-radius-base, 8px);
+  font-size: var(--el-font-size-base, 14px);
+}
+
+/* EP small ≈ 24px 高、~7px 圆角；EU small 默认更高更方 */
+.el-button--small {
+  height: 24px;
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--el-border-radius-base, 8px) - 1px);
+}
+
+.el-button--mini {
+  height: 24px;
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--el-border-radius-base, 8px) - 1px);
+}
+
+/* 仅图标的操作钮：固定 24×24，与 kv3 line-actions 对齐 */
+.el-button--small.is-circle,
+.el-button--mini.is-circle,
+.line-actions .el-button--small,
+.line-actions .el-button--mini {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+/* —— Button primary —— */
+.el-button--primary {
+  color: var(--ku-text-on-primary, #fff);
+  background-color: var(--el-color-primary);
+  border-color: var(--el-color-primary);
+
+  &:hover,
+  &:focus {
+    background: var(--el-color-primary-light-3, var(--ku-color-primary-hover));
+    border-color: var(--el-color-primary-light-3, var(--ku-color-primary-hover));
+    color: var(--ku-text-on-primary, #fff);
+  }
+
+  &:active {
+    background: var(--el-color-primary-dark-2, var(--ku-color-primary-hover));
+    border-color: var(--el-color-primary-dark-2, var(--ku-color-primary-hover));
+    color: var(--ku-text-on-primary, #fff);
+  }
+
+  &.is-plain,
+  &.is-plain:hover,
+  &.is-plain:focus {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-9, var(--ku-color-primary-bg));
+    border-color: var(--el-color-primary-light-5, var(--el-color-primary-light-3));
+  }
+
+  &.is-plain:active {
+    color: var(--ku-text-on-primary, #fff);
+    background: var(--el-color-primary);
+    border-color: var(--el-color-primary);
+  }
+}
+
+/* —— Button default（重置等） —— */
+.el-button--default {
+  color: var(--el-text-color-regular, var(--ku-text-secondary, #6d655a));
+  background: var(--el-fill-color-blank, var(--ku-bg-card, #f7f3eb));
+  border-color: var(--el-border-color, var(--ku-border, #c5bcb0));
+
+  &:hover,
+  &:focus {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-9, var(--ku-color-primary-bg));
+    border-color: var(--el-color-primary-light-5, var(--el-color-primary-light-3));
+  }
+
+  &:active {
+    color: var(--el-color-primary);
+    border-color: var(--el-color-primary);
+  }
+}
+
+/* —— Button danger（chalk #F56C6C → skin 琥珀棕红） —— */
+.el-button--danger {
+  color: var(--ku-text-on-primary, #fff);
+  background-color: var(--el-color-danger);
+  border-color: var(--el-color-danger);
+
+  &:hover,
+  &:focus {
+    background: var(--el-color-danger-light-3);
+    border-color: var(--el-color-danger-light-3);
+    color: var(--ku-text-on-primary, #fff);
+  }
+
+  &:active {
+    background: var(--el-color-danger);
+    border-color: var(--el-color-danger);
+  }
+
+  &.is-plain,
+  &.is-plain:hover,
+  &.is-plain:focus {
+    color: var(--el-color-danger);
+    background: var(--el-color-danger-light-9);
+    border-color: var(--el-color-danger-light-5);
+  }
+
+  &.is-plain:active {
+    color: var(--ku-text-on-primary, #fff);
+    background: var(--el-color-danger);
+    border-color: var(--el-color-danger);
+  }
+}
+
+/* —— Button success / warning / info（同理绑 token） —— */
+.el-button--success {
+  background-color: var(--el-color-success);
+  border-color: var(--el-color-success);
+  color: var(--ku-text-on-primary, #fff);
+
+  &.is-plain,
+  &.is-plain:hover,
+  &.is-plain:focus {
+    color: var(--el-color-success);
+    background: var(--el-color-success-light-9, var(--ku-color-success-bg));
+    border-color: var(--el-color-success-light-5, var(--el-color-success-light-3));
+  }
+}
+
+.el-button--warning {
+  background-color: var(--el-color-warning);
+  border-color: var(--el-color-warning);
+  color: var(--ku-text-on-primary, #fff);
+
+  &.is-plain,
+  &.is-plain:hover,
+  &.is-plain:focus {
+    color: var(--el-color-warning);
+    background: var(--el-color-warning-light-9, var(--ku-color-warning-bg));
+    border-color: var(--el-color-warning-light-5, var(--el-color-warning-light-3));
+  }
+}
+
+.el-button--info {
+  background-color: var(--el-color-info);
+  border-color: var(--el-color-info);
+  color: var(--ku-text-on-primary, #fff);
+
+  &.is-plain,
+  &.is-plain:hover,
+  &.is-plain:focus {
+    color: var(--el-color-info);
+    background: var(--el-color-info-light-9);
+    border-color: var(--el-color-info-light-5);
+  }
+}
+
+.el-button--text {
+  color: var(--el-color-primary);
+
+  &:hover,
+  &:focus {
+    color: var(--el-color-primary-light-3, var(--ku-color-primary-hover));
+  }
+}
+
+/* —— Radio button（EU: __orig-radio；尺寸对齐 EP 5px 11px / 24h） —— */
+.el-radio-button__inner,
+.el-radio-button--medium .el-radio-button__inner,
+.el-radio-button--small .el-radio-button__inner,
+.el-radio-button--mini .el-radio-button__inner {
+  box-sizing: border-box;
+  min-height: 24px;
+  padding: 5px 11px !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  border-radius: 0;
+}
+
+.el-radio-button:first-child .el-radio-button__inner {
+  border-radius: var(--el-border-radius-base, 8px) 0 0 var(--el-border-radius-base, 8px);
+}
+
+.el-radio-button:last-child .el-radio-button__inner {
+  border-radius: 0 var(--el-border-radius-base, 8px) var(--el-border-radius-base, 8px) 0;
+}
+
+.el-radio-button:first-child:last-child .el-radio-button__inner {
+  border-radius: var(--el-border-radius-base, 8px);
+}
+
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  color: var(--ku-text-on-primary, #fff) !important;
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+  box-shadow: -1px 0 0 0 var(--el-color-primary) !important;
+}
+
+.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner {
+  background-color: var(--el-color-primary-light-5, var(--el-color-primary-light-3)) !important;
+  border-color: var(--el-color-primary-light-5, var(--el-color-primary-light-3)) !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: var(--el-color-primary);
+  background: var(--el-color-primary);
+}
+
+.el-radio__input.is-checked + .el-radio__label {
+  color: var(--el-color-primary);
+}
+
+/* —— Switch —— */
+.el-switch.is-checked .el-switch__core {
+  border-color: var(--el-switch-on-color, var(--el-color-primary)) !important;
+  background-color: var(--el-switch-on-color, var(--el-color-primary)) !important;
+}
+
+/* —— Checkbox —— */
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: var(--el-color-primary);
+  border-color: var(--el-color-primary);
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: var(--el-color-primary);
+}
+
+.el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: var(--el-color-primary);
+}
+
+/* —— Input / Select focus —— */
+.el-input__inner {
+  height: var(--el-component-size, 32px);
+  line-height: var(--el-component-size, 32px);
+  border-radius: var(--el-border-radius-base, 8px);
+  font-size: var(--el-font-size-base, 14px);
+}
+
+.el-input--small .el-input__inner {
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+}
+
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+  border-color: var(--el-color-primary);
+}
+
+.el-select .el-input.is-focus .el-input__inner,
+.el-select .el-input__inner:focus {
+  border-color: var(--el-color-primary);
+}
+
+.el-range-editor.is-active,
+.el-range-editor.is-active:hover {
+  border-color: var(--el-color-primary);
+}
+
+/* EU select 触发器高度跟 input */
+.el-select .el-input__inner {
+  height: var(--el-component-size, 32px);
+}
+
+/* —— Table（EU 不读 --el-table-*，需显式覆写；表头与卡面同色对齐 kv3） —— */
+.el-table {
+  --el-table-header-bg-color: var(--el-table-bg-color, var(--ku-bg-card, #f7f3eb));
+  font-size: var(--el-font-size-base, 14px);
+  color: var(--el-table-text-color, var(--ku-text-secondary, #6d655a));
+  background-color: var(--el-table-bg-color, var(--ku-bg-card, #f7f3eb));
+}
+
+.el-table th,
+.el-table thead th.el-table__cell,
+.el-table__header-wrapper th {
+  background-color: var(--el-table-header-bg-color, var(--ku-bg-card, #f7f3eb)) !important;
+  color: var(--el-table-header-text-color, var(--ku-text-primary, #4e4540));
+  font-size: var(--el-font-size-base, 14px);
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.el-table td {
+  padding: 8px 0;
+  font-size: var(--el-font-size-base, 14px);
+}
+
+.el-table td,
+.el-table th.is-leaf {
+  border-bottom-color: var(--el-table-border-color, var(--ku-border-light, #ddd4c6));
+}
+
+/* —— Pagination（EU 用 .active，EP 用 .is-active） —— */
+.el-pagination.is-background .el-pager li:not(.disabled).active,
+.el-pagination.is-background .el-pager li:not(.disabled).is-active {
+  background-color: var(--el-color-primary) !important;
+  color: var(--ku-text-on-primary, #fff) !important;
+  font-weight: 600;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: var(--el-color-primary);
+}
+
+.el-pagination button:hover {
+  color: var(--el-color-primary);
+}
+
+.el-pager li.active,
+.el-pager li.is-active {
+  color: var(--el-color-primary);
+}
+
+.el-pager li:hover {
+  color: var(--el-color-primary);
+}
+
+/* —— Link / Tag / Badge —— */
+.el-link.el-link--primary {
+  color: var(--el-color-primary);
+}
+
+.el-tag--dark.el-tag--primary,
+.el-tag.el-tag--primary {
+  background-color: var(--el-color-primary-light-9, var(--ku-color-primary-bg));
+  border-color: var(--el-color-primary-light-7, var(--el-color-primary-light-5));
+  color: var(--el-color-primary);
+}
+
+/* —— Tabs —— */
+.el-tabs__item.is-active {
+  color: var(--el-color-primary);
+}
+
+.el-tabs__item:hover {
+  color: var(--el-color-primary);
+}
+
+.el-tabs__active-bar {
+  background-color: var(--el-color-primary);
+}
+
+.el-tabs__nav-wrap::after {
+  background-color: var(--ku-border-light, #e4e7ed);
+}
+
+/* —— Menu（EU 默认会刷 #409EFF；侧栏由 app-shell !important 再盖） —— */
+.el-menu-item.is-active {
+  color: var(--el-color-primary) !important;
+}
+
+.el-menu-item.is-active i {
+  color: inherit;
+}
+
+.el-submenu__title:hover,
+.el-menu-item:hover {
+  background-color: var(--ku-bg-hover, #f5f7fa);
+}
+
+/* —— Loading spinner —— */
+.el-loading-spinner .path {
+  stroke: var(--el-color-primary);
+}
+
+.el-loading-spinner .el-loading-text {
+  color: var(--el-color-primary);
+}
+
+/* —— Slider / Progress —— */
+.el-slider__bar {
+  background-color: var(--el-color-primary);
+}
+
+.el-slider__button {
+  border-color: var(--el-color-primary);
+}
+
+.el-progress-bar__inner {
+  background-color: var(--el-color-primary);
+}
+
+/* —— Step —— */
+.el-step__head.is-finish,
+.el-step__title.is-finish,
+.el-step__description.is-finish {
+  color: var(--el-color-primary);
+  border-color: var(--el-color-primary);
+}
+
+.el-step__head.is-process {
+  color: var(--el-color-primary);
+  border-color: var(--el-color-primary);
+}
+
+/* —— Dialog / MessageBox —— */
+.el-dialog {
+  border-radius: var(--el-border-radius-base, 8px);
+  background: var(--el-dialog-bg-color, var(--ku-bg-card, #f7f3eb));
+}
+
+.el-message-box {
+  border-radius: var(--el-border-radius-base, 8px);
+  background: var(--el-dialog-bg-color, var(--ku-bg-card, #f7f3eb));
+}

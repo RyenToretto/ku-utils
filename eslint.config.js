@@ -18,9 +18,14 @@ export default [
       'vue/block-lang': 'off',
     },
   },
-  // Vue 2 组件包使用 Vue 2 语法（.sync、非自闭合 HTML 等），需关闭 Vue 3 专属规则
+  // Vue 2 组件包 / 应用使用 Vue 2 语法（.sync、非自闭合 HTML 等），需关闭 Vue 3 专属规则
   {
-    files: ['packages/v2-custom-columns/**/*.vue'],
+    files: [
+      'packages/v2-custom-columns/**/*.vue',
+      'packages/ui-vue2/**/*.vue',
+      'apps/kv2-admin/**/*.vue',
+      'apps/playground-vue2/**/*.vue',
+    ],
     rules: {
       'vue/no-deprecated-v-bind-sync': 'off',
       'vue/require-explicit-emits': 'off',

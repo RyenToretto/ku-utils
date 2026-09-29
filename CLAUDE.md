@@ -51,7 +51,8 @@ ku-utils/
 │   ├── playground-vue3/   Vue 3 + Vite 验证应用
 │   ├── playground-vue2/   Vue 2 + Vite 验证应用
 │   ├── playground-nuxt4/  Nuxt 4 验证应用
-│   └── kv3-admin/         Vue 3 + Element Plus 管理端 starter
+│   ├── kv3-admin/         Vue 3 + Element Plus 管理端 starter
+│   └── kv2-admin/         Vue 2.7 + Element UI 管理端 starter（与 kv3 1:1 双生）
 ├── docs/               # VitePress 文档站
 ├── .cursor/rules/      # AI 开发规范（4 个 .mdc 文件）
 ├── .vscode/settings.json  # IDE 配置
@@ -88,6 +89,7 @@ pnpm --filter @ku-utils/utils build       # 构建单个包
 pnpm --filter @ku-utils/docs dev          # 启动文档站开发
 pnpm --filter @ku-utils/playground-vue3 dev  # Vue 3 Playground
 pnpm dev:admin                                # kv3-admin starter
+pnpm dev:admin:v2                             # kv2-admin starter（Vue2）
 
 # 发布
 pnpm changeset            # 创建变更记录
@@ -150,6 +152,7 @@ type(scope): 中文描述
 ## 关联项目
 
 - **kv3-admin**: `apps/kv3-admin`，本仓 Vue 3 管理端 starter，workspace 消费 `@ku-utils/*`
+- **kv2-admin**: `apps/kv2-admin`，Vue 2.7 管理端 starter，与 kv3 功能/规则 1:1 双生（见 `docs/best-practice/kv2-kv3-admin-parity/`）
 
 ## 已知注意事项
 

@@ -59,6 +59,7 @@ export default {
         'cli',
         'create-app',
         'kv3-admin',
+        'kv2-admin',
         'docs',
         'deps',
         'ci',

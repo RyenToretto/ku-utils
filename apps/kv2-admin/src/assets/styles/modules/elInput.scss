@@ -1,0 +1,119 @@
+.do-filter-panel {
+  .el-form-item__content {
+    /* 日期范围：清除图标 hover 叠层显隐，勿常驻右侧大 padding 挤掉结束时间 */
+    > .el-date-editor--daterange {
+      &.el-range-editor--default {
+        --el-date-editor-daterange-width: 240px;
+
+        padding: 0 10px 0 8px;
+        > .el-range-input {
+          width: 90px;
+        }
+        > .el-range-separator {
+          margin: 0;
+          padding: 0 2px;
+          flex: 0 0 auto;
+        }
+      }
+    }
+
+    > .el-date-editor--datetimerange {
+      &.el-range-editor--default {
+        --el-date-editor-datetimerange-width: 360px;
+        padding: 0 10px 0 8px;
+      }
+    }
+
+    > .el-input,
+    > .el-select-v2,
+    > .el-select,
+    > .material-label-selector {
+      width: var(--do-input-width, 194px);
+    }
+    .el-select__selection.is-near {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+/**
+ * 日期范围清除图标：默认隐藏，hover / focus 输入框才出现；
+ * 出现时用输入框底色实心底盖住下层文字（浅色即白），避免透明×叠在时间上。
+ */
+.el-date-editor {
+  &.el-range-editor {
+    position: relative;
+
+    .el-range__close-icon {
+      position: absolute;
+      inset-inline-end: 6px;
+      top: 50%;
+      z-index: 2;
+      transform: translateY(-50%);
+      margin: 0;
+      box-sizing: content-box;
+      font-size: 15px;
+      width: 1em;
+      height: 1em;
+      padding: 3px;
+      border-radius: 50%;
+      color: var(--el-color-warning);
+      background-color: var(--el-fill-color-blank, #fff);
+      box-shadow: 0 0 0 2px var(--el-fill-color-blank, #fff);
+      flex-shrink: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        color var(--el-transition-duration),
+        background-color var(--el-transition-duration),
+        opacity var(--el-transition-duration),
+        visibility var(--el-transition-duration);
+    }
+
+    .el-range__close-icon--hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    &:hover .el-range__close-icon:not(.el-range__close-icon--hidden),
+    &:focus-within .el-range__close-icon:not(.el-range__close-icon--hidden) {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .el-range__close-icon:not(.el-range__close-icon--hidden):hover {
+      color: var(--el-color-warning-dark-2);
+      background-color: var(--el-color-warning-light-9);
+      box-shadow: 0 0 0 2px var(--el-color-warning-light-9);
+    }
+  }
+
+  /* 单日期：suffix 区固定宽度，减少 clear 挂载时的跳动 */
+  &:not(.el-range-editor) {
+    .el-input__suffix {
+      position: relative;
+      min-width: 20px;
+    }
+
+    .el-input__clear {
+      box-sizing: content-box;
+      font-size: 15px;
+      width: 1em;
+      height: 1em;
+      padding: 2px;
+      border-radius: 50%;
+      color: var(--el-color-warning);
+      background-color: var(--el-fill-color-blank, #fff);
+      box-shadow: 0 0 0 2px var(--el-fill-color-blank, #fff);
+    }
+
+    .el-input__clear:hover {
+      color: var(--el-color-warning-dark-2);
+      background-color: var(--el-color-warning-light-9);
+      box-shadow: 0 0 0 2px var(--el-color-warning-light-9);
+    }
+  }
+}

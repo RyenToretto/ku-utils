@@ -18,6 +18,7 @@ tools/               → cli / create-app
 apps/
   playground-vue3|vue2|nuxt4
   kv3-admin          → Vue3 + Element Plus starter（private）
+  kv2-admin          → Vue2.7 + Element UI starter（private；与 kv3 1:1 双生）
 docs/                → VitePress
 ```
 
@@ -74,4 +75,4 @@ pnpm release   # 本地紧急发版
 | 自定义列 | `docs/best-practice/rule-skill-custom-columns` |
 | 皮肤 | `docs/best-practice/skill-theme-skin` |
 
-kv3-admin 列表约定仍以 `apps/kv3-admin/.cursor/rules/project-context.mdc` 为运行摘要，细则对齐上表模块。
+kv3-admin / kv2-admin 列表约定分别以各自 `apps/*/ .cursor/rules/project-context.mdc` 为运行摘要；成对同步见 `docs/best-practice/kv2-kv3-admin-parity/`，细则对齐上表模块。

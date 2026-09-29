@@ -1,0 +1,18 @@
+{
+  "extends": "@ku-utils/tsconfig/vue2.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@example-routes": ["./src/stubs/emptyExampleRoutes.ts"],
+      "@example-maps": ["./src/stubs/emptyExampleMaps.ts"],
+      "@example-mocks": ["./src/stubs/emptyExampleMocks.ts"],
+      "@header-example-tab": ["./src/stubs/emptyExampleNavTab.ts"]
+    },
+    "types": ["vite/client", "node"],
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "src/types/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

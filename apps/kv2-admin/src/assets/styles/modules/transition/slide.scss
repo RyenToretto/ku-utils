@@ -1,0 +1,41 @@
+@use '../../common/mixins.scss' as *;
+
+.slide-y-transition {
+  @include transitionDefault();
+
+  .slide-y-transition-enter-from,
+  .slide-y-transition-leave-to {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+}
+
+.slide-y-reverse-transition {
+  @include transitionDefault();
+
+  .slide-y-reverse-transition-enter-from,
+  .slide-y-reverse-transition-leave-to {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
+
+.slide-x-transition {
+  @include transitionDefault();
+
+  .slide-x-transition-enter-from,
+  .slide-x-transition-leave-to {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+}
+
+.slide-x-reverse-transition {
+  @include transitionDefault();
+
+  .slide-x-reverse-transition-enter-from,
+  .slide-x-reverse-transition-leave-to {
+    opacity: 0;
+    transform: translateX(15px);
+  }
+}

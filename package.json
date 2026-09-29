@@ -17,6 +17,7 @@
     "dev:v2": "pnpm --filter @ku-utils/playground-vue2 dev",
     "dev:n4": "pnpm --filter @ku-utils/playground-nuxt4 dev",
     "dev:admin": "pnpm --filter @ku-utils/kv3-admin dev",
+    "dev:admin:v2": "pnpm --filter @ku-utils/kv2-admin dev",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
