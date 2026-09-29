@@ -62,7 +62,7 @@
   3. 页面请求态通过 loading 传入，组件会禁用主搜索按钮，避免重复请求。
   4. #ctl 放附加操作；按钮与末行筛选项同排贴卡片右下角，横向「搜索 | 重置 | …」。
   5. 单行筛选使用 :line="1"；多行筛选用 :line="2" 并支持折叠。
-  6. handleReset 先重置 filters，再调用 search(true)；列表页优先复用 useAdminTable。
+  6. handleReset 先重置 filters，再调用 search(true)；列表页优先复用 useTableQuery。
   7. 日期范围用 DateRange（禁止裸 el-date-picker 范围）；日期类筛选项必须排在所有筛选项最前；
      筛选日期默认可清空（DateRange 默认 clearable，仅合同要求必填时 :clearable="false"）。
 -->

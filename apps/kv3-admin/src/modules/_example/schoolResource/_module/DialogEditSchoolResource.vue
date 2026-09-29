@@ -99,7 +99,7 @@ const submitLoading = ref(false);
 const schoolFormRef = ref<FormInstance>();
 
 const schoolForm = reactive({
-  id: '' as string | number,
+  id: '' as string,
   schoolName: '',
   status: SCHOOL_STATUS_ENABLED,
   remark: '',
@@ -119,7 +119,7 @@ function resetEditSchoolResource() {
   schoolFormRef.value?.clearValidate();
 }
 
-function open(row?: { id: number; schoolName: string; status: number; remark?: string }) {
+function open(row?: { id: string; schoolName: string; status: number; remark?: string }) {
   resetEditSchoolResource();
   if (row) {
     schoolForm.id = row.id;

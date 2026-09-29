@@ -1,7 +1,5 @@
 <template>
   <div class="page-club-activity">
-    <PageHeader />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"
@@ -231,12 +229,15 @@
 
       <template #ft>
         <BasePagination
+          enable-refresh
+          :refresh-loading="tableLoading"
           :page-num="listFilters.pageNum"
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @page-change="handlePageChange"
+          @size-change="handleSizeChange"
+          @refresh="refresh()"
         />
       </template>
     </TableWrap>
@@ -255,9 +256,9 @@ import { ref } from 'vue';
 
 import DialogEditClubActivity from './DialogEditClubActivity.vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useRowSelector } from '@/composables/useRowSelector';
+import { useTableQuery } from '@/composables/useTableQuery';
 import {
   requestBatchSwitchClubActivity,
   requestClubActivityList,
@@ -285,20 +286,21 @@ const {
   tableTotal,
   tableLoading,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<ClubActivityRow, { clubName: string; status: string | number }>({
+  refresh,
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<ClubActivityRow, { clubName: string; status: string | number }>({
   defaultFilters: {
     clubName: '',
     status: '',
   },
   defaultPageSize: 10,
-  fetcher: (query) =>
-    requestClubActivityList(query) as Promise<{
+  fetcher: async (query, signal) =>
+    requestClubActivityList(query, signal) as Promise<{
       data: { lists: ClubActivityRow[]; total: number };
     }>,
-  onAfterSearch() {
+  onLoaded() {
     selectionApi.clearSelection();
   },
 });
@@ -315,7 +317,7 @@ const { selectRows, statusOfSelect, isRowSelected, chooseRow, toggleBatchSelect,
 selectionApi.clearSelection = clearSelection;
 
 function handleReset() {
-  resetListFilters();
+  reset();
 }
 
 function openCreate() {

@@ -1,7 +1,7 @@
 import { axios } from '@/plugins/axios';
 
 export type ClubSchoolItem = {
-  id: number;
+  id: string;
   schoolName: string;
 };
 
@@ -14,8 +14,8 @@ export type ClubActivityRow = {
   [key: string]: unknown;
 };
 
-export function requestClubActivityList(params: Record<string, unknown>) {
-  return axios.get('/example/club', { params });
+export function requestClubActivityList(params: Record<string, unknown>, signal?: AbortSignal) {
+  return axios.get('/example/club', { params, signal });
 }
 
 export function requestEditClubActivity(payload: {

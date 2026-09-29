@@ -35,21 +35,33 @@ sed -n '1,80p' packages/hooks/src/index.ts
 ## Step 2：选型
 
 - **跨 Vue3 应用可复用** → 加到 `packages/hooks`，发版后消费方升版本（本仓 apps 用 `workspace:*`）
-- **仅管理端表格壳** → `apps/kv3-admin/src/composables`（如 `useAdminTableMaxHeight`）
+- **仅管理端表格壳** → `apps/kv3-admin/src/composables`（如 `useTableQuery`、`useAdminTableMaxHeight`）
 
-## Step 3：kv3-admin 高度
+## Step 3：kv3-admin 列表与高度
 
 ```ts
-// 页面表格
-const { maxHeight } = useAdminTableMaxHeight('.page-xxx');
+// 列表查询（页面态）
+const { listFilters, tableData, tableLoading, search, refresh } = useTableQuery({
+  defaultFilters: {/* 业务筛，不含分页 */},
+  immediate: true,
+  refreshOnActivated: true,
+  async fetcher(query, signal, ctx) {
+    return requestXxxPage(query, signal); // 静默时把 ctx.silent 传给 request 层
+  },
+});
+
+// 页面表格高度
+const maxHeight = useAdminTableMaxHeight('.page-xxx');
 
 // 抽屉点选表 — 勿用上面的页面 hook
 const { maxHeight, remeasureAfterLayout } = useDrawerPickListMaxHeight('page-table');
 ```
 
+选择器双模：`immediate: !enableSelector`，`refreshOnActivated: !enableSelector`；失败出口用 `tableLoadFailed` + `#empty` 重试。
+
 ## Step 4：验收
 
-- 无手写 `loading = ref(false)` 重复样板（已有 hook 覆盖时）
+- 无手写 `loading = ref(false)` / 分页状态机替代 `useTableQuery`
 - 弹层表高度不写死 px、不误用页面 maxHeight hook
 
 规则摘要：`.cursor/rules/hooks-guide.mdc`。  

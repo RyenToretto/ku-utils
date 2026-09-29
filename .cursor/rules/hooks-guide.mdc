@@ -27,11 +27,11 @@ alwaysApply: false
 
 kv3-admin：
 
+- 列表查询：`useTableQuery`（`listFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `reset` / `refresh`；fetcher 传 `signal`；选择器双模 `immediate: !enableSelector`）
 - 页面表高：`useAdminTableMaxHeight`（基于 `useMaxHeight`）
 - 抽屉点选表高：`useDrawerPickListMaxHeight`（禁止对弹层表误用页面 maxHeight）
-- 列表查询态：`useAdminTable` 等仓内封装
 
-禁止魔法数字散落当表格高度。
+禁止魔法数字散落当表格高度。禁止在 List 外另造分页状态与 `useTableQuery` 双轨。
 
 ## 新增 hook
 

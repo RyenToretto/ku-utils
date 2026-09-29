@@ -1,7 +1,5 @@
 <template>
   <div class="page-clazz-manage">
-    <PageHeader />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"
@@ -153,12 +151,15 @@
 
       <template #ft>
         <BasePagination
+          enable-refresh
+          :refresh-loading="tableLoading"
           :page-num="listFilters.pageNum"
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @page-change="handlePageChange"
+          @size-change="handleSizeChange"
+          @refresh="refresh()"
         />
       </template>
     </TableWrap>
@@ -177,8 +178,8 @@ import { ref } from 'vue';
 
 import DialogEditClazzManage from './DialogEditClazzManage.vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useTableQuery } from '@/composables/useTableQuery';
 import {
   requestClazzManageList,
   requestDeleteClazzManage,
@@ -198,21 +199,24 @@ const {
   tableTotal,
   tableLoading,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<ClazzManageRow, { clazzName: string; status: string | number }>({
+  refresh,
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<ClazzManageRow, { clazzName: string; status: string | number }>({
   defaultFilters: {
     clazzName: '',
     status: '',
   },
   defaultPageSize: 10,
-  fetcher: (query) =>
-    requestClazzManageList(query) as Promise<{ data: { lists: ClazzManageRow[]; total: number } }>,
+  fetcher: async (query, signal) =>
+    requestClazzManageList(query, signal) as Promise<{
+      data: { lists: ClazzManageRow[]; total: number };
+    }>,
 });
 
 function handleReset() {
-  resetListFilters();
+  reset();
 }
 
 function openCreate() {

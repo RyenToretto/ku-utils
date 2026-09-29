@@ -26,14 +26,17 @@ src/modules/<域>/<子业务>/
 ## 列表页硬约束
 
 1. 页面根 class：`page-<业务>`
-2. 表格用 `<TableWrap>` 包裹
-3. 表格 class：`do-inner-scroller page-table hide-table-border`
-4. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks` 的 `useMaxHeight`）
-5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；分组筛选 / 非表单节点用 `disableFold`
-6. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
-7. 自定义列：`@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
+2. 列表状态：`useTableQuery`（`listFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `refresh`）；fetcher 传 `AbortSignal`；有分页用 `BasePagination` `enable-refresh` + `@refresh`
+3. 表格用 `<TableWrap>` 包裹
+4. 表格 class：`do-inner-scroller page-table hide-table-border`
+5. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks` 的 `useMaxHeight`）
+6. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查；禁 `watch(listFilters)`；分组筛选 / 非表单节点用 `disableFold`
+7. **默认禁止页面态 `PageHeader`**（顶栏+侧栏已表达身份；Demo 说明性页可保留 subtitle）
+8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
+9. 自定义列：`@ku-utils/custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
+10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
 
-全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange` 等，见 `plugins/globalComponents.ts`。
+全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
 
 局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。
 

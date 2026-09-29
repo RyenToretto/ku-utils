@@ -8,16 +8,14 @@
       :close-on-press-escape="false"
       append-to-body
       destroy-on-close
+      @opened="onOpened"
       @closed="resetSchoolSelect"
     >
       <template #header>
         <span class="el-drawer__title">选择学校</span>
       </template>
 
-      <section
-        v-loading="rendering"
-        class="do-drawer__view"
-      >
+      <section class="do-drawer__view">
         <SchoolResourceList
           v-if="visibleTable"
           ref="schoolListRef"
@@ -66,7 +64,6 @@ const props = withDefaults(
     multiple?: boolean;
     valueKey?: string;
     lockEnabledStatus?: boolean;
-    /** 多选时默认 5，便于跨页演示 */
     defaultPageSize?: number;
   }>(),
   {
@@ -83,7 +80,6 @@ const emit = defineEmits<{
 
 const dialogVisible = ref(false);
 const selectorModel = ref<SchoolResourceRow[]>([]);
-const rendering = ref(true);
 const visibleTable = ref(false);
 const schoolListRef = ref<InstanceType<typeof SchoolResourceList>>();
 
@@ -116,10 +112,12 @@ function handleChosen(evt: SchoolResourceRow | SchoolResourceRow[] | undefined) 
 
 function onListLoaded() {
   nextTick(() => {
-    // silent：只恢复列表勾选，不回写 change，避免翻页冲掉已选
     schoolListRef.value?.setChecked(checkedIds.value, selectorModel.value, true);
-    rendering.value = false;
   });
+}
+
+async function onOpened() {
+  await schoolListRef.value?.remeasureAfterLayout?.();
 }
 
 function confirmSchoolSelect() {
@@ -133,25 +131,26 @@ function cancelSchoolSelect() {
 
 function resetSchoolSelect() {
   nextTick(() => {
-    rendering.value = true;
     visibleTable.value = false;
     selectorModel.value = [];
   });
 }
 
 function show(ids: Array<string | number> = [], checkedRows: SchoolResourceRow[] = []) {
-  rendering.value = true;
   if (checkedRows.length) {
     selectorModel.value = checkedRows.map((row) => ({ ...row }));
   } else if (ids.length) {
     selectorModel.value = ids.map(
-      (id) => ({ [props.valueKey]: id }) as unknown as SchoolResourceRow,
+      (id) => ({ [props.valueKey]: String(id) }) as unknown as SchoolResourceRow,
     );
   } else {
     selectorModel.value = [];
   }
   dialogVisible.value = true;
   visibleTable.value = true;
+  nextTick(() => {
+    void schoolListRef.value?.search?.(true);
+  });
 }
 
 defineExpose({ show });

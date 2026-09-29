@@ -166,8 +166,8 @@
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @update:page-num="handlePageChange"
+          @update:page-size="handleSizeChange"
         />
       </template>
     </TableWrap>
@@ -177,9 +177,9 @@
 <script setup lang="ts">
 import { Check, Minus } from '@element-plus/icons-vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useRowSelector } from '@/composables/useRowSelector';
+import { useTableQuery } from '@/composables/useTableQuery';
 import { requestSimpleExampleList } from '@/modules/_example/simpleExample/_api';
 
 defineOptions({ name: 'SimpleExampleBatchSelectList' });
@@ -202,15 +202,15 @@ const {
   tableTotal,
   tableLoading,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<ExampleRow, { exampleName: string; status: string | number }>({
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<ExampleRow, { exampleName: string; status: string | number }>({
   defaultFilters: {
     exampleName: '',
     status: '',
   },
-  fetcher: (query) =>
+  fetcher: async (query, _signal) =>
     requestSimpleExampleList(query) as Promise<{
       data: { lists: ExampleRow[]; total: number };
     }>,
@@ -225,7 +225,7 @@ const { selectRows, statusOfSelect, isRowSelected, chooseRow, toggleBatchSelect 
   });
 
 function handleReset() {
-  resetListFilters({
+  reset({
     exampleName: '',
     status: '',
   });

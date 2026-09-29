@@ -1,69 +1,66 @@
 # rule-skill-entity-selector — 实体选择器
 
 > **已落地**：`apps/kv3-admin/.cursor/rules/entity-selector.mdc` + `skills/selector/SKILL.md`  
-> **来源**：oversea `selector-best-practices` + jx-dsp 选择器专章。  
+> **来源**：oversea `selector-best-practices`（取其精华：List 双模、写能力、筛项锁定、薄壳、Demo；去其糟粕：不强制 vue-i18n、不照搬 `0000`/`result`、不引入 HTTP 适配层）。  
 > **同步**：改本模块或 `.cursor` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
 **类型**：Cursor Rule + Skill（`.mdc` + `SKILL.md`）
 
 ## 本仓落点
 
-| 路径                                                 | 说明                                             |
-| ---------------------------------------------------- | ------------------------------------------------ |
-| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`   | List 双模硬约束                                  |
-| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`    | 新建选择器步骤                                   |
-| `schoolResource` List + `DialogSelectSchoolResource` | 金标样板（可补 `SchoolResourceSelector` 触发器） |
+| 路径                                                  | 说明                            |
+| ----------------------------------------------------- | ------------------------------- |
+| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`    | List 双模硬约束                 |
+| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`     | 新建选择器步骤                  |
+| `schoolResource` List + DialogSelect + SchoolSelector | 金标样板                        |
+| `schoolSelector` Demo                                 | `/example/school-selector/demo` |
 
 ## 推进接入分数
 
-| 维度         | 分         | 说明                                    |
-| ------------ | ---------- | --------------------------------------- |
-| 覆盖度       | 21/25      | oversea 金标；jx 百科；kv3 Demo         |
-| 可执行性     | 23/25      | 文件命名与禁止项清晰                    |
-| 可移植性     | 18/25      | 依赖 TableWrap/DoFilterPanel 等同族组件 |
-| Agent 可触发 | 14/15      | globs `*Selector*` + skill              |
-| 单一真源     | 8/10       | 双模 vs 旧「Dialog 内完整表」需统一     |
-| **合计**     | **84/100** |                                         |
+| 维度         | 分         | 说明                                |
+| ------------ | ---------- | ----------------------------------- |
+| 覆盖度       | 24/25      | oversea 金标细节已落入 rule         |
+| 可执行性     | 24/25      | 命名 / 禁止项 / 写能力可检查        |
+| 可移植性     | 18/25      | 依赖 TableWrap/DoFilterPanel 等同族 |
+| Agent 可触发 | 14/15      | globs + skill                       |
+| 单一真源     | 9/10       | kv3 合同与 oversea 分表写清         |
+| **合计**     | **89/100** |                                     |
 
 ## 最佳实践（精炼）
 
-### 何时必须用选择器
+### 何时必须用
 
-控件在**挑业务实体**（有 list/page 合同、有展示名）→ 必须 `XxxSelector`。  
-**禁止**筛/表单用手填 `*Id` / 包名；无现成选择器则**先建**再引用。  
-编辑已用选择器时，筛选同条件必须同形（可 `clearable` = 不限）。
+挑业务实体（有 list/page、有展示名）→ `XxxSelector`。禁止手填 `*Id`。无选择器先建再引用。
 
-### 分页实体 → List 双模金标（推荐强制）
+### 分页 → List 双模
 
-请求含 `pageNum`+`pageSize` 或响应含 `total` / 分页结构时：
+| 文件                  | 职责                                    |
+| --------------------- | --------------------------------------- |
+| `XxxList.vue`         | **唯一**表格逻辑；`enableSelector` 分叉 |
+| `XxxSelector.vue`     | 假 select + 开抽屉                      |
+| `DialogSelectXxx.vue` | 薄壳 `show()`，内挂 List                |
 
-| 文件                  | 职责                                                |
-| --------------------- | --------------------------------------------------- |
-| `XxxList.vue`         | **唯一**表格逻辑；页面 CRUD + `enableSelector` 点选 |
-| `XxxSelector.vue`     | 假 `el-select`（隐藏原生下拉）+ 打开抽屉            |
-| `DialogSelectXxx.vue` | **薄壳** header/footer/`show()`，内挂 `XxxList`     |
+禁止 Dialog 内第二套表；禁止 remote `el-select` 截断首屏。
 
-**禁止**：在 `DialogSelectXxx` 内再写一套 `DoFilterPanel`+`el-table`+query hook。  
-**禁止**：`ScrollSelect` / remote `el-select` 截断首屏冒充分页。
+### 选择器态硬约束
 
-勾选与 CRUD：全选框金标在表格选择列 header；若放 `TableWrap` `#batch`，必须用 `.batch-select-control`（Demo：`/example/simple/batch-select`）。选择器模式不屏蔽已有新建/编辑/删除（及行内状态切换）入口。
+- 筛项同形保留；锁定用 `:disabled`，禁 `v-if` 藏
+- 有写接口 → 操作列表头「新建」同形文案按钮 + 行内编辑删除；禁卸 Dialog
+- `load-failed` + `#empty` 失败态；薄壳勿叠 `v-loading`
+- 抽屉表高：`useDrawerPickListMaxHeight`；禁页面 `useAdminTableMaxHeight`
 
-### 回传形状
+### 回传
 
-`{ id, label, item }`（单选对象/`null`，多选数组）；`id` 类型跟合同（常用 `string`）。
+`{ id: string, label, item }`；单选对象/`null`，多选数组。
 
-### Demo（强制）
+### Demo
 
-每种选择器独立 Demo 页（开发态 Example 门控）：筛选区单选+多选；编辑弹层回填验证。禁止多选择器堆同一聚合页。
-
-### 抽屉表高
-
-根 class `drawer-model-selector`；`useDrawerPickListMaxHeight`；禁写死 px；禁对弹层表用页面 `useAdminTableMaxHeight`；`@opened` → `remeasureAfterLayout()`。
+独立页：筛选单选+多选 + `DialogEditXxxSelectorDemo`。门控 `VITE_APP_USE_EXAMPLE`。
 
 ## 验收清单
 
-- [ ] 外键筛选项无手填 ID
-- [ ] 分页实体选择器只有一份 List 逻辑
-- [ ] 每选择器有独立 Demo
-- [ ] 多选全选：表头选择列，或 `#batch` + `.batch-select-control`（勿裸方块）
-- [ ] 选择器模式仍可走已有增删改入口
+- [ ] 外键无手填 ID
+- [ ] 分页实体只有一份 List 逻辑
+- [ ] 选择器态可写（若接口支持）且筛项不藏
+- [ ] Demo 三件套
+- [ ] `pnpm type-check`

@@ -1,7 +1,7 @@
 import { axios } from '@/plugins/axios';
 
 export type SchoolResourceRow = {
-  id: number;
+  id: string;
   schoolName: string;
   status: number;
   remark: string;
@@ -9,12 +9,12 @@ export type SchoolResourceRow = {
   [key: string]: unknown;
 };
 
-export function requestSchoolResourceList(params: Record<string, unknown>) {
-  return axios.get('/example/school', { params });
+export function requestSchoolResourcePage(params: Record<string, unknown>, signal?: AbortSignal) {
+  return axios.get('/example/school/page', { params, signal });
 }
 
 export function requestEditSchoolResource(payload: {
-  id?: string | number;
+  id?: string;
   schoolName: string;
   status?: number;
   remark?: string;
@@ -25,10 +25,10 @@ export function requestEditSchoolResource(payload: {
   return axios.post('/example/school', payload);
 }
 
-export function requestDeleteSchoolResource(payload: { id: string | number }) {
+export function requestDeleteSchoolResource(payload: { id: string }) {
   return axios.delete(`/example/school/${payload.id}`);
 }
 
-export function requestBatchSwitchSchoolResource(ids: Array<string | number>, status: number) {
+export function requestBatchSwitchSchoolResource(ids: string[], status: number) {
   return axios.post('/example/school/batch', { ids, status });
 }

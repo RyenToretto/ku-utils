@@ -21,6 +21,7 @@ const menus = ref<SideMenuNode[]>([
       '/example/simple/list',
       '/example/simple/batch-select',
       '/example/school/list',
+      '/example/school-selector/demo',
       '/example/clazz/list',
       '/example/club/list',
     ],

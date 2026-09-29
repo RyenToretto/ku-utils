@@ -139,8 +139,8 @@
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @update:page-num="handlePageChange"
+          @update:page-size="handleSizeChange"
         />
       </template>
     </TableWrap>
@@ -151,8 +151,8 @@
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useTableQuery } from '@/composables/useTableQuery';
 
 interface DemoRow {
   id: number;
@@ -255,17 +255,17 @@ const {
   tableTotal,
   tableLoading,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<DemoRow, { keyword: string; status: string | number; dateRange: string[] }>({
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<DemoRow, { keyword: string; status: string | number; dateRange: string[] }>({
   defaultFilters: {
     keyword: '',
     status: '',
     dateRange: [],
   },
   defaultPageSize: 10,
-  fetcher: async (query) => {
+  fetcher: async (query, _signal) => {
     await new Promise((resolve) => window.setTimeout(resolve, 280));
     const keyword = String(query.keyword || '');
     const status = query.status;
@@ -295,7 +295,7 @@ const {
 });
 
 function handleReset() {
-  resetListFilters({
+  reset({
     keyword: '',
     status: '',
     dateRange: [],

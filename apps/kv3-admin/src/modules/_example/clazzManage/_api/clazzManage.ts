@@ -4,21 +4,21 @@ export type ClazzManageRow = {
   id: number;
   clazzName: string;
   status: number;
-  schoolId: number | null;
+  schoolId: string | null;
   schoolName: string;
   createTime: string;
   [key: string]: unknown;
 };
 
-export function requestClazzManageList(params: Record<string, unknown>) {
-  return axios.get('/example/clazz', { params });
+export function requestClazzManageList(params: Record<string, unknown>, signal?: AbortSignal) {
+  return axios.get('/example/clazz', { params, signal });
 }
 
 export function requestEditClazzManage(payload: {
   id?: string | number;
   clazzName: string;
   status?: number;
-  schoolId?: number | null;
+  schoolId?: string | null;
   schoolName?: string;
 }) {
   if (payload.id) {

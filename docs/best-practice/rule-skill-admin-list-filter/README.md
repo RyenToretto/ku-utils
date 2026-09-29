@@ -22,8 +22,10 @@
 ### 页面与表格
 
 1. Layer 薄壳 + `_module/XxxList`；单根 `page-*`；Dialog 在根内。
-2. **表格四要素**：`TableWrap`（Dialog 内嵌可省）+ `class="do-inner-scroller page-table hide-table-border"` + `border`/`stripe` + `:max-height`（页面用 admin maxHeight hook；**弹层表**用 drawer 专用 hook，禁写死 px）。
-3. 两种滚动（可选）：区内滚动（默认）vs 整页滚动（高筛选页，表不传 max-height）。
+2. 列表状态：`useTableQuery`（abort / `tableLoadFailed` / `refresh`）；失败 `#empty` 有出口；有分页挂 `BasePagination` `enable-refresh`。
+3. **表格四要素**：`TableWrap`（Dialog 内嵌可省）+ `class="do-inner-scroller page-table hide-table-border"` + `border`/`stripe` + `:max-height`（页面用 admin maxHeight hook；**弹层表**用 drawer 专用 hook，禁写死 px）。
+4. 两种滚动（可选）：区内滚动（默认）vs 整页滚动（高筛选页，表不传 max-height）。
+5. **默认禁止业务列表 `PageHeader`**（Demo 说明性页可保留）。
 
 ### 筛选 `DoFilterPanel`
 
@@ -32,15 +34,14 @@
 - 范围日期用封装 `DateRange`；默认可清空
 - 单选 ≤3 → 分段 radio（首项空=不限）；≥4/多选/长文案 → select
 - `#ctl` 横向贴卡片右下；搜索 loading 勿撑宽按钮
-- 离散控件变更可即查；禁盲目 `watch(listFilters)`（按仓约定）
+- **离散完成即查**（radio / select / DateRange / 选择器确定 / 关键字清空）；关键字打字不查；禁 `watch(listFilters)`
 
 ### 操作列与动作分区
 
 - `ops-column` 语义标记；对齐交给 EP `align`
 - 行内：`plain` + `small`；**禁 link**；icon 在前、文字在后；删除用 icon、禁再写「删除」文案
 - loading 按钮行内紧凑 `min-width`
-- 表头「新建」；**批量**→ `#batch`；**页级**→ `#control` 或 PageHeader `#actions`（若产品启用页头）
-- **PageHeader 策略按仓冻结**：有的仓默认禁用页头（顶栏+侧栏已表达身份）
+- 表头「新建」；**批量**→ `#batch`；**页级**→ `#control`（勿默认再挂 PageHeader）
 
 ### Cell
 

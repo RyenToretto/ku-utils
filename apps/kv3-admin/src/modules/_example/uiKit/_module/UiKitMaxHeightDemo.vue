@@ -207,8 +207,8 @@
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @update:page-num="handlePageChange"
+          @update:page-size="handleSizeChange"
         />
       </template>
     </TableWrap>
@@ -216,8 +216,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useTableQuery } from '@/composables/useTableQuery';
 
 interface DemoRow {
   id: string;
@@ -276,10 +276,10 @@ const {
   tableLoading,
   tableTotal,
   search,
-  resetListFilters,
-  handlePageNumChange,
-  handlePageSizeChange,
-} = useAdminTable({
+  reset,
+  handlePageChange,
+  handleSizeChange,
+} = useTableQuery({
   defaultFilters: {
     dateRange: undefined as string[] | undefined,
     keyword: '',
@@ -290,7 +290,7 @@ const {
     tag: '',
   },
   defaultPageSize: 20,
-  fetcher: async (query) => {
+  fetcher: async (query, _signal) => {
     const keyword = String(query.keyword ?? '').trim();
     const status = query.status;
     const owner = String(query.owner ?? '').trim();
@@ -316,7 +316,7 @@ const {
 });
 
 function handleReset() {
-  resetListFilters();
+  reset();
 }
 </script>
 

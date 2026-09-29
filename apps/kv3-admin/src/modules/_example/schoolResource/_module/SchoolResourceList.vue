@@ -1,10 +1,8 @@
 <template>
   <div
-    class="page-school-resource"
+    class="page-school-resource-list"
     :class="{ 'in-dialog': inDialog }"
   >
-    <PageHeader v-if="!enableSelector" />
-
     <DoFilterPanel
       :line="1"
       :loading="tableLoading"
@@ -59,6 +57,10 @@
       </template>
     </DoFilterPanel>
 
+    <!--
+      选择器金标：全选勾选只放在勾选列 #header（与行内 do-select-cell 同列对齐）。
+      禁止塞进 TableWrap #batch / DoTableHeader。
+    -->
     <TableWrap
       :class="{ 'drawer-pick-table-wrap': inDialog }"
       :enable-do-header="!enableSelector"
@@ -110,9 +112,11 @@
           width="55"
           align="center"
         >
-          <template #header>
+          <template
+            v-if="isMultiple"
+            #header
+          >
             <div
-              v-if="isMultiple"
               class="do-select-cell batch-select-box"
               :class="[statusOfSelect, { active: statusOfSelect !== 'none-selected' }]"
               @click.stop="toggleBatchSelect"
@@ -167,7 +171,7 @@
               :inactive-label="
                 $MAPS.example.schoolResource.schoolStatus.getLabel(SCHOOL_STATUS_DISABLED)
               "
-              switchable
+              :switchable="!enableSelector"
               :switching="isStatusSwitching(row.id)"
               active-tips="确认启用该学校？"
               inactive-tips="确认停用该学校？"
@@ -228,16 +232,41 @@
             </div>
           </template>
         </el-table-column>
+
+        <template #empty>
+          <el-empty
+            v-if="tableLoadFailed"
+            description="列表加载失败"
+            :image-size="80"
+          >
+            <el-button
+              type="primary"
+              plain
+              size="small"
+              @click="retryLoad"
+            >
+              重试
+            </el-button>
+          </el-empty>
+          <el-empty
+            v-else-if="!tableLoading"
+            description="暂无数据"
+            :image-size="80"
+          />
+        </template>
       </el-table>
 
       <template #ft>
         <BasePagination
-          :page-num="listFilters.pageNum"
-          :page-size="listFilters.pageSize"
+          enable-refresh
+          :refresh-loading="tableLoading"
+          :page-num="listFilters.pageNum ?? 1"
+          :page-size="listFilters.pageSize ?? 10"
           :total="tableTotal"
           :page-sizes="pageSizeOptions"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @page-change="handlePageChange"
+          @size-change="handleSizeChange"
+          @refresh="refresh()"
         />
       </template>
     </TableWrap>
@@ -256,14 +285,14 @@ import { computed, ref, toRef, watch } from 'vue';
 
 import DialogEditSchoolResource from './DialogEditSchoolResource.vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useDrawerPickListMaxHeight } from '@/composables/useDrawerPickListMaxHeight';
 import { useRowSelector } from '@/composables/useRowSelector';
+import { useTableQuery } from '@/composables/useTableQuery';
 import {
   requestBatchSwitchSchoolResource,
   requestDeleteSchoolResource,
-  requestSchoolResourceList,
+  requestSchoolResourcePage,
   type SchoolResourceRow,
 } from '@/modules/_example/schoolResource/_api';
 import {
@@ -280,7 +309,6 @@ const props = withDefaults(
     lineKey?: string;
     checkedIds?: Array<string | number>;
     lockEnabledStatus?: boolean;
-    /** 选择器内默认分页大小（多选跨页演示建议 5） */
     defaultPageSize?: number;
   }>(),
   {
@@ -299,10 +327,11 @@ const emit = defineEmits<{
   change: [value: SchoolResourceRow | SchoolResourceRow[] | undefined];
   'refresh-start': [];
   loaded: [];
+  'load-failed': [];
 }>();
 
-const pageMaxHeight = useAdminTableMaxHeight('.page-school-resource', 400);
-const { maxHeight: drawerTableMaxHeight } = useDrawerPickListMaxHeight(
+const pageMaxHeight = useAdminTableMaxHeight('.page-school-resource-list', 400);
+const { maxHeight: drawerTableMaxHeight, remeasureAfterLayout } = useDrawerPickListMaxHeight(
   'school-resource-pick-table',
 );
 const tableMaxHeight = computed(() =>
@@ -328,18 +357,21 @@ const {
   tableData,
   tableTotal,
   tableLoading,
+  tableLoadFailed,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<SchoolResourceRow, { schoolName: string; status: string | number }>({
+  refresh,
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<SchoolResourceRow, { schoolName: string; status: string | number }>({
   defaultFilters: {
     schoolName: '',
     status: statusFilterLocked.value ? SCHOOL_STATUS_ENABLED : '',
   },
   defaultPageSize: props.defaultPageSize,
-  fetcher: (query) =>
-    requestSchoolResourceList(query) as Promise<{
+  immediate: !props.enableSelector,
+  fetcher: async (query, signal) =>
+    requestSchoolResourcePage(query, signal) as Promise<{
       data: { lists: SchoolResourceRow[]; total: number };
     }>,
   transformQuery(query) {
@@ -351,9 +383,12 @@ const {
   onBeforeSearch() {
     if (props.enableSelector) emit('refresh-start');
   },
-  onAfterSearch() {
+  onLoaded() {
     if (props.enableCache) selectionApi.syncPageFromCache();
     if (props.enableSelector) emit('loaded');
+  },
+  onError() {
+    if (props.enableSelector) emit('load-failed');
   },
 });
 
@@ -384,8 +419,12 @@ const {
 
 selectionApi.syncPageFromCache = syncPageFromCache;
 
+function retryLoad() {
+  void search(false).catch(() => undefined);
+}
+
 function handleReset() {
-  resetListFilters({
+  reset({
     schoolName: '',
     status: statusFilterLocked.value ? SCHOOL_STATUS_ENABLED : '',
   });
@@ -408,7 +447,7 @@ async function removeRow(row: SchoolResourceRow) {
   await ElMessageBox.confirm(`确认删除「${row.schoolName}」？`, '提示', { type: 'warning' });
   await requestDeleteSchoolResource({ id: row.id });
   ElMessage.success('删除成功');
-  search(false);
+  void search(false);
 }
 
 async function toBatchSwitch(status: number) {
@@ -424,23 +463,23 @@ async function toBatchSwitch(status: number) {
     await requestBatchSwitchSchoolResource(ids, status);
     ElMessage.success(`${actionLabel}成功`);
     clearSelection();
-    search(false);
+    void search(false);
   } finally {
     loadingRef.value = false;
   }
 }
 
-function isStatusSwitching(id: string | number) {
-  return !!statusSwitchingIds.value[String(id)];
+function isStatusSwitching(id: string) {
+  return !!statusSwitchingIds.value[id];
 }
 
 async function switchSchoolStatus(row: SchoolResourceRow, nextStatus: string | number | boolean) {
-  const key = String(row.id);
+  const key = row.id;
   statusSwitchingIds.value = { ...statusSwitchingIds.value, [key]: true };
   try {
     await requestBatchSwitchSchoolResource([row.id], Number(nextStatus));
     row.status = Number(nextStatus);
-    ElMessage.success(nextStatus === SCHOOL_STATUS_ENABLED ? '已启用' : '已停用');
+    ElMessage.success(Number(nextStatus) === SCHOOL_STATUS_ENABLED ? '已启用' : '已停用');
   } finally {
     const nextMap = { ...statusSwitchingIds.value };
     delete nextMap[key];
@@ -458,11 +497,11 @@ watch(
   { immediate: true },
 );
 
-defineExpose({ setChecked, clearSelection, search });
+defineExpose({ setChecked, clearSelection, search, remeasureAfterLayout });
 </script>
 
 <style lang="scss" scoped>
-.page-school-resource {
+.page-school-resource-list {
   box-sizing: border-box;
 
   &.in-dialog {
@@ -471,6 +510,7 @@ defineExpose({ setChecked, clearSelection, search });
     min-height: 0;
     flex: 1;
     overflow: hidden;
+    padding: 0;
   }
 }
 

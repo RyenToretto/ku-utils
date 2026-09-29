@@ -253,8 +253,8 @@
           :page-size="listFilters.pageSize"
           :total="tableTotal"
           :page-sizes="[10, 20, 50]"
-          @update:page-num="handlePageNumChange"
-          @update:page-size="handlePageSizeChange"
+          @update:page-num="handlePageChange"
+          @update:page-size="handleSizeChange"
         />
       </template>
     </TableWrap>
@@ -273,8 +273,8 @@ import { computed, reactive, ref, toRefs, watch } from 'vue';
 
 import DialogEditSimpleExample from './DialogEditSimpleExample.vue';
 
-import { useAdminTable } from '@/composables/useAdminTable';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useTableQuery } from '@/composables/useTableQuery';
 import {
   buildDoFilterPanelDemoFields,
   createDoFilterPanelDemoFilters,
@@ -363,10 +363,10 @@ const {
   tableTotal,
   tableLoading,
   search,
-  handlePageNumChange,
-  handlePageSizeChange,
-  resetListFilters,
-} = useAdminTable<
+  handlePageChange,
+  handleSizeChange,
+  reset,
+} = useTableQuery<
   ExampleRow,
   { exampleName: string; taskAction: string | number; status: string | number }
 >({
@@ -376,7 +376,7 @@ const {
     status: '',
   },
   defaultPageSize: 10,
-  fetcher: (query) =>
+  fetcher: async (query, _signal) =>
     requestSimpleExampleList(query) as Promise<{ data: { lists: ExampleRow[]; total: number } }>,
 });
 
@@ -389,7 +389,7 @@ function handleReset() {
     search(true);
     return;
   }
-  resetListFilters();
+  reset();
 }
 
 function onDemoExtra(kind: 'export' | 'more') {

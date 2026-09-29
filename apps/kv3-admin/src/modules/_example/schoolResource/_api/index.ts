@@ -1,5 +1,5 @@
 export {
-  requestSchoolResourceList,
+  requestSchoolResourcePage,
   requestEditSchoolResource,
   requestDeleteSchoolResource,
   requestBatchSwitchSchoolResource,
