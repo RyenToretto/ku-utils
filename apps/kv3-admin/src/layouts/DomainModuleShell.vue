@@ -86,7 +86,8 @@ onMounted(() => triggerMenu());
   min-width: 0;
   min-height: 0;
   overflow: auto;
-  padding: 0 20px 20px;
+  /* 去 PageHeader 后需保留上间距，与左右下一致 */
+  padding: 20px;
   background: var(--ku-bg-page-gradient);
   background-attachment: local;
 }

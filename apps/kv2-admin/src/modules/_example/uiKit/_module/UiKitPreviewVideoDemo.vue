@@ -61,11 +61,12 @@ function openAudio() {
 <style lang="scss" scoped>
 .page-ui-kit-preview-video {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .ui-kit-demo-card {
-  margin-top: 12px;
-
   h3 {
     margin: 0 0 12px;
     font-size: 14px;

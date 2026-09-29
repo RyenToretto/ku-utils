@@ -92,15 +92,16 @@ function onRemoteSelect(item: Record<string, unknown> | undefined) {
 <style lang="scss" scoped>
 .page-ui-kit-do-selector {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .ui-kit-demo-alert {
-  margin-top: 12px;
+  margin-top: 0;
 }
 
 .ui-kit-demo-card {
-  margin-top: 12px;
-
   h3 {
     margin: 0 0 12px;
     font-size: 14px;

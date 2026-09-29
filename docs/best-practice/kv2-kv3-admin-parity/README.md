@@ -38,6 +38,8 @@
 | Pinia：`ensure-vue-demi-vue27` 锁 vue-demi 2.7   | 默认 isVue3 会使 Options Store state 以 Ref 暴露 + `toRefs` 警告 |
 | 勿 `Vue.component('Filter'/'Menu')`              | 与 HTML/SVG 保留标签冲突；改 import 使用                         |
 | **禁止**页级 `PageHeader` / title / subtitle     | 两侧一致；非产品明确拍板不得加回                                 |
+| `.domain-module-main` padding 四边一致（20px）   | 去掉 PageHeader 后禁止再写成 `0 20px 20px` 导致贴顶              |
+| 页内首块勿再叠 `margin-top`                      | 父级已有 padding 时用 `gap`，避免顶距翻倍                        |
 
 ## 必须成对的资产
 

@@ -136,10 +136,12 @@ function onDialogSuccess(payload: {
 <style lang="scss" scoped>
 .page-example-school-selector-demo {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .page-example-school-selector-demo-card {
-  margin-top: 12px;
   padding: 16px;
   background: var(--ku-bg-elevated, #fff);
   border-radius: 8px;
