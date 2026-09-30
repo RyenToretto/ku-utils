@@ -1,7 +1,6 @@
 import {
   useSchemaColumnConfig,
   DoConfigColumnDialog,
-  DoTableHeader,
   schemasToColumns,
   SchemaColumnConfigContext,
   type ColumnSchema,
@@ -73,7 +72,7 @@ export default function SlotsColumns() {
       <div className="page-slots-columns">
         <TableWrap
           enableDoHeader
-          control={<DoTableHeader />}
+          disabledColumnConfig={false}
         >
           <Table
             key={config.tableRenderKey}

@@ -1,7 +1,6 @@
 import {
   useSchemaColumnConfig,
   DoConfigColumnDialog,
-  DoTableHeader,
   schemasToColumns,
   SchemaColumnConfigContext,
   type ColumnSchema,
@@ -83,7 +82,7 @@ export default function ElAttrsColumns() {
       <div className="page-el-attrs-columns">
         <TableWrap
           enableDoHeader
-          control={<DoTableHeader />}
+          disabledColumnConfig={false}
         >
           <Table
             key={config.tableRenderKey}

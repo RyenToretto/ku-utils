@@ -46,6 +46,8 @@ export function DoTableHeader(props: DoTableHeaderProps) {
           <Button
             className="do-table-control-btn"
             size="small"
+            variant="outlined"
+            color="default"
             onClick={() => onOpen?.()}
           >
             {label}

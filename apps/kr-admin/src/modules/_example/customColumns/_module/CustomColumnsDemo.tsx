@@ -1,7 +1,6 @@
 import {
   useSchemaColumnConfig,
   DoConfigColumnDialog,
-  DoTableHeader,
   schemasToColumns,
   SchemaColumnConfigContext,
 } from '@ku-utils/r-custom-columns';
@@ -116,7 +115,7 @@ export default function CustomColumnsDemo({
       <div className={pageClass}>
         <TableWrap
           enableDoHeader
-          control={<DoTableHeader />}
+          disabledColumnConfig={false}
         >
           <Table
             key={config.tableRenderKey}
