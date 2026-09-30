@@ -1,16 +1,21 @@
 import { useVersionUpdate } from '@ku-utils/hooks-react';
 import { ConfigProvider, theme as antTheme, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import DialogPreviewVideo, {
+  type DialogPreviewVideoRef,
+} from '@/components/DialogPreviewVideo';
 import { useSplashReadiness } from '@/composables/useSplashReadiness';
 import BaseHeader from '@/layouts/BaseHeader';
 import { useAppStore } from '@/stores/app';
+import { registerPreviewVideoHost } from '@/utils/previewMedia';
 import { fetchStaticVersion } from '@/utils/version';
 
 export default function App() {
   const location = useLocation();
+  const previewVideoRef = useRef<DialogPreviewVideoRef>(null);
   const [routerReady, setRouterReady] = useState(false);
   const themeMode = useAppStore((s) => s.theme);
   const isDark =
@@ -22,6 +27,12 @@ export default function App() {
   }, [location.pathname]);
 
   useSplashReadiness(routerReady);
+
+  useLayoutEffect(() => {
+    const host = previewVideoRef.current;
+    registerPreviewVideoHost(host ? { play: (url, raw) => host.play(url, raw) } : null);
+    return () => registerPreviewVideoHost(null);
+  }, []);
 
   const { hasUpdate, refreshForUpdate } = useVersionUpdate({
     fetchVersion: fetchStaticVersion,
@@ -73,6 +84,7 @@ export default function App() {
             <Outlet />
           </Suspense>
         </div>
+        <DialogPreviewVideo ref={previewVideoRef} />
       </div>
     </ConfigProvider>
   );
