@@ -1,24 +1,39 @@
-import { Button, Input, Pagination, Radio, Space, Table, Tag, message, Modal } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Input, Radio, Table, Tag, message, Modal } from 'antd';
+import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useState } from 'react';
 
 import DialogEditClubActivity from './DialogEditClubActivity';
 
+import CellNameId from '@/components/CellNameId';
+import CellState from '@/components/CellState';
 import DoFilterPanel from '@/components/DoFilterPanel';
+import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
 import {
+  requestBatchSwitchClubActivity,
   requestDeleteClubActivity,
   requestClubActivityList,
   type ClubActivityRow,
 } from '@/modules/_example/clubActivity/_api';
+import {
+  CLUB_STATUS_DISABLED,
+  CLUB_STATUS_ENABLED,
+} from '@/modules/_example/clubActivity/_map/clubStatus';
 
 export default function ClubActivityList() {
   const status = maps.example.clubActivity.clubStatus;
   const [editOpen, setEditOpen] = useState(false);
   const [editRow, setEditRow] = useState<ClubActivityRow | null>(null);
+  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ClubActivityRow[]>([]);
+  const [batchEnableLoading, setBatchEnableLoading] = useState(false);
+  const [batchDisableLoading, setBatchDisableLoading] = useState(false);
+  const [statusSwitchingIds, setStatusSwitchingIds] = useState<Record<string, boolean>>({});
+
   const {
     listFilters,
     setListFilters,
@@ -26,10 +41,12 @@ export default function ClubActivityList() {
     tableTotal,
     tableLoading,
     search,
+    reset,
     handlePageChange,
     handleSizeChange,
   } = useTableQuery<ClubActivityRow, { clubName: string; status: number | '' }>({
     defaultFilters: { clubName: '', status: '' },
+    defaultPageSize: 10,
     fetcher: async (query, signal) =>
       requestClubActivityList(query, signal) as Promise<{
         data: { lists: ClubActivityRow[]; total: number };
@@ -37,17 +54,106 @@ export default function ClubActivityList() {
   });
   const maxHeight = useAdminTableMaxHeight('.page-club-activity', 400);
 
+  function clearSelection() {
+    setSelectedKeys([]);
+    setSelectedRows([]);
+  }
+
+  async function toBatchSwitch(nextStatus: number) {
+    const ids = selectedRows.map((row) => row.id);
+    if (!ids.length) return;
+    const actionLabel = nextStatus === CLUB_STATUS_ENABLED ? '启用' : '停用';
+    Modal.confirm({
+      title: '提示',
+      content: `确定${actionLabel}所选的 ${ids.length} 个社团？`,
+      onOk: async () => {
+        const setLoading =
+          nextStatus === CLUB_STATUS_ENABLED ? setBatchEnableLoading : setBatchDisableLoading;
+        setLoading(true);
+        try {
+          await requestBatchSwitchClubActivity(ids, nextStatus);
+          message.success(`${actionLabel}成功`);
+          clearSelection();
+          void search(false);
+        } finally {
+          setLoading(false);
+        }
+      },
+    });
+  }
+
+  async function switchClubStatus(row: ClubActivityRow, nextStatus: string | number | boolean) {
+    const key = String(row.id);
+    setStatusSwitchingIds((prev) => ({ ...prev, [key]: true }));
+    try {
+      await requestBatchSwitchClubActivity([row.id], Number(nextStatus));
+      row.status = Number(nextStatus);
+      message.success(Number(nextStatus) === CLUB_STATUS_ENABLED ? '已启用' : '已停用');
+      void search(false);
+    } finally {
+      setStatusSwitchingIds((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+    }
+  }
+
   const columns: ColumnsType<ClubActivityRow> = [
-    { title: '社团名称', dataIndex: 'clubName', minWidth: 140 },
     {
-      title: '关联学校',
-      dataIndex: 'schools',
-      minWidth: 200,
-      render: (schools: ClubActivityRow['schools']) =>
-        schools?.length ? schools.map((s) => <Tag key={s.id}>{s.schoolName}</Tag>) : '—',
+      title: '社团名称',
+      dataIndex: 'clubName',
+      minWidth: 140,
+      className: 'name-slot-cell',
+      render: (_, row) => (
+        <CellNameId
+          id={row.id}
+          name={row.clubName}
+        />
+      ),
     },
-    { title: '状态', dataIndex: 'status', width: 100, render: (v) => status.getLabel(v) },
-    { title: '创建时间', dataIndex: 'createTime', width: 180 },
+    {
+      title: '参与学校',
+      dataIndex: 'schools',
+      minWidth: 220,
+      render: (schools: ClubActivityRow['schools']) =>
+        schools?.length
+          ? schools.map((s) => (
+              <Tag
+                key={s.id}
+                className="school-chip"
+              >
+                {s.schoolName}
+              </Tag>
+            ))
+          : '—',
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 100,
+      align: 'center',
+      render: (_, row) => (
+        <CellState
+          modelValue={row.status}
+          activeValue={CLUB_STATUS_ENABLED}
+          inactiveValue={CLUB_STATUS_DISABLED}
+          activeLabel={status.getLabel(CLUB_STATUS_ENABLED)}
+          inactiveLabel={status.getLabel(CLUB_STATUS_DISABLED)}
+          switchable
+          switching={!!statusSwitchingIds[String(row.id)]}
+          activeTips="确认启用该社团？"
+          inactiveTips="确认停用该社团？"
+          onSwitch={(next) => void switchClubStatus(row, next)}
+        />
+      ),
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      minWidth: 160,
+      render: (v) => v || '—',
+    },
     {
       title: (
         <Button
@@ -58,54 +164,83 @@ export default function ClubActivityList() {
             setEditOpen(true);
           }}
         >
-          新建
+          新建社团
         </Button>
       ),
       key: 'ops',
       width: 140,
       fixed: 'right',
+      className: 'ops-column',
       render: (_, row) => (
-        <Space>
+        <div className="line-actions">
           <Button
+            type="primary"
+            ghost
             size="small"
-            onClick={() => {
+            icon={<EditOutlined />}
+            title="编辑"
+            aria-label="编辑"
+            onClick={(e) => {
+              e.stopPropagation();
               setEditRow(row);
               setEditOpen(true);
             }}
-          >
-            编辑
-          </Button>
+          />
           <Button
-            size="small"
             danger
-            onClick={() => {
+            ghost
+            size="small"
+            icon={<DeleteOutlined />}
+            title="删除"
+            aria-label="删除"
+            onClick={(e) => {
+              e.stopPropagation();
               Modal.confirm({
-                title: '确认删除该社团？',
+                title: '提示',
+                content: `确认删除「${row.clubName}」？`,
                 onOk: async () => {
                   await requestDeleteClubActivity({ id: row.id });
-                  message.success('已删除');
+                  message.success('删除成功');
                   void search(false);
                 },
               });
             }}
-          >
-            删除
-          </Button>
-        </Space>
+          />
+        </div>
       ),
     },
   ];
 
+  const rowSelection: TableProps<ClubActivityRow>['rowSelection'] = {
+    type: 'checkbox',
+    selectedRowKeys: selectedKeys,
+    onChange: (keys, rows) => {
+      setSelectedKeys(keys);
+      setSelectedRows(rows);
+    },
+    columnWidth: 55,
+  };
+
   return (
     <div className="page-club-activity">
       <DoFilterPanel
+        line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}
+        ctl={
+          <Button
+            disabled={tableLoading}
+            onClick={() => void reset()}
+          >
+            重置
+          </Button>
+        }
       >
         <div className="do-filter-field">
-          <span className="do-filter-field-label">名称</span>
+          <span className="do-filter-field-label">社团名称</span>
           <Input
             allowClear
+            placeholder="不限"
             style={{ width: 180 }}
             value={listFilters.clubName}
             onChange={(e) => setListFilters({ clubName: e.target.value })}
@@ -113,33 +248,61 @@ export default function ClubActivityList() {
           />
         </div>
         <div className="do-filter-field">
-          <span className="do-filter-field-label">状态</span>
+          <span className="do-filter-field-label do-filter-field-label-sm">状态</span>
           <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            size="small"
             value={listFilters.status}
             onChange={(e) => {
               setListFilters({ status: e.target.value });
               void search(true);
             }}
-            options={[{ label: '全部', value: '' }, ...status.options]}
+            options={[{ label: '不限', value: '' }, ...status.options]}
           />
         </div>
       </DoFilterPanel>
       <TableWrap
+        enableDoHeader
+        batch={
+          <div className="batch-control">
+            <span>批量操作：</span>
+            <Button
+              className="ml-5"
+              type="primary"
+              size="small"
+              ghost
+              disabled={!selectedRows.length}
+              loading={batchEnableLoading}
+              onClick={() => void toBatchSwitch(CLUB_STATUS_ENABLED)}
+            >
+              批量启用
+            </Button>
+            <Button
+              className="ml-5"
+              size="small"
+              disabled={!selectedRows.length}
+              loading={batchDisableLoading}
+              onClick={() => void toBatchSwitch(CLUB_STATUS_DISABLED)}
+            >
+              批量停用
+            </Button>
+          </div>
+        }
         footer={
-          <Pagination
-            current={listFilters.pageNum || 1}
-            pageSize={listFilters.pageSize || 20}
+          <ListPaginationBar
+            pageNum={listFilters.pageNum || 1}
+            pageSize={listFilters.pageSize || 10}
             total={tableTotal}
-            showSizeChanger
-            showTotal={(t) => `共 ${t} 条`}
-            onChange={(page, size) => {
-              if (size !== listFilters.pageSize) void handleSizeChange(size);
-              else void handlePageChange(page);
-            }}
+            loading={tableLoading}
+            onPageChange={(p) => void handlePageChange(p)}
+            onSizeChange={(s) => void handleSizeChange(s)}
+            onRefresh={() => void search(false)}
           />
         }
       >
         <Table
+          className="do-inner-scroller page-table hide-table-border"
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
@@ -148,6 +311,7 @@ export default function ClubActivityList() {
           bordered
           size="middle"
           scroll={{ y: maxHeight }}
+          rowSelection={rowSelection}
         />
       </TableWrap>
       <DialogEditClubActivity
