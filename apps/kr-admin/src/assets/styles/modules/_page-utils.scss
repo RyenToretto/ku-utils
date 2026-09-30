@@ -397,9 +397,140 @@ el-form-item.do-fill-form > .el-form-item__content {
   justify-content: flex-start;
   align-items: center;
   gap: 3px;
-  .el-button {
+  .el-button,
+  .ant-btn {
     margin: 2px;
     padding: 0 5px;
     height: 24px;
+  }
+}
+
+/* CellNameId / CellState — 对齐 kv3 全局单元格 */
+.cell-name-id {
+  min-width: 0;
+  max-width: 100%;
+
+  .name,
+  .id {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .name {
+    line-height: 16px;
+    padding-bottom: 2px;
+    color: var(--ku-text-primary, rgba(0, 0, 0, 0.88));
+  }
+
+  .id {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--ku-text-secondary, #909399);
+  }
+}
+
+.cell-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .cell-state-switch-wrap {
+    display: inline-flex;
+    line-height: 1;
+  }
+
+  .cell-state-loading {
+    font-size: 14px;
+    color: var(--ku-color-primary, #b37338);
+  }
+}
+
+.cell-state-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &.is-success {
+    color: var(--ku-color-success, #67c23a);
+    &::before {
+      background: var(--ku-color-success, #67c23a);
+    }
+  }
+
+  &.is-danger {
+    color: var(--ku-color-danger, #f56c6c);
+    &::before {
+      background: var(--ku-color-danger, #f56c6c);
+    }
+  }
+
+  &.is-warning {
+    color: var(--ku-color-warning, #e6a23c);
+    &::before {
+      background: var(--ku-color-warning, #e6a23c);
+    }
+  }
+
+  &.is-info {
+    color: var(--ku-text-secondary, #909399);
+    &::before {
+      background: var(--ku-text-secondary, #909399);
+    }
+  }
+
+  &.is-primary {
+    color: var(--ku-color-primary, #b37338);
+    &::before {
+      background: var(--ku-color-primary, #b37338);
+    }
+  }
+}
+
+.batch-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ku-text-secondary, #909399);
+}
+
+.ml-5 {
+  margin-left: 5px;
+}
+
+.table-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+
+.do-filter-field-label-sm {
+  min-width: 52px;
+}
+
+.page-school-resource-list {
+  box-sizing: border-box;
+
+  &.in-dialog {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+    padding: 0;
   }
 }

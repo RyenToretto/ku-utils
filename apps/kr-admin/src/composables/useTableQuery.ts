@@ -108,6 +108,17 @@ export function useTableQuery<
     });
   }, []);
 
+  /** 同步写回 filtersRef 后立刻 search，避免 setState 批处理导致旧筛选项 */
+  const reset = useCallback(
+    (nextFilters?: TFilter) => {
+      const next = { ...(nextFilters ?? defaultFilters) } as TFilter;
+      filtersRef.current = next;
+      setFilters(next);
+      return search(true);
+    },
+    [defaultFilters, search],
+  );
+
   const handlePageChange = useCallback(
     (page: number) => {
       setPageNum(page);
@@ -153,6 +164,7 @@ export function useTableQuery<
     setPageNum,
     setPageSize,
     search,
+    reset,
     handlePageChange,
     handleSizeChange,
     onPageChange(page: number, size: number) {
