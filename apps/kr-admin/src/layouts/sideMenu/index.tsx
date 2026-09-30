@@ -1,5 +1,5 @@
 import { Menu } from 'antd';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export type SideMenuNode = {
@@ -66,9 +66,50 @@ function mapChildren(
   });
 }
 
+/** 收集 pathname 所在分支的全部祖先 key（与 kv3 el-menu 默认只展开当前链一致） */
+function collectOpenKeysForPath(menus: SideMenuNode[], pathname: string): string[] {
+  const found: string[] = [];
+
+  const walk = (nodes: SideMenuNode[], ancestors: string[]): boolean => {
+    for (const node of nodes) {
+      const chain = [...ancestors, node.path];
+      if (!node.children?.length) {
+        if (node.path === pathname) {
+          found.push(...ancestors);
+          return true;
+        }
+        continue;
+      }
+      for (const child of node.children) {
+        if (typeof child === 'string') {
+          if (child === pathname) {
+            found.push(...chain);
+            return true;
+          }
+        } else if (walk([child], chain)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  walk(menus, []);
+  return [...new Set(found)];
+}
+
 export default function SideMenu({ menus }: { menus: SideMenuNode[]; moduleRootPath?: string }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const pathOpenKeys = useMemo(
+    () => collectOpenKeysForPath(menus, location.pathname),
+    [menus, location.pathname],
+  );
+  const [openKeys, setOpenKeys] = useState<string[]>(pathOpenKeys);
+
+  useEffect(() => {
+    setOpenKeys(pathOpenKeys);
+  }, [pathOpenKeys]);
 
   const items = useMemo(
     () =>
@@ -83,18 +124,15 @@ export default function SideMenu({ menus }: { menus: SideMenuNode[]; moduleRootP
 
   return (
     <Menu
+      className="side-menu"
       theme="dark"
       mode="inline"
       selectedKeys={[location.pathname]}
-      defaultOpenKeys={menus.map((m) => m.path)}
+      openKeys={openKeys}
+      onOpenChange={setOpenKeys}
       items={items}
       onClick={({ key }) => {
         if (String(key).startsWith('/')) navigate(String(key));
-      }}
-      style={{
-        height: '100%',
-        borderInlineEnd: 0,
-        background: 'transparent',
       }}
     />
   );

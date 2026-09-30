@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import SideMenu, { type SideMenuNode } from '@/layouts/sideMenu';
 
@@ -27,26 +27,8 @@ export function DomainModuleShell({ menus, moduleRootPath }: DomainModuleShellPr
   }, [location.pathname, menus, moduleRootPath, navigate]);
 
   return (
-    <main
-      className="domain-module-shell"
-      style={{
-        display: 'flex',
-        height: '100%',
-        minHeight: 0,
-        overflow: 'hidden',
-        background: 'transparent',
-      }}
-    >
-      <aside
-        className="domain-module-aside sidebar-nav"
-        style={{
-          width: 220,
-          flexShrink: 0,
-          borderRight: '1px solid var(--ku-border-color-sidebar, transparent)',
-          background: 'var(--ku-bg-sidebar, #2f2a26)',
-          overflow: 'auto',
-        }}
-      >
+    <main className="domain-module-shell">
+      <aside className="domain-module-aside">
         <div className="domain-module-aside-body">
           <SideMenu
             menus={menus}
@@ -54,19 +36,7 @@ export function DomainModuleShell({ menus, moduleRootPath }: DomainModuleShellPr
           />
         </div>
       </aside>
-      <div
-        className="domain-module-main"
-        style={{
-          flex: 1,
-          minWidth: 0,
-          minHeight: 0,
-          padding: 20,
-          overflow: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 12,
-        }}
-      >
+      <div className="domain-module-main">
         <Outlet />
       </div>
     </main>
