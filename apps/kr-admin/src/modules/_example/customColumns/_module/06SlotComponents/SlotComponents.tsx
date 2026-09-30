@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <CustomColumnsDemo
       title="06 单元格三种写法"
-      mode="slots"
+      mode="slot-components"
     />
   );
 }

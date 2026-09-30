@@ -1,82 +1,188 @@
 import {
   useSchemaColumnConfig,
-  DoTableHeader,
   DoConfigColumnDialog,
+  DoTableHeader,
   schemasToColumns,
   SchemaColumnConfigContext,
   type ColumnSchema,
 } from '@ku-utils/r-custom-columns';
 import { Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import { useMemo, useState } from 'react';
 
-const BASE_SCHEMAS: ColumnSchema[] = [
-  { prop: 'id', label: 'ID', width: 80, fixed: 'left', isDefault: true },
-  { prop: 'name', label: '名称', isDefault: true, showOverflowTooltip: true },
-  { prop: 'groupA', label: '分组A', group: '指标', isDefault: true },
-  { prop: 'groupB', label: '分组B', group: '指标' },
-  { prop: 'amount', label: '金额', align: 'right', isDefault: true },
-  { prop: 'rate', label: '比率', align: 'right' },
-  { prop: 'status', label: '状态', isDefault: true },
-  { prop: 'remark', label: '备注' },
-];
+import TableWrap from '@/components/TableWrap';
+import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import {
+  BASIC_COLUMN_SCHEMAS,
+  DEMO_CUSTOM_COLUMN_MESSAGES,
+  NESTED_COLUMN_SCHEMAS,
+  SCHEMA_FIXED_COLUMN_SCHEMAS,
+  VERSION_COLUMN_SCHEMAS,
+} from '@/modules/_example/customColumns/_utils/demoSchemas';
+import {
+  useCustomColumnsDemoData,
+  type DemoRow,
+} from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
-const NESTED: ColumnSchema[] = [
-  { prop: 'id', label: 'ID', width: 80, isDefault: true },
+export type CustomColumnsDemoMode =
+  | 'basic'
+  | 'el-attrs'
+  | 'slots'
+  | 'nested'
+  | 'version'
+  | 'slot-components'
+  | 'header-slots'
+  | 'fixed';
+
+const EL_ATTRS_SCHEMAS: ColumnSchema[] = [
   {
-    label: '嵌套表头',
-    children: [
-      { prop: 'name', label: '名称', isDefault: true },
-      { prop: 'amount', label: '金额', isDefault: true },
-    ],
+    prop: 'amount',
+    label: '数量',
+    minWidth: 100,
+    align: 'right',
+    renderType: 'integer',
+    showOverflowTooltip: true,
+    isDefault: true,
+  },
+  {
+    prop: 'cost',
+    label: '成本（超长提示）',
+    minWidth: 140,
+    align: 'right',
+    renderType: 'float',
+    renderArgs: [2, true],
+    showOverflowTooltip: true,
+    isDefault: true,
+  },
+  {
+    prop: 'roi',
+    label: 'ROI',
+    minWidth: 100,
+    align: 'right',
+    renderType: 'float',
+    isDefault: true,
   },
 ];
 
-const DATA = Array.from({ length: 8 }, (_, i) => ({
-  id: i + 1,
-  name: `示例 ${i + 1}`,
-  groupA: 10 + i,
-  groupB: 20 + i,
-  amount: 1000 * (i + 1),
-  rate: `${(i + 1) * 3}%`,
-  status: i % 2 ? '启用' : '停用',
-  remark: '备注',
-}));
+function resolveSchemas(mode: CustomColumnsDemoMode): ColumnSchema[] {
+  switch (mode) {
+    case 'nested':
+      return NESTED_COLUMN_SCHEMAS;
+    case 'version':
+      return VERSION_COLUMN_SCHEMAS;
+    case 'fixed':
+      return SCHEMA_FIXED_COLUMN_SCHEMAS;
+    case 'el-attrs':
+      return EL_ATTRS_SCHEMAS;
+    case 'slots':
+    case 'slot-components':
+    case 'header-slots':
+    case 'basic':
+    default:
+      return BASIC_COLUMN_SCHEMAS;
+  }
+}
+
+function mapVersionRow(row: DemoRow): DemoRow {
+  return { ...row, cvtRate: row.rate };
+}
 
 export default function CustomColumnsDemo({
-  title,
+  title: _title,
   mode = 'basic',
 }: {
   title: string;
-  mode?: 'basic' | 'nested' | 'fixed' | 'version' | 'slots';
+  mode?: CustomColumnsDemoMode;
 }) {
-  const schemas =
-    mode === 'nested'
-      ? NESTED
-      : mode === 'fixed'
-        ? BASE_SCHEMAS.map((s) => (s.prop === 'name' ? { ...s, fixed: 'left' as const } : s))
-        : BASE_SCHEMAS;
+  void _title;
+  const pageClass = `page-custom-columns-${mode}`;
+  const maxHeight = useAdminTableMaxHeight(`.${pageClass}`, 400);
+  const { tableLoading, tableData } = useCustomColumnsDemoData();
+  const columnSchemas = resolveSchemas(mode);
+  const [sortedInfo, setSortedInfo] = useState<{
+    field?: string;
+    order?: 'ascend' | 'descend';
+  }>({});
 
   const config = useSchemaColumnConfig({
-    columnSchemas: schemas,
-    storageKey: `kr_cc_${mode}`,
+    columnSchemas,
+    storageKey: `kr-example-${mode}`,
     schemaVersion: mode === 'version' ? 2 : 1,
+    messages: DEMO_CUSTOM_COLUMN_MESSAGES,
   });
 
-  const columns = schemasToColumns(config.visibleSchemas);
+  const rows = useMemo(() => {
+    const base = mode === 'version' ? tableData.map(mapVersionRow) : tableData;
+    if (!sortedInfo.field || !sortedInfo.order) return base;
+    const prop = sortedInfo.field;
+    const factor = sortedInfo.order === 'ascend' ? 1 : -1;
+    return [...base].sort((a, b) => {
+      const av = Number(a[prop] ?? 0);
+      const bv = Number(b[prop] ?? 0);
+      return (av - bv) * factor;
+    });
+  }, [mode, sortedInfo.field, sortedInfo.order, tableData]);
+
+  const schemaColumns = schemasToColumns<DemoRow>(config.visibleSchemas, {
+    formatCell: config.formatSchemaCell,
+  });
+
+  const columns: ColumnsType<DemoRow> = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      width: 60,
+      fixed: 'left',
+      align: 'center',
+    },
+    {
+      title: '名称',
+      dataIndex: 'name',
+      minWidth: 120,
+      fixed: 'left',
+    },
+    ...schemaColumns,
+    ...(mode === 'fixed'
+      ? [
+          {
+            title: '操作',
+            key: 'ops',
+            width: 90,
+            fixed: 'right' as const,
+            render: () => <a>详情</a>,
+          },
+        ]
+      : []),
+  ];
 
   return (
     <SchemaColumnConfigContext.Provider value={config}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <DoTableHeader />
-        <div style={{ opacity: 0.65, fontSize: 12 }}>{title} · 自定义列</div>
-        <Table
-          key={config.tableRenderKey}
-          size="middle"
-          rowKey="id"
-          columns={columns}
-          dataSource={DATA}
-          pagination={false}
-          scroll={{ x: true }}
-        />
+      <div className={pageClass}>
+        <TableWrap
+          enableDoHeader
+          control={<DoTableHeader />}
+        >
+          <Table
+            key={config.tableRenderKey}
+            className="do-inner-scroller page-table hide-table-border"
+            size="middle"
+            rowKey="id"
+            loading={tableLoading}
+            columns={columns}
+            dataSource={rows}
+            pagination={false}
+            bordered
+            scroll={{ x: true, y: maxHeight }}
+            onChange={(_p, _f, sorter) => {
+              const one = Array.isArray(sorter) ? sorter[0] : sorter;
+              const field = String(one?.field || one?.columnKey || '');
+              setSortedInfo({
+                field: field || undefined,
+                order: one?.order || undefined,
+              });
+            }}
+          />
+        </TableWrap>
         <DoConfigColumnDialog />
       </div>
     </SchemaColumnConfigContext.Provider>
