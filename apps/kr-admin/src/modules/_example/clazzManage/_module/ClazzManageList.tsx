@@ -1,10 +1,14 @@
-import { Button, Input, Pagination, Radio, Space, Table, message, Modal } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Input, Radio, Table, message, Modal } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
 
 import DialogEditClazzManage from './DialogEditClazzManage';
 
+import CellNameId from '@/components/CellNameId';
+import CellState from '@/components/CellState';
 import DoFilterPanel from '@/components/DoFilterPanel';
+import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useTableQuery } from '@/composables/useTableQuery';
@@ -14,6 +18,10 @@ import {
   requestClazzManageList,
   type ClazzManageRow,
 } from '@/modules/_example/clazzManage/_api';
+import {
+  CLAZZ_STATUS_DISABLED,
+  CLAZZ_STATUS_ENABLED,
+} from '@/modules/_example/clazzManage/_map/clazzStatus';
 
 export default function ClazzManageList() {
   const status = maps.example.clazzManage.clazzStatus;
@@ -26,10 +34,12 @@ export default function ClazzManageList() {
     tableTotal,
     tableLoading,
     search,
+    reset,
     handlePageChange,
     handleSizeChange,
   } = useTableQuery<ClazzManageRow, { clazzName: string; status: number | '' }>({
     defaultFilters: { clazzName: '', status: '' },
+    defaultPageSize: 10,
     fetcher: async (query, signal) =>
       requestClazzManageList(query, signal) as Promise<{
         data: { lists: ClazzManageRow[]; total: number };
@@ -38,10 +48,46 @@ export default function ClazzManageList() {
   const maxHeight = useAdminTableMaxHeight('.page-clazz-manage', 400);
 
   const columns: ColumnsType<ClazzManageRow> = [
-    { title: '班级名称', dataIndex: 'clazzName', minWidth: 140 },
-    { title: '学校', dataIndex: 'schoolName', minWidth: 140, render: (v) => v || '—' },
-    { title: '状态', dataIndex: 'status', width: 100, render: (v) => status.getLabel(v) },
-    { title: '创建时间', dataIndex: 'createTime', width: 180 },
+    {
+      title: '班级名称',
+      dataIndex: 'clazzName',
+      minWidth: 160,
+      className: 'name-slot-cell',
+      render: (_, row) => (
+        <CellNameId
+          id={row.id}
+          name={row.clazzName}
+        />
+      ),
+    },
+    {
+      title: '所属学校',
+      dataIndex: 'schoolName',
+      minWidth: 160,
+      ellipsis: true,
+      render: (v) => v || '—',
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 100,
+      align: 'center',
+      render: (v) => (
+        <CellState
+          modelValue={v}
+          activeValue={CLAZZ_STATUS_ENABLED}
+          inactiveValue={CLAZZ_STATUS_DISABLED}
+          activeLabel={status.getLabel(CLAZZ_STATUS_ENABLED)}
+          inactiveLabel={status.getLabel(CLAZZ_STATUS_DISABLED)}
+        />
+      ),
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      minWidth: 160,
+      render: (v) => v || '—',
+    },
     {
       title: (
         <Button
@@ -52,40 +98,47 @@ export default function ClazzManageList() {
             setEditOpen(true);
           }}
         >
-          新建
+          新建班级
         </Button>
       ),
       key: 'ops',
       width: 140,
       fixed: 'right',
+      className: 'ops-column',
       render: (_, row) => (
-        <Space>
+        <div className="line-actions">
           <Button
+            type="primary"
+            ghost
             size="small"
+            icon={<EditOutlined />}
+            title="编辑"
+            aria-label="编辑"
             onClick={() => {
               setEditRow(row);
               setEditOpen(true);
             }}
-          >
-            编辑
-          </Button>
+          />
           <Button
-            size="small"
             danger
+            ghost
+            size="small"
+            icon={<DeleteOutlined />}
+            title="删除"
+            aria-label="删除"
             onClick={() => {
               Modal.confirm({
-                title: '确认删除该班级？',
+                title: '提示',
+                content: `确认删除「${row.clazzName}」？`,
                 onOk: async () => {
                   await requestDeleteClazzManage({ id: row.id });
-                  message.success('已删除');
+                  message.success('删除成功');
                   void search(false);
                 },
               });
             }}
-          >
-            删除
-          </Button>
-        </Space>
+          />
+        </div>
       ),
     },
   ];
@@ -93,13 +146,23 @@ export default function ClazzManageList() {
   return (
     <div className="page-clazz-manage">
       <DoFilterPanel
+        line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}
+        ctl={
+          <Button
+            disabled={tableLoading}
+            onClick={() => void reset()}
+          >
+            重置
+          </Button>
+        }
       >
         <div className="do-filter-field">
-          <span className="do-filter-field-label">名称</span>
+          <span className="do-filter-field-label">班级名称</span>
           <Input
             allowClear
+            placeholder="不限"
             style={{ width: 180 }}
             value={listFilters.clazzName}
             onChange={(e) => setListFilters({ clazzName: e.target.value })}
@@ -107,33 +170,35 @@ export default function ClazzManageList() {
           />
         </div>
         <div className="do-filter-field">
-          <span className="do-filter-field-label">状态</span>
+          <span className="do-filter-field-label do-filter-field-label-sm">状态</span>
           <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            size="small"
             value={listFilters.status}
             onChange={(e) => {
               setListFilters({ status: e.target.value });
               void search(true);
             }}
-            options={[{ label: '全部', value: '' }, ...status.options]}
+            options={[{ label: '不限', value: '' }, ...status.options]}
           />
         </div>
       </DoFilterPanel>
       <TableWrap
         footer={
-          <Pagination
-            current={listFilters.pageNum || 1}
-            pageSize={listFilters.pageSize || 20}
+          <ListPaginationBar
+            pageNum={listFilters.pageNum || 1}
+            pageSize={listFilters.pageSize || 10}
             total={tableTotal}
-            showSizeChanger
-            showTotal={(t) => `共 ${t} 条`}
-            onChange={(page, size) => {
-              if (size !== listFilters.pageSize) void handleSizeChange(size);
-              else void handlePageChange(page);
-            }}
+            loading={tableLoading}
+            onPageChange={(p) => void handlePageChange(p)}
+            onSizeChange={(s) => void handleSizeChange(s)}
+            onRefresh={() => void search(false)}
           />
         }
       >
         <Table
+          className="do-inner-scroller page-table hide-table-border"
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
