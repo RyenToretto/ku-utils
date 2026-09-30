@@ -1108,3 +1108,35 @@ el-form-item.do-fill-form > .el-form-item__content {
     font-size: 12px;
   }
 }
+
+/* 自定义列 Demo：ROI 条件色 / 单元格组件 / 表头插槽 */
+.roi-high {
+  color: var(--ku-color-success, #67c23a);
+  font-weight: 600;
+}
+
+.roi-normal {
+  color: var(--ku-text-regular, #606266);
+}
+
+.amount-cell {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.rating-cell {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.badge-header,
+.trend-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trend-header {
+  gap: 4px;
+}

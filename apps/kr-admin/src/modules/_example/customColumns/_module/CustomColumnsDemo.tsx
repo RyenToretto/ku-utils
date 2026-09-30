@@ -4,7 +4,6 @@ import {
   DoTableHeader,
   schemasToColumns,
   SchemaColumnConfigContext,
-  type ColumnSchema,
 } from '@ku-utils/r-custom-columns';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
@@ -24,47 +23,9 @@ import {
   type DemoRow,
 } from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
-export type CustomColumnsDemoMode =
-  | 'basic'
-  | 'el-attrs'
-  | 'slots'
-  | 'nested'
-  | 'version'
-  | 'slot-components'
-  | 'header-slots'
-  | 'fixed';
+export type CustomColumnsDemoMode = 'basic' | 'nested' | 'version' | 'fixed';
 
-const EL_ATTRS_SCHEMAS: ColumnSchema[] = [
-  {
-    prop: 'amount',
-    label: '数量',
-    minWidth: 100,
-    align: 'right',
-    renderType: 'integer',
-    showOverflowTooltip: true,
-    isDefault: true,
-  },
-  {
-    prop: 'cost',
-    label: '成本（超长提示）',
-    minWidth: 140,
-    align: 'right',
-    renderType: 'float',
-    renderArgs: [2, true],
-    showOverflowTooltip: true,
-    isDefault: true,
-  },
-  {
-    prop: 'roi',
-    label: 'ROI',
-    minWidth: 100,
-    align: 'right',
-    renderType: 'float',
-    isDefault: true,
-  },
-];
-
-function resolveSchemas(mode: CustomColumnsDemoMode): ColumnSchema[] {
+function resolveSchemas(mode: CustomColumnsDemoMode) {
   switch (mode) {
     case 'nested':
       return NESTED_COLUMN_SCHEMAS;
@@ -72,11 +33,6 @@ function resolveSchemas(mode: CustomColumnsDemoMode): ColumnSchema[] {
       return VERSION_COLUMN_SCHEMAS;
     case 'fixed':
       return SCHEMA_FIXED_COLUMN_SCHEMAS;
-    case 'el-attrs':
-      return EL_ATTRS_SCHEMAS;
-    case 'slots':
-    case 'slot-components':
-    case 'header-slots':
     case 'basic':
     default:
       return BASIC_COLUMN_SCHEMAS;
