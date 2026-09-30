@@ -30,7 +30,7 @@ export default function DialogSelectSchoolResourceInner({
       open={open}
       onClose={onCancel}
       width={960}
-      destroyOnClose
+      destroyOnHidden
       className="drawer-model-selector"
       footer={
         <Space style={{ float: 'right' }}>

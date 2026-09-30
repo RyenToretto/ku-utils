@@ -29,18 +29,20 @@ export default function HeaderProfileMenu({
   onSetTheme,
 }: HeaderProfileMenuProps) {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [appearanceOpen, setAppearanceOpen] = useState(false);
+  const [appearanceExpanded, setAppearanceExpanded] = useState(false);
 
   const appearanceLabel = useMemo(() => THEME_LABELS[theme] || THEME_LABELS.system, [theme]);
 
   const closeAll = () => {
-    setAppearanceOpen(false);
+    setAppearanceExpanded(false);
     setProfileOpen(false);
   };
 
   const handleSetTheme = (mode: ThemeMode) => {
-    closeAll();
-    onSetTheme(mode);
+    // 先关弹层再切主题，避免 html.dark 切换时 Ant Popover 门户残留
+    setAppearanceExpanded(false);
+    setProfileOpen(false);
+    window.setTimeout(() => onSetTheme(mode), 0);
   };
 
   const handleLogout = () => {
@@ -65,30 +67,28 @@ export default function HeaderProfileMenu({
 
       <div className="profile-menu-divider" />
 
-      <Popover
-        open={appearanceOpen}
-        onOpenChange={setAppearanceOpen}
-        placement="leftTop"
-        trigger="click"
-        arrow={false}
-        overlayClassName="appearance-menu-popover"
-        content={
+      <button
+        type="button"
+        className={`profile-menu-item is-appearance${appearanceExpanded ? ' is-expanded' : ''}`}
+        onClick={() => setAppearanceExpanded((v) => !v)}
+      >
+        <SunOutlined />
+        <span>外观</span>
+        <span className="profile-menu-item-value">{appearanceLabel}</span>
+        <ArrowRightOutlined
+          className="profile-menu-item-arrow"
+          style={{ transform: appearanceExpanded ? 'rotate(90deg)' : undefined }}
+        />
+      </button>
+
+      {appearanceExpanded ? (
+        <div className="profile-menu-appearance-panel">
           <AppearancePicker
             value={theme}
             onChange={handleSetTheme}
           />
-        }
-      >
-        <button
-          type="button"
-          className="profile-menu-item is-appearance"
-        >
-          <SunOutlined />
-          <span>外观</span>
-          <span className="profile-menu-item-value">{appearanceLabel}</span>
-          <ArrowRightOutlined className="profile-menu-item-arrow" />
-        </button>
-      </Popover>
+        </div>
+      ) : null}
 
       <button
         type="button"
@@ -107,11 +107,12 @@ export default function HeaderProfileMenu({
         open={profileOpen}
         onOpenChange={(open) => {
           setProfileOpen(open);
-          if (!open) setAppearanceOpen(false);
+          if (!open) setAppearanceExpanded(false);
         }}
         trigger="click"
         placement="bottomRight"
         arrow={false}
+        destroyOnHidden
         overlayClassName="profile-menu-popover"
         content={menu}
       >

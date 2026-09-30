@@ -62,7 +62,7 @@ export default function DialogEditClazzManage({
       onCancel={onClose}
       onOk={handleOk}
       confirmLoading={loading}
-      destroyOnClose
+      destroyOnHidden
       width={520}
     >
       <Form

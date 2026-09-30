@@ -64,7 +64,7 @@ export default function DialogEditClubActivity({
       onCancel={onClose}
       onOk={handleOk}
       confirmLoading={loading}
-      destroyOnClose
+      destroyOnHidden
       width={560}
     >
       <Form

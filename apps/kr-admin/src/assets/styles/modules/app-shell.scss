@@ -124,29 +124,14 @@
     font-size: 12px !important;
     color: var(--ku-text-placeholder, var(--ant-color-text-placeholder, #a3988c));
     margin-left: 1px;
-  }
-}
-
-.appearance-menu-popover {
-  z-index: 1101 !important;
-
-  .ant-popover-arrow {
-    display: none;
+    transition: transform 0.15s ease;
   }
 
-  .ant-popover-inner {
-    padding: 6px !important;
-    border-radius: 12px !important;
-    width: 160px;
-    border: 1px solid var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8)) !important;
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.04),
-      0 4px 8px rgba(0, 0, 0, 0.06),
-      0 12px 28px rgba(0, 0, 0, 0.1) !important;
-  }
-
-  .ant-popover-inner-content {
-    padding: 0 !important;
+  .profile-menu-appearance-panel {
+    margin: 0 4px 4px;
+    padding: 4px;
+    border-radius: 8px;
+    background: var(--ku-fill-light, var(--ant-color-fill-quaternary, #f7f3ea));
   }
 
   .appearance-options {
@@ -177,7 +162,7 @@
     text-align: left;
 
     &:hover {
-      background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
+      background: var(--ku-bg-card, var(--ant-color-bg-container, #fff));
       color: var(--ku-text-primary, var(--ant-color-text));
     }
 

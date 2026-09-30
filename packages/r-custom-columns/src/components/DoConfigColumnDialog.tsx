@@ -217,7 +217,7 @@ export function DoConfigColumnDialog(props: DoConfigColumnDialogProps) {
       open={open}
       onCancel={() => onCancel?.()}
       width={720}
-      destroyOnClose
+      destroyOnHidden
       footer={[
         <Button
           key="reset"

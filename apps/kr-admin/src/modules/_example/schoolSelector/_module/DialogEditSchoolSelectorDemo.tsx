@@ -53,7 +53,7 @@ export default function DialogEditSchoolSelectorDemo({
       }
       open={open}
       width={640}
-      destroyOnClose
+      destroyOnHidden
       onCancel={onClose}
       onOk={async () => {
         const values = await form.validateFields();

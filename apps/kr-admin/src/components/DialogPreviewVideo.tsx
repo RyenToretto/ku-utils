@@ -157,7 +157,7 @@ const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPrev
       title={dialogTitle}
       width={dialogWidth}
       centered
-      destroyOnClose
+      destroyOnHidden
       footer={null}
       onCancel={() => setDialogVisible(false)}
       afterClose={resetPanel}
