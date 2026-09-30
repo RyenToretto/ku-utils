@@ -1,21 +1,59 @@
-import { Card, Descriptions, Typography } from 'antd';
+import { Card } from 'antd';
+import { useState } from 'react';
+
+import DoNamePattern from '@/components/DoNamePattern';
+
+const patternList = ['{应用名}', '{日期}', '{时分秒}', '{动态标号}'];
 
 export default function UiKitNamePatternDemo() {
+  const [patternBottom, setPatternBottom] = useState('{应用名}-{日期}-{动态标号}');
+  const [patternPopover, setPatternPopover] = useState('');
+  const [patternTextarea, setPatternTextarea] = useState('{应用名}-{日期}');
+
   return (
-    <Card title="命名模板">
-      <Typography.Paragraph type="secondary">
-        Layer / List / DialogXxx / XxxSelector 命名约定与 kv3 对齐。
-      </Typography.Paragraph>
-      <Descriptions
-        bordered
+    <div className="page-ui-kit-name-pattern">
+      <Card
         size="small"
-        column={1}
+        className="ui-kit-demo-card"
       >
-        <Descriptions.Item label="路由落点">XxxLayer.tsx</Descriptions.Item>
-        <Descriptions.Item label="表格">_module/XxxList.tsx</Descriptions.Item>
-        <Descriptions.Item label="弹层">DialogXxx.tsx</Descriptions.Item>
-        <Descriptions.Item label="选择器">XxxSelector + DialogSelectXxx</Descriptions.Item>
-      </Descriptions>
-    </Card>
+        <h3>底栏芯片（默认）</h3>
+        <DoNamePattern
+          value={patternBottom}
+          patternList={patternList}
+          onChange={setPatternBottom}
+        />
+        <p className="ui-kit-demo-hint">{patternBottom || '—'}</p>
+      </Card>
+
+      <Card
+        size="small"
+        className="ui-kit-demo-card"
+      >
+        <h3>浮层插入</h3>
+        <DoNamePattern
+          value={patternPopover}
+          usePopover
+          patternList={patternList}
+          style={{ maxWidth: 420 }}
+          onChange={setPatternPopover}
+        />
+        <p className="ui-kit-demo-hint">{patternPopover || '—'}</p>
+      </Card>
+
+      <Card
+        size="small"
+        className="ui-kit-demo-card"
+      >
+        <h3>textarea + useOnly</h3>
+        <DoNamePattern
+          value={patternTextarea}
+          textarea
+          useOnly
+          patternList={patternList}
+          onChange={setPatternTextarea}
+        />
+        <p className="ui-kit-demo-hint">{patternTextarea || '—'}</p>
+      </Card>
+    </div>
   );
 }
