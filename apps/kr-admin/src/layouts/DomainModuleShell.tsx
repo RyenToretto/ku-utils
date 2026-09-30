@@ -38,12 +38,12 @@ export function DomainModuleShell({ menus, moduleRootPath }: DomainModuleShellPr
       }}
     >
       <aside
-        className="domain-module-aside"
+        className="domain-module-aside sidebar-nav"
         style={{
           width: 220,
           flexShrink: 0,
-          borderRight: '1px solid var(--ku-border-color, #e5e0d8)',
-          background: 'var(--ku-bg-elevated, #fff)',
+          borderRight: '1px solid var(--ku-border-color-sidebar, transparent)',
+          background: 'var(--ku-bg-sidebar, #2f2a26)',
           overflow: 'auto',
         }}
       >

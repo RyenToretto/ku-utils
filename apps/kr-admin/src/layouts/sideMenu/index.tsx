@@ -83,6 +83,7 @@ export default function SideMenu({ menus }: { menus: SideMenuNode[]; moduleRootP
 
   return (
     <Menu
+      theme="dark"
       mode="inline"
       selectedKeys={[location.pathname]}
       defaultOpenKeys={menus.map((m) => m.path)}
@@ -90,7 +91,11 @@ export default function SideMenu({ menus }: { menus: SideMenuNode[]; moduleRootP
       onClick={({ key }) => {
         if (String(key).startsWith('/')) navigate(String(key));
       }}
-      style={{ height: '100%', borderInlineEnd: 0 }}
+      style={{
+        height: '100%',
+        borderInlineEnd: 0,
+        background: 'transparent',
+      }}
     />
   );
 }
