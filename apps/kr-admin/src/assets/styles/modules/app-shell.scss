@@ -1,9 +1,29 @@
 // 顶栏只消费皮肤 `--ku-top-header-*`，Light / Dark 由主题各自给出，壳层不再覆盖底色。
 // Mega Panel、Popover、Drawer 继续走页面主题变量，不要套用顶栏 token。
 
-// ─── 用户菜单 popover（teleport 出 DOM，需全局样式）─────────────
+// ─── 用户菜单 popover（Ant Popover teleport，需全局样式）─────────
 .profile-menu-popover {
-  padding: 6px !important;
+  z-index: 1100 !important;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner {
+    padding: 6px !important;
+    border-radius: 12px;
+    width: 220px;
+  }
+
+  .ant-popover-inner-content {
+    padding: 0 !important;
+  }
+
+  .profile-menu {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
 
   .profile-menu-hd {
     display: flex;
@@ -14,11 +34,15 @@
 
   .profile-menu-avatar {
     flex-shrink: 0;
-    background: linear-gradient(135deg, var(--ku-color-primary), var(--ku-color-primary-hover));
-    color: var(--ku-text-on-primary, #fff);
+    background: linear-gradient(
+      135deg,
+      var(--ku-color-primary),
+      var(--ku-color-primary-hover, var(--ku-color-primary))
+    ) !important;
+    color: var(--ku-text-on-primary, #fff) !important;
     font-weight: 700;
     font-size: 15px;
-    box-shadow: 0 2px 8px rgba(var(--el-color-primary-rgb), 0.32);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--ku-color-primary) 32%, transparent);
   }
 
   .profile-menu-meta {
@@ -33,7 +57,7 @@
   .profile-menu-name {
     font-size: 13.5px;
     font-weight: 600;
-    color: var(--el-text-color-primary);
+    color: var(--ku-text-primary, var(--ant-color-text));
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -43,13 +67,13 @@
 
   .profile-menu-role {
     font-size: 11.5px;
-    color: var(--el-text-color-secondary);
+    color: var(--ku-text-secondary, var(--ant-color-text-secondary));
     line-height: 1.35;
   }
 
   .profile-menu-divider {
     height: 1px;
-    background: var(--el-border-color-lighter);
+    background: var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8));
     margin: 2px 4px 6px;
   }
 
@@ -66,32 +90,26 @@
     font-size: 13px;
     font-weight: 500;
     font-family: inherit;
-    color: var(--el-text-color-regular);
+    color: var(--ku-text-regular, var(--ant-color-text));
     transition:
-      background var(--el-transition-duration-fast) ease,
-      color var(--el-transition-duration-fast) ease;
+      background 0.15s ease,
+      color 0.15s ease;
     user-select: none;
     text-align: left;
 
-    .el-icon {
+    .anticon {
       font-size: 15px;
       flex-shrink: 0;
       opacity: 0.7;
     }
 
     &:hover {
-      background: var(--el-fill-color-light);
-      color: var(--el-text-color-primary);
+      background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
+      color: var(--ku-text-primary, var(--ant-color-text));
 
-      .el-icon {
+      .anticon {
         opacity: 1;
       }
-    }
-  }
-
-  .profile-menu-item.is-appearance {
-    .el-icon:first-child {
-      color: var(--el-text-color-regular);
     }
   }
 
@@ -99,24 +117,37 @@
     margin-left: auto;
     font-size: 12px;
     font-weight: 400;
-    color: var(--el-text-color-placeholder);
+    color: var(--ku-text-placeholder, var(--ant-color-text-placeholder, #a3988c));
   }
 
   .profile-menu-item-arrow {
     font-size: 12px !important;
-    color: var(--el-text-color-placeholder);
+    color: var(--ku-text-placeholder, var(--ant-color-text-placeholder, #a3988c));
     margin-left: 1px;
   }
 }
 
 .appearance-menu-popover {
-  padding: 6px !important;
-  border-radius: 12px !important;
-  border: 1px solid var(--el-border-color-lighter) !important;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.04),
-    0 4px 8px rgba(0, 0, 0, 0.06),
-    0 12px 28px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1101 !important;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner {
+    padding: 6px !important;
+    border-radius: 12px !important;
+    width: 160px;
+    border: 1px solid var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8)) !important;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 4px 8px rgba(0, 0, 0, 0.06),
+      0 12px 28px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .ant-popover-inner-content {
+    padding: 0 !important;
+  }
 
   .appearance-options {
     display: flex;
@@ -134,23 +165,23 @@
     border: 0;
     border-radius: 8px;
     background: transparent;
-    color: var(--el-text-color-regular);
+    color: var(--ku-text-regular, var(--ant-color-text));
     cursor: pointer;
     font-size: 13px;
     font-weight: 500;
     font-family: inherit;
     transition:
-      background var(--el-transition-duration-fast) ease,
-      color var(--el-transition-duration-fast) ease;
+      background 0.15s ease,
+      color 0.15s ease;
     user-select: none;
     text-align: left;
 
     &:hover {
-      background: var(--el-fill-color-light);
-      color: var(--el-text-color-primary);
+      background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
+      color: var(--ku-text-primary, var(--ant-color-text));
     }
 
-    .el-icon {
+    .anticon {
       font-size: 14px;
       flex-shrink: 0;
     }
@@ -373,6 +404,9 @@ html.dark {
     position: relative;
     display: inline-flex;
     flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
   }
 
   .logo-img {

@@ -22,22 +22,57 @@ html.dark {
 .table-wrap {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
+  background: var(--ku-bg-card, #fff);
+  border: 1px solid var(--ku-border-light, #eee6d8);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.table-wrap-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
+.table-wrap-bd {
+  flex: 1;
+  min-width: 0;
+  padding: 0 10px;
 }
 
 .table-wrap-ft {
   display: flex;
   justify-content: flex-end;
-  padding-top: 4px;
+  padding: 8px 10px 12px;
+  border-top: 1px solid var(--ku-border-light, #eee6d8);
+}
+
+/* 批量操作：对齐 kv3 success/warning plain */
+.batch-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  font-size: 13px;
+  color: var(--ku-text-secondary, #8a7f74);
+
+  > span {
+    margin-right: 4px;
+  }
+
+  .ant-btn {
+    margin-left: 5px;
+  }
+
+  .ant-btn-variant-outlined.ant-btn-color-green:not(:disabled) {
+    color: var(--ku-color-success, #389e0d);
+    border-color: color-mix(in srgb, var(--ku-color-success, #389e0d) 55%, #fff);
+    background: color-mix(in srgb, var(--ku-color-success, #389e0d) 8%, #fff);
+  }
+
+  .ant-btn-variant-outlined.ant-btn-color-orange:not(:disabled),
+  .ant-btn-variant-outlined.ant-btn-color-gold:not(:disabled) {
+    color: var(--ku-color-warning, #d48806);
+    border-color: color-mix(in srgb, var(--ku-color-warning, #d48806) 55%, #fff);
+    background: color-mix(in srgb, var(--ku-color-warning, #d48806) 8%, #fff);
+  }
 }
 
 .do-filter-panel {
@@ -368,7 +403,8 @@ html.dark {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--ku-color-primary) 32%, transparent);
 }
 
-.admin-version-logo {
+/* 顶栏 Logo：槽宽 = aside，禁止省略号截断（app-shell 通用规则会 ellipsis） */
+.base-header .admin-version-logo {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -376,8 +412,9 @@ html.dark {
   flex-shrink: 0;
   width: var(--ku-layout-aside-width, 220px);
   min-width: var(--ku-layout-aside-width, 220px);
+  max-width: var(--ku-layout-aside-width, 220px);
   height: 100%;
-  padding: 0;
+  padding: 0 8px;
   margin: 0;
   border: 0;
   border-radius: 0;
@@ -387,6 +424,7 @@ html.dark {
   text-align: center;
   cursor: default;
   outline-offset: 2px;
+  overflow: visible;
   transition: background-color 0.15s ease;
 
   &.has-update {
@@ -397,37 +435,43 @@ html.dark {
       background: rgba(255, 255, 255, 0.1);
     }
   }
-}
 
-.logo-icon-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  user-select: none;
-}
+  .logo-icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+    max-width: 100%;
+    overflow: visible;
+    user-select: none;
+  }
 
-.logo-mark {
-  font-size: 22px;
-  color: currentColor;
-  opacity: 0.95;
-}
+  .logo-mark,
+  .brand-logo-mark {
+    display: block;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    font-size: 22px;
+    color: currentColor;
+    opacity: 0.95;
+  }
 
-.brand-logo-mark {
-  display: block;
-  flex-shrink: 0;
-  width: 1em;
-  height: 1em;
-}
-
-.logo-text {
-  position: relative;
-  z-index: 1;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
+  .logo-text {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    max-width: none;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
 }
 
 .logo-update-badge {

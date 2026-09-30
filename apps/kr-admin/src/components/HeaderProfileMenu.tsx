@@ -1,5 +1,5 @@
 import { ArrowRightOutlined, LogoutOutlined, SunOutlined } from '@ant-design/icons';
-import { Avatar, Dropdown, Popover } from 'antd';
+import { Avatar, Popover } from 'antd';
 import { useMemo, useState } from 'react';
 
 import AppearancePicker from '@/components/AppearancePicker';
@@ -70,6 +70,7 @@ export default function HeaderProfileMenu({
         onOpenChange={setAppearanceOpen}
         placement="leftTop"
         trigger="click"
+        arrow={false}
         overlayClassName="appearance-menu-popover"
         content={
           <AppearancePicker
@@ -102,16 +103,17 @@ export default function HeaderProfileMenu({
 
   return (
     <div className="header-profile">
-      <Dropdown
+      <Popover
         open={profileOpen}
         onOpenChange={(open) => {
           setProfileOpen(open);
           if (!open) setAppearanceOpen(false);
         }}
-        trigger={['click']}
+        trigger="click"
         placement="bottomRight"
-        dropdownRender={() => menu}
+        arrow={false}
         overlayClassName="profile-menu-popover"
+        content={menu}
       >
         <button
           type="button"
@@ -125,7 +127,7 @@ export default function HeaderProfileMenu({
             {initial}
           </Avatar>
         </button>
-      </Dropdown>
+      </Popover>
     </div>
   );
 }
