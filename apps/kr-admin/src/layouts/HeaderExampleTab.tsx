@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function HeaderExampleTab() {
   return (
-    <Link
+    <NavLink
       to="/example"
-      className="base-header-link"
+      className={({ isActive }) => `base-header-link header-example-tab${isActive ? ' is-active' : ''}`}
     >
       Demo
-    </Link>
+    </NavLink>
   );
 }

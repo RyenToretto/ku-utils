@@ -1,30 +1,55 @@
+import BrandLogoMark from '@/components/BrandLogoMark';
 import { doEnv } from '@/utils/env';
 
 export function AdminVersionLogo({
-  hasUpdate,
+  hasUpdate = false,
   onRefresh,
 }: {
   hasUpdate?: boolean;
   onRefresh?: () => void;
 }) {
-  return (
-    <div className="admin-version-logo">
-      <span
-        className="admin-version-logo-mark"
-        aria-hidden
-      >
-        ◆
-      </span>
-      <span className="admin-version-logo-name">{doEnv.VITE_APP_PROJECT_NAME}</span>
+  const projectName = doEnv.VITE_APP_PROJECT_NAME || 'kr-admin';
+  const label = projectName.replace(/-/g, ' ');
+
+  const inner = (
+    <span className="logo-icon-wrap">
+      <BrandLogoMark className="logo-mark" />
+      <span className="logo-text">{label}</span>
       {hasUpdate ? (
-        <button
-          type="button"
-          className="admin-version-logo-update"
-          onClick={onRefresh}
+        <span
+          className="logo-update-badge"
+          role="status"
         >
-          有更新，点击刷新
-        </button>
+          <span
+            className="logo-update-dot"
+            aria-hidden
+          />
+          新版本
+        </span>
       ) : null}
+    </span>
+  );
+
+  if (hasUpdate) {
+    return (
+      <button
+        type="button"
+        className="admin-version-logo has-update"
+        title="发现新版本，点击刷新页面"
+        aria-label="发现新版本，点击刷新页面"
+        onClick={onRefresh}
+      >
+        {inner}
+      </button>
+    );
+  }
+
+  return (
+    <div
+      className="admin-version-logo"
+      title={projectName}
+    >
+      {inner}
     </div>
   );
 }
