@@ -590,3 +590,97 @@ el-form-item.do-fill-form > .el-form-item__content {
     flex-shrink: 0;
   }
 }
+
+.page-ui-kit-cells {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .demo-card {
+    background: var(--ku-bg-elevated, #fff);
+  }
+
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .demo-datetime {
+    align-items: flex-start;
+  }
+
+  .demo-label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: var(--ku-text-secondary, #909399);
+  }
+
+  .demo-hint {
+    font-size: 13px;
+    color: var(--ku-text-secondary, #909399);
+  }
+}
+
+.cell-datetime-with-actor {
+  display: block;
+  width: 100%;
+  text-align: right;
+
+  .cell-datetime-with-actor-body {
+    display: inline-block;
+    max-width: 100%;
+    text-align: left;
+
+    .name {
+      line-height: 16px;
+      padding-bottom: 2px;
+    }
+
+    .id {
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--ku-text-secondary, #909399);
+      text-align: right;
+    }
+  }
+}
+
+.do-number-setter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .do-number-setter-control {
+    cursor: pointer;
+    color: var(--ku-color-primary, #b37338);
+  }
+}
+
+.do-number-setter-popover,
+.do-txtsetter-popover {
+  min-width: 200px;
+
+  .do-number-setter-footer,
+  .do-txtsetter-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+}
+
+.do-txt-setter {
+  display: inline-block;
+
+  &.inline {
+    display: inline-flex;
+  }
+
+  .txt-set-btn {
+    cursor: pointer;
+  }
+}
+
+.line-txt {
+  color: #918364;
+}
