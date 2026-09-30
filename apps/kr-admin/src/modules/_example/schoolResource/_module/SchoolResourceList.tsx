@@ -326,9 +326,9 @@ export default function SchoolResourceList({
               <span>批量操作：</span>
               <Button
                 className="ml-5"
-                type="primary"
+                color="green"
+                variant="outlined"
                 size="small"
-                ghost
                 disabled={!selectedRows.length}
                 loading={batchEnableLoading}
                 onClick={() => void toBatchSwitch(SCHOOL_STATUS_ENABLED)}
@@ -337,6 +337,8 @@ export default function SchoolResourceList({
               </Button>
               <Button
                 className="ml-5"
+                color="orange"
+                variant="outlined"
                 size="small"
                 disabled={!selectedRows.length}
                 loading={batchDisableLoading}

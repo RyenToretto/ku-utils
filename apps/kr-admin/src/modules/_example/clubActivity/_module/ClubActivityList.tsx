@@ -269,9 +269,9 @@ export default function ClubActivityList() {
             <span>批量操作：</span>
             <Button
               className="ml-5"
-              type="primary"
+              color="green"
+              variant="outlined"
               size="small"
-              ghost
               disabled={!selectedRows.length}
               loading={batchEnableLoading}
               onClick={() => void toBatchSwitch(CLUB_STATUS_ENABLED)}
@@ -280,6 +280,8 @@ export default function ClubActivityList() {
             </Button>
             <Button
               className="ml-5"
+              color="orange"
+              variant="outlined"
               size="small"
               disabled={!selectedRows.length}
               loading={batchDisableLoading}
