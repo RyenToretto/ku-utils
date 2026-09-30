@@ -1,45 +1,82 @@
-import { Card, Space, Typography } from 'antd';
-import { useState } from 'react';
+import { Alert, Card } from 'antd';
+import { useMemo, useState } from 'react';
 
 import { DoSelector } from '@/components/DoSelector';
 
-const OPTIONS = [
-  { value: 1, label: '选项甲' },
-  { value: 2, label: '选项乙' },
-  { value: 3, label: '选项丙' },
+const cityOptions = [
+  { label: '北京', value: 'bj' },
+  { label: '上海', value: 'sh' },
+  { label: '深圳', value: 'sz' },
 ];
 
 export default function UiKitDoSelectorDemo() {
-  const [single, setSingle] = useState<string | number | null>(1);
-  const [multi, setMulti] = useState<Array<string | number>>([1, 2]);
+  const [staticValue, setStaticValue] = useState<string | number | null>(null);
+  const [remoteValue, setRemoteValue] = useState<string | number | null>(null);
+  const [remoteLabel, setRemoteLabel] = useState('');
+
+  const remotePayload = useMemo(
+    () => ({
+      keyword: 'demo',
+      requestFunc: async () => {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        return [
+          { label: '北京', value: 'bj' },
+          { label: '上海', value: 'sh' },
+          { label: '广州', value: 'gz' },
+        ];
+      },
+    }),
+    [],
+  );
+
   return (
-    <Card title="DoSelector">
-      <Space
-        direction="vertical"
-        size="large"
+    <div className="page-ui-kit-do-selector">
+      <Alert
+        type="warning"
+        showIcon
+        closable={false}
+        className="ui-kit-demo-alert"
+        message="DoSelector 适合简单枚举 / 远程下拉；跨域选实体请用 XxxSelector。"
+      />
+
+      <Card
+        size="small"
+        className="ui-kit-demo-card"
       >
-        <div>
-          <Typography.Text type="secondary">单选</Typography.Text>
-          <div>
-            <DoSelector
-              value={single}
-              options={OPTIONS}
-              onChange={(v) => setSingle(Array.isArray(v) ? (v[0] ?? null) : v)}
-            />
-          </div>
-        </div>
-        <div>
-          <Typography.Text type="secondary">多选</Typography.Text>
-          <div>
-            <DoSelector
-              multiple
-              value={multi}
-              options={OPTIONS}
-              onChange={(v) => setMulti(Array.isArray(v) ? v : v != null ? [v] : [])}
-            />
-          </div>
-        </div>
-      </Space>
-    </Card>
+        <h3>静态 options</h3>
+        <DoSelector
+          value={staticValue}
+          clearable
+          style={{ width: 220 }}
+          options={cityOptions}
+          placeholder="请选择"
+          onChange={(v) => setStaticValue(Array.isArray(v) ? (v[0] ?? null) : v)}
+        />
+        <p className="ui-kit-demo-hint">{staticValue || '—'}</p>
+      </Card>
+
+      <Card
+        size="small"
+        className="ui-kit-demo-card"
+      >
+        <h3>远程 payload</h3>
+        <DoSelector
+          value={remoteValue}
+          clearable
+          style={{ width: 220 }}
+          payload={remotePayload}
+          placeholder="请选择"
+          onChange={(v) => setRemoteValue(Array.isArray(v) ? (v[0] ?? null) : v)}
+          onSelectChange={(opt) => {
+            const one = Array.isArray(opt) ? opt[0] : opt;
+            setRemoteLabel(one?.label || '');
+          }}
+        />
+        <p className="ui-kit-demo-hint">
+          {remoteValue || '—'}
+          {remoteLabel ? ` / ${remoteLabel}` : ''}
+        </p>
+      </Card>
+    </div>
   );
 }
