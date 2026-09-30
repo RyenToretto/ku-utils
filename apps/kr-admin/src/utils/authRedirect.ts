@@ -101,6 +101,11 @@ export function consumeLogoutNext(): LogoutNext | null {
 
 /** 未登录统一整页跳转 OIDC（禁止 fetch）。状态页不作 return，避免登出后再被带回异常页。 */
 export function redirectToLogin(): void {
+  // 本地 Mock 无 OIDC：禁止跳同源 /login（SPA 会反复 bootstrap）
+  if (String(import.meta.env.VITE_USE_MOCK || '') === 'true') {
+    console.warn('[auth] mock 模式跳过 redirectToLogin');
+    return;
+  }
   const pathname = window.location.pathname;
   const ret = isAuthStatusPath(pathname) ? '/' : (sanitizeReturnPath(currentReturnPath()) ?? '/');
   rememberPostLoginReturn(ret);

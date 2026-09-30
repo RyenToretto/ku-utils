@@ -9,6 +9,7 @@ import {
   peekLogoutNext,
   redirectToLogin,
   submitLogout,
+  UNAUTHORIZED_BUSINESS_CODE,
   USER_NOT_PROVISIONED_BUSINESS_CODE,
 } from '@/utils/authRedirect';
 import { isAuthStatusPath } from '@/utils/authStatus';
@@ -72,9 +73,12 @@ function shouldSkipUnauthorizedRedirect(): boolean {
 }
 
 function rejectUnauthorized(payload?: unknown): Promise<never> {
-  if (shouldSkipUnauthorizedRedirect()) {
-    const err = new Error('unauthorized') as Error & { cause?: unknown };
+  // Mock 模式无真实 OIDC：禁止整页跳 /login（同源 SPA 会 bootstrap 死循环）
+  const useMock = String(import.meta.env.VITE_USE_MOCK || '') === 'true';
+  if (useMock || shouldSkipUnauthorizedRedirect()) {
+    const err = new Error('unauthorized') as Error & { cause?: unknown; code?: number };
     err.cause = payload;
+    err.code = UNAUTHORIZED_BUSINESS_CODE;
     return Promise.reject(err);
   }
   message.error('未登录');

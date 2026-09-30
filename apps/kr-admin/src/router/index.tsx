@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import App from '@/App';
-import { isSplashGateOpen } from '@/bootstrap/splashGate';
+import { isSplashGateOpen, whenAppBootstrapped } from '@/bootstrap/splashGate';
 import authRoute from '@/maps/common/authRoute';
 import { MODULE_PERMISSION_KEYS } from '@/maps/common/dspPermission';
 import { resolveBusinessHomePath } from '@/router/paths';
@@ -54,6 +54,8 @@ function startProgress() {
 }
 
 async function authLoader({ request }: LoaderFunctionArgs) {
+  // 等 main.bootstrap 拉完用户信息再判权，避免未登录误跳 /logged-out
+  await whenAppBootstrapped();
   const url = new URL(request.url);
   const path = url.pathname;
   const query = Object.fromEntries(url.searchParams.entries());
@@ -72,14 +74,21 @@ async function authLoader({ request }: LoaderFunctionArgs) {
       startProgress();
       return null;
     }
+    // 已在异常页：禁止再 redirect 自身，否则 loader 死循环（Splash 永不消）
+    if (goingException) {
+      startProgress();
+      return null;
+    }
     const logoutNext = consumeLogoutNext();
     if (logoutNext === 'logged-out') {
       throw redirect(LOGGED_OUT_PATH);
     }
     if (userStore.accessDenied) {
-      if (!goingException) throw redirect(ACCOUNT_EXCEPTION_PATH);
-      startProgress();
-      return null;
+      throw redirect(ACCOUNT_EXCEPTION_PATH);
+    }
+    // Mock 无 OIDC：落到已退出页，禁止跳 /login
+    if (doEnv.VITE_USE_MOCK) {
+      throw redirect(LOGGED_OUT_PATH);
     }
     redirectToLogin();
     throw redirect(ACCOUNT_EXCEPTION_PATH);

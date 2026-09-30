@@ -14,6 +14,7 @@ import {
   mountAndDismissSplash,
   mountAppWithSplashHandoff,
 } from '@/bootstrap/mountAppWithSplashHandoff';
+import { markAppBootstrapped } from '@/bootstrap/splashGate';
 import { MODULE_PERMISSION_KEYS } from '@/maps/common/dspPermission';
 import '@/plugins/axios';
 import router, { resolveBusinessHomePath } from '@/router';
@@ -122,6 +123,7 @@ async function bootstrap() {
     if (targetPath && window.location.pathname !== targetPath) {
       window.history.replaceState(window.history.state, '', targetPath);
     }
+    markAppBootstrapped();
     mountMain(<RouterProvider router={router} />);
   }
 
@@ -162,6 +164,7 @@ async function bootstrap() {
       window.history.replaceState(window.history.state, '', resolveBusinessHomePath());
     }
 
+    markAppBootstrapped();
     mountMain(<RouterProvider router={router} />);
   } catch (err) {
     console.error(err);
@@ -172,9 +175,16 @@ async function bootstrap() {
         return;
       }
       if (logoutNext === 'login') {
+        markAppBootstrapped();
         redirectToLogin();
         return;
       }
+      // Mock 本地无 OIDC：落到已退出页，避免 Splash 卡死 /login 死循环
+      if (String(import.meta.env.VITE_USE_MOCK || '') === 'true') {
+        await mountRoutedApp(LOGGED_OUT_PATH);
+        return;
+      }
+      markAppBootstrapped();
       return;
     }
     if (isUserNotProvisionedError(err)) {
@@ -190,8 +200,8 @@ async function bootstrap() {
       await mountRoutedApp(ACCOUNT_EXCEPTION_PATH);
       return;
     }
+    markAppBootstrapped();
     await mountTipPage(extractErrorCode(err));
   }
 }
-
 void bootstrap();
