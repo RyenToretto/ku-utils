@@ -17,6 +17,8 @@ export type SchoolSelectorProps = {
   disabled?: boolean;
   lockEnabledStatus?: boolean;
   placeholder?: string;
+  /** 选择器抽屉内默认分页大小（金标多选 Demo 用 5） */
+  defaultPageSize?: number;
   style?: React.CSSProperties;
   onChange?: (value: SchoolSelectorValue) => void;
 };
@@ -28,6 +30,7 @@ export default function SchoolSelector({
   disabled,
   lockEnabledStatus,
   placeholder = '请选择学校',
+  defaultPageSize,
   style,
   onChange,
 }: SchoolSelectorProps) {
@@ -59,6 +62,7 @@ export default function SchoolSelector({
         isMultiple={multiple}
         lockEnabledStatus={lockEnabledStatus}
         checkedIds={selected.map((s) => s.id)}
+        defaultPageSize={defaultPageSize}
         onCancel={() => setOpen(false)}
         onConfirm={(rows) => {
           if (multiple) {

@@ -10,6 +10,7 @@ export default function DialogSelectSchoolResourceInner({
   isMultiple = false,
   lockEnabledStatus = false,
   checkedIds = [],
+  defaultPageSize,
   onCancel,
   onConfirm,
 }: {
@@ -17,6 +18,7 @@ export default function DialogSelectSchoolResourceInner({
   isMultiple?: boolean;
   lockEnabledStatus?: boolean;
   checkedIds?: string[];
+  defaultPageSize?: number;
   onCancel: () => void;
   onConfirm: (value: SchoolResourceRow | SchoolResourceRow[] | undefined) => void;
 }) {
@@ -49,6 +51,7 @@ export default function DialogSelectSchoolResourceInner({
           isMultiple={isMultiple}
           checkedIds={checkedIds}
           lockEnabledStatus={!!lockEnabledStatus}
+          defaultPageSize={defaultPageSize}
           onChange={(row) => {
             pending.current = row;
           }}

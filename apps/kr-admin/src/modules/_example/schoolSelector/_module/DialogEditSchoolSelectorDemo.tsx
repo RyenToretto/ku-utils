@@ -1,48 +1,112 @@
-import { Form, Modal, message } from 'antd';
-import { useEffect, useState } from 'react';
+import { Form, Input, Modal, message } from 'antd';
+import { useEffect } from 'react';
 
 import SchoolSelector, {
   type SchoolSelectorValue,
 } from '@/modules/_example/schoolResource/_module/SchoolSelector';
 
+export type SchoolSelectorDemoForm = {
+  id: string;
+  demoName: string;
+  schoolSingle: { id: string; label: string } | null;
+  schoolMulti: Array<{ id: string; label: string }>;
+};
+
 export default function DialogEditSchoolSelectorDemo({
   open,
+  seed,
   onClose,
+  onSuccess,
 }: {
   open: boolean;
+  seed?: SchoolSelectorDemoForm | null;
   onClose: () => void;
+  onSuccess?: (payload: SchoolSelectorDemoForm) => void;
 }) {
-  const [school, setSchool] = useState<SchoolSelectorValue>(null);
+  const [form] = Form.useForm<{
+    demoName: string;
+    schoolSingle: SchoolSelectorValue;
+    schoolMulti: SchoolSelectorValue;
+  }>();
+  const isEdit = !!seed?.id;
 
   useEffect(() => {
-    if (open) setSchool(null);
-  }, [open]);
+    if (!open) return;
+    form.setFieldsValue({
+      demoName: seed?.demoName ?? '',
+      schoolSingle: seed?.schoolSingle ?? null,
+      schoolMulti: seed?.schoolMulti ?? [],
+    });
+  }, [open, seed, form]);
 
   return (
     <Modal
-      title="学校选择器 Demo"
+      title={
+        isEdit ? (
+          <span>
+            编辑演示
+            <span className="dialog-edit-school-selector-demo-tips">（验证选择器回填）</span>
+          </span>
+        ) : (
+          '新建演示'
+        )
+      }
       open={open}
+      width={640}
+      destroyOnClose
       onCancel={onClose}
-      onOk={() => {
-        const label =
-          school && !Array.isArray(school)
-            ? school.label
-            : Array.isArray(school)
-              ? school.map((s) => s.label).join('、')
-              : '';
-        message.success(label ? `已选择 ${label}` : '未选择');
+      onOk={async () => {
+        const values = await form.validateFields();
+        const single =
+          values.schoolSingle && !Array.isArray(values.schoolSingle) ? values.schoolSingle : null;
+        const multi = Array.isArray(values.schoolMulti) ? values.schoolMulti : [];
+        if (!single) {
+          message.error('请选择学校（单选）');
+          return;
+        }
+        const payload: SchoolSelectorDemoForm = {
+          id: seed?.id || '',
+          demoName: values.demoName.trim(),
+          schoolSingle: single,
+          schoolMulti: multi,
+        };
+        message.success('已保存演示');
+        onSuccess?.(payload);
         onClose();
       }}
-      destroyOnClose
+      okText="确 定"
+      cancelText="取 消"
     >
-      <Form layout="vertical">
+      <Form
+        form={form}
+        layout="horizontal"
+        labelCol={{ flex: '120px' }}
+        className="do-dialog-content-box"
+      >
         <Form.Item
-          label="学校"
-          required
+          label="演示名称"
+          name="demoName"
+          rules={[{ required: true, message: '请输入演示名称' }]}
+        >
+          <Input
+            allowClear
+            placeholder="请输入演示名称"
+          />
+        </Form.Item>
+        <Form.Item
+          label="学校（单选）"
+          name="schoolSingle"
+          rules={[{ required: true, message: '请选择学校' }]}
+        >
+          <SchoolSelector placeholder="请选择学校" />
+        </Form.Item>
+        <Form.Item
+          label="学校（多选）"
+          name="schoolMulti"
         >
           <SchoolSelector
-            value={school}
-            onChange={setSchool}
+            multiple
+            placeholder="请选择学校（可多选）"
           />
         </Form.Item>
       </Form>

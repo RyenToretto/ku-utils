@@ -534,3 +534,59 @@ el-form-item.do-fill-form > .el-form-item__content {
     padding: 0;
   }
 }
+
+.page-example-school-selector-demo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.page-example-school-selector-demo-card {
+  padding: 16px;
+  background: var(--ku-bg-elevated, #fff);
+  border-radius: 8px;
+}
+
+.page-example-school-selector-demo-section {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.page-example-school-selector-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.page-example-school-selector-demo-meta {
+  margin: 8px 0 0;
+  color: var(--ku-text-secondary, #909399);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.do-filter-field-label-wide {
+  min-width: 120px;
+}
+
+.dialog-edit-school-selector-demo-tips {
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ku-text-secondary, #909399);
+}
+
+.page-simple-example-list.fill-viewport {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+
+  .do-filter-panel,
+  .table-wrap {
+    flex-shrink: 0;
+  }
+}
