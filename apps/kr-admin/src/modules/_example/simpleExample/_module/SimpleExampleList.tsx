@@ -383,17 +383,67 @@ export default function SimpleExampleList({
 
       <TableWrap
         batch={
-          enableBatchSelect ? (
-            <div className="batch-select-control">
-              <Button
-                size="small"
-                onClick={() => setSelectedRowKeys(tableData.map((r) => r.id))}
-              >
-                全选本页
-              </Button>
-              <span className="batch-select-count">已选 {selectedRowKeys.length}</span>
-            </div>
-          ) : null
+          enableBatchSelect
+            ? (() => {
+                const pageIds = tableData.map((r) => r.id as React.Key);
+                const pageIdSet = new Set(pageIds);
+                const selectedOnPage = pageIds.filter((id) => selectedRowKeys.includes(id));
+                const statusOfSelect =
+                  !pageIds.length || selectedOnPage.length === 0
+                    ? 'none-selected'
+                    : selectedOnPage.length === pageIds.length
+                      ? 'all-selected'
+                      : 'half-selected';
+                const toggleBatchSelect = () => {
+                  if (statusOfSelect === 'all-selected') {
+                    setSelectedRowKeys((prev) => prev.filter((k) => !pageIdSet.has(k)));
+                  } else {
+                    setSelectedRowKeys((prev) => Array.from(new Set([...prev, ...pageIds])));
+                  }
+                };
+                return (
+                  <div
+                    className={[
+                      'batch-select-control',
+                      statusOfSelect !== 'none-selected' ? 'is-active' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    role="checkbox"
+                    aria-checked={
+                      statusOfSelect === 'all-selected'
+                        ? 'true'
+                        : statusOfSelect === 'half-selected'
+                          ? 'mixed'
+                          : 'false'
+                    }
+                    tabIndex={0}
+                    onClick={toggleBatchSelect}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleBatchSelect();
+                      }
+                    }}
+                  >
+                    <div
+                      className={[
+                        'do-select-cell',
+                        'batch-select-box',
+                        statusOfSelect,
+                        statusOfSelect !== 'none-selected' ? 'active' : '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                    />
+                    <span className="batch-select-label">全选本页</span>
+                    {selectedRowKeys.length ? (
+                      <span className="batch-select-count">已选 {selectedRowKeys.length}</span>
+                    ) : null}
+                  </div>
+                );
+              })()
+            : null
         }
         footer={
           <ListPaginationBar
