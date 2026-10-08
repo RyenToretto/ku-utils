@@ -325,10 +325,29 @@
   line-height: 42px !important;
   margin: 0 10px !important;
   padding-inline: 10px !important;
+  width: calc(100% - 20px) !important;
   border-radius: 8px !important;
   color: var(--ku-text-on-sidebar, rgba(255, 255, 255, 0.92)) !important;
   font-size: 14px;
   font-weight: 600;
+}
+
+.domain-module-aside .ant-menu-submenu-arrow {
+  inset-inline-end: 26px !important;
+  color: var(--ku-text-on-sidebar-muted, rgba(255, 255, 255, 0.65));
+  opacity: 1 !important;
+}
+
+.domain-module-aside .ant-menu-submenu-arrow::before,
+.domain-module-aside .ant-menu-submenu-arrow::after {
+  background: currentColor !important;
+}
+
+.domain-module-aside .ant-menu-submenu-selected > .ant-menu-submenu-title > .anticon,
+.domain-module-aside .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-submenu-arrow,
+.domain-module-aside .ant-menu-submenu-title:hover > .anticon,
+.domain-module-aside .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
+  color: var(--ku-text-on-sidebar, rgba(255, 255, 255, 0.92));
 }
 
 .domain-module-aside .ant-menu-submenu-title:hover {
@@ -368,6 +387,70 @@
 
 .domain-module-aside .ant-menu-item-selected::after {
   display: none !important;
+}
+
+/* 多级：子菜单容器左侧引导线逐级右移，二级起标题 / 叶子逐级缩进收窄（对齐 kv3 .side-menu） */
+.domain-module-aside .ant-menu-sub.ant-menu-inline {
+  position: relative;
+  padding: 2px 0 4px;
+}
+
+.domain-module-aside .ant-menu-sub.ant-menu-inline::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 28px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--ku-border-light);
+  pointer-events: none;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-sub.ant-menu-inline::before {
+  left: 40px;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-sub .ant-menu-sub.ant-menu-inline::before {
+  left: 52px;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-submenu-title {
+  height: 36px !important;
+  line-height: 36px !important;
+  margin: 1px 10px 1px 22px !important;
+  padding-inline: 18px 12px !important;
+  width: calc(100% - 32px) !important;
+  border-radius: 6px !important;
+  font-size: 13px;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-sub .ant-menu-submenu-title {
+  height: 34px !important;
+  line-height: 34px !important;
+  margin-left: 34px !important;
+  width: calc(100% - 44px) !important;
+  font-size: 12.5px;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-item {
+  height: 36px !important;
+  line-height: 36px !important;
+  margin: 1px 10px 1px 22px !important;
+  padding-inline: 18px 12px !important;
+  width: calc(100% - 32px) !important;
+  border-radius: 6px !important;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-sub .ant-menu-item {
+  margin-left: 34px !important;
+  width: calc(100% - 44px) !important;
+  font-size: 12.5px;
+}
+
+.domain-module-aside .ant-menu-sub .ant-menu-sub .ant-menu-sub .ant-menu-item {
+  margin-left: 46px !important;
+  width: calc(100% - 56px) !important;
 }
 
 .side-menu {
