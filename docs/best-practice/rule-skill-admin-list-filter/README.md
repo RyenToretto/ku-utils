@@ -73,6 +73,7 @@
 - [`apps/kv3-admin/.cursor/rules/project-context.mdc`](../../../apps/kv3-admin/.cursor/rules/project-context.mdc)
 - [`apps/kv3-admin/.cursor/skills/filter-panel-demo/SKILL.md`](../../../apps/kv3-admin/.cursor/skills/filter-panel-demo/SKILL.md)
 - `apps/kv3-admin/docs/admin-list-page-pattern.md`
+- kv2-admin / kr-admin / ka-admin：同名 `project-context.mdc` + `skills/filter-panel-demo` + `docs/admin-list-page-pattern.md`（ka 为 Angular 写法：`injectTableQuery`、`ka-do-filter-panel`、路由 data 直绑 input）
 
 ## 验收清单
 

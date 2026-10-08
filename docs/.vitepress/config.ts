@@ -66,6 +66,8 @@ export default defineConfig({
           items: [
             { text: 'Utils 工具函数', link: '/packages/utils' },
             { text: 'Hooks 组合式函数', link: '/packages/hooks' },
+            { text: 'Hooks Angular 注入函数', link: '/packages/hooks-angular' },
+            { text: 'A Custom Columns（Angular）', link: '/packages/a-custom-columns' },
             { text: 'Constants 常量', link: '/packages/constants' },
             { text: 'Types 类型定义', link: '/packages/types' },
             { text: 'Directives 指令', link: '/packages/directives' },

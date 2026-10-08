@@ -8,12 +8,13 @@
 
 ## 本仓落点
 
-| 路径                                                  | 说明                            |
-| ----------------------------------------------------- | ------------------------------- |
-| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`    | List 双模硬约束                 |
-| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`     | 新建选择器步骤                  |
-| `schoolResource` List + DialogSelect + SchoolSelector | 金标样板                        |
-| `schoolSelector` Demo                                 | `/example/school-selector/demo` |
+| 路径                                                                           | 说明                                            |
+| ------------------------------------------------------------------------------ | ----------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`                             | List 双模硬约束                                 |
+| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`                              | 新建选择器步骤                                  |
+| `schoolResource` List + DialogSelect + SchoolSelector                          | 金标样板                                        |
+| `schoolSelector` Demo                                                          | `/example/school-selector/demo`                 |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/entity-selector.mdc` + `skills/selector` | 四生同名；ka 选择器为 CVA，抽屉由 `[open]` 驱动 |
 
 ## 推进接入分数
 

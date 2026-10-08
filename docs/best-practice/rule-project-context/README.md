@@ -71,6 +71,7 @@
 - [`.cursor/rules/project-context.mdc`](../../../.cursor/rules/project-context.mdc)
 - [`apps/kv3-admin/.cursor/rules/project-context.mdc`](../../../apps/kv3-admin/.cursor/rules/project-context.mdc)（含专题 Rules 索引表）
 - kv3-admin 已落地专题：`project-structure` / `mock-isolation` / `api-contract` / `entity-selector`(+skill) / `user-visible-copy` / `task-ledger`（精简）/ `custom-columns` / `filter-panel-demo`
+- kv2-admin / kr-admin / ka-admin：同名 8 rules + 3 skills 四生对齐（见 [admin-parity](../admin-parity/)）
 - 同步机制：[`.cursor/rules/best-practice-sync.mdc`](../../../.cursor/rules/best-practice-sync.mdc)
 - 对照表：[SYNC.md](../SYNC.md)（`rule-fe-be-doc-sync` 仍为参考，按需升格）
 

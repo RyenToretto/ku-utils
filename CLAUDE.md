@@ -27,7 +27,7 @@
 
 ```
 ku-utils/
-├── packages/           # 可发布的 npm 包（16 个）
+├── packages/           # 可发布的 npm 包（20 个）
 │   ├── eslint-config/     构建: tsup       ESLint Flat Config（含 vue2/vue3/nuxt4 子配置）
 │   ├── prettier-config/   构建: 无（纯JSON） Prettier 共享配置
 │   ├── tsconfig/          构建: 无（纯JSON） TypeScript 配置集（base/library/vue3/vue2/nuxt4）
@@ -42,8 +42,12 @@ ku-utils/
 │   ├── ui/                构建: Vite       Vue 3 组件库（DuButton/DuModal/DuEmpty/DuStatusTag）
 │   ├── ui-vue2/           构建: Vite       Vue 2 组件库（维护模式）
 │   ├── nuxt-module/       构建: nuxt-module-builder   Nuxt 4 集成模块
+│   ├── hooks-react/       构建: tsup       React Hooks（与 hooks 对齐）
+│   ├── hooks-angular/     构建: ng-packagr Angular 注入函数（signals；与 hooks 对齐）
 │   ├── custom-columns/    构建: tsup       Vue 3 自定义列
-│   └── v2-custom-columns/ 构建: tsup       Vue 2 自定义列
+│   ├── v2-custom-columns/ 构建: tsup       Vue 2 自定义列
+│   ├── r-custom-columns/  构建: Vite       React 自定义列（antd）
+│   └── a-custom-columns/  构建: ng-packagr Angular 自定义列（ng-zorro）
 ├── tools/              # CLI 工具（2 个）
 │   ├── cli/               @ku-utils/cli 团队命令行工具
 │   └── create-app/        @ku-utils/create-app 项目脚手架
@@ -51,8 +55,10 @@ ku-utils/
 │   ├── playground-vue3/   Vue 3 + Vite 验证应用
 │   ├── playground-vue2/   Vue 2 + Vite 验证应用
 │   ├── playground-nuxt4/  Nuxt 4 验证应用
-│   ├── kv3-admin/         Vue 3 + Element Plus 管理端 starter
-│   └── kv2-admin/         Vue 2.7 + Element UI 管理端 starter（与 kv3 1:1 双生）
+│   ├── kv3-admin/         Vue 3 + Element Plus 管理端 starter（四生金标）
+│   ├── kv2-admin/         Vue 2.7 + Element UI 管理端 starter（四生）
+│   ├── kr-admin/          React 19 + Ant Design 管理端 starter（四生）
+│   └── ka-admin/          Angular 22 + ng-zorro 管理端 starter（四生）
 ├── docs/               # VitePress 文档站
 ├── .cursor/rules/      # AI 开发规范（4 个 .mdc 文件）
 ├── .vscode/settings.json  # IDE 配置
@@ -90,6 +96,8 @@ pnpm --filter @ku-utils/docs dev          # 启动文档站开发
 pnpm --filter @ku-utils/playground-vue3 dev  # Vue 3 Playground
 pnpm dev:admin                                # kv3-admin starter
 pnpm dev:admin:v2                             # kv2-admin starter（Vue2）
+pnpm dev:admin:react                          # kr-admin starter（React）
+pnpm dev:admin:angular                        # ka-admin starter（Angular；Node ^22.22.3 / ^24.15 / ≥26）
 
 # 发布
 pnpm changeset            # 创建变更记录
@@ -152,8 +160,9 @@ type(scope): 中文描述
 ## 关联项目
 
 - **kv3-admin**: `apps/kv3-admin`，本仓 Vue 3 管理端 starter，workspace 消费 `@ku-utils/*`，端口 **3111**
-- **kv2-admin**: `apps/kv2-admin`，Vue 2.7 管理端 starter，与 kv3 功能/规则 1:1（见 `docs/best-practice/kv2-kv3-kr-admin-parity/`），端口 **3222**
-- **kr-admin**: `apps/kr-admin`，React 19 + Ant Design 管理端 starter，三生第三极，端口 **3333**（`pnpm dev:admin:react`）
+- **kv2-admin**: `apps/kv2-admin`，Vue 2.7 管理端 starter，与 kv3 功能/规则 1:1（见 `docs/best-practice/admin-parity/`），端口 **3222**
+- **kr-admin**: `apps/kr-admin`，React 19 + Ant Design 管理端 starter，四生之一，端口 **3333**（`pnpm dev:admin:react`）
+- **ka-admin**: `apps/ka-admin`，Angular 22 + ng-zorro 管理端 starter（standalone + signals + zoneless），四生之一，端口 **3444**（`pnpm dev:admin:angular`）
 
 ## 已知注意事项
 

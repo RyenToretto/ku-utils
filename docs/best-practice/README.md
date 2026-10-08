@@ -40,19 +40,19 @@
 
 ### B. 管理端模块化（自 jx-dsp / oversea 拆分）
 
-| 顺序 | 目录                                                            | 类型       | 一句话                 | 得分 |
-| ---- | --------------------------------------------------------------- | ---------- | ---------------------- | ---- |
-| 8    | [rule-api-contract](./rule-api-contract/)                       | rule       | 信封/字典/响应示例边界 | 84   |
-| 9    | [rule-skill-admin-list-filter](./rule-skill-admin-list-filter/) | rule+skill | 列表/筛选/操作列/Cell  | 89   |
-| 10   | [rule-skill-entity-selector](./rule-skill-entity-selector/)     | rule+skill | 实体选择器双模金标     | 84   |
-| 11   | [rule-mock-isolation](./rule-mock-isolation/)                   | rule       | Mock 隔离与种子        | 87   |
-| 12   | [rule-user-visible-copy](./rule-user-visible-copy/)             | rule       | 用户可见文案           | 88   |
-| 13   | [rule-task-ledger](./rule-task-ledger/)                         | rule       | 任务台账与 wait 队列   | 78   |
-| 13b  | [kv2-kv3-kr-admin-parity](./kv2-kv3-kr-admin-parity/)           | 约定       | kv2/kv3/kr 管理端三生  | —    |
-| 14   | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)                   | rule+skill | 合同与上游增量同步     | 80   |
-| 15   | [rule-skill-hooks-composables](./rule-skill-hooks-composables/) | rule+skill | hooks 约定             | 85   |
-| 16   | [rule-skill-custom-columns](./rule-skill-custom-columns/)       | rule+skill | Vue3 自定义列          | 93   |
-| 17   | [skill-theme-skin](./skill-theme-skin/)                         | skill      | 皮肤 / Token           | 92   |
+| 顺序 | 目录                                                            | 类型       | 一句话                   | 得分 |
+| ---- | --------------------------------------------------------------- | ---------- | ------------------------ | ---- |
+| 8    | [rule-api-contract](./rule-api-contract/)                       | rule       | 信封/字典/响应示例边界   | 84   |
+| 9    | [rule-skill-admin-list-filter](./rule-skill-admin-list-filter/) | rule+skill | 列表/筛选/操作列/Cell    | 89   |
+| 10   | [rule-skill-entity-selector](./rule-skill-entity-selector/)     | rule+skill | 实体选择器双模金标       | 84   |
+| 11   | [rule-mock-isolation](./rule-mock-isolation/)                   | rule       | Mock 隔离与种子          | 87   |
+| 12   | [rule-user-visible-copy](./rule-user-visible-copy/)             | rule       | 用户可见文案             | 88   |
+| 13   | [rule-task-ledger](./rule-task-ledger/)                         | rule       | 任务台账与 wait 队列     | 78   |
+| 13b  | [admin-parity](./admin-parity/)                                 | 约定       | kv3/kv2/kr/ka 管理端四生 | —    |
+| 14   | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)                   | rule+skill | 合同与上游增量同步       | 80   |
+| 15   | [rule-skill-hooks-composables](./rule-skill-hooks-composables/) | rule+skill | hooks 约定               | 85   |
+| 16   | [rule-skill-custom-columns](./rule-skill-custom-columns/)       | rule+skill | Vue3 自定义列            | 93   |
+| 17   | [skill-theme-skin](./skill-theme-skin/)                         | skill      | 皮肤 / Token             | 92   |
 
 ### C. 全局机配置（`glb-*`，可选）
 

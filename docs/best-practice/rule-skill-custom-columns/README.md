@@ -43,6 +43,7 @@ Element Plus 表格用 schema + `useSchemaColumnConfig` 驱动列配置、持久
 - `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc`
 - `apps/kv2-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv2-admin/.cursor/rules/custom-columns-vue2-pattern.mdc`
 - `apps/kr-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kr-admin/.cursor/rules/custom-columns-react-pattern.mdc`
+- `apps/ka-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/ka-admin/.cursor/rules/custom-columns-angular-pattern.mdc`
 
 ## 验收清单
 

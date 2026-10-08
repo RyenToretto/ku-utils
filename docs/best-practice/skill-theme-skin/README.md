@@ -34,6 +34,7 @@
 
 - `packages/skin` + `TOKEN.md`（CSS：`@ku-utils/skin`；JS：`@ku-utils/skin/tokens`）
 - antd 接入：`apps/kr-admin/src/plugins/antdTheme.ts`
+- ng-zorro 接入：`apps/ka-admin/scripts/generate-zorro-theme.mjs`（less 编译源样式 → `--ku-*`）+ `src/assets/styles/zorro-ku-bridge.scss`
 - [`.cursor/skills/theme-skin/SKILL.md`](../../../.cursor/skills/theme-skin/SKILL.md)
 - 约束摘要亦见根 `project-context` / `vue-standards`（`--ku-*` fallback）
 

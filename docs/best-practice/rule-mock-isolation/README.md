@@ -8,10 +8,11 @@
 
 ## 本仓落点
 
-| 路径                                              | 说明                                               |
-| ------------------------------------------------- | -------------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/mock-isolation.mdc` | globs `_mock` / `src/mock`；信封 `code:0` + `data` |
-| `apps/kv3-admin/src/mock/utils.ts`                | `ok` / `pageOk` / `defaultSuccess` 真源            |
+| 路径                                                      | 说明                                                                |
+| --------------------------------------------------------- | ------------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/mock-isolation.mdc`         | globs `_mock` / `src/mock`；信封 `code:0` + `data`                  |
+| `apps/kv3-admin/src/mock/utils.ts`                        | `ok` / `pageOk` / `defaultSuccess` 真源                             |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/mock-isolation.mdc` | 四生同名；ka 由 dev-server 中间件 `esbuild/mock-middleware.ts` 加载 |
 
 ## 推进接入分数
 

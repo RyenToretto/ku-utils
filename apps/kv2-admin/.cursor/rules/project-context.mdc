@@ -8,7 +8,7 @@ alwaysApply: false
 
 - 对话与 commit message 使用中文
 - 本目录是 Vue 2.7 + Vite + Element UI 管理端 starter，workspace 消费 `@ku-utils/utils`、`仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate``、`@ku-utils/v2-custom-columns`
-- **控制台零异常**：`predev`/`prebuild` 跑 `ensure-vue-demi-vue27`（Pinia 的 vue-demi 必须 isVue2）；跨文件 type alias props 用运行时 `PropType`，禁 `| null`（详见 `docs/best-practice/kv2-kv3-admin-parity/`）
+- **控制台零异常**：`predev`/`prebuild` 跑 `ensure-vue-demi-vue27`（Pinia 的 vue-demi 必须 isVue2）；跨文件 type alias props 用运行时 `PropType`，禁 `| null`（详见 `docs/best-practice/admin-parity/`）
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv2-admin/docs/admin-list-page-pattern.md`
 - Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）

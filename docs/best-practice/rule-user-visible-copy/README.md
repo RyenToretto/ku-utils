@@ -8,9 +8,10 @@
 
 ## 本仓落点
 
-| 路径                                                 | 说明                        |
-| ---------------------------------------------------- | --------------------------- |
-| `apps/kv3-admin/.cursor/rules/user-visible-copy.mdc` | Toast/校验/空态禁开发态泄漏 |
+| 路径                                                         | 说明                        |
+| ------------------------------------------------------------ | --------------------------- |
+| `apps/kv3-admin/.cursor/rules/user-visible-copy.mdc`         | Toast/校验/空态禁开发态泄漏 |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/user-visible-copy.mdc` | 四生同名                    |
 
 ## 推进接入分数
 

@@ -8,11 +8,12 @@
 
 ## 本仓落点
 
-| 路径                                            | 说明                                        |
-| ----------------------------------------------- | ------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/api-contract.mdc` | 信封 `code:0`/`data`、`requestXxx`、`$MAPS` |
-| `apps/kv3-admin/src/plugins/axios.ts`           | 拦截器成功判定                              |
-| `apps/kv3-admin/src/mock/utils.ts`              | Mock 信封工具                               |
+| 路径                                                    | 说明                                                                   |
+| ------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/api-contract.mdc`         | 信封 `code:0`/`data`、`requestXxx`、`$MAPS`                            |
+| `apps/kv3-admin/src/plugins/axios.ts`                   | 拦截器成功判定                                                         |
+| `apps/kv3-admin/src/mock/utils.ts`                      | Mock 信封工具                                                          |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/api-contract.mdc` | 四生同名；ka 走 `ApiClient`（`HttpClient` + `apiEnvelopeInterceptor`） |
 
 ## 推进接入分数
 

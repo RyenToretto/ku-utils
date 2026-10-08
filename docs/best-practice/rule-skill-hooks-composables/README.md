@@ -33,6 +33,7 @@ Vue 3 composables 的放置、命名、与业务页面协作方式。
 - [`.cursor/rules/hooks-guide.mdc`](../../../.cursor/rules/hooks-guide.mdc)
 - [`.cursor/skills/hooks/SKILL.md`](../../../.cursor/skills/hooks/SKILL.md)
 - kv3-admin：`src/composables/useTableQuery.ts`、`useAdminTableMaxHeight.ts`、`useDrawerPickListMaxHeight.ts` 等
+- ka-admin：`src/composables/inject-table-query.ts`、`inject-admin-table-max-height.ts`、`inject-flex-columns.ts`、`inject-row-selector.ts`（注入函数，须在注入上下文调用）
 
 ## 验收清单
 

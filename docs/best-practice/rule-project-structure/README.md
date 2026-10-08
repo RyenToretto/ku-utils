@@ -8,10 +8,11 @@
 
 ## 本仓落点
 
-| 路径                                                 | 说明                                                          |
-| ---------------------------------------------------- | ------------------------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/project-structure.mdc` | glob `src/modules/**/*`；就近原则 + Layer/_module + DialogXxx |
-| `apps/kv3-admin/.cursor/rules/project-context.mdc`   | 瘦身壳仍保留骨架摘要，细则以本 rule 为准                      |
+| 路径                                                         | 说明                                                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/project-structure.mdc`         | glob `src/modules/**/*`；就近原则 + Layer/_module + DialogXxx |
+| `apps/kv3-admin/.cursor/rules/project-context.mdc`           | 瘦身壳仍保留骨架摘要，细则以本 rule 为准                      |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/project-structure.mdc` | 四生同名；ka 为 kebab-case `xxx-layer.ts` / `dialog-xxx.ts`   |
 
 ## 推进接入分数
 

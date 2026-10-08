@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "description": "Vue 2.7 + Element UI 管理端 starter，与 kv3-admin 1:1 双生，workspace 消费 @ku-utils/*",
+  "description": "Vue 2.7 + Element UI 管理端 starter，与 kv3-admin 1:1 四生对齐，workspace 消费 @ku-utils/*",
   "scripts": {
     "ensure-vue-demi": "node ./scripts/ensure-vue-demi-vue27.mjs",
     "dev": "vite --host",

@@ -1,4 +1,4 @@
-> **本应用**：Vue 2.7 + Element UI + Pinia 2.0 + vue-router@3。与 `kv3-admin` 1:1 双生。
+> **本应用**：Vue 2.7 + Element UI + Pinia 2.0 + vue-router@3。与 `kv3-admin` 1:1 四生对齐（见 `docs/best-practice/admin-parity/`）。
 
 # 管理端业务列表页范式
 

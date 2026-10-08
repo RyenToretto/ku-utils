@@ -9,11 +9,12 @@
 
 ## 本仓落点
 
-| 路径                                           | 说明                                                                                                          |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/task-ledger.mdc` | 精简：先登记再编码 + emoji                                                                                    |
-| `apps/kv3-admin/docs/task/TASK.md`             | 活跃看板（按人→按状态）                                                                                       |
-| `oversea-creative-web`（业务仓）               | 已对齐：历史 Pxx 只读 + 新 ID `{owner}{seq}-{slug}` + 活跃看板；见该仓 `task-ledger.mdc` / `doc-backend-sync` |
+| 路径                                                                  | 说明                                                                                                          |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `apps/kv3-admin/.cursor/rules/task-ledger.mdc`                        | 精简：先登记再编码 + emoji                                                                                    |
+| `apps/kv3-admin/docs/task/TASK.md`                                    | 活跃看板（按人→按状态）                                                                                       |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/task-ledger.mdc` + `docs/task/` | 四生同名；ka 台账 `koujianfeng1-ka-kv3-detail-parity`                                                         |
+| `oversea-creative-web`（业务仓）                                      | 已对齐：历史 Pxx 只读 + 新 ID `{owner}{seq}-{slug}` + 活跃看板；见该仓 `task-ledger.mdc` / `doc-backend-sync` |
 
 ## 推进接入分数
 
