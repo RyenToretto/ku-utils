@@ -13,6 +13,12 @@ import {
 } from '@/modules/_example/schoolResource/_module/types';
 import { message } from '@/plugins/antdApp';
 
+type FormValues = {
+  clubName: string;
+  status: number;
+  schoolPick: SchoolSelectorValue[];
+};
+
 export default function DialogEditClubActivity({
   open,
   row,
@@ -27,32 +33,34 @@ export default function DialogEditClubActivity({
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const status = maps.example.clubActivity.clubStatus;
+  const isEdit = !!row?.id;
 
   useEffect(() => {
     if (!open) return;
-    const schools: SchoolSelectorValue[] = (row?.schools || []).map(toSchoolPickFromRef);
     form.setFieldsValue({
       clubName: row?.clubName || '',
       status: row?.status ?? status.CLUB_STATUS_ENABLED,
-      schools,
+      schoolPick: (row?.schools || []).map(toSchoolPickFromRef),
     });
   }, [open, row, form, status.CLUB_STATUS_ENABLED]);
 
   async function handleOk() {
-    const values = await form.validateFields().catch(() => null);
+    const values = (await form.validateFields().catch(() => null)) as FormValues | null;
     if (!values) return;
-    const schoolsVal = (values.schools || []) as SchoolSelectorValue[];
     setLoading(true);
     try {
       await requestEditClubActivity({
-        id: row?.id,
-        clubName: values.clubName,
+        id: row?.id || undefined,
+        clubName: values.clubName.trim(),
         status: values.status,
-        schools: schoolsVal.map((s) => ({ id: s.id, schoolName: s.item.schoolName })),
+        schools: values.schoolPick.map((pick) => ({
+          id: pick.id,
+          schoolName: pick.item.schoolName || pick.label,
+        })),
       });
-      message.success(row?.id ? '已保存' : '已创建');
-      onSuccess();
+      message.success(isEdit ? '修改成功' : '创建成功');
       onClose();
+      onSuccess();
     } finally {
       setLoading(false);
     }
@@ -61,39 +69,50 @@ export default function DialogEditClubActivity({
   return (
     <Modal
       open={open}
-      title={row?.id ? '编辑社团' : '新建社团'}
+      title={isEdit ? '编辑社团活动' : '新建社团活动'}
       onCancel={onClose}
       onOk={handleOk}
       confirmLoading={loading}
+      maskClosable={false}
       destroyOnHidden
       width={560}
     >
       <Form
         form={form}
-        layout="vertical"
+        layout="horizontal"
+        labelCol={{ flex: '100px' }}
+        className="do-dialog-content-box"
       >
         <Form.Item
           name="clubName"
-          label="社团名称"
-          rules={[{ required: true, message: '请输入社团名称' }]}
+          label="活动名称"
+          rules={[{ required: true, whitespace: true, message: '请输入活动名称' }]}
         >
-          <Input maxLength={64} />
-        </Form.Item>
-        <Form.Item
-          name="schools"
-          label="关联学校"
-        >
-          <SchoolSelector
-            multiple
-            clearable
+          <Input
+            maxLength={60}
+            allowClear
+            placeholder="请输入活动名称"
           />
         </Form.Item>
         <Form.Item
-          name="status"
           label="状态"
-          rules={[{ required: true, message: '请选择状态' }]}
+          required
         >
-          <Radio.Group options={status.options} />
+          <Form.Item
+            name="status"
+            noStyle
+            rules={[{ required: true, message: '请选择状态' }]}
+          >
+            <Radio.Group options={status.options} />
+          </Form.Item>
+          <span className="dialog-tips">仅启用状态可被业务引用</span>
+        </Form.Item>
+        <Form.Item
+          name="schoolPick"
+          label="关联学校"
+          rules={[{ type: 'array', required: true, min: 1, message: '请至少选择一所学校' }]}
+        >
+          <SchoolSelector multiple />
         </Form.Item>
       </Form>
     </Modal>

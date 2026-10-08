@@ -64,7 +64,7 @@ export default function DialogEditSchoolResource({
       title={
         <span>
           {isEdit ? '修改' : '添加'}学校
-          {isEdit ? <span className="dialog-title-tips">(ID: {row?.id})</span> : null}
+          {isEdit ? <span className="dialog-tips">(ID: {row?.id})</span> : null}
         </span>
       }
       onCancel={onClose}

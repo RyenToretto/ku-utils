@@ -68,7 +68,7 @@ export default function DialogEditSimpleExample({
       title={
         <span>
           {isEdit ? '修改' : '添加'}示例
-          {isEdit ? <span className="dialog-title-tips">(ID: {row?.id})</span> : null}
+          {isEdit ? <span className="dialog-tips">(ID: {row?.id})</span> : null}
         </span>
       }
       open={open}
