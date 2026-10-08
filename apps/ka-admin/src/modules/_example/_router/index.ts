@@ -8,6 +8,7 @@ import { EXAMPLE_MENUS } from '@/modules/_example/menus';
 import schoolResource from '@/modules/_example/schoolResource/_router';
 import schoolSelector from '@/modules/_example/schoolSelector/_router';
 import simpleExample from '@/modules/_example/simpleExample/_router';
+import uiKit from '@/modules/_example/uiKit/_router';
 import type { AppRouteData } from '@/types/route-data';
 
 const exampleRoutes: Routes = [
@@ -30,6 +31,7 @@ const exampleRoutes: Routes = [
       ...schoolSelector,
       ...clazzManage,
       ...clubActivity,
+      ...uiKit,
     ],
   },
 ];

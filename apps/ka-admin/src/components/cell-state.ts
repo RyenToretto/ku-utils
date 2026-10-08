@@ -4,7 +4,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-type StateValue = string | number | boolean;
+export type StateValue = string | number | boolean;
 type StateTone = 'success' | 'warning' | 'danger' | 'info' | 'primary';
 
 /**
