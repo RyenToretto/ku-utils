@@ -1,0 +1,45 @@
+---
+description: ka-admin 目录结构与命名 — xxx-layer / _module、dialog-xxx、就近原则
+globs:
+  - src/modules/**/*
+alwaysApply: false
+---
+
+# 目录结构与命名（ka-admin）
+
+> 与列表细则见 `project-context.mdc`、`docs/admin-list-page-pattern.md`。
+> 最佳实践：`docs/best-practice/rule-project-structure/`。
+
+## 就近原则
+
+`_` 前缀目录放在**最小共享范围**：单页 → `_module`；子域多处 → 子域 `_xxx`；整域 → 域根；跨域 → `src/components|api|composables|maps`。先就近，第二使用方再上提。
+
+## 子业务骨架
+
+```text
+src/modules/<域>/<子业务>/
+├── _api/          # XxxApi（@Injectable providedIn root）+ requestXxx
+├── _map/          # 可选 → maps
+├── _mock/         # 仅 Mock 中间件加载
+├── _module/       # xxx-list / dialog-xxx / xxx-selector
+├── _router/       # Routes：loadComponent + data satisfies AppRouteData
+└── xxx-layer.ts   # 薄壳 page-*；只挂 List + 根内 Dialog（export default）
+```
+
+- 业务禁静态 import `_example`；Example 只在 `useExample` 构建里装配
+
+## 命名
+
+| 用途 | 文件 / 类 | 选择器 |
+| --- | --- | --- |
+| 路由落点 | `xxx-layer.ts` / `XxxLayer`（default export） | `ka-xxx-layer` |
+| 表格 | `_module/xxx-list.ts` / `XxxList` | `ka-xxx-list` |
+| 弹层（含 drawer） | `dialog-xxx.ts` / `DialogXxx`（禁 `drawer-xxx`） | `ka-dialog-xxx` |
+| 选择器 | `xxx-selector.ts` + `dialog-select-xxx.ts` | `ka-xxx-selector` |
+| HTTP | `_api` 内 `XxxApi.requestXxx` | — |
+| 注入函数 | `src/composables/inject-xxx.ts` / `injectXxx()` | — |
+
+## 具象化变量名
+
+`form`→`xxxForm`，`filters`→`query.filters()`，`loading`→`tableLoading`/`submitLoading`，`visible`→`open`/`editOpen`。
+`[nzLoading]` 绑在 `nz-table` 上，禁挂 `ka-table-wrap`。

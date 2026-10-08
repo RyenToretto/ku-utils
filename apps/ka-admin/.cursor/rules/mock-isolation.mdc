@@ -1,0 +1,39 @@
+---
+description: ka-admin Mock 隔离 — 加载边界、信封 code:0/data、硬编码种子
+globs:
+  - '**/_mock/**'
+  - src/mock/**
+  - esbuild/**
+alwaysApply: false
+---
+
+# Mock 隔离（ka-admin）
+
+> 最佳实践：`docs/best-practice/rule-mock-isolation/`。
+> 信封与 `rule-api-contract` / `src/mock/utils.ts` / `apiEnvelopeInterceptor` 一致。
+
+## 加载边界
+
+- Mock **只**由 dev-server 中间件（`esbuild/mock-middleware.ts`，`angular.json` `serve.options.middlewares`）加载 `src/mock/index.ts` 聚合；**业务 / `maps` / 页面禁止** import `_mock` 当字典或种子
+- `/api/*` 未命中须回 JSON 信封，**禁止**回落 SPA HTML
+
+## 本仓信封（冻结）
+
+| 项     | 字面量                          |
+| ------ | ------------------------------- |
+| 成功码 | `code === 0`（number）          |
+| 载荷   | `data`                          |
+| 工具   | `ok()` / `pageOk()`（`@/mock/utils`） |
+
+Mock、`_api`、拦截器必须同形；**禁止**双码兼容（如同时认 `0` 与 `'0000'`）或改载荷字段名。
+
+## 种子硬约束
+
+1. 表格/列表行必须**逐条硬编码**；禁 `Array.from` / `map` 工厂生成行（对已有种子 `filter`+分页除外）
+2. 默认首屏满页（`pageSize=10` → ≥10 条）；演示翻页建议 ≥ `pageSize×3`
+3. 无筛选时 `total` ≥ 3 且与过滤后条数一致
+4. 增删改默认可只回成功信封，不强制改种子（除非任务要求 CRUD 闭环）
+
+## Example 门控
+
+`environment.useExample=false` 时 `src/mock/index.ts` 不聚合 example mocks；`business` 构建用 `fileReplacements` 换 stubs，产物不得含 `_example`。

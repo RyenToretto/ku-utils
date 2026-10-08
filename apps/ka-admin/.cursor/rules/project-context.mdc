@@ -1,0 +1,82 @@
+---
+description: ka-admin starter 约定。写列表页、表格、筛选、弹层、自定义列时读取。
+globs:
+alwaysApply: false
+---
+
+# ka-admin starter
+
+- 对话与 commit message 使用中文
+- 本目录是 Angular 22 + ng-zorro-antd 22 管理端 starter（四生之一，端口 **3444**），workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks-angular`、`@ku-utils/a-custom-columns`、`@ku-utils/skin`
+- Node `^22.22.3 || ^24.15.0 || >=26`（本机 `nvm use 22.23.3`）；`pnpm dev:admin:angular`
+- 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
+- 文档真源：`apps/ka-admin/docs/admin-list-page-pattern.md`
+- Demo 壳：`DomainModuleShell`（`modules/_example/index.ts`）
+- **模块化最佳实践**：仓库根 `docs/best-practice/`；四生对照 `docs/best-practice/admin-parity/`
+
+## Angular 写法（强制）
+
+- standalone + `ChangeDetectionStrategy.OnPush` + zoneless；状态一律 signals（`signal` / `computed` / `linkedSignal` / `effect` + `untracked`）
+- `input()` / `output()` / `model()`、`inject()`、控制流 `@if` / `@for` / `@let`；禁 `@Input` 装饰器、`*ngIf`、`NgModule`
+- 文件名 kebab-case，选择器前缀 `ka-`；路由落点（Layer / 页面）`export default` + `loadComponent`
+- 依赖输入才能建的查询：`injectTableQuery({ immediate: false })` + `ngOnInit` 里 `query.reset(filters, pageSize)`
+- 路由 `data` 经 `withComponentInputBinding` 直绑组件 `input()`（如 `doFilterPanel` / `nestTrail`）
+- 表单弹层用 Reactive Forms；筛选区用 `[ngModel]` + `(ngModelChange)`，禁双向 `[(ngModel)]` 写 `filters`
+
+## 目录骨架
+
+细则见同目录 `project-structure.mdc`。摘要：
+
+```text
+src/modules/<域>/<子业务>/
+├── _api/ _map/ _mock/ _module/ _router/
+└── xxx-layer.ts         # 薄壳；xxx-list / dialog-xxx 在 _module
+```
+
+## 列表页硬约束
+
+1. 页面根 class：`host: { class: 'page-<业务>' }`
+2. 列表状态：`injectTableQuery`（`filters` / `setListFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `reset` / `patchRow`）；fetcher 传 `AbortSignal`；分页用 `ka-list-pagination-bar`
+3. 表格用 `<ka-table-wrap>` 包裹；表格 class `do-inner-scroller page-table`
+4. 高度 `injectAdminTableMaxHeight('.page-xxx', 400)` → `[nzScroll]="{ y: maxHeight() + 'px' }"`；列宽 `injectFlexColumns(COLUMNS, '.page-xxx')` → `[nzWidthConfig]`
+5. 筛选用 `ka-do-filter-panel`；placeholder「不限」；日期在前、radio 在后；离散完成即查（`setListFilters` 后 `search(true)`）；禁 `effect` 监听 filters 自动查
+6. **禁止页面态 PageHeader / 页级 title / subtitle**（顶栏 + 侧栏已表达身份）
+7. 弹层文件名一律 `dialog-xxx.ts`（含 nz-drawer，禁 `drawer-xxx`）；由父级 `[open]` + `(closed)` / `(success)` 驱动
+8. 自定义列：`@ku-utils/a-custom-columns` 的 `createSchemaColumnConfig` + `[kuSchemaColumnConfig]`
+9. 分页实体外键 → `entity-selector` 金标（`ka-school-selector` 样板）
+
+## ng-zorro 反馈与主题
+
+- 二次确认统一 `injectConfirm()`（`@/plugins/confirm`，实心警示图标、无关闭叉、居中）；提示用 `NzMessageService`
+- 日期适配 `provideNzDateFnsAdapter({ locale: zhCN, firstDayOfWeek: 1 })`；禁已废弃的 `NZ_DATE_LOCALE`
+- 主题：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式 → `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；变量映射 `--ku-*`，less 表达不了的细节进 `zorro-ku-bridge.scss`
+- 样式颜色读 `var(--ku-*, <tome 浅色>)`；禁 `--ant-*` 覆写与 ng-zorro 默认色
+- 图标静态注册在 `plugins/zorro-icons.ts`，禁全量动态加载
+
+Angular 无全局组件：页面按需 `imports`（`TableWrap`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`ListPaginationBar` 等，均在 `src/components`）。
+
+## Demo 模块索引
+
+| 侧栏 | 路径前缀 | 说明 |
+|------|----------|------|
+| 示例管理 | `/example/simple/*` 等 | list；`batch-select` 表外全选；school/clazz/club |
+| 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
+| 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
+| 自定义列 | `/example/custom-columns/*` | 01–08 |
+| 多级导航 | `/example/nest-menus/*` | 4 个叶子 |
+
+## Example 门控
+
+开发态 `environment.useExample = true`。`ng build --configuration business` 用 `fileReplacements` 把 `_example` 路由 / maps / 顶栏 Tab 换成 `src/stubs/*`，并由 esbuild 插件 `forbid-example-in-bundle` 拦截产物。
+
+## 专题 Rules（同目录）
+
+| Rule | 用途 |
+| --- | --- |
+| `project-structure` | Layer / `_module` / dialog-xxx |
+| `mock-isolation` | Mock 边界与种子；信封 `code:0`/`data` |
+| `api-contract` | `requestXxx`、`maps`、禁兼容 |
+| `entity-selector` | List 双模选择器（+ skill `selector`） |
+| `user-visible-copy` | 用户可见文案禁开发态泄漏 |
+| `task-ledger` | 精简台账 `docs/task/` |
+| `custom-columns-angular-pattern` | 自定义列 |

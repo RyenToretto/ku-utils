@@ -1,0 +1,152 @@
+---
+description: ka-admin 实体选择器 — xxx-list 双模 + xxx-selector（CVA）+ 薄壳 dialog-select-xxx；分页接口强制金标
+globs:
+  - '**/*-selector*.ts'
+  - '**/dialog-select-*.ts'
+  - '**/inject-row-selector.ts'
+  - '**/_example/**/*'
+alwaysApply: false
+---
+
+# 实体选择器（ka-admin）
+
+> 最佳实践：`docs/best-practice/rule-skill-entity-selector/`。
+> 金标真源：`schoolResource` 的 `school-resource-list.ts` + `dialog-select-school-resource.ts` + `school-selector.ts`。
+
+跨表单 / 筛选选业务实体时，封装为可复用选择器。
+**凡「有接口且分页」的实体点选，必须按 List 双模金标实现**。
+
+## 文件命名（强制）
+
+| 类型 | 命名 | 示例 |
+| --- | --- | --- |
+| 列表（页面 + 选择器共用） | **`xxx-list.ts`** | `school-resource-list.ts` |
+| 选择器控件（假 select，CVA） | **`xxx-selector.ts`** | `school-selector.ts` |
+| 选值弹层（薄壳） | **`dialog-select-xxx.ts`** | `dialog-select-school-resource.ts`（即使是 nz-drawer） |
+| Demo 壳 | `xxx-selector-demo-layer.ts` | `modules/_example/<camel>Selector/` |
+| Demo 编辑弹层 | `dialog-edit-xxx-selector-demo.ts` | 筛选区之外的「新增/编辑」回填验证 |
+
+### 禁止
+
+- **禁止**在 `dialog-select-xxx` 内再写完整表格（`ka-do-filter-panel` + `nz-table` + `injectTableQuery` + 列定义）
+- **禁止**页面 List 与选择器抽屉各维护一份表格逻辑
+- **禁止** `xxx-select.ts` / `xxx-picker.ts` / `drawer-select-xxx.ts`
+- **禁止**多种选择器堆同一聚合 Demo 页
+- **禁止**「只读 input + 页面手动开弹层」冒充控件；选择器必须实现 `ControlValueAccessor`
+- **禁止**筛选 / 表单手填实体 ID 代替已有 `xxx-selector`
+- **禁止**远程 `nz-select` 截断首屏冒充分页
+
+### 允许保留
+
+- 原生 `nz-select`（枚举 / 短 `maps` options，非远程实体）
+- `maps` 驱动的 `nz-radio-group` / `nz-select`
+- 选择器抽屉**内部**名称搜索仍可用 `nz-input`（写在 `xxx-list` 筛选区）
+- `ka-do-selector` 仅适合静态枚举 / 简单 remote 下拉，**不**替代分页实体选择器
+
+## 何时必须用选择器
+
+**判定**：控件在**挑业务实体**（有独立 list/page 合同、有展示名），不是自由文本 / 枚举 / 数值。
+
+筛选区、新建 / 编辑弹层中的外键：无现成选择器时**先建** `xxx-list` 双模 + `xxx-selector` + `dialog-select-xxx` + 独立 Demo。
+
+编辑已用选择器时，筛选暴露同条件必须用**同一**选择器（可清空表示不限）。
+
+## 分页接口判定（强制）
+
+| 判定 | 说明 |
+| --- | --- |
+| 请求含 `pageNum` + `pageSize` | 含等价命名 |
+| 响应含 `total` 或分页结构 | `lists` + `total` |
+| 业务上可翻页点选实体 | 禁止 remote `nz-select` 截断首屏 |
+
+**全量小数组 / `maps`** → 可用轻量 `nz-select`，勿硬套抽屉。
+
+## List 双模金标（强制）
+
+```text
+xxx-layer ──► ka-xxx-list ([enableSelector]=false)
+dialog-select-xxx ──► ka-xxx-list ([enableSelector]=true, [inDialog]=true)
+xxx-selector ──► dialog-select-xxx ([open]=true)
+```
+
+### A. `xxx-list.ts` 双模
+
+**inputs（选择器态）**
+
+| input | 默认 | 说明 |
+| --- | --- | --- |
+| `enableSelector` | `false` | 选择器模式 |
+| `isMultiple` | 视业务 | 单选 / 多选 |
+| `inDialog` | `false` | 抽屉内：`drawer-pick-table-wrap` 高度 |
+| `checkedRows` | `[]` | 打开时回显的已选行（`ngOnInit` 里 `selector.setChecked`） |
+| `lockXxxFilter` | — | 如仅启用态 |
+| `defaultPageSize` | — | 选择器可改小页演示翻页 |
+
+**outputs**：`selectionChange(row | rows | undefined)`、`loaded`、**`loadFailed`（强制，在 `injectTableQuery` 的 `onError` 里发）**。
+
+**行为分叉**
+
+- 两态都用 `injectTableQuery({ immediate: false })` + `ngOnInit` 里 `query.reset(initialFilters(), defaultPageSize())`（输入在构造期不可读）
+- `!enableSelector`：`[tableBatch]`、操作列表头「新建」文案按钮；**禁止**页面态 PageHeader / title
+- `enableSelector`：勾选列始终渲染；`[tableBatch]` 仍仅页面态；`ka-cell-state` 仅页面态传 `[switchable]="true"`（默认 `false` 只读）
+- 失败态：表体 `@if (query.tableLoadFailed())` 出失败文案 + 重试
+
+**筛选项可见（选择器态强制）**
+
+- 页面态已有的筛项，选择器态**必须同形保留**；**禁止** `@if (!enableSelector())` 把筛项整项藏掉
+- 锁定约束（如 `lockEnabledStatus`）：控件**仍展示**，绑锁定值 + `[nzDisabled]`；`transformQuery` 仍写死约束
+- 若筛项本身是会再开抽屉的 `xxx-selector`，选择器态改为**只读展示锁定上下文**，禁止抽屉套抽屉
+
+**写能力（选择器态强制，与接口对齐）**
+
+| 能力 | 选择器态落点 |
+| --- | --- |
+| 新建 | **操作列表头**；与页面态同形：`nzType="primary"` + `nzSize="small"` +「新建」文案按钮 |
+| 编辑 / 删除等行内写 | 操作列行内按钮（`btn-plain-*` + `nzSize="small"`；`(click)` 里 `$event.stopPropagation()`） |
+| 依赖弹层 | `dialog-xxx` **禁止** `@if (!enableSelector())` 卸掉 |
+
+**勾选列**
+
+- `injectRowSelector`：`isMultiple` 传 input signal；`onChange` 内仅选择器态 emit
+- 多选全选：`ka-do-select-cell` **仅**写在勾选列表头；**禁止**塞进 `[tableBatch]`
+- 确需表外全选：`.batch-select-control`（Demo：`/example/simple/batch-select`）
+
+### B. `dialog-select-xxx` 薄壳
+
+1. `nz-drawer`：`nzWrapClassName="drawer-model-selector"`；`[nzWidth]="960"`；`[nzMaskClosable]="false"`；内容用 `*nzDrawerContent`（关闭即销毁 List）
+2. 结构：标题 → `.do-drawer__view` 内 **仅** `<ka-xxx-list [enableSelector]="true" [inDialog]="true" ...>` → footer（已选计数 + 取消 / 确定）
+3. **禁止**壳内 `injectTableQuery` / 列定义 / `requestXxxPage`
+4. 由父级 `[open]` 控制；`effect` 在打开瞬间 `untracked` 快照 `checkedRows`，抽屉内勾选不回写外部
+5. 确定后才 `confirmed.emit(...)`；取消 `cancelled.emit()`
+
+### C. `xxx-selector` 控件
+
+1. 实现 `ControlValueAccessor`（`NG_VALUE_ACCESSOR` + `forwardRef`）；视图里含 `ngModel` 时加 `viewProviders: [{ provide: ControlContainer, useValue: null }]`，避免挂进外层表单
+2. 假 `nz-select`：`(nzOpenChange)` 里 `select().setOpenState(false)` 再开抽屉；下拉层不展示
+3. 选项仅回显已选；多选折叠 tag + 悬浮浮层（`do-selector-tags-panel`）
+4. 值：`{ id: string, label, item }`；单选对象 / `null`，多选数组；必填校验用 `@/utils/validators` 的 `requiredPick`
+
+### D. 独立 Demo（强制）
+
+1. 侧栏独立叶子 + 路由 `/example/<kebab>-selector/demo`
+2. **筛选区**：单选 + 多选各一枚 `xxx-selector`
+3. **新增/编辑弹层**：`dialog-edit-xxx-selector-demo`
+4. 仅 `useExample` 构建；`business` 构建必须换 stubs
+
+## 本仓合同（ka-admin）
+
+| 项 | 要求 |
+| --- | --- |
+| 成功码 / 载荷 | `code === 0` / **`data`** |
+| ID | 分页实体选择器 **`id: string`**（学校金标） |
+| 文案 | 中文即可（本 starter 不强制 i18n） |
+| HTTP | 继续用本仓 `ApiClient`；**不要**引入他仓 request 适配层 |
+
+## Agent 自检
+
+1. 该字段是否实体外键？→ 必须选择器
+2. 接口是否分页？→ 必须 List 双模 A+B+C+D
+3. `dialog-select-xxx` 是否仍含 `injectTableQuery`？→ 违规，收到 `xxx-list`
+4. 接口支持新建/编辑/删除时，选择器态是否可操作？→ 必须
+5. Demo 三件套齐全？
+6. `pnpm --filter @ku-utils/ka-admin typecheck`
