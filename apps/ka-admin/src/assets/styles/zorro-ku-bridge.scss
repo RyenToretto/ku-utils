@@ -105,9 +105,10 @@
   }
 }
 
-/* Alert：对齐 kv3 el-alert 无边框、标题随类型着色、16px 图标 */
+/* Alert：对齐 kv3 el-alert 无边框、24 行高、标题随类型着色、16px 图标 */
 .ant-alert {
   border: 0;
+  line-height: 24px;
 
   @each $type,
     $token in ('success': 'success', 'info': 'info', 'warning': 'warning', 'error': 'danger')
@@ -176,6 +177,25 @@
 /* Card：el-card 标题常规字重 */
 .ant-card-head {
   font-weight: 400;
+}
+
+/* less 用 card-head-padding 同时做标题上下内距（20 → 头高 62）；antd v5：头高 54（含边框）、标题垂直居中 */
+.ant-card-head {
+  display: flex;
+  align-items: center;
+}
+
+.ant-card-head-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.ant-card-head-title,
+.ant-card-extra,
+.ant-card-small > .ant-card-head > .ant-card-head-wrapper > .ant-card-head-title,
+.ant-card-small > .ant-card-head > .ant-card-head-wrapper > .ant-card-extra {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* Table：el-table 正文次级色、表头 600 */

@@ -46,6 +46,11 @@ const MODIFY_VARS = {
   'card-head-font-size': '14px',
   'card-padding-base': '20px',
   'card-radius': '4px',
+  // el-card 无尺寸档：small 与默认同值（kr headerHeightSM / bodyPaddingSM）
+  'card-head-height-sm': '54px',
+  'card-head-padding-sm': '20px',
+  'card-head-font-size-sm': '14px',
+  'card-padding-base-sm': '20px',
   // el-table：次级色正文、卡片底表头、悬停 hover 底、选中 primary-bg、8px 单元格
   'table-header-bg': '@component-background',
   'table-header-cell-split-color': 'transparent',

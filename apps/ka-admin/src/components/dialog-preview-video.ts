@@ -36,6 +36,9 @@ function applyRawMeta(raw?: PreviewMediaRaw): MediaInfo {
   return info;
 }
 
+/** kr body `8px 12px 16px` 外还有 antd v5 内容区 16 内边距；nz 无该层，左右与底部并入 body */
+const BODY_STYLE = { padding: '8px 28px 32px' };
+
 async function doPlay(el: HTMLVideoElement | HTMLAudioElement) {
   try {
     el.muted = false;
@@ -58,7 +61,7 @@ async function doPlay(el: HTMLVideoElement | HTMLAudioElement) {
       [nzTitle]="dialogTitle()"
       [nzWidth]="dialogWidth()"
       [nzFooter]="null"
-      [nzBodyStyle]="{ padding: '8px 12px 16px' }"
+      [nzBodyStyle]="bodyStyle"
       (nzOnCancel)="visible.set(false)"
       (nzAfterClose)="resetPanel()"
     >
@@ -110,6 +113,7 @@ async function doPlay(el: HTMLVideoElement | HTMLAudioElement) {
   `,
 })
 export class DialogPreviewVideo {
+  protected readonly bodyStyle = BODY_STYLE;
   protected readonly visible = signal(false);
   protected readonly mediaUrl = signal('');
   protected readonly isAudio = signal(false);
