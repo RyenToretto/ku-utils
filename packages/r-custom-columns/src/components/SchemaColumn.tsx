@@ -54,7 +54,8 @@ export function schemaToColumn<T extends Record<string, unknown> = Record<string
     key: schema.prop || schema.label,
     dataIndex: schema.prop,
     title: titleNode,
-    width: schema.width ?? schema.minWidth,
+    width: schema.width,
+    minWidth: schema.minWidth,
     align: schema.align || 'left',
     fixed,
     sorter: schema.sortable ? true : undefined,
@@ -83,6 +84,3 @@ export function schemasToColumns<T extends Record<string, unknown> = Record<stri
 ): ColumnsType<T> {
   return (schemas || []).map((schema) => schemaToColumn<T>(schema, options));
 }
-
-/** @deprecated 使用 schemasToColumns；保留别名便于迁移 */
-export const SchemaColumn = schemasToColumns;

@@ -31,7 +31,7 @@
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "antd": ">=5.0.0",
+    "antd": ">=5.21.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
