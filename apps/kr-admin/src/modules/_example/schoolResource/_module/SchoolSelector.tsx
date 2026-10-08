@@ -1,7 +1,7 @@
 import { Select, Tag } from 'antd';
 import { useMemo, useState } from 'react';
 
-import DialogSelectSchoolResourceInner from './DialogSelectSchoolResourceInner';
+import DialogSelectSchoolResource from './DialogSelectSchoolResource';
 
 import type { SchoolResourceRow } from '@/modules/_example/schoolResource/_api';
 
@@ -36,7 +36,7 @@ export default function SchoolSelector({
 }: SchoolSelectorProps) {
   const [open, setOpen] = useState(false);
   const selected = useMemo(() => {
-    if (!value) return [] as Array<{ id: string; label: string }>;
+    if (!value) return [] as Array<{ id: string; label: string; item?: SchoolResourceRow }>;
     return Array.isArray(value) ? value : [value];
   }, [value]);
 
@@ -57,11 +57,13 @@ export default function SchoolSelector({
           if (visible && !disabled) setOpen(true);
         }}
       />
-      <DialogSelectSchoolResourceInner
+      <DialogSelectSchoolResource
         open={open}
         isMultiple={multiple}
         lockEnabledStatus={lockEnabledStatus}
-        checkedIds={selected.map((s) => s.id)}
+        checkedRows={selected.map(
+          (s) => s.item ?? ({ id: s.id, schoolName: s.label } as SchoolResourceRow),
+        )}
         defaultPageSize={defaultPageSize}
         onCancel={() => setOpen(false)}
         onConfirm={(rows) => {

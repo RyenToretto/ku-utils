@@ -135,3 +135,8 @@
     white-space: nowrap;
   }
 }
+
+/* 单选选择器：当前选中行高亮（对齐 kv3 highlight-current-row） */
+.ant-table-tbody > tr.ant-table-row.current-row > td {
+  background: var(--ku-primary-50, #fbf6ec);
+}

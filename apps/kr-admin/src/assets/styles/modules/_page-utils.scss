@@ -254,14 +254,20 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* Drawer 内点选/列表：配合 useDrawerPickListMaxHeight（禁止写死 max-height px） */
 .drawer-model-selector {
-  .el-drawer__footer {
+  .do-drawer__foot_btn {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-top: 12px;
+    gap: 8px;
   }
 
-  .el-drawer__body {
+  .selected-count {
+    margin-right: auto;
+    font-size: 13px;
+    color: var(--ku-text-secondary, #909399);
+  }
+
+  .ant-drawer-body {
     overflow: hidden;
     display: flex;
     flex-direction: column;

@@ -1,7 +1,7 @@
-import { DeleteOutlined, EditOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, Input, Pagination, Radio, Table } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
-import { useEffect, useMemo, useState } from 'react';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Input, Radio, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import { useEffect, useState } from 'react';
 
 import DialogEditSchoolResource from './DialogEditSchoolResource';
 
@@ -9,8 +9,11 @@ import CellDateTime from '@/components/CellDateTime';
 import CellNameId from '@/components/CellNameId';
 import CellState from '@/components/CellState';
 import DoFilterPanel from '@/components/DoFilterPanel';
+import { createSelectColumn } from '@/components/DoSelectCell';
+import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useRowSelector } from '@/composables/useRowSelector';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
 import {
@@ -29,7 +32,8 @@ export type SchoolResourceListProps = {
   enableSelector?: boolean;
   isMultiple?: boolean;
   inDialog?: boolean;
-  checkedIds?: string[];
+  /** 选择器模式回显的已选行 */
+  checkedRows?: SchoolResourceRow[];
   lockEnabledStatus?: boolean;
   defaultPageSize?: number;
   onChange?: (row: SchoolResourceRow | SchoolResourceRow[] | undefined) => void;
@@ -41,7 +45,7 @@ export default function SchoolResourceList({
   enableSelector = false,
   isMultiple = true,
   inDialog = false,
-  checkedIds = [],
+  checkedRows,
   lockEnabledStatus = false,
   defaultPageSize,
   onChange,
@@ -51,14 +55,12 @@ export default function SchoolResourceList({
   const status = maps.example.schoolResource.schoolStatus;
   const statusFilterLocked = enableSelector && lockEnabledStatus;
   const pageClass = inDialog ? 'page-school-resource-list in-dialog' : 'page-school-resource-list';
-  const resolvedDefaultPageSize = defaultPageSize ?? (enableSelector ? 10 : 10);
+  const resolvedDefaultPageSize = defaultPageSize ?? 10;
   const pageSizeOptions =
     inDialog && defaultPageSize === 5 ? ['5', '10', '20'] : ['10', '20', '50'];
 
   const [editOpen, setEditOpen] = useState(false);
   const [editRow, setEditRow] = useState<SchoolResourceRow | null>(null);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>(checkedIds);
-  const [selectedRows, setSelectedRows] = useState<SchoolResourceRow[]>([]);
   const [batchEnableLoading, setBatchEnableLoading] = useState(false);
   const [batchDisableLoading, setBatchDisableLoading] = useState(false);
   const [statusSwitchingIds, setStatusSwitchingIds] = useState<Record<string, boolean>>({});
@@ -94,6 +96,15 @@ export default function SchoolResourceList({
     onError: () => onLoadFailed?.(),
   });
 
+  const selector = useRowSelector<SchoolResourceRow>({
+    tableData,
+    lineKey: 'id',
+    isMultiple,
+    initialSelected: checkedRows,
+    onChange: enableSelector ? onChange : undefined,
+  });
+  const { selectRows, chooseRow, clearSelection } = selector;
+
   useEffect(() => {
     if (enableSelector) void search(true);
   }, [enableSelector]);
@@ -110,14 +121,8 @@ export default function SchoolResourceList({
     });
   }
 
-  function clearSelection() {
-    setSelectedKeys([]);
-    setSelectedRows([]);
-    onChange?.(undefined);
-  }
-
   async function toBatchSwitch(nextStatus: number) {
-    const ids = selectedRows.map((row) => row.id);
+    const ids = selectRows.map((row) => row.id);
     if (!ids.length) return;
     const actionLabel = nextStatus === SCHOOL_STATUS_ENABLED ? '启用' : '停用';
     modal.confirm({
@@ -155,124 +160,109 @@ export default function SchoolResourceList({
     }
   }
 
-  const columns: ColumnsType<SchoolResourceRow> = useMemo(
-    () => [
-      {
-        title: '学校名称',
-        dataIndex: 'schoolName',
-        minWidth: 160,
-        className: 'name-slot-cell',
-        render: (_, row) => (
-          <CellNameId
-            id={row.id}
-            name={row.schoolName}
-          />
-        ),
-      },
-      {
-        title: '状态',
-        dataIndex: 'status',
-        width: 100,
-        align: 'center',
-        render: (_, row) => (
-          <CellState
-            modelValue={row.status}
-            activeValue={SCHOOL_STATUS_ENABLED}
-            inactiveValue={SCHOOL_STATUS_DISABLED}
-            activeLabel={status.getLabel(SCHOOL_STATUS_ENABLED)}
-            inactiveLabel={status.getLabel(SCHOOL_STATUS_DISABLED)}
-            switchable={!enableSelector}
-            switching={!!statusSwitchingIds[row.id]}
-            activeTips="确认启用该学校？"
-            inactiveTips="确认停用该学校？"
-            onSwitch={(next) => void switchSchoolStatus(row, next)}
-          />
-        ),
-      },
-      {
-        title: '备注',
-        dataIndex: 'remark',
-        minWidth: 140,
-        ellipsis: true,
-        render: (v) => v || '—',
-      },
-      {
-        title: '创建时间',
-        dataIndex: 'createTime',
-        minWidth: 160,
-        render: (v) => <CellDateTime value={v} />,
-      },
-      {
-        title: (
+  const columns: ColumnsType<SchoolResourceRow> = [
+    createSelectColumn(selector, { multiple: isMultiple }),
+    {
+      title: '学校名称',
+      dataIndex: 'schoolName',
+      minWidth: 160,
+      className: 'name-slot-cell',
+      render: (_, row) => (
+        <CellNameId
+          id={row.id}
+          name={row.schoolName}
+        />
+      ),
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 100,
+      align: 'center',
+      render: (_, row) => (
+        <CellState
+          modelValue={row.status}
+          activeValue={SCHOOL_STATUS_ENABLED}
+          inactiveValue={SCHOOL_STATUS_DISABLED}
+          activeLabel={status.getLabel(SCHOOL_STATUS_ENABLED)}
+          inactiveLabel={status.getLabel(SCHOOL_STATUS_DISABLED)}
+          switchable={!enableSelector}
+          switching={!!statusSwitchingIds[row.id]}
+          activeTips="确认启用该学校？"
+          inactiveTips="确认停用该学校？"
+          onSwitch={(next) => void switchSchoolStatus(row, next)}
+        />
+      ),
+    },
+    {
+      title: '备注',
+      dataIndex: 'remark',
+      minWidth: 140,
+      ellipsis: true,
+      render: (v) => v || '—',
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      minWidth: 160,
+      render: (v) => <CellDateTime value={v} />,
+    },
+    {
+      title: (
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => {
+            setEditRow(null);
+            setEditOpen(true);
+          }}
+        >
+          新建学校
+        </Button>
+      ),
+      key: 'ops',
+      width: 140,
+      fixed: 'right',
+      className: 'ops-column',
+      render: (_, row) => (
+        <div className="line-actions">
           <Button
             type="primary"
+            ghost
             size="small"
-            onClick={() => {
-              setEditRow(null);
+            icon={<EditOutlined />}
+            title="编辑"
+            aria-label="编辑"
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditRow(row);
               setEditOpen(true);
             }}
-          >
-            新建学校
-          </Button>
-        ),
-        key: 'ops',
-        width: 140,
-        fixed: 'right',
-        className: 'ops-column',
-        render: (_, row) => (
-          <div className="line-actions">
-            <Button
-              type="primary"
-              ghost
-              size="small"
-              icon={<EditOutlined />}
-              title="编辑"
-              aria-label="编辑"
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditRow(row);
-                setEditOpen(true);
-              }}
-            />
-            <Button
-              danger
-              ghost
-              size="small"
-              icon={<DeleteOutlined />}
-              title="删除"
-              aria-label="删除"
-              onClick={(e) => {
-                e.stopPropagation();
-                modal.confirm({
-                  title: '提示',
-                  content: `确认删除「${row.schoolName}」？`,
-                  onOk: async () => {
-                    await requestDeleteSchoolResource({ id: row.id });
-                    message.success('删除成功');
-                    void search(false);
-                  },
-                });
-              }}
-            />
-          </div>
-        ),
-      },
-    ],
-    [enableSelector, search, status, statusSwitchingIds],
-  );
-
-  const rowSelection: TableProps<SchoolResourceRow>['rowSelection'] = {
-    type: isMultiple ? 'checkbox' : 'radio',
-    selectedRowKeys: selectedKeys,
-    onChange: (keys, rows) => {
-      setSelectedKeys(keys);
-      setSelectedRows(rows);
-      if (enableSelector) {
-        onChange?.(isMultiple ? rows : rows[0]);
-      }
+          />
+          <Button
+            danger
+            ghost
+            size="small"
+            icon={<DeleteOutlined />}
+            title="删除"
+            aria-label="删除"
+            onClick={(e) => {
+              e.stopPropagation();
+              modal.confirm({
+                title: '提示',
+                content: `确认删除「${row.schoolName}」？`,
+                onOk: async () => {
+                  await requestDeleteSchoolResource({ id: row.id });
+                  message.success('删除成功');
+                  void search(false);
+                },
+              });
+            }}
+          />
+        </div>
+      ),
     },
-    columnWidth: 55,
-  };
+  ];
 
   return (
     <div className={pageClass}>
@@ -331,7 +321,7 @@ export default function SchoolResourceList({
                 color="green"
                 variant="outlined"
                 size="small"
-                disabled={!selectedRows.length}
+                disabled={!selectRows.length}
                 loading={batchEnableLoading}
                 onClick={() => void toBatchSwitch(SCHOOL_STATUS_ENABLED)}
               >
@@ -342,7 +332,7 @@ export default function SchoolResourceList({
                 color="orange"
                 variant="outlined"
                 size="small"
-                disabled={!selectedRows.length}
+                disabled={!selectRows.length}
                 loading={batchDisableLoading}
                 onClick={() => void toBatchSwitch(SCHOOL_STATUS_DISABLED)}
               >
@@ -352,29 +342,16 @@ export default function SchoolResourceList({
           ) : null
         }
         footer={
-          <div className="table-pagination-bar">
-            <Button
-              type="text"
-              size="small"
-              icon={<ReloadOutlined spin={tableLoading} />}
-              aria-label="刷新"
-              title="刷新"
-              onClick={() => void search(false)}
-            />
-            <Pagination
-              current={listFilters.pageNum || 1}
-              pageSize={listFilters.pageSize || resolvedDefaultPageSize}
-              total={tableTotal}
-              showSizeChanger
-              showQuickJumper
-              pageSizeOptions={pageSizeOptions}
-              showTotal={(t) => `共 ${t} 条`}
-              onChange={(page, size) => {
-                if (size !== listFilters.pageSize) void handleSizeChange(size);
-                else void handlePageChange(page);
-              }}
-            />
-          </div>
+          <ListPaginationBar
+            pageNum={listFilters.pageNum || 1}
+            pageSize={listFilters.pageSize || resolvedDefaultPageSize}
+            total={tableTotal}
+            loading={tableLoading}
+            pageSizeOptions={pageSizeOptions}
+            onPageChange={(p) => void handlePageChange(p)}
+            onSizeChange={(size) => void handleSizeChange(size)}
+            onRefresh={() => void search(false)}
+          />
         }
       >
         <Table
@@ -412,26 +389,12 @@ export default function SchoolResourceList({
               '暂无数据'
             ),
           }}
-          rowSelection={rowSelection}
+          rowClassName={(row) =>
+            enableSelector && !isMultiple && selector.isRowSelected(row) ? 'current-row' : ''
+          }
           onRow={(row) => ({
             onClick: () => {
-              if (!enableSelector) return;
-              if (isMultiple) {
-                const exists = selectedKeys.includes(row.id);
-                const nextKeys = exists
-                  ? selectedKeys.filter((k) => k !== row.id)
-                  : [...selectedKeys, row.id];
-                const nextRows = exists
-                  ? selectedRows.filter((r) => r.id !== row.id)
-                  : [...selectedRows, row];
-                setSelectedKeys(nextKeys);
-                setSelectedRows(nextRows);
-                onChange?.(nextRows);
-              } else {
-                setSelectedKeys([row.id]);
-                setSelectedRows([row]);
-                onChange?.(row);
-              }
+              if (enableSelector) chooseRow(row);
             },
           })}
         />
@@ -446,9 +409,3 @@ export default function SchoolResourceList({
     </div>
   );
 }
-
-export type SchoolResourceListHandle = {
-  search: (reset?: boolean) => Promise<void>;
-  setChecked: (ids: string[]) => void;
-  clearSelection: () => void;
-};

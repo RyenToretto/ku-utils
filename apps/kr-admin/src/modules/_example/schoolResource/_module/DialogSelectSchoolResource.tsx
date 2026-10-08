@@ -1,59 +1,64 @@
-import { Button, Drawer, Space } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Drawer } from 'antd';
+import { useEffect, useState } from 'react';
 
-import SchoolResourceList, { type SchoolResourceListProps } from './SchoolResourceList';
+import SchoolResourceList from './SchoolResourceList';
 
 import type { SchoolResourceRow } from '@/modules/_example/schoolResource/_api';
 
 export type DialogSelectSchoolResourceProps = {
+  open: boolean;
   isMultiple?: boolean;
   lockEnabledStatus?: boolean;
-  onChange?: (value: SchoolResourceRow | SchoolResourceRow[] | undefined) => void;
+  /** 打开时回显的已选行 */
+  checkedRows?: SchoolResourceRow[];
+  defaultPageSize?: number;
+  onCancel: () => void;
+  onConfirm: (value: SchoolResourceRow | SchoolResourceRow[] | undefined) => void;
 };
 
-export type DialogSelectSchoolResourceHandle = {
-  show: (checkedIds?: string[]) => void;
-};
-
+/** 学校选择抽屉，对齐 kv3 `DialogSelectSchoolResource.vue` */
 export default function DialogSelectSchoolResource({
+  open,
   isMultiple = false,
-  lockEnabledStatus = false,
-  onChange,
+  lockEnabledStatus = true,
+  checkedRows = [],
+  defaultPageSize,
+  onCancel,
+  onConfirm,
 }: DialogSelectSchoolResourceProps) {
-  const [open, setOpen] = useState(false);
-  const [checkedIds, setCheckedIds] = useState<string[]>([]);
-  const pending = useRef<SchoolResourceRow | SchoolResourceRow[] | undefined>(undefined);
+  const [picked, setPicked] = useState<SchoolResourceRow[]>([]);
+  const pageSize = defaultPageSize ?? (isMultiple ? 5 : 10);
 
-  function show(ids: string[] = []) {
-    setCheckedIds(ids);
-    pending.current = undefined;
-    setOpen(true);
+  useEffect(() => {
+    if (open) setPicked(checkedRows);
+    // 仅在打开瞬间快照已选，抽屉内的勾选不回写外部
+  }, [open]);
+
+  function confirm() {
+    onConfirm(isMultiple ? picked : picked[0]);
   }
-
-  // expose via window for selector pattern simplicity
-  (DialogSelectSchoolResource as unknown as { show?: typeof show }).show = show;
 
   return (
     <Drawer
-      title={isMultiple ? '选择学校（多选）' : '选择学校'}
+      title="选择学校"
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={onCancel}
       width={960}
+      maskClosable={false}
+      keyboard={false}
       destroyOnHidden
       className="drawer-model-selector"
       footer={
-        <Space style={{ float: 'right' }}>
-          <Button onClick={() => setOpen(false)}>取消</Button>
+        <div className="do-drawer__foot_btn">
+          {isMultiple ? <span className="selected-count">已选 {picked.length} 所</span> : null}
+          <Button onClick={onCancel}>取 消</Button>
           <Button
             type="primary"
-            onClick={() => {
-              onChange?.(pending.current);
-              setOpen(false);
-            }}
+            onClick={confirm}
           >
-            确定
+            确 定
           </Button>
-        </Space>
+        </div>
       }
     >
       <div className="do-drawer__view">
@@ -61,37 +66,15 @@ export default function DialogSelectSchoolResource({
           enableSelector
           inDialog
           isMultiple={isMultiple}
-          checkedIds={checkedIds}
+          checkedRows={checkedRows}
           lockEnabledStatus={lockEnabledStatus}
-          onChange={(row) => {
-            pending.current = row;
+          defaultPageSize={pageSize}
+          onChange={(value) => {
+            const list = Array.isArray(value) ? value : value ? [value] : [];
+            setPicked(isMultiple ? list : list.slice(0, 1));
           }}
         />
       </div>
     </Drawer>
   );
-}
-
-export function useDialogSelectSchoolResource() {
-  const [open, setOpen] = useState(false);
-  const [checkedIds, setCheckedIds] = useState<string[]>([]);
-  const [pending, setPending] = useState<SchoolResourceRow | SchoolResourceRow[] | undefined>();
-  const [props, setProps] = useState<
-    Pick<SchoolResourceListProps, 'isMultiple' | 'lockEnabledStatus'>
-  >({});
-
-  return {
-    open,
-    checkedIds,
-    pending,
-    props,
-    show(ids: string[] = [], nextProps: typeof props = {}) {
-      setCheckedIds(ids);
-      setPending(undefined);
-      setProps(nextProps);
-      setOpen(true);
-    },
-    setOpen,
-    setPending,
-  };
 }
