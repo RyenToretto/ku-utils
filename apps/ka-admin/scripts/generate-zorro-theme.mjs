@@ -78,6 +78,8 @@ const MODIFY_VARS = {
   'drawer-title-line-height': '24px',
   'drawer-footer-padding-vertical': '8px',
   'drawer-footer-padding-horizontal': '16px',
+  // antd v5 Tag：borderRadiusSM
+  'tag-border-radius': '@border-radius-sm',
 }
 
 const { css: source } = await less.render(readFileSync(entry, 'utf-8'), {
@@ -200,6 +202,8 @@ const KEEP_LITERAL_SELECTOR = /ant-switch-handle|-dark\b/
 /** 按选择器定点覆写：通用映射表表达不了的语义色 */
 const SELECTOR_OVERRIDES = [
   { selector: /^\.ant-switch$/, prop: 'background-color', value: mix('var(--ku-text-primary)', 25) },
+  // antd v5 Tag defaultBg = colorFillQuaternary 叠在卡片底上（不是表头色）
+  { selector: /^\.ant-tag$/, prop: 'background', value: mix('var(--ku-text-primary)', 3, 'var(--ku-bg-card)') },
 ]
 
 let replaced = 0
