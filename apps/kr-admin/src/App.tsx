@@ -49,6 +49,8 @@ export default function App() {
     <ConfigProvider
       locale={zhCN}
       button={{ autoInsertSpace: false }}
+      modal={{ centered: true }}
+      form={{ colon: false }}
       theme={antdTheme}
     >
       <AntdApp component={false}>

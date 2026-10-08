@@ -107,6 +107,11 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         titleFontSize: 18,
         titleLineHeight: 24 / 18,
       },
+      // 对齐 kv3 el-form：项间距 18、标签次级色
+      Form: {
+        itemMarginBottom: 18,
+        labelColor: ku['text-secondary'],
+      },
       // 对齐 kv3 el-alert：无边框、16px 内边距、标题行高 24
       Alert: {
         defaultPadding: '8px 16px',

@@ -75,6 +75,10 @@
 
   .ant-modal-footer {
     margin-top: 16px;
+
+    > .ant-btn + .ant-btn {
+      margin-inline-start: 12px;
+    }
   }
 }
 

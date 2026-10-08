@@ -232,24 +232,23 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* ─── 全局响应式约束 ─────────────────────────────────────────── */
 
-/* 弹窗不超出视口；垂直居中走 ElConfigProvider dialog.alignCenter（勿再写死 margin-top） */
-.el-overlay-dialog .el-dialog {
-  display: flex;
-  flex-direction: column;
+/* 弹窗不超出视口；垂直居中走 ConfigProvider modal.centered（勿再写死 top） */
+.ant-modal {
   max-width: calc(100vw - 32px);
-  max-height: calc(100vh - 32px);
-}
 
-.el-overlay-dialog .el-dialog.is-align-center {
-  margin: auto;
-}
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 32px);
+  }
 
-.el-overlay-dialog .el-dialog__body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  .ant-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 
 /* Drawer 内点选/列表：配合 useDrawerPickListMaxHeight（禁止写死 max-height px） */
