@@ -61,6 +61,8 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
       borderRadius: 8,
       borderRadiusLG: 8,
       borderRadiusSM: 4,
+      // el 控件聚焦只描边、按钮无投影：antd 的聚焦光晕与按钮 2px 底影都取这个宽度
+      controlOutlineWidth: 0,
     },
     components: {
       // el-button：默认态文字 --el-text-color-regular、字重 500；small 12px / 11 内距 / 7 圆角
