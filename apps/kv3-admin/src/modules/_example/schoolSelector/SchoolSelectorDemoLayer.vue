@@ -143,7 +143,7 @@ function onDialogSuccess(payload: {
 
 .page-example-school-selector-demo-card {
   padding: 16px;
-  background: var(--ku-bg-elevated, #fff);
+  background: var(--ku-bg-card, #f7f3eb);
   border-radius: 8px;
 }
 

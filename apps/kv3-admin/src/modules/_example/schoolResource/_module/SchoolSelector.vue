@@ -299,8 +299,8 @@ onBeforeUnmount(() => {
   gap: 6px;
   box-sizing: border-box;
   padding: 8px 10px;
-  background: var(--ku-bg-elevated, #fff);
-  border: 1px solid var(--ku-border-color, #e4e7ed);
+  background: var(--ku-bg-card-elevated, #fcf8f2);
+  border: 1px solid var(--ku-border-light, #ddd4c6);
   border-radius: 6px;
   box-shadow: var(--ku-box-shadow-light, 0 2px 12px rgba(0, 0, 0, 0.08));
 }
