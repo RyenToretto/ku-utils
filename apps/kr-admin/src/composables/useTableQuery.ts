@@ -73,6 +73,8 @@ export function useTableQuery<
         }
         if (transformQuery) query = transformQuery(query);
         const res = await fetcher(query, ac.signal, { silent });
+        // fetcher 未透传 signal 时旧请求仍会返回，丢弃以免覆盖新结果
+        if (ac.signal.aborted) return;
         const data =
           (res as { data?: { lists?: TRow[]; total?: number } }).data ??
           (res as { lists?: TRow[]; total?: number });
@@ -82,6 +84,7 @@ export function useTableQuery<
         onLoaded?.();
       } catch (err) {
         if (
+          ac.signal.aborted ||
           (err as { name?: string })?.name === 'CanceledError' ||
           (err as { code?: string })?.code === 'ERR_CANCELED'
         ) {
@@ -94,7 +97,7 @@ export function useTableQuery<
           onError?.();
         }
       } finally {
-        if (!silent) setTableLoading(false);
+        if (abortRef.current === ac) setTableLoading(false);
       }
     },
     [enablePagination, fetcher, transformQuery, onLoaded, onError],
