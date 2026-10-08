@@ -5,6 +5,12 @@
     white-space: nowrap;
   }
 
+  // el-table .cell 行高 23px
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    line-height: 23px;
+  }
+
   // 隔行变色（对齐 kv3 el-table stripe）；`of` 选择器跳过 antd 的 measure-row
   .ant-table-tbody > tr.ant-table-row:nth-child(even of .ant-table-row) > td {
     background: var(--ku-table-stripe-bg);
