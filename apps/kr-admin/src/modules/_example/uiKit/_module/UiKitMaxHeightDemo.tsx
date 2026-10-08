@@ -152,18 +152,8 @@ export default function UiKitMaxHeightDemo() {
       className: 'ops-column',
       render: () => (
         <div className="line-actions">
-          <Button
-            size="small"
-            ghost
-          >
-            编辑
-          </Button>
-          <Button
-            size="small"
-            ghost
-          >
-            复制
-          </Button>
+          <Button size="small">编辑</Button>
+          <Button size="small">复制</Button>
           <Button
             type="primary"
             size="small"
@@ -282,7 +272,6 @@ export default function UiKitMaxHeightDemo() {
             loading={tableLoading}
             onPageChange={(p) => void handlePageChange(p)}
             onSizeChange={(s) => void handleSizeChange(s)}
-            onRefresh={() => void search(false)}
           />
         }
       >
