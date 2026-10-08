@@ -71,6 +71,7 @@ export default function SchoolResourceList({
     tableLoadFailed,
     search,
     reset,
+    patchRow,
     handlePageChange,
     handleSizeChange,
   } = useTableQuery<SchoolResourceRow, { schoolName: string; status: number | '' }>({
@@ -142,9 +143,8 @@ export default function SchoolResourceList({
     setStatusSwitchingIds((prev) => ({ ...prev, [key]: true }));
     try {
       await requestBatchSwitchSchoolResource([row.id], Number(nextStatus));
-      row.status = Number(nextStatus);
+      patchRow((item) => item.id === row.id, { status: Number(nextStatus) });
       message.success(Number(nextStatus) === SCHOOL_STATUS_ENABLED ? '已启用' : '已停用');
-      void search(false);
     } finally {
       setStatusSwitchingIds((prev) => {
         const next = { ...prev };

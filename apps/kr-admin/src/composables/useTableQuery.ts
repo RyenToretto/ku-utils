@@ -118,6 +118,11 @@ export function useTableQuery<
     [defaultFilters, search],
   );
 
+  /** 行内操作（开关等）成功后只改本行，不重拉列表，避免翻页/滚动位置丢失 */
+  const patchRow = useCallback((match: (row: TRow) => boolean, patch: Partial<TRow>) => {
+    setTableData((prev) => prev.map((row) => (match(row) ? { ...row, ...patch } : row)));
+  }, []);
+
   const handlePageChange = useCallback(
     (page: number) => {
       setPageNum(page);
@@ -164,6 +169,7 @@ export function useTableQuery<
     setPageSize,
     search,
     reset,
+    patchRow,
     handlePageChange,
     handleSizeChange,
     onPageChange(page: number, size: number) {

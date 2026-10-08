@@ -79,6 +79,7 @@ export default function SimpleExampleList({
     tableLoadFailed,
     search,
     reset,
+    patchRow,
     handlePageChange,
     handleSizeChange,
   } = useTableQuery<
@@ -114,9 +115,8 @@ export default function SimpleExampleList({
     setStatusSwitchingIds((prev) => ({ ...prev, [key]: true }));
     try {
       await requestBatchSimpleExample([row.id], Number(nextStatus));
-      row.status = Number(nextStatus);
+      patchRow((item) => item.id === row.id, { status: Number(nextStatus) });
       message.success(Number(nextStatus) === 1 ? '已启用' : '已停用');
-      void search(false);
     } finally {
       setStatusSwitchingIds((prev) => {
         const next = { ...prev };

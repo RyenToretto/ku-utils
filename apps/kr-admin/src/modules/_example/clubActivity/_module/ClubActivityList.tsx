@@ -43,6 +43,7 @@ export default function ClubActivityList() {
     tableLoading,
     search,
     reset,
+    patchRow,
     handlePageChange,
     handleSizeChange,
   } = useTableQuery<ClubActivityRow, { clubName: string; status: number | '' }>({
@@ -88,9 +89,8 @@ export default function ClubActivityList() {
     setStatusSwitchingIds((prev) => ({ ...prev, [key]: true }));
     try {
       await requestBatchSwitchClubActivity([row.id], Number(nextStatus));
-      row.status = Number(nextStatus);
+      patchRow((item) => item.id === row.id, { status: Number(nextStatus) });
       message.success(Number(nextStatus) === CLUB_STATUS_ENABLED ? '已启用' : '已停用');
-      void search(false);
     } finally {
       setStatusSwitchingIds((prev) => {
         const next = { ...prev };
