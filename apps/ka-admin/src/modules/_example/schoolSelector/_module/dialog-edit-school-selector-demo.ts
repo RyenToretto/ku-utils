@@ -8,12 +8,7 @@ import {
   output,
   untracked,
 } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  type AbstractControl,
-  type ValidationErrors,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -21,7 +16,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { SchoolSelector } from '@/modules/_example/schoolResource/_module/school-selector';
 import type { SchoolSelectorValue } from '@/modules/_example/schoolResource/_module/types';
-import { notBlank } from '@/utils/validators';
+import { notBlank, requiredPick } from '@/utils/validators';
 
 export type SchoolSelectorDemoForm = {
   id: string;
@@ -29,10 +24,6 @@ export type SchoolSelectorDemoForm = {
   schoolSingle: SchoolSelectorValue | null;
   schoolMulti: SchoolSelectorValue[];
 };
-
-function requiredPick(control: AbstractControl): ValidationErrors | null {
-  return control.value ? null : { required: true };
-}
 
 @Component({
   selector: 'ka-dialog-edit-school-selector-demo',

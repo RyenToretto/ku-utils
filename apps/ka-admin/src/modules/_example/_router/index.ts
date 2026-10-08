@@ -2,6 +2,8 @@ import type { Routes } from '@angular/router';
 
 import { firstLeafPath } from '@/layouts/side-menu/side-menu-tree';
 import { EXAMPLE_MODULE } from '@/maps/common/dsp-permission';
+import clazzManage from '@/modules/_example/clazzManage/_router';
+import clubActivity from '@/modules/_example/clubActivity/_router';
 import { EXAMPLE_MENUS } from '@/modules/_example/menus';
 import schoolResource from '@/modules/_example/schoolResource/_router';
 import schoolSelector from '@/modules/_example/schoolSelector/_router';
@@ -26,6 +28,8 @@ const exampleRoutes: Routes = [
       ...simpleExample,
       ...schoolResource,
       ...schoolSelector,
+      ...clazzManage,
+      ...clubActivity,
     ],
   },
 ];

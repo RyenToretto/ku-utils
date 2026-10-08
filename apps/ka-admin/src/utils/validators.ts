@@ -7,3 +7,10 @@ export function notBlank(control: AbstractControl): ValidationErrors | null {
   if (typeof value === 'string' && value.trim() === '') return { required: true };
   return null;
 }
+
+/** 选择器必选：单选非空，多选至少一项（对齐 antd rules `{ type: 'array', required, min: 1 }`） */
+export function requiredPick(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  if (Array.isArray(value) ? value.length : value) return null;
+  return { required: true };
+}
