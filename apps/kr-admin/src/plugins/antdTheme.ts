@@ -57,9 +57,20 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
       colorBgLayout: ku['bg-page-from'],
       colorBgMask: ku['bg-overlay'],
       colorBgSpotlight: ku['bg-tooltip'],
-      borderRadius: 6,
+      // 对齐 skin el-base.css：--el-border-radius-base 8 / small 4
+      borderRadius: 8,
+      borderRadiusLG: 8,
+      borderRadiusSM: 4,
     },
     components: {
+      // el-button 默认态文字为 --el-text-color-regular
+      Button: {
+        defaultColor: ku['text-secondary'],
+      },
+      // el-pager 页码 2px 圆角
+      Pagination: {
+        borderRadius: 2,
+      },
       // 对齐 kv3 el-card：标题常规字重、18/20 内边距、4px 圆角；default / small 同尺寸
       Card: {
         headerHeight: 54,
@@ -84,6 +95,17 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         rowSelectedHoverBg: ku['bg-hover'],
         cellPaddingBlockMD: 8,
         cellPaddingInlineMD: 8,
+      },
+      // 对齐 kv3 el-dialog：卡片底色、modal 阴影、16 内边距、18/24 常规字重标题（头/脚间距见 antd-ku-bridge）
+      Modal: {
+        contentBg: ku['bg-card'],
+        headerBg: ku['bg-card'],
+        boxShadow: ku['shadow-modal'],
+        fontWeightStrong: 400,
+        paddingMD: 16,
+        paddingContentHorizontalLG: 16,
+        titleFontSize: 18,
+        titleLineHeight: 24 / 18,
       },
       // 对齐 kv3 el-alert：无边框、16px 内边距、标题行高 24
       Alert: {

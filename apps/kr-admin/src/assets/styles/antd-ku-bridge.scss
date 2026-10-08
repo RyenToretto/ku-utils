@@ -67,6 +67,17 @@
   }
 }
 
+/* Modal：对齐 kv3 el-dialog 头/脚与正文 16px 间距（antd 对应 token 为内部值） */
+.ant-modal {
+  .ant-modal-header {
+    margin-bottom: 16px;
+  }
+
+  .ant-modal-footer {
+    margin-top: 16px;
+  }
+}
+
 .do-filter-panel {
   box-sizing: border-box;
   width: 100%;
