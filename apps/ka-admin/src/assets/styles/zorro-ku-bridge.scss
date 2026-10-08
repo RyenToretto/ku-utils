@@ -75,7 +75,7 @@
   border-color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
 
   &:not([disabled]):hover,
-  &:not([disabled]):focus {
+  &:not([disabled]):focus-visible {
     color: #fff;
     background: $c;
     border-color: $c;
@@ -160,6 +160,14 @@
     .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
       margin-left: 12px;
     }
+  }
+}
+
+/* 仅图标按钮：ng-zorro（antd v4）默认图标 16px，对齐 kv3 / kr 的 14px（小号保持 less 的 14px） */
+.ant-btn.ant-btn-icon-only:not(.ant-btn-sm):not(.ant-btn-lg) {
+  &,
+  > * {
+    font-size: 14px;
   }
 }
 
@@ -330,6 +338,29 @@
   width: var(--do-input-width, 194px);
 }
 
+/*
+ * loading ≠ disabled：对齐 kr（antd v5）保持类型原色 + .65、不响应悬停，去掉 ng-zorro 的白色遮罩；
+ * spinner 包裹层含 1em + 8px 间距，用负 margin 抵消，出现/消失时按钮宽度不变。
+ */
+.ant-btn.ant-btn-loading {
+  pointer-events: none;
+  opacity: 0.65;
+
+  &::before {
+    display: none;
+  }
+
+  &:not(.ant-btn-icon-only) {
+    > .ant-btn-loading-icon {
+      margin-inline-start: calc(-0.5em - 4px);
+    }
+
+    > .ant-btn-loading-icon + span {
+      margin-inline-end: calc(-0.5em - 4px);
+    }
+  }
+}
+
 .do-filter-ctl {
   box-sizing: border-box;
   display: flex;
@@ -341,16 +372,8 @@
   padding-bottom: 18px;
 
   .ant-btn {
-    position: relative;
     min-width: 76px;
     padding-inline: 24px;
-  }
-
-  /* loading 图标进文档流会把按钮撑宽，改为落在左侧 padding 内 */
-  .ant-btn-loading > .anticon-loading {
-    position: absolute;
-    left: 8px;
-    margin: 0;
   }
 }
 

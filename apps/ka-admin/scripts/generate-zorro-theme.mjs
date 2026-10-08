@@ -209,13 +209,34 @@ const SELECTOR_OVERRIDES = [
   { selector: /^\.ant-switch$/, prop: 'background-color', value: mix('var(--ku-text-primary)', 25) },
   // antd v5 Tag defaultBg = colorFillQuaternary 叠在卡片底上（不是表头色）
   { selector: /^\.ant-tag$/, prop: 'background', value: mix('var(--ku-text-primary)', 3, 'var(--ku-bg-card)') },
+  // 实心主按钮字色：暗色下主色变浅，需随 skin 切深字（kv3 / kr 同读 --ku-text-on-primary）
+  { selector: /\.ant-btn-primary/, prop: 'color', literal: '#fff', value: 'var(--ku-text-on-primary)' },
 ]
 
 let replaced = 0
+let focusRewritten = 0
+
+/** antd v4 less 让按钮 :focus 与 hover 同色，鼠标点完会一直停在 hover 色；对齐 antd v5 / Element Plus 只认键盘聚焦 */
+const FOCUS_PSEUDO = /:focus(?![-\w])/g
+
+function rewriteButtonFocus(selector) {
+  return selector
+    .split(',')
+    .map((part) => {
+      if (!part.includes('.ant-btn')) return part
+      return part.replace(FOCUS_PSEUDO, () => {
+        focusRewritten += 1
+        return ':focus-visible'
+      })
+    })
+    .join(',')
+}
 
 function rewriteDeclaration(selector, prop, value) {
   if (KEEP_LITERAL_SELECTOR.test(selector)) return value
-  const override = SELECTOR_OVERRIDES.find((o) => o.prop === prop && o.selector.test(selector))
+  const override = SELECTOR_OVERRIDES.find(
+    (o) => o.prop === prop && o.selector.test(selector) && (!o.literal || norm(value) === o.literal),
+  )
   if (override) {
     replaced += 1
     return override.value
@@ -246,7 +267,7 @@ css = css.replace(/([^{}]+)\{([^{}]*)\}/g, (_rule, rawSelector, body) => {
     if (prop.startsWith('--ant-')) return whole
     return `${lead}${prop}: ${rewriteDeclaration(selector, prop, value)}`
   })
-  return `${rawSelector}{${nextBody}}`
+  return `${rewriteButtonFocus(rawSelector)}{${nextBody}}`
 })
 
 const header =
@@ -254,4 +275,6 @@ const header =
 
 mkdirSync(dirname(OUT_FILE), { recursive: true })
 writeFileSync(OUT_FILE, header + css, 'utf-8')
-console.log(`[generate-zorro-theme] → ${OUT_FILE}（替换 ${replaced} 处中性色）`)
+console.log(
+  `[generate-zorro-theme] → ${OUT_FILE}（替换 ${replaced} 处中性色，按钮 :focus → :focus-visible ${focusRewritten} 处）`,
+)

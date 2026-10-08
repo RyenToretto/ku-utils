@@ -68,7 +68,6 @@ const PANEL_GAP = 18;
             nz-button
             nzType="primary"
             [nzLoading]="loading()"
-            [disabled]="loading()"
             (click)="onSearchClick()"
           >
             {{ mainText() }}
