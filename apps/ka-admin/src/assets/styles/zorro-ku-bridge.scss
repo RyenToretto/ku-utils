@@ -198,6 +198,19 @@
   padding-bottom: 0;
 }
 
+/* Breadcrumb / Typography secondary：antd v5 走 colorTextDescription（= text-placeholder），less 为 text-secondary */
+.ant-breadcrumb,
+.ant-breadcrumb a,
+.ant-breadcrumb-separator,
+.ant-typography.ant-typography-secondary {
+  color: var(--ku-text-placeholder);
+}
+
+/* nz 模板在分隔符文本两侧留了空白（渲染为「 / 」）；flex 化后首尾空白不成项 */
+.ant-breadcrumb-separator {
+  display: inline-flex;
+}
+
 /* Table：el-table 正文次级色、表头 600 */
 .ant-table {
   color: var(--ku-text-secondary);
