@@ -1,4 +1,4 @@
-import { Button, Card, Space, Typography } from 'antd';
+import { Button, Card } from 'antd';
 import { useMemo, useState } from 'react';
 
 import ScheduleTimeWeekPicker from '@/components/ScheduleTimeWeekPicker';
@@ -39,16 +39,13 @@ export default function UiKitScheduleWeekDemo() {
       <Card
         size="small"
         className="ui-kit-demo-card"
-        title="投放时段周网格"
       >
+        <h3>投放时段周网格</h3>
         <ScheduleTimeWeekPicker
           value={bitmap}
           onChange={setBitmap}
         />
-        <Space
-          className="ui-kit-demo-actions"
-          wrap
-        >
+        <div className="ui-kit-demo-actions">
           <Button onClick={clearBitmap}>清空</Button>
           <Button
             type="primary"
@@ -56,19 +53,9 @@ export default function UiKitScheduleWeekDemo() {
           >
             工作日上午预设
           </Button>
-        </Space>
-        <Typography.Paragraph
-          type="secondary"
-          className="ui-kit-demo-hint"
-        >
-          位图长度：{bitmap.length}
-        </Typography.Paragraph>
-        <Typography.Paragraph
-          type="secondary"
-          className="ui-kit-demo-hint ui-kit-demo-mono"
-        >
-          {bitmapPreview}
-        </Typography.Paragraph>
+        </div>
+        <p className="ui-kit-demo-hint">位图长度：{bitmap.length}</p>
+        <p className="ui-kit-demo-hint ui-kit-demo-mono">{bitmapPreview}</p>
       </Card>
     </div>
   );

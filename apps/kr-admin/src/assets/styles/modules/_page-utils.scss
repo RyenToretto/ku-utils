@@ -1422,18 +1422,12 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .page-ui-kit-schedule-week {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
+  /* kv3：gap 8 + el-button 相邻 margin-left 12 */
   .ui-kit-demo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
     margin-top: 12px;
-  }
-
-  .ui-kit-demo-hint {
-    margin: 8px 0 0;
-    font-size: 12px;
   }
 
   .ui-kit-demo-mono {
