@@ -75,10 +75,10 @@ const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConf
 
 <style lang="scss" scoped>
 .roi-high {
-  color: #67c23a;
+  color: var(--ku-color-success);
   font-weight: 600;
 }
 .roi-normal {
-  color: #606266;
+  color: var(--ku-text-secondary);
 }
 </style>
