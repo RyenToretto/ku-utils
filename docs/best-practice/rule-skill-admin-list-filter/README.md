@@ -50,7 +50,7 @@
 2. **disabled** 对齐 kv3（Element Plus）：实心 `light-5`；plain `light-5 / 9 / 8`；禁写死色值。
 3. **图标显隐不改宽**：loading spinner、条件图标出现 / 消失（含进出场动画）时宽高不变。全局样式用负 margin 抵消图标占位（图标 1em + 间距）；禁止组件内 `position: absolute` 局部 hack 或 `min-width` 兜宽。
 4. 仅图标按钮图标 14px；聚焦态只认键盘 `:focus-visible`，鼠标点击后不残留悬停色。
-5. 验收：逐帧采样按钮宽度（loading 前、中、后），四端一致。
+5. 验收：逐帧采样按钮宽度（loading 前、中、后），四端一致；loading 结束后 spinner 必须移除（禁止为防跳宽把框架的进出场过渡全部关掉，动画库可能靠 `transitionend` 收尾）。
 
 ### Cell
 
