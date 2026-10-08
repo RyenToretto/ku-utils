@@ -228,8 +228,8 @@ export default function SchoolResourceList({
       render: (_, row) => (
         <div className="line-actions">
           <Button
-            type="primary"
-            ghost
+            color="primary"
+            variant="outlined"
             size="small"
             icon={<EditOutlined />}
             title="编辑"
@@ -241,8 +241,8 @@ export default function SchoolResourceList({
             }}
           />
           <Button
-            danger
-            ghost
+            color="danger"
+            variant="outlined"
             size="small"
             icon={<DeleteOutlined />}
             title="删除"
@@ -379,8 +379,8 @@ export default function SchoolResourceList({
                 description="列表加载失败"
               >
                 <Button
-                  type="primary"
-                  ghost
+                  color="primary"
+                  variant="outlined"
                   size="small"
                   onClick={() => void search(false)}
                 >

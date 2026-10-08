@@ -54,9 +54,10 @@ src/modules/<域>/<子业务>/
 2. **disabled** 对齐 kv3（Element Plus）：实心 `light-5`，plain `light-5 / 9 / 8`，读 `--ku-*`，禁写死色值
 3. **图标显隐不改宽**：loading spinner、条件图标出现 / 消失时按钮宽高不变，进出场动画期间也不变。由全局样式用负 margin 抵消图标占位（图标 1em + 间距）；**禁止**组件内 `position: absolute` 局部 hack、禁止用 `min-width` 兜宽
 4. 仅图标按钮图标 14px；行内仅图标小按钮 24×24，带文字的按钮宽度自适应
-5. 聚焦态只认键盘 `:focus-visible`，鼠标点击后不得残留悬停色
-6. 新增 / 改按钮形态后，在四端逐帧采样按钮宽度（loading 前、中、后）验收
-7. 本端落点：`assets/styles/antd-ku-bridge.scss`。antd v5 对 `.ant-btn-loading-icon` 做 width / margin / scale 进出场动画，且退场时 `.ant-btn-loading` 已先移除，所以规则只挂图标包裹层本身并用 `!important` 钉死动画，抵消 `0.5em + 4px`
+5. el plain 一律 `color` + `variant="outlined"`（删除用 `color="danger"`），**禁止** `ghost`（透明底，与 kv3 plain 不一致）；配色读 skin 色阶 `--ku-color-{family}-light-9 / 5 / 8`，禁 `color-mix` 近似
+6. 聚焦态只认键盘 `:focus-visible`，鼠标点击后不得残留悬停色
+7. 新增 / 改按钮形态后，在四端逐帧采样按钮宽度（loading 前、中、后）验收
+8. 本端落点：`assets/styles/antd-ku-bridge.scss`。antd v5 对 `.ant-btn-loading-icon` 做 width / margin / scale 进出场动画，且退场时 `.ant-btn-loading` 已先移除，所以规则只挂图标包裹层本身并用 `!important` 钉死动画，抵消 `0.5em + 4px`
 
 ## Demo 模块索引
 

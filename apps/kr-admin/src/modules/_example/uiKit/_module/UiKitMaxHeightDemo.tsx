@@ -156,9 +156,9 @@ export default function UiKitMaxHeightDemo() {
           <Button size="small">编辑</Button>
           <Button size="small">复制</Button>
           <Button
-            type="primary"
+            color="primary"
+            variant="outlined"
             size="small"
-            ghost
           >
             立即使用
           </Button>

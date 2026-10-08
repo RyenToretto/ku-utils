@@ -178,8 +178,8 @@ export default function ClubActivityList() {
       render: (_, row) => (
         <div className="line-actions">
           <Button
-            type="primary"
-            ghost
+            color="primary"
+            variant="outlined"
             size="small"
             icon={<EditOutlined />}
             title="编辑"
@@ -191,8 +191,8 @@ export default function ClubActivityList() {
             }}
           />
           <Button
-            danger
-            ghost
+            color="danger"
+            variant="outlined"
             size="small"
             icon={<DeleteOutlined />}
             title="删除"
