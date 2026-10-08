@@ -14,6 +14,7 @@ import TrendHeader from './headers/TrendHeader';
 
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { DEMO_CUSTOM_COLUMN_MESSAGES } from '@/modules/_example/customColumns/_utils/demoSchemas';
 import {
   useCustomColumnsDemoData,
@@ -116,6 +117,8 @@ export default function HeaderSlots() {
     }),
   ];
 
+  const flexColumns = useFlexColumns(columns, '.page-header-slots');
+
   return (
     <SchemaColumnConfigContext.Provider value={config}>
       <div className="page-header-slots">
@@ -129,7 +132,7 @@ export default function HeaderSlots() {
             size="middle"
             rowKey="id"
             loading={tableLoading}
-            columns={columns}
+            columns={flexColumns}
             dataSource={tableData}
             pagination={false}
             scroll={{ x: true, y: maxHeight }}

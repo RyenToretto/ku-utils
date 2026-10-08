@@ -12,6 +12,7 @@ import DoFilterPanel from '@/components/DoFilterPanel';
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
 import {
@@ -256,6 +257,8 @@ export default function SimpleExampleList({
       </>
     ) : null;
 
+  const flexColumns = useFlexColumns(columns, '.page-simple-example-list');
+
   return (
     <div
       className={['page-simple-example-list', fillViewportLayout ? 'fill-viewport' : '']
@@ -388,7 +391,7 @@ export default function SimpleExampleList({
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
-          columns={columns}
+          columns={flexColumns}
           pagination={false}
           size="middle"
           scroll={{ y: maxHeight }}

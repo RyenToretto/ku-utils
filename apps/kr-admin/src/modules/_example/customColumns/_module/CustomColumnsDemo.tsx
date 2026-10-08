@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react';
 
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import {
   BASIC_COLUMN_SCHEMAS,
   DEMO_CUSTOM_COLUMN_MESSAGES,
@@ -82,7 +83,7 @@ export default function CustomColumnsDemo({
     formatCell: config.formatSchemaCell,
   });
 
-  const columns: ColumnsType<DemoRow> = [
+  const baseColumns: ColumnsType<DemoRow> = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -109,6 +110,7 @@ export default function CustomColumnsDemo({
         ]
       : []),
   ];
+  const columns = useFlexColumns(baseColumns, `.${pageClass}`);
 
   return (
     <SchemaColumnConfigContext.Provider value={config}>

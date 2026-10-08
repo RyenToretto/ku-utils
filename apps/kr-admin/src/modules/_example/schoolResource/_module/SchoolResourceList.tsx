@@ -13,6 +13,7 @@ import { createSelectColumn } from '@/components/DoSelectCell';
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { useRowSelector } from '@/composables/useRowSelector';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
@@ -109,10 +110,10 @@ export default function SchoolResourceList({
     if (enableSelector) void search(true);
   }, [enableSelector]);
 
-  const maxHeight = useAdminTableMaxHeight(
-    inDialog ? '.page-school-resource-list.in-dialog' : '.page-school-resource-list',
-    inDialog ? 360 : 400,
-  );
+  const pageSelector = inDialog
+    ? '.page-school-resource-list.in-dialog'
+    : '.page-school-resource-list';
+  const maxHeight = useAdminTableMaxHeight(pageSelector, inDialog ? 360 : 400);
 
   function handleReset() {
     void reset({
@@ -264,6 +265,8 @@ export default function SchoolResourceList({
     },
   ];
 
+  const flexColumns = useFlexColumns(columns, pageSelector);
+
   return (
     <div className={pageClass}>
       <DoFilterPanel
@@ -365,7 +368,7 @@ export default function SchoolResourceList({
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
-          columns={columns}
+          columns={flexColumns}
           pagination={false}
           size="middle"
           scroll={{ y: maxHeight }}

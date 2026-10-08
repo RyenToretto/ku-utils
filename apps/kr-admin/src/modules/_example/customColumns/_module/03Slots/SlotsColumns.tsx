@@ -11,6 +11,7 @@ import { useMemo } from 'react';
 
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import {
   BASIC_COLUMN_SCHEMAS,
   DEMO_CUSTOM_COLUMN_MESSAGES,
@@ -67,6 +68,8 @@ export default function SlotsColumns() {
     }),
   ];
 
+  const flexColumns = useFlexColumns(columns, '.page-slots-columns');
+
   return (
     <SchemaColumnConfigContext.Provider value={config}>
       <div className="page-slots-columns">
@@ -80,7 +83,7 @@ export default function SlotsColumns() {
             size="middle"
             rowKey="id"
             loading={tableLoading}
-            columns={columns}
+            columns={flexColumns}
             dataSource={tableData}
             pagination={false}
             scroll={{ x: true, y: maxHeight }}

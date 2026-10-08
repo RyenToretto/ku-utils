@@ -7,6 +7,7 @@ import DoFilterPanel from '@/components/DoFilterPanel';
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { useTableQuery } from '@/composables/useTableQuery';
 
 type DemoRow = {
@@ -166,6 +167,8 @@ export default function UiKitMaxHeightDemo() {
     },
   ];
 
+  const flexColumns = useFlexColumns(columns, '.page-ui-kit-max-height');
+
   return (
     <div className="page-ui-kit-max-height">
       <DoFilterPanel
@@ -280,7 +283,7 @@ export default function UiKitMaxHeightDemo() {
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
-          columns={columns}
+          columns={flexColumns}
           pagination={false}
           size="middle"
           scroll={{ x: 1400, y: maxHeight }}

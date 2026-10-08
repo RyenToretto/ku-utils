@@ -12,6 +12,7 @@ import DoTxtSetter from '@/components/DoTxtSetter';
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { useTableQuery } from '@/composables/useTableQuery';
 import { message } from '@/plugins/antdApp';
 
@@ -157,6 +158,8 @@ export default function UiKitPanelDemo() {
     [patchRow],
   );
 
+  const flexColumns = useFlexColumns(columns, '.page-ui-kit-panel');
+
   return (
     <div className="page-ui-kit-panel">
       <DoFilterPanel
@@ -245,7 +248,7 @@ export default function UiKitPanelDemo() {
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
-          columns={columns}
+          columns={flexColumns}
           pagination={false}
           size="middle"
           scroll={{ y: maxHeight }}

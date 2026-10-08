@@ -13,6 +13,7 @@ import { DoSelectBatchBox, createSelectColumn } from '@/components/DoSelectCell'
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useFlexColumns } from '@/composables/useFlexColumns';
 import { useRowSelector } from '@/composables/useRowSelector';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
@@ -214,6 +215,8 @@ export default function ClubActivityList() {
     },
   ];
 
+  const flexColumns = useFlexColumns(columns, '.page-club-activity');
+
   return (
     <div className="page-club-activity">
       <DoFilterPanel
@@ -326,7 +329,7 @@ export default function ClubActivityList() {
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
-          columns={columns}
+          columns={flexColumns}
           pagination={false}
           size="middle"
           scroll={{ y: maxHeight }}
