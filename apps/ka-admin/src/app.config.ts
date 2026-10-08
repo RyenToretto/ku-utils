@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
     { provide: NZ_DATE_LOCALE, useValue: zhCN },
     provideNzIcons(ZORRO_ICONS),
     provideNzConfig({
-      message: { nzTop: 24, nzMaxStack: 5 },
+      message: { nzTop: 8, nzMaxStack: 5 },
       form: { nzNoColon: true },
     }),
     provideAppInitializer(() => inject(AppBootstrap).run()),
