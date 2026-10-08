@@ -25,14 +25,26 @@ export function useFlexColumns<T>(columns: ColumnsType<T>, pageSelector: string)
   useLayoutEffect(() => {
     const contain = document.querySelector(pageSelector);
     if (!contain) return;
+    let body: Element | null = null;
+    const resizeObserver = new ResizeObserver(() => measure());
+    // 表体随 loading / Table key 重建，需跟随新节点
     const measure = () => {
-      const body = contain.querySelector('.ant-table-body, .ant-table-content');
+      const next = contain.querySelector('.ant-table-body, .ant-table-content');
+      if (next !== body) {
+        if (body) resizeObserver.unobserve(body);
+        body = next;
+        if (body) resizeObserver.observe(body);
+      }
       setBodyWidth(body?.clientWidth ?? 0);
     };
-    measure();
-    const resizeObserver = new ResizeObserver(measure);
+    const mutationObserver = new MutationObserver(measure);
+    mutationObserver.observe(contain, { childList: true, subtree: true });
     resizeObserver.observe(contain);
-    return () => resizeObserver.disconnect();
+    measure();
+    return () => {
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [pageSelector]);
 
   return useMemo(() => {
