@@ -34,13 +34,13 @@
 
 ## B. 壳层
 
-| ID  | 项                  | 验收要点                                                                                                                                                  | 状态        |
-| --- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| S01 | BaseHeader          | Logo / Demo Tab / 账户菜单 / 外观                                                                                                                         | ✅          |
-| S02 | DomainModuleShell   | aside 220、主区 padding 20                                                                                                                                | ✅ 度量一致 |
-| S03 | SideMenu            | 展开链、高亮、图标、暗色、四级导航                                                                                                                        | ⭕️          |
-| S04 | 皮肤桥接 / 样式迁移 | `--ku-*` / dark / Ant token / 弹层暗色；`elTable.scss`、`_page-utils.scss` 大量 `.el-*` 选择器在 antd 下失效（斑马纹、行高、筛选区、分页样式与 kv3 有差） | ⭕️          |
-| S05 | Button 文案         | 两字中文不插空（`button.autoInsertSpace`）                                                                                                                | ✅          |
+| ID  | 项                  | 验收要点                                                                                                                                                                                                                                                            | 状态        |
+| --- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| S01 | BaseHeader          | Logo / Demo Tab / 账户菜单 / 外观                                                                                                                                                                                                                                   | ✅          |
+| S02 | DomainModuleShell   | aside 220、主区 padding 20                                                                                                                                                                                                                                          | ✅ 度量一致 |
+| S03 | SideMenu            | 展开链、高亮、图标、暗色、四级导航                                                                                                                                                                                                                                  | ⭕️          |
+| S04 | 皮肤桥接 / 样式迁移 | `--ku-*` / dark / Ant token / 弹层暗色；`elTable.scss`、`_page-utils.scss` 大量 `.el-*` 选择器在 antd 下失效（斑马纹、行高、筛选区、分页样式与 kv3 有差）；表格/筛选区已迁，余 antd 全局 token（文字色/卡片/边框）、elInput/elPagination/elRadio/app-shell 失效样式 | ⚠️          |
+| S05 | Button 文案         | 两字中文不插空（`button.autoInsertSpace`）                                                                                                                                                                                                                          | ✅          |
 
 ## C. 叶子页场景清单
 
@@ -63,27 +63,27 @@
 
 ### C1 示例管理（6）
 
-| ID  | 路径                            | 已过                                      | 状态      |
-| --- | ------------------------------- | ----------------------------------------- | --------- |
-| L01 | `/example/simple/list`          | s1–s5 s7–s10 s12                          | ⚠️ 余 s11 |
-| L02 | `/example/simple/batch-select`  | s1–s6 s12（独立组件，对齐 kv3）           | ⚠️ 余 s11 |
-| L03 | `/example/school/list`          | s1–s10 s12                                | ⚠️ 余 s11 |
-| L04 | `/example/school-selector/demo` | 单/多选、折叠、悬浮删除、表单校验回填 s12 | ⚠️ 余 s11 |
-| L05 | `/example/clazz/list`           | s1 s7 s8 s9 s10 s12                       | ⚠️ 余 s11 |
-| L06 | `/example/club/list`            | s1 s6–s10 s12                             | ⚠️ 余 s11 |
+| ID  | 路径                            | 已过                                      | 状态 |
+| --- | ------------------------------- | ----------------------------------------- | ---- |
+| L01 | `/example/simple/list`          | s1–s5 s7–s10 s12                          | ✅   |
+| L02 | `/example/simple/batch-select`  | s1–s6 s12（独立组件，对齐 kv3）           | ✅   |
+| L03 | `/example/school/list`          | s1–s10 s12                                | ✅   |
+| L04 | `/example/school-selector/demo` | 单/多选、折叠、悬浮删除、表单校验回填 s12 | ✅   |
+| L05 | `/example/clazz/list`           | s1 s7 s8 s9 s10 s12                       | ✅   |
+| L06 | `/example/club/list`            | s1 s6–s10 s12                             | ✅   |
 
 ### C2 基础组件（8）
 
-| ID  | 路径                   | 状态 |
-| --- | ---------------------- | ---- |
-| U01 | `ui-kit/panel`         | ⭕️   |
-| U02 | `ui-kit/cells`         | ⭕️   |
-| U03 | `ui-kit/max-height`    | ⭕️   |
-| U04 | `ui-kit/name-pattern`  | ⭕️   |
-| U05 | `ui-kit/selector`      | ⭕️   |
-| U06 | `ui-kit/words-tag`     | ⭕️   |
-| U07 | `ui-kit/preview-video` | ⭕️   |
-| U08 | `ui-kit/schedule-week` | ⭕️   |
+| ID  | 路径                   | 状态                                     |
+| --- | ---------------------- | ---------------------------------------- |
+| U01 | `ui-kit/panel`         | ✅（分页跳转器仅多页显示 ⏭ 控件差异）    |
+| U02 | `ui-kit/cells`         | ⚠️ 余卡片皮肤（待 antd 全局 token 方案） |
+| U03 | `ui-kit/max-height`    | ⭕️                                       |
+| U04 | `ui-kit/name-pattern`  | ⭕️                                       |
+| U05 | `ui-kit/selector`      | ⭕️                                       |
+| U06 | `ui-kit/words-tag`     | ⭕️                                       |
+| U07 | `ui-kit/preview-video` | ⭕️                                       |
+| U08 | `ui-kit/schedule-week` | ⭕️                                       |
 
 ### C3 筛选面板（9）
 
@@ -133,4 +133,11 @@
 | 2026-10-08 | L06 社团勾选             | useRowSelector + 加载后清空                                        | 7407c16                         |
 | 2026-10-08 | C17 查询竞态             | 丢弃旧结果、loading 守卫                                           | 5e273a5                         |
 | 2026-10-08 | s1 空态/失败             | Empty + 重试                                                       | 6a92fa8                         |
+| 2026-10-08 | L01–L06 s11 暗色         | 6 页无浅色残留，弹窗暗底                                           | —                               |
+| 2026-10-08 | 表格 scroll.y 溢出       | 扣除表头与边框，列表页无外层滚动条                                 | 8442da4                         |
+| 2026-10-08 | U01 panel                | CellState 默认尺寸；行内开关/数量原地更新；去刷新                  | 513eb9d 9dcb4ed                 |
+| 2026-10-08 | S04 表格皮肤             | components.Table 走 --ku-*；斑马纹；删 elTable.scss；去 bordered   | ccc60a6                         |
+| 2026-10-08 | S04 筛选面板             | 折叠「更多筛选」、labelWidth、卡片/按钮几何逐像素对齐              | 8a4e8d8                         |
+| 2026-10-08 | DoTxtSetter              | 小号次要色 + 悬停态                                                | b9cad2d                         |
+| 2026-10-08 | 表体常驻滚动条           | antd scroll.y 强制 overflow-y:scroll，⏭ 控件差异                   | —                               |
 | 2026-10-08 | 备注                     | kv2-admin `typecheck` 既有 84 个 TS 错误（与本任务无关，另立任务） | —                               |
