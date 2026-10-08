@@ -24,10 +24,11 @@
 
 - **唯一金标** `@ku-utils/skin`（tome）；禁止 apps 自造第二套色板。
 - kv3：Element Plus 原生消费 `--el-*`（skin 已桥接）。
-- kv2：Element UI chalk 之后加载 `element-ui-bridge.scss`。
+- kv2：`scripts/generate-element-theme.mjs` 把 Element UI chalk 的写死色值按「属性语境 + 字面量」换成 `--el-*` / `--ku-*`（取 Element Plus 组件内实际生效的中性色 / 色阶；未映射字面量即失败），产物 `src/assets/styles/generated/element-ui-ku.css`（gitignore，`prepare:assets` 生成），**禁止再引入** `element-ui/lib/theme-chalk/index.css`；弹层 / 对话框 / 抽屉阴影整值换成 `--el-box-shadow*`；`element-ui-bridge.scss` 只放与 Element Plus 的结构差异（表单项 32px 行高 / 18px 间距、输入与下拉文字起点、箭头 14px、日期范围结构、radio / checkbox / switch 32 高、表格单元格 `8px 0` + `.cell` `0 12px` / 23px、Dialog 根内距 16、MessageBox 内距 12 / 圆角 4 / 默认尺寸按钮、按钮鼠标 `:focus` 回落静止态仅 `:focus-visible` 描边），不写纯换色规则；从 kv3 复制样式 / 模板时必须改成 Element UI 的 DOM / 类名 / prop（`.el-input__inner`、`.el-pager li.active`、无 `--el-border` 等 EP 变量，`show-after` → `open-delay`、`teleported` → `append-to-body`），`pnpm audit:ep`（prebuild 自动跑）兜底，复制后用同态计算样式对比验收——对齐的是 kv3 **实际渲染值**（kv3 部分覆写被 EP 组件样式盖掉，如分页圆角实际 2px、表格 `.cell` 实际 12px）。框架语义差异保留：EP 把 `''` 视为空值显示占位，EU 会选中 `value=""` 的「不限」选项。
 - kr：Ant Design 主题由 `plugins/antdTheme.ts` 读 `@ku-utils/skin/tokens` 明暗色值生成（`ConfigProvider theme`）；`antd-ku-bridge.scss` 只放 token 覆盖不到的结构样式，均读 `--ku-*`。
 - kr：确认框 / 提示一律走 `@/plugins/antdApp`（antd `<App>` 上下文实例），禁止 `Modal.confirm` / `message.xxx` 静态方法——React 19 下不渲染且不跟随暗色；`main.tsx` 引入 `@ant-design/v5-patch-for-react-19`。
-- ka：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式，变量映射到 `--ku-*`，产物 `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；less 表达不了的结构细节进 `zorro-ku-bridge.scss`。
+- ka：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式，变量映射到 `--ku-*`（未映射字面量即失败，预设色板 / 阴影等显式登记保留），产物 `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；less 表达不了的结构细节进 `zorro-ku-bridge.scss`。
+- 皮肤验收四端同口径：明暗 × 悬停（表格行 / radio / 菜单 / 分页 / 按钮）× 弹层（头像菜单 / 下拉 / 日期 / 对话框 / 确认框），无蓝紫色相、无暗色浅底；apps 禁写 `var(--未定义变量, #hex)` 与 Element 默认蓝字面量。
 - ka：确认框统一 `injectConfirm()`，提示用 `NzMessageService`；日期适配 `provideNzDateFnsAdapter`（`NZ_DATE_LOCALE` 已废弃，v23 移除）。
 - ka ↔ kr 固定换算：ng-zorro modal 无 content 级 padding → ka 内距 = kr `bodyStyle` + 16；antd v5 `Paragraph` 是 `div` → ka 用 `<div nz-typography>`；el plain / kr outlined → ka `btn-plain-*`（禁 ghost / `nzGhost`；plain 配色读 skin 色阶 `--ku-color-{family}-light-9 / 5 / 8`，与 kv3 同值）。
 - **禁止**页级 `PageHeader` / title / subtitle（四端一致）。
