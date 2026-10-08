@@ -41,26 +41,26 @@
   .ant-btn + .ant-btn {
     margin-left: 12px;
   }
+}
 
-  /* el-button plain 配色：与卡片底混合 light-9 / light-5 / light-8，明暗通用 */
-  @each $color, $token in (green: success, orange: warning, gold: warning) {
-    .ant-btn-variant-outlined.ant-btn-color-#{$color} {
-      $c: var(--ku-color-#{$token});
+/* el-button plain 配色：与卡片底混合 light-9 / light-5 / light-8，明暗通用 */
+@each $color, $token in (primary: primary, green: success, orange: warning, gold: warning) {
+  .ant-btn-variant-outlined.ant-btn-color-#{$color} {
+    $c: var(--ku-color-#{$token});
 
-      color: $c;
-      background: color-mix(in srgb, #{$c} 10%, var(--ku-bg-card));
-      border-color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
+    color: $c;
+    background: color-mix(in srgb, #{$c} 10%, var(--ku-bg-card));
+    border-color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
 
-      &:not(:disabled):hover {
-        color: #fff;
-        background: $c;
-        border-color: $c;
-      }
+    &:not(:disabled):hover {
+      color: #fff;
+      background: $c;
+      border-color: $c;
+    }
 
-      &:disabled {
-        color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
-        border-color: color-mix(in srgb, #{$c} 20%, var(--ku-bg-card));
-      }
+    &:disabled {
+      color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
+      border-color: color-mix(in srgb, #{$c} 20%, var(--ku-bg-card));
     }
   }
 }

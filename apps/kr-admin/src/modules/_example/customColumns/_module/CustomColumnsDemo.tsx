@@ -15,7 +15,6 @@ import {
   BASIC_COLUMN_SCHEMAS,
   DEMO_CUSTOM_COLUMN_MESSAGES,
   NESTED_COLUMN_SCHEMAS,
-  SCHEMA_FIXED_COLUMN_SCHEMAS,
   VERSION_COLUMN_SCHEMAS,
 } from '@/modules/_example/customColumns/_utils/demoSchemas';
 import {
@@ -23,7 +22,7 @@ import {
   type DemoRow,
 } from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
-export type CustomColumnsDemoMode = 'basic' | 'nested' | 'version' | 'fixed';
+export type CustomColumnsDemoMode = 'basic' | 'nested' | 'version';
 
 function resolveSchemas(mode: CustomColumnsDemoMode) {
   switch (mode) {
@@ -31,8 +30,6 @@ function resolveSchemas(mode: CustomColumnsDemoMode) {
       return NESTED_COLUMN_SCHEMAS;
     case 'version':
       return VERSION_COLUMN_SCHEMAS;
-    case 'fixed':
-      return SCHEMA_FIXED_COLUMN_SCHEMAS;
     case 'basic':
     default:
       return BASIC_COLUMN_SCHEMAS;
@@ -98,17 +95,6 @@ export default function CustomColumnsDemo({
       fixed: 'left',
     },
     ...schemaColumns,
-    ...(mode === 'fixed'
-      ? [
-          {
-            title: '操作',
-            key: 'ops',
-            width: 90,
-            fixed: 'right' as const,
-            render: () => <a>详情</a>,
-          },
-        ]
-      : []),
   ];
   const columns = useFlexColumns(baseColumns, `.${pageClass}`);
 
