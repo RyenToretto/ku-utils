@@ -1,4 +1,5 @@
 import type { SchoolResourceRow } from '../_api';
+import { SCHOOL_STATUS_ENABLED } from '../_map/schoolStatus';
 
 /** 选择器对外值：id = school id */
 export type SchoolSelectorValue = {
@@ -21,4 +22,18 @@ export function toSchoolPick(row: SchoolResourceRow): SchoolSelectorValue {
     label: schoolPickLabel(row),
     item: row,
   };
+}
+
+/** 业务行只存 id + 名称时，构造可回显的选择项 */
+export function toSchoolPickFromRef(ref: {
+  id: string | number;
+  schoolName?: string | null;
+}): SchoolSelectorValue {
+  return toSchoolPick({
+    id: String(ref.id),
+    schoolName: ref.schoolName || '',
+    status: SCHOOL_STATUS_ENABLED,
+    remark: '',
+    createTime: '',
+  });
 }

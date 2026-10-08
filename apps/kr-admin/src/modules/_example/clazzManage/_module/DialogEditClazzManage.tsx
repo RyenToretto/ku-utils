@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 
 import maps from '@/maps';
 import { requestEditClazzManage, type ClazzManageRow } from '@/modules/_example/clazzManage/_api';
-import SchoolSelector, {
+import SchoolSelector from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import {
+  toSchoolPickFromRef,
   type SchoolSelectorValue,
-} from '@/modules/_example/schoolResource/_module/SchoolSelector';
+} from '@/modules/_example/schoolResource/_module/types';
 import { message } from '@/plugins/antdApp';
 
 export default function DialogEditClazzManage({
@@ -25,8 +27,8 @@ export default function DialogEditClazzManage({
 
   useEffect(() => {
     if (!open) return;
-    const school: SchoolSelectorValue = row?.schoolId
-      ? { id: String(row.schoolId), label: row.schoolName || String(row.schoolId) }
+    const school: SchoolSelectorValue | null = row?.schoolId
+      ? toSchoolPickFromRef({ id: row.schoolId, schoolName: row.schoolName })
       : null;
     form.setFieldsValue({
       clazzName: row?.clazzName || '',
@@ -38,8 +40,7 @@ export default function DialogEditClazzManage({
   async function handleOk() {
     const values = await form.validateFields().catch(() => null);
     if (!values) return;
-    const school = values.school as SchoolSelectorValue;
-    const schoolObj = school && !Array.isArray(school) ? school : null;
+    const schoolObj = values.school as SchoolSelectorValue | null;
     setLoading(true);
     try {
       await requestEditClazzManage({
@@ -47,7 +48,7 @@ export default function DialogEditClazzManage({
         clazzName: values.clazzName,
         status: values.status,
         schoolId: schoolObj?.id ?? null,
-        schoolName: schoolObj?.label,
+        schoolName: schoolObj?.item.schoolName,
       });
       message.success(row?.id ? '已保存' : '已创建');
       onSuccess();

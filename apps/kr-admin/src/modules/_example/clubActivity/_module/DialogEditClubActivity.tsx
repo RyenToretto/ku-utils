@@ -6,9 +6,11 @@ import {
   requestEditClubActivity,
   type ClubActivityRow,
 } from '@/modules/_example/clubActivity/_api';
-import SchoolSelector, {
+import SchoolSelector from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import {
+  toSchoolPickFromRef,
   type SchoolSelectorValue,
-} from '@/modules/_example/schoolResource/_module/SchoolSelector';
+} from '@/modules/_example/schoolResource/_module/types';
 import { message } from '@/plugins/antdApp';
 
 export default function DialogEditClubActivity({
@@ -28,10 +30,7 @@ export default function DialogEditClubActivity({
 
   useEffect(() => {
     if (!open) return;
-    const schools: SchoolSelectorValue = (row?.schools || []).map((s) => ({
-      id: s.id,
-      label: s.schoolName,
-    }));
+    const schools: SchoolSelectorValue[] = (row?.schools || []).map(toSchoolPickFromRef);
     form.setFieldsValue({
       clubName: row?.clubName || '',
       status: row?.status ?? status.CLUB_STATUS_ENABLED,
@@ -42,14 +41,14 @@ export default function DialogEditClubActivity({
   async function handleOk() {
     const values = await form.validateFields().catch(() => null);
     if (!values) return;
-    const schoolsVal = (values.schools || []) as Array<{ id: string; label: string }>;
+    const schoolsVal = (values.schools || []) as SchoolSelectorValue[];
     setLoading(true);
     try {
       await requestEditClubActivity({
         id: row?.id,
         clubName: values.clubName,
         status: values.status,
-        schools: schoolsVal.map((s) => ({ id: s.id, schoolName: s.label })),
+        schools: schoolsVal.map((s) => ({ id: s.id, schoolName: s.item.schoolName })),
       });
       message.success(row?.id ? '已保存' : '已创建');
       onSuccess();

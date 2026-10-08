@@ -6,30 +6,27 @@ import DialogEditSchoolSelectorDemo, {
 } from './_module/DialogEditSchoolSelectorDemo';
 
 import DoFilterPanel from '@/components/DoFilterPanel';
-import SchoolSelector, {
-  type SchoolSelectorValue,
-} from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import SchoolSelector from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import type { SchoolSelectorValue } from '@/modules/_example/schoolResource/_module/types';
 
-function formatMultiLabels(list: Array<{ label: string }>) {
+function formatMultiLabels(list: SchoolSelectorValue[]) {
   if (!list.length) return '';
   return list.map((item) => item.label).join('、');
 }
 
 export default function SchoolSelectorDemoLayer() {
-  const [schoolSingle, setSchoolSingle] = useState<SchoolSelectorValue>(null);
-  const [schoolMulti, setSchoolMulti] = useState<SchoolSelectorValue>([]);
+  const [schoolSingle, setSchoolSingle] = useState<SchoolSelectorValue | null>(null);
+  const [schoolMulti, setSchoolMulti] = useState<SchoolSelectorValue[]>([]);
   const [lastFilterSnapshot, setLastFilterSnapshot] = useState('');
   const [lastDialogSnapshot, setLastDialogSnapshot] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [editSeed, setEditSeed] = useState<SchoolSelectorDemoForm | null>(null);
 
-  const multiList = Array.isArray(schoolMulti) ? schoolMulti : [];
-
   function handleFilterSearch() {
     setLastFilterSnapshot(
       JSON.stringify({
-        single: schoolSingle && !Array.isArray(schoolSingle) ? schoolSingle.id : null,
-        multi: multiList.map((item) => item.id),
+        single: schoolSingle?.id ?? null,
+        multi: schoolMulti.map((item) => item.id),
       }),
     );
   }
@@ -49,8 +46,8 @@ export default function SchoolSelectorDemoLayer() {
     setEditSeed({
       id: 'demo-1',
       demoName: '演示班级计划',
-      schoolSingle: schoolSingle && !Array.isArray(schoolSingle) ? schoolSingle : null,
-      schoolMulti: [...multiList],
+      schoolSingle,
+      schoolMulti: [...schoolMulti],
     });
     setEditOpen(true);
   }
@@ -76,7 +73,7 @@ export default function SchoolSelectorDemoLayer() {
             <span className="do-filter-field-label do-filter-field-label-wide">学校（单选）</span>
             <SchoolSelector
               value={schoolSingle}
-              onChange={setSchoolSingle}
+              onChange={(v) => setSchoolSingle(v && !Array.isArray(v) ? v : null)}
               placeholder="请选择学校"
             />
           </div>
@@ -84,7 +81,7 @@ export default function SchoolSelectorDemoLayer() {
             <span className="do-filter-field-label do-filter-field-label-wide">学校（多选）</span>
             <SchoolSelector
               value={schoolMulti}
-              onChange={setSchoolMulti}
+              onChange={(v) => setSchoolMulti(Array.isArray(v) ? v : [])}
               multiple
               placeholder="请选择学校（可多选）"
               defaultPageSize={5}
@@ -93,8 +90,8 @@ export default function SchoolSelectorDemoLayer() {
         </DoFilterPanel>
         <p className="page-example-school-selector-demo-meta">
           当前值：单选=
-          {schoolSingle && !Array.isArray(schoolSingle) ? schoolSingle.label : '—'}
-          ；多选={formatMultiLabels(multiList) || '—'}
+          {schoolSingle?.label || '—'}
+          ；多选={formatMultiLabels(schoolMulti) || '—'}
         </p>
         {lastFilterSnapshot ? (
           <p className="page-example-school-selector-demo-meta">

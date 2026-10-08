@@ -577,6 +577,31 @@ el-form-item.do-fill-form > .el-form-item__content {
   min-width: 120px;
 }
 
+.school-selector {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 200px;
+  vertical-align: middle;
+}
+
+.do-selector-tags-popover .ant-popover-inner {
+  padding: 8px 10px;
+}
+
+.do-selector-tags-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 240px;
+  max-width: 420px;
+
+  .do-selector-tag {
+    max-width: 100%;
+    margin-inline-end: 0;
+  }
+}
+
 .dialog-title-tips {
   margin-left: 8px;
   font-size: 13px;

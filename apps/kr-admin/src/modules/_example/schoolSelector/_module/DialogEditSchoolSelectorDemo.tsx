@@ -1,17 +1,18 @@
 import { Form, Input, Modal } from 'antd';
 import { useEffect } from 'react';
 
-import SchoolSelector, {
-  type SchoolSelectorValue,
-} from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import SchoolSelector from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import type { SchoolSelectorValue } from '@/modules/_example/schoolResource/_module/types';
 import { message } from '@/plugins/antdApp';
 
 export type SchoolSelectorDemoForm = {
   id: string;
   demoName: string;
-  schoolSingle: { id: string; label: string } | null;
-  schoolMulti: Array<{ id: string; label: string }>;
+  schoolSingle: SchoolSelectorValue | null;
+  schoolMulti: SchoolSelectorValue[];
 };
+
+type FormValues = Omit<SchoolSelectorDemoForm, 'id'>;
 
 export default function DialogEditSchoolSelectorDemo({
   open,
@@ -20,15 +21,11 @@ export default function DialogEditSchoolSelectorDemo({
   onSuccess,
 }: {
   open: boolean;
-  seed?: SchoolSelectorDemoForm | null;
+  seed?: Partial<SchoolSelectorDemoForm> | null;
   onClose: () => void;
   onSuccess?: (payload: SchoolSelectorDemoForm) => void;
 }) {
-  const [form] = Form.useForm<{
-    demoName: string;
-    schoolSingle: SchoolSelectorValue;
-    schoolMulti: SchoolSelectorValue;
-  }>();
+  const [form] = Form.useForm();
   const isEdit = !!seed?.id;
 
   useEffect(() => {
@@ -36,46 +33,38 @@ export default function DialogEditSchoolSelectorDemo({
     form.setFieldsValue({
       demoName: seed?.demoName ?? '',
       schoolSingle: seed?.schoolSingle ?? null,
-      schoolMulti: seed?.schoolMulti ?? [],
+      schoolMulti: seed?.schoolMulti ? [...seed.schoolMulti] : [],
     });
   }, [open, seed, form]);
+
+  async function handleOk() {
+    const values = (await form.validateFields().catch(() => null)) as FormValues | null;
+    if (!values) return;
+    onSuccess?.({
+      id: seed?.id || '',
+      demoName: values.demoName.trim(),
+      schoolSingle: values.schoolSingle,
+      schoolMulti: [...(values.schoolMulti || [])],
+    });
+    message.success(isEdit ? '编辑演示已确认' : '新建演示已确认');
+    onClose();
+  }
 
   return (
     <Modal
       title={
-        isEdit ? (
-          <span>
-            编辑演示
+        <span>
+          {isEdit ? '编辑演示' : '新建演示'}
+          {isEdit ? (
             <span className="dialog-edit-school-selector-demo-tips">（验证选择器回填）</span>
-          </span>
-        ) : (
-          '新建演示'
-        )
+          ) : null}
+        </span>
       }
       open={open}
       width={640}
       destroyOnHidden
       onCancel={onClose}
-      onOk={async () => {
-        const values = await form.validateFields().catch(() => null);
-        if (!values) return;
-        const single =
-          values.schoolSingle && !Array.isArray(values.schoolSingle) ? values.schoolSingle : null;
-        const multi = Array.isArray(values.schoolMulti) ? values.schoolMulti : [];
-        if (!single) {
-          message.error('请选择学校（单选）');
-          return;
-        }
-        const payload: SchoolSelectorDemoForm = {
-          id: seed?.id || '',
-          demoName: values.demoName.trim(),
-          schoolSingle: single,
-          schoolMulti: multi,
-        };
-        message.success('已保存演示');
-        onSuccess?.(payload);
-        onClose();
-      }}
+      onOk={handleOk}
       okText="确 定"
       cancelText="取 消"
     >
@@ -88,7 +77,7 @@ export default function DialogEditSchoolSelectorDemo({
         <Form.Item
           label="演示名称"
           name="demoName"
-          rules={[{ required: true, message: '请输入演示名称' }]}
+          rules={[{ required: true, whitespace: true, message: '请输入演示名称' }]}
         >
           <Input
             allowClear
@@ -100,16 +89,13 @@ export default function DialogEditSchoolSelectorDemo({
           name="schoolSingle"
           rules={[{ required: true, message: '请选择学校' }]}
         >
-          <SchoolSelector placeholder="请选择学校" />
+          <SchoolSelector />
         </Form.Item>
         <Form.Item
           label="学校（多选）"
           name="schoolMulti"
         >
-          <SchoolSelector
-            multiple
-            placeholder="请选择学校（可多选）"
-          />
+          <SchoolSelector multiple />
         </Form.Item>
       </Form>
     </Modal>
