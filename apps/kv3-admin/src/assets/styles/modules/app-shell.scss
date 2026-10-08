@@ -1566,6 +1566,41 @@ html.dark {
   background-color: var(--el-color-primary-light-9);
 }
 
+/*
+ * loading ≠ disabled：保持类型原色、整体 .65；EP 遮罩读 --el-mask-color-extra-light（= v-loading 底色）会把按钮洗白，去掉。
+ * spinner 用负 margin 抵消自身占位（1em + 6px 间距），出现/消失时按钮宽度不变。
+ */
+.el-button.is-loading {
+  --el-button-disabled-text-color: var(--el-button-text-color);
+  --el-button-disabled-bg-color: var(--el-button-bg-color);
+  --el-button-disabled-border-color: var(--el-button-border-color);
+
+  opacity: 0.65;
+
+  &::before {
+    display: none;
+  }
+
+  > .el-icon.is-loading:not(:last-child) {
+    margin-inline-start: calc(-0.5em - 3px);
+  }
+
+  > .el-icon.is-loading + span {
+    margin-inline-end: calc(-0.5em - 3px);
+  }
+
+  /* EP small 档图标与文案间距为 4px */
+  &.el-button--small {
+    > .el-icon.is-loading:not(:last-child) {
+      margin-inline-start: calc(-0.5em - 2px);
+    }
+
+    > .el-icon.is-loading + span {
+      margin-inline-end: calc(-0.5em - 2px);
+    }
+  }
+}
+
 // ─── 1280px 窄屏适配 ──────────────────────────────────────────
 @media (max-width: 1280px) {
   // 仅在折叠态强制 64px；展开时保留完整宽度，避免菜单文字被裁切

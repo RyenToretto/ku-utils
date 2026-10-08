@@ -59,7 +59,7 @@
   约定：
   1. 筛选项统一包在 inline el-form 内，并使用 @submit.prevent 阻止原生提交。
   2. 搜索、回车、清空和选项变化统一调用 search(true)，确保回到第一页。
-  3. 页面请求态通过 loading 传入，组件会禁用主搜索按钮，避免重复请求。
+  3. 页面请求态通过 loading 传入，主搜索按钮进入 loading（不可点、宽度不变），避免重复请求。
   4. #ctl 放附加操作；按钮与末行筛选项同排贴卡片右下角，横向「搜索 | 重置 | …」。
   5. 单行筛选使用 :line="1"；多行筛选用 :line="2" 并支持折叠。
   6. handleReset 先重置 filters，再调用 search(true)；列表页优先复用 useTableQuery。
@@ -110,7 +110,6 @@
         <el-button
           type="primary"
           :loading="loading"
-          :disabled="loading"
           @click="emitSearch(true)"
         >
           {{ resolvedMainText }}
@@ -287,24 +286,9 @@ onBeforeUnmount(() => {
     padding: 0 0 18px;
 
     :deep(.el-button) {
-      position: relative;
       min-width: 76px;
       margin: 0;
       padding-inline: 24px;
-    }
-
-    /*
-     * EP loading 会把 spinner 插入文档流导致按钮变宽跳动。
-     * 把 ico 绝对定位进左侧 padding（24px 够放下 1em 图标），宽度与文案态一致。
-     */
-    :deep(.el-button.is-loading > .el-icon) {
-      position: absolute;
-      left: 8px;
-      margin: 0;
-    }
-
-    :deep(.el-button.is-loading > .el-icon + span) {
-      margin-left: 0;
     }
   }
 
