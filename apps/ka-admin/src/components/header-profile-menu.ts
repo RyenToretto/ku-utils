@@ -66,7 +66,7 @@ const THEME_LABELS: Record<ThemeMode, string> = {
           nz-popover
           [nzPopoverTrigger]="null"
           nzPopoverPlacement="leftTop"
-          nzPopoverOverlayClassName="appearance-menu-popover"
+          nzPopoverOverlayClassName="appearance-menu-popover appearance-menu-popover-portal"
           [nzPopoverContent]="appearanceTpl"
           [nzPopoverVisible]="appearanceOpen()"
           (nzPopoverVisibleChange)="appearanceOpen.set($event)"

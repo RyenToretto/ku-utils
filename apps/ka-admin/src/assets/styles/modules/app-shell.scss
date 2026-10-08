@@ -4,6 +4,8 @@
 // ─── 用户菜单 popover（Ant Popover teleport，需全局样式）─────────
 .profile-menu-popover {
   z-index: 1100 !important;
+  /* ng-zorro 连接位给箭头留 12px，隐藏箭头后收回到 kr 的 4px 间距 */
+  margin-top: -8px;
 
   /* leave 兜底：motion=false 未生效时仍瞬时隐藏，避免卡顿 */
   &.ant-zoom-big-leave,
@@ -25,6 +27,7 @@
   }
 
   .ant-popover-inner-content {
+    width: auto;
     padding: 0 !important;
   }
 
@@ -136,10 +139,25 @@
   }
 }
 
-/* 外观侧向弹层（自管 portal，对齐 kv3 left-start 浮层） */
+/* 外观侧向弹层（nz-popover leftTop，对齐 kv3 left-start 浮层）：去掉 popover 自带壳，只保留 inner 卡片 */
 .appearance-menu-popover-portal {
-  z-index: 1200;
+  z-index: 1200 !important;
   box-sizing: border-box;
+  margin-right: -4px;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .ant-popover-inner-content {
+    width: auto;
+    padding: 0;
+  }
 }
 
 .appearance-menu-popover-inner {
@@ -162,6 +180,7 @@
 
 .appearance-menu-popover-portal .appearance-option {
   width: 100%;
+  line-height: 1.15;
   display: flex;
   align-items: center;
   justify-content: space-between;
