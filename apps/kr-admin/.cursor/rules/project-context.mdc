@@ -36,6 +36,12 @@ src/modules/<域>/<子业务>/
 9. 自定义列：`@ku-utils/r-custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
 10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
 
+## Ant Design 反馈（React 19）
+
+- **禁止** `Modal.confirm` / `message.xxx` / `notification.xxx` 等 antd 静态方法：React 19 下不渲染（点击无响应），且吃不到暗色主题
+- 统一 `import { message, modal, notification } from '@/plugins/antdApp'`（`<App>` 上下文实例；axios 等非组件代码同样适用）
+- `main.tsx` 首行保留 `@ant-design/v5-patch-for-react-19`
+
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
 
 局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。

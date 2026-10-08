@@ -1,9 +1,10 @@
-import { Form, Input, Modal, message } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { useEffect } from 'react';
 
 import SchoolSelector, {
   type SchoolSelectorValue,
 } from '@/modules/_example/schoolResource/_module/SchoolSelector';
+import { message } from '@/plugins/antdApp';
 
 export type SchoolSelectorDemoForm = {
   id: string;

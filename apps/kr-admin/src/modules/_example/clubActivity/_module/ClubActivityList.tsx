@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Input, Radio, Table, Tag, message, Modal } from 'antd';
+import { Button, Input, Radio, Table, Tag } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useState } from 'react';
 
@@ -23,6 +23,7 @@ import {
   CLUB_STATUS_DISABLED,
   CLUB_STATUS_ENABLED,
 } from '@/modules/_example/clubActivity/_map/clubStatus';
+import { message, modal } from '@/plugins/antdApp';
 
 export default function ClubActivityList() {
   const status = maps.example.clubActivity.clubStatus;
@@ -63,7 +64,7 @@ export default function ClubActivityList() {
     const ids = selectedRows.map((row) => row.id);
     if (!ids.length) return;
     const actionLabel = nextStatus === CLUB_STATUS_ENABLED ? '启用' : '停用';
-    Modal.confirm({
+    modal.confirm({
       title: '提示',
       content: `确定${actionLabel}所选的 ${ids.length} 个社团？`,
       onOk: async () => {
@@ -195,7 +196,7 @@ export default function ClubActivityList() {
             aria-label="删除"
             onClick={(e) => {
               e.stopPropagation();
-              Modal.confirm({
+              modal.confirm({
                 title: '提示',
                 content: `确认删除「${row.clubName}」？`,
                 onOk: async () => {

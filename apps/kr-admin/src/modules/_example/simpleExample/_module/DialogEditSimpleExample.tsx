@@ -1,8 +1,9 @@
-import { Form, Input, Modal, Radio, message } from 'antd';
+import { Form, Input, Modal, Radio } from 'antd';
 import { useEffect, useState } from 'react';
 
 import maps from '@/maps';
 import { requestEditSimpleExample } from '@/modules/_example/simpleExample/_api';
+import { message } from '@/plugins/antdApp';
 
 type Row = {
   id?: string | number;

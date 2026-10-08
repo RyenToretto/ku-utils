@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Input, Radio, Table, message, Modal } from 'antd';
+import { Button, Input, Radio, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
 
@@ -22,6 +22,7 @@ import {
   CLAZZ_STATUS_DISABLED,
   CLAZZ_STATUS_ENABLED,
 } from '@/modules/_example/clazzManage/_map/clazzStatus';
+import { message, modal } from '@/plugins/antdApp';
 
 export default function ClazzManageList() {
   const status = maps.example.clazzManage.clazzStatus;
@@ -127,7 +128,7 @@ export default function ClazzManageList() {
             title="删除"
             aria-label="删除"
             onClick={() => {
-              Modal.confirm({
+              modal.confirm({
                 title: '提示',
                 content: `确认删除「${row.clazzName}」？`,
                 onOk: async () => {

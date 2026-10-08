@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Radio, message } from 'antd';
+import { Form, Input, Modal, Radio } from 'antd';
 import { useEffect, useState } from 'react';
 
 import maps from '@/maps';
@@ -6,6 +6,7 @@ import {
   requestEditSchoolResource,
   type SchoolResourceRow,
 } from '@/modules/_example/schoolResource/_api';
+import { message } from '@/plugins/antdApp';
 
 export default function DialogEditSchoolResource({
   open,

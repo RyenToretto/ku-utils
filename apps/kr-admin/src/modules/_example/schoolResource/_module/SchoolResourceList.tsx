@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, Input, Pagination, Radio, Table, message, Modal } from 'antd';
+import { Button, Input, Pagination, Radio, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -22,6 +22,7 @@ import {
   SCHOOL_STATUS_DISABLED,
   SCHOOL_STATUS_ENABLED,
 } from '@/modules/_example/schoolResource/_map/schoolStatus';
+import { message, modal } from '@/plugins/antdApp';
 
 export type SchoolResourceListProps = {
   enableSelector?: boolean;
@@ -117,7 +118,7 @@ export default function SchoolResourceList({
     const ids = selectedRows.map((row) => row.id);
     if (!ids.length) return;
     const actionLabel = nextStatus === SCHOOL_STATUS_ENABLED ? '启用' : '停用';
-    Modal.confirm({
+    modal.confirm({
       title: '提示',
       content: `确定${actionLabel}所选的 ${ids.length} 所学校？`,
       onOk: async () => {
@@ -241,7 +242,7 @@ export default function SchoolResourceList({
               aria-label="删除"
               onClick={(e) => {
                 e.stopPropagation();
-                Modal.confirm({
+                modal.confirm({
                   title: '提示',
                   content: `确认删除「${row.schoolName}」？`,
                   onOk: async () => {

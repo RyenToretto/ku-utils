@@ -1,4 +1,4 @@
-import { Button, Table, message } from 'antd';
+import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useMemo, useRef, useState } from 'react';
 
@@ -13,6 +13,7 @@ import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { useTableQuery } from '@/composables/useTableQuery';
+import { message } from '@/plugins/antdApp';
 
 type DemoRow = {
   id: number;
@@ -109,15 +110,11 @@ export default function UiKitPanelDemo() {
             switchable
             switching={!!row.switching}
             onSwitch={(val) => {
-              setRows((prev) =>
-                prev.map((r) => (r.id === row.id ? { ...r, switching: true } : r)),
-              );
+              setRows((prev) => prev.map((r) => (r.id === row.id ? { ...r, switching: true } : r)));
               window.setTimeout(() => {
                 setRows((prev) =>
                   prev.map((r) =>
-                    r.id === row.id
-                      ? { ...r, status: Number(val), switching: false }
-                      : r,
+                    r.id === row.id ? { ...r, status: Number(val), switching: false } : r,
                   ),
                 );
                 message.success(`已${Number(val) === 1 ? '启用' : '禁用'}：${row.name}`);

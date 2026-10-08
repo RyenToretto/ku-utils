@@ -1,9 +1,10 @@
 import { LockOutlined } from '@ant-design/icons';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MODULE_PERMISSION_KEYS } from '@/maps/common/dspPermission';
+import { message } from '@/plugins/antdApp';
 import { submitLogout } from '@/plugins/axios';
 import { resolveBusinessHomePath } from '@/router/paths';
 import { useUserStore } from '@/stores/user';

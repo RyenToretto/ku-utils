@@ -1,14 +1,13 @@
 import { useVersionUpdate } from '@ku-utils/hooks-react';
-import { ConfigProvider, theme as antTheme, Spin } from 'antd';
+import { App as AntdApp, ConfigProvider, theme as antTheme, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-import DialogPreviewVideo, {
-  type DialogPreviewVideoRef,
-} from '@/components/DialogPreviewVideo';
+import DialogPreviewVideo, { type DialogPreviewVideoRef } from '@/components/DialogPreviewVideo';
 import { useSplashReadiness } from '@/composables/useSplashReadiness';
 import BaseHeader from '@/layouts/BaseHeader';
+import { AntdAppBridge } from '@/plugins/antdApp';
 import { useAppStore } from '@/stores/app';
 import { registerPreviewVideoHost } from '@/utils/previewMedia';
 import { fetchStaticVersion } from '@/utils/version';
@@ -55,38 +54,41 @@ export default function App() {
         },
       }}
     >
-      <div
-        className="app-entry"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          overflow: 'hidden',
-          background: 'var(--ku-bg-page-gradient, var(--ku-bg-page))',
-        }}
-      >
-        {!hideHeader ? (
-          <BaseHeader
-            hasUpdate={hasUpdate}
-            onRefresh={refreshForUpdate}
-          />
-        ) : null}
+      <AntdApp component={false}>
+        <AntdAppBridge />
         <div
-          className="app-shell-main"
-          style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}
+          className="app-entry"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            overflow: 'hidden',
+            background: 'var(--ku-bg-page-gradient, var(--ku-bg-page))',
+          }}
         >
-          <Suspense
-            fallback={
-              <div style={{ padding: 48, textAlign: 'center' }}>
-                <Spin />
-              </div>
-            }
+          {!hideHeader ? (
+            <BaseHeader
+              hasUpdate={hasUpdate}
+              onRefresh={refreshForUpdate}
+            />
+          ) : null}
+          <div
+            className="app-shell-main"
+            style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}
           >
-            <Outlet />
-          </Suspense>
+            <Suspense
+              fallback={
+                <div style={{ padding: 48, textAlign: 'center' }}>
+                  <Spin />
+                </div>
+              }
+            >
+              <Outlet />
+            </Suspense>
+          </div>
+          <DialogPreviewVideo ref={previewVideoRef} />
         </div>
-        <DialogPreviewVideo ref={previewVideoRef} />
-      </div>
+      </AntdApp>
     </ConfigProvider>
   );
 }

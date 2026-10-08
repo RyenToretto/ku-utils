@@ -1,4 +1,4 @@
-import { Card, Space, message } from 'antd';
+import { Card, Space } from 'antd';
 import { useState } from 'react';
 
 import CellDateTime from '@/components/CellDateTime';
@@ -7,6 +7,7 @@ import DateRange from '@/components/DateRange';
 import DoNumberSetter from '@/components/DoNumberSetter';
 import { DoSelector } from '@/components/DoSelector';
 import DoTxtSetter from '@/components/DoTxtSetter';
+import { message } from '@/plugins/antdApp';
 
 const sampleTime = '2026-08-06 19:43:02';
 const cityOptions = [
@@ -110,11 +111,10 @@ export default function UiKitCellsDemo() {
             value={selectorValue}
             options={cityOptions}
             style={{ width: 180 }}
-            onChange={(v) => setSelectorValue(Array.isArray(v) ? v[0] ?? null : v)}
+            onChange={(v) => setSelectorValue(Array.isArray(v) ? (v[0] ?? null) : v)}
           />
           <span className="demo-hint">
-            已选：{selectorValue || '—'} /{' '}
-            {dateRange.length === 2 ? dateRange.join(' ~ ') : '—'}
+            已选：{selectorValue || '—'} / {dateRange.length === 2 ? dateRange.join(' ~ ') : '—'}
           </span>
         </div>
       </Card>

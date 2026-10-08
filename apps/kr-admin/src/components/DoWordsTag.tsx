@@ -1,6 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Input, Tag, message } from 'antd';
+import { Input, Tag } from 'antd';
 import { useMemo, useState } from 'react';
+
+import { message } from '@/plugins/antdApp';
 
 export type DoWordsTagProps = {
   value?: string[];

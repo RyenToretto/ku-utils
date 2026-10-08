@@ -1,7 +1,7 @@
-import { message } from 'antd';
 import axios from 'axios';
 import qs from 'qs';
 
+import { message } from '@/plugins/antdApp';
 import {
   isUnauthorizedBusinessCode,
   isUserInfoMissingLocalUserCode,

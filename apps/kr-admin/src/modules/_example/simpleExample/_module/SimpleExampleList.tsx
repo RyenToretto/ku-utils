@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Input, Radio, Select, Space, Table, message, Modal } from 'antd';
+import { Button, Input, Radio, Select, Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useMemo, useState } from 'react';
 
@@ -22,6 +22,7 @@ import {
   requestDeleteSimpleExample,
   requestSimpleExampleList,
 } from '@/modules/_example/simpleExample/_api';
+import { message, modal } from '@/plugins/antdApp';
 
 export type SimpleExampleRow = {
   id: string | number;
@@ -108,10 +109,7 @@ export default function SimpleExampleList({
     message.success(`已触发「${kind === 'export' ? '导出' : '更多'}」（Demo）`);
   }
 
-  async function switchExampleStatus(
-    row: SimpleExampleRow,
-    nextStatus: string | number | boolean,
-  ) {
+  async function switchExampleStatus(row: SimpleExampleRow, nextStatus: string | number | boolean) {
     const key = String(row.id);
     setStatusSwitchingIds((prev) => ({ ...prev, [key]: true }));
     try {
@@ -219,7 +217,7 @@ export default function SimpleExampleList({
             title="删除"
             aria-label="删除"
             onClick={() => {
-              Modal.confirm({
+              modal.confirm({
                 title: '提示',
                 content: `确认删除「${row.exampleName}」？`,
                 onOk: async () => {
@@ -265,7 +263,9 @@ export default function SimpleExampleList({
 
   return (
     <div
-      className={[pageClassName, fillViewportLayout ? 'fill-viewport' : ''].filter(Boolean).join(' ')}
+      className={[pageClassName, fillViewportLayout ? 'fill-viewport' : '']
+        .filter(Boolean)
+        .join(' ')}
     >
       <DoFilterPanel
         line={resolvedFilterLine}
@@ -280,9 +280,7 @@ export default function SimpleExampleList({
                 className="do-filter-field"
                 key={field.key}
               >
-                <span className="do-filter-field-label">
-                  筛选项 {field.key.slice(1)}
-                </span>
+                <span className="do-filter-field-label">筛选项 {field.key.slice(1)}</span>
                 {field.kind === 'input' ? (
                   <Input
                     allowClear
@@ -301,9 +299,7 @@ export default function SimpleExampleList({
                     placeholder="不限"
                     style={{ width: 140 }}
                     value={demoFilters[field.key] || undefined}
-                    onChange={(v) =>
-                      setDemoFilters((prev) => ({ ...prev, [field.key]: v ?? '' }))
-                    }
+                    onChange={(v) => setDemoFilters((prev) => ({ ...prev, [field.key]: v ?? '' }))}
                     options={[
                       { label: '启用', value: '1' },
                       { label: '停用', value: '0' },
