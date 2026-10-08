@@ -29,7 +29,7 @@
 - kr：确认框 / 提示一律走 `@/plugins/antdApp`（antd `<App>` 上下文实例），禁止 `Modal.confirm` / `message.xxx` 静态方法——React 19 下不渲染且不跟随暗色；`main.tsx` 引入 `@ant-design/v5-patch-for-react-19`。
 - ka：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式，变量映射到 `--ku-*`，产物 `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；less 表达不了的结构细节进 `zorro-ku-bridge.scss`。
 - ka：确认框统一 `injectConfirm()`，提示用 `NzMessageService`；日期适配 `provideNzDateFnsAdapter`（`NZ_DATE_LOCALE` 已废弃，v23 移除）。
-- ka ↔ kr 固定换算：ng-zorro modal 无 content 级 padding → ka 内距 = kr `bodyStyle` + 16；antd v5 `Paragraph` 是 `div` → ka 用 `<div nz-typography>`；el plain / kr outlined → ka `btn-plain-*`。
+- ka ↔ kr 固定换算：ng-zorro modal 无 content 级 padding → ka 内距 = kr `bodyStyle` + 16；antd v5 `Paragraph` 是 `div` → ka 用 `<div nz-typography>`；el plain / kr outlined → ka `btn-plain-*`（禁 ghost / `nzGhost`；plain 配色读 skin 色阶 `--ku-color-{family}-light-9 / 5 / 8`，与 kv3 同值）。
 - **禁止**页级 `PageHeader` / title / subtitle（四端一致）。
 - `.domain-module-main` padding 四边一致（20px）；页内首块勿再叠 `margin-top`，用父级 `gap`。
 - 侧栏多级以 kv3 `app-shell.scss` `.side-menu` 为准：二级起左缘 22 / 34 / 46、引导线 28 / 40 / 52、各级右缘同为 209、激活链与悬停时箭头 / 图标高亮。kr / ka 用 `.ant-menu-sub` 层级选择器补齐（标题宽 `calc(100% - 20px)`、箭头 `inset-inline-end: 26px`）；ka 递归模板投影的 `nz-submenu` 查不到子项，需显式绑定 `ant-menu-submenu-selected`；kv2 Element UI 子项默认 `min-width: 200px` 须清零。

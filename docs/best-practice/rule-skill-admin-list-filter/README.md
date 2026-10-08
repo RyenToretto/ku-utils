@@ -40,6 +40,7 @@
 
 - `ops-column` 语义标记；对齐交给 EP `align`
 - 行内：`plain` + `small`；**禁 link**；icon 在前、文字在后；删除用 icon、禁再写「删除」文案
+- antd / ng-zorro 的 plain：kr `color` + `variant="outlined"`、ka `btn-plain-*`；**禁 ghost**（透明底与 plain 不一致）；配色读 skin 色阶 `--ku-color-{family}-light-9 / 5 / 8`
 - 行内仅图标小按钮 24×24；带文字的按钮宽度自适应（禁止用「仅图标」尺寸规则误伤文字按钮）
 - 表头「新建」；**批量**→ `#batch`；**页级**→ `#control`（禁止再挂 PageHeader / title / subtitle）
 
