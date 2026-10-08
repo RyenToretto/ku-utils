@@ -48,7 +48,6 @@ export function CellState({
   if (switchable) {
     const sw = (
       <Switch
-        size="small"
         checked={isActive}
         disabled={switching}
         onChange={() => {
