@@ -94,8 +94,10 @@ export function injectTableQuery<
     filters.update((prev) => ({ ...prev, ...patch }));
   }
 
-  function reset(nextFilters?: TFilter) {
+  /** 重置筛选并回到第 1 页；`nextPageSize` 供依赖 input 的分页大小在 ngOnInit 首查时落地 */
+  function reset(nextFilters?: TFilter, nextPageSize?: number) {
     filters.set({ ...(nextFilters ?? defaultFilters) });
+    if (nextPageSize) pageSize.set(nextPageSize);
     return search(true);
   }
 

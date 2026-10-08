@@ -1,4 +1,4 @@
-import { computed, signal, type Signal } from '@angular/core';
+import { computed, isSignal, signal, type Signal } from '@angular/core';
 
 export type RowSelectorStatus = 'none-selected' | 'half-selected' | 'all-selected';
 
@@ -8,7 +8,8 @@ export type InjectRowSelectorOptions<T extends object> = {
   /** 当前页行数据 */
   tableData: Signal<T[]>;
   lineKey?: keyof T & string;
-  isMultiple?: boolean;
+  /** 依赖组件 input 时传 signal（构造期 input 尚未赋值） */
+  isMultiple?: boolean | Signal<boolean>;
   /** 外部已选 id（仅用于回显；未进入本地选中时显示为半透明） */
   checkedIds?: Signal<RowId[]>;
   disabledIds?: Signal<RowId[]>;
@@ -24,7 +25,8 @@ function sameId(a: unknown, b: unknown) {
 /** 表格行选中（单/多选、跨页保留、表头批量），对齐 kv3 / kr `useRowSelector` */
 export function injectRowSelector<T extends object>(options: InjectRowSelectorOptions<T>) {
   const lineKey = options.lineKey || 'id';
-  const isMultiple = options.isMultiple ?? true;
+  const multipleOption = options.isMultiple ?? true;
+  const isMultiple = () => (isSignal(multipleOption) ? multipleOption() : multipleOption);
   const selected = signal<T[]>(options.initialSelected ? [...options.initialSelected] : []);
 
   const keyOf = (row: T) => (row as Record<string, unknown>)[lineKey] as RowId;
@@ -33,12 +35,12 @@ export function injectRowSelector<T extends object>(options: InjectRowSelectorOp
   function commit(next: T[], silent = false) {
     selected.set(next);
     if (silent) return;
-    options.onChange?.(isMultiple ? [...next] : next[0]);
+    options.onChange?.(isMultiple() ? [...next] : next[0]);
   }
 
   function chooseRow(row: T) {
     const id = keyOf(row);
-    if (!isMultiple) {
+    if (!isMultiple()) {
       commit([row]);
       return;
     }

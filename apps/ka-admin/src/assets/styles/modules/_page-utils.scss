@@ -568,6 +568,11 @@ el-form-item.do-fill-form > .el-form-item__content {
   vertical-align: middle;
 }
 
+.school-selector-trigger {
+  width: 100%;
+  min-width: 200px;
+}
+
 .do-selector-tags-popover .ant-popover-inner {
   padding: 8px 10px;
 }
