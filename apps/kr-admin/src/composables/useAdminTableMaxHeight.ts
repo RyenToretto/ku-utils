@@ -76,8 +76,16 @@ export function measureAdminTableMaxHeight(
   return clientHeight - tableTopInContainer - afterHeight - scrollerPaddingBottom;
 }
 
+/** antd `scroll.y` 只约束表体，表头与边框等非表体高度需从整表可用高度中扣除 */
+function getTableChromeHeight(table: Element): number {
+  const body = table.querySelector('.ant-table-body');
+  if (body) return table.getBoundingClientRect().height - body.getBoundingClientRect().height;
+  const thead = table.querySelector('.ant-table-thead');
+  return thead ? thead.getBoundingClientRect().height : 0;
+}
+
 /**
- * Admin 列表页表格 max-height（Ant Design `.ant-table`）
+ * Admin 列表页表格 `scroll.y`（Ant Design 表体 max-height，已扣表头）
  */
 export function useAdminTableMaxHeight(
   pageSelector: string,
@@ -136,9 +144,10 @@ export function useAdminTableMaxHeight(
     }
 
     const scrollerPaddingBottom = getScrollerPaddingBottom(scroller);
-    const measured = measureAdminTableMaxHeight(scroller, contain, table);
+    const chromeHeight = getTableChromeHeight(table);
+    const measured = measureAdminTableMaxHeight(scroller, contain, table) - chromeHeight;
     if (measured <= 0) {
-      return Math.max(baseMaxHeight - scrollerPaddingBottom, minHeight);
+      return Math.max(baseMaxHeight - scrollerPaddingBottom - chromeHeight, minHeight);
     }
 
     return Math.max(Math.floor(measured) - 1, minHeight);
