@@ -289,7 +289,6 @@ export default function ClubActivityList() {
             </div>
             <span>批量操作：</span>
             <Button
-              className="ml-5"
               color="green"
               variant="outlined"
               size="small"
@@ -300,7 +299,6 @@ export default function ClubActivityList() {
               批量启用
             </Button>
             <Button
-              className="ml-5"
               color="orange"
               variant="outlined"
               size="small"

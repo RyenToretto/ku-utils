@@ -28,29 +28,45 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0;
+  gap: 8px;
   font-size: 13px;
-  color: var(--ku-text-secondary, #8a7f74);
+  color: var(--ku-text-secondary);
 
-  > span {
-    margin-right: 4px;
+  /* el-button + el-button */
+  .ant-btn + .ant-btn {
+    margin-left: 12px;
   }
 
-  .ant-btn {
+  /* el-button plain 配色：与卡片底混合 light-9 / light-5 / light-8，明暗通用 */
+  @each $color, $token in (green: success, orange: warning, gold: warning) {
+    .ant-btn-variant-outlined.ant-btn-color-#{$color} {
+      $c: var(--ku-color-#{$token});
+
+      color: $c;
+      background: color-mix(in srgb, #{$c} 10%, var(--ku-bg-card));
+      border-color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
+
+      &:not(:disabled):hover {
+        color: #fff;
+        background: $c;
+        border-color: $c;
+      }
+
+      &:disabled {
+        color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
+        border-color: color-mix(in srgb, #{$c} 20%, var(--ku-bg-card));
+      }
+    }
+  }
+}
+
+/* kv3 学校列表 scoped：gap 4 + 按钮 ml-5 */
+.page-school-resource-list .batch-control {
+  gap: 4px;
+
+  .ant-btn,
+  .ant-btn + .ant-btn {
     margin-left: 5px;
-  }
-
-  .ant-btn-variant-outlined.ant-btn-color-green:not(:disabled) {
-    color: var(--ku-color-success, #389e0d);
-    border-color: color-mix(in srgb, var(--ku-color-success, #389e0d) 55%, #fff);
-    background: color-mix(in srgb, var(--ku-color-success, #389e0d) 8%, #fff);
-  }
-
-  .ant-btn-variant-outlined.ant-btn-color-orange:not(:disabled),
-  .ant-btn-variant-outlined.ant-btn-color-gold:not(:disabled) {
-    color: var(--ku-color-warning, #d48806);
-    border-color: color-mix(in srgb, var(--ku-color-warning, #d48806) 55%, #fff);
-    background: color-mix(in srgb, var(--ku-color-warning, #d48806) 8%, #fff);
   }
 }
 

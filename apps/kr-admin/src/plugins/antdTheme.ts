@@ -63,9 +63,13 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
       borderRadiusSM: 4,
     },
     components: {
-      // el-button 默认态文字为 --el-text-color-regular
+      // el-button：默认态文字 --el-text-color-regular、字重 500；small 12px / 11 内距 / 7 圆角
       Button: {
         defaultColor: ku['text-secondary'],
+        fontWeight: 500,
+        contentFontSizeSM: 12,
+        paddingInlineSM: 11,
+        borderRadiusSM: 7,
       },
       // el-pager 页码 2px 圆角
       Pagination: {
