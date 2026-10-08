@@ -130,7 +130,6 @@
                   v-model="draggableModel"
                   :animation="200"
                   handle=".sel-drag-handle"
-                  @update="onDragReorder"
                 >
                   <div
                     v-for="col in draggableModel"
@@ -328,8 +327,12 @@ const fixedSelectedCols = computed(() => {
 
 const draggableModel = computed<TableColumnMeta[]>({
   get: () => emitColumnConfig.value.filter((col) => !unableToControl(col)),
-  set: () => {
-    /* 实际重排由 onDragReorder 处理 */
+  set: (reordered) => {
+    const schemaFixed = emitColumnConfig.value.filter(
+      (col) => unableToControl(col) && !col._alwaysVisible,
+    );
+    emitColumnConfig.value = [...schemaFixed, ...reordered];
+    updateNewConfigName();
   },
 });
 
@@ -470,15 +473,6 @@ function removeSelectedItem(property?: string): void {
   updateNewConfigName();
 }
 
-function onDragReorder(): void {
-  const reordered = draggableModel.value;
-  const schemaFixed = emitColumnConfig.value.filter(
-    (col) => unableToControl(col) && !col._alwaysVisible,
-  );
-  emitColumnConfig.value = [...schemaFixed, ...reordered];
-  updateNewConfigName();
-}
-
 function scrollToGroup(group: string): void {
   activeNavGroup.value = group;
   const domEl = groupRefs.get(group);
@@ -598,7 +592,7 @@ defineExpose({ showConfigColumnDialog });
   flex-shrink: 0;
   overflow-y: auto;
   border-right: 1px solid var(--ku-border-light, #ddd4c6);
-  background: var(--ku-neutral-50, #fafafa);
+  background: var(--ku-bg-card-elevated, #fcf8f2);
   padding: 8px 0;
 }
 

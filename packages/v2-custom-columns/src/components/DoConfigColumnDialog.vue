@@ -701,7 +701,7 @@ export default {
         flex-shrink: 0;
         overflow-y: auto;
         border-right: 1px solid var(--ku-border-light, #ddd4c6);
-        background: var(--ku-neutral-50, #fafafa);
+        background: var(--ku-bg-card-elevated, #fcf8f2);
         padding: 8px 0;
 
         .nav-link {
