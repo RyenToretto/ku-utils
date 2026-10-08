@@ -4,6 +4,7 @@ import { firstLeafPath } from '@/layouts/side-menu/side-menu-tree';
 import { EXAMPLE_MODULE } from '@/maps/common/dsp-permission';
 import clazzManage from '@/modules/_example/clazzManage/_router';
 import clubActivity from '@/modules/_example/clubActivity/_router';
+import customColumns from '@/modules/_example/customColumns/_router';
 import doFilterPanel from '@/modules/_example/doFilterPanel/_router';
 import { EXAMPLE_MENUS } from '@/modules/_example/menus';
 import nestMenus from '@/modules/_example/nestMenus/_router';
@@ -35,6 +36,7 @@ const exampleRoutes: Routes = [
       ...clubActivity,
       ...uiKit,
       ...doFilterPanel,
+      ...customColumns,
       ...nestMenus,
     ],
   },
