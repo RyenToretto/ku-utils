@@ -31,11 +31,11 @@
   border-radius: calc(var(--el-border-radius-base, 8px) - 1px);
 }
 
-/* 仅图标的操作钮：固定 24×24，与 kv3 line-actions 对齐 */
+/* 仅图标的操作钮：固定 24×24，与 kv3 line-actions 对齐（EU 有文案才渲染 <span>，文字钮保持自适应宽） */
 .el-button--small.is-circle,
 .el-button--mini.is-circle,
-.line-actions .el-button--small,
-.line-actions .el-button--mini {
+.line-actions .el-button--small:not(:has(> span)),
+.line-actions .el-button--mini:not(:has(> span)) {
   width: 24px;
   min-width: 24px;
   height: 24px;
@@ -177,6 +177,104 @@
   &:hover,
   &:focus {
     color: var(--el-color-primary-light-3, var(--ku-color-primary-hover));
+  }
+}
+
+/* —— Button disabled（chalk 写死 #a0cfff 等 → 对齐 EP：实心 light-5，plain light-5/9/8） —— */
+.el-button.is-disabled {
+  &,
+  &:hover,
+  &:focus {
+    color: var(--ku-text-disabled, #a89f90);
+    background-color: var(--el-fill-color-blank, var(--ku-bg-card, #f7f3eb));
+    border-color: var(--el-border-color-light, var(--ku-border-light, #ddd5c8));
+  }
+}
+
+@each $type in (primary, success, warning, danger, info) {
+  .el-button--#{$type}.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--ku-text-on-primary, #fff);
+      background-color: var(--el-color-#{$type}-light-5);
+      border-color: var(--el-color-#{$type}-light-5);
+    }
+
+    &.is-plain,
+    &.is-plain:hover,
+    &.is-plain:focus,
+    &.is-plain:active {
+      color: var(--el-color-#{$type}-light-5);
+      background-color: var(--el-color-#{$type}-light-9);
+      border-color: var(--el-color-#{$type}-light-8);
+    }
+  }
+}
+
+.el-button--text.is-disabled {
+  &,
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+/*
+ * —— Button loading ——
+ * loading ≠ disabled：保持类型原色、整体 .65、去掉 chalk 的白色遮罩；
+ * inline-flex 吞掉 <i>/<span> 间的空白，spinner 用负 margin 抵消自身占位（1em + 5px），宽度不变。
+ */
+.el-button.is-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+
+  &::before {
+    display: none;
+  }
+
+  > .el-icon-loading:not(:last-child) {
+    margin-inline-start: calc(-0.5em - 2.5px);
+  }
+
+  > .el-icon-loading + span {
+    margin-inline-end: calc(-0.5em - 2.5px);
+  }
+}
+
+@each $type in (primary, success, warning, danger, info) {
+  .el-button--#{$type}.is-loading {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--ku-text-on-primary, #fff);
+      background-color: var(--el-color-#{$type});
+      border-color: var(--el-color-#{$type});
+    }
+
+    &.is-plain,
+    &.is-plain:hover,
+    &.is-plain:focus,
+    &.is-plain:active {
+      color: var(--el-color-#{$type});
+      background-color: var(--el-color-#{$type}-light-9);
+      border-color: var(--el-color-#{$type}-light-5);
+    }
+  }
+}
+
+.el-button--default.is-loading {
+  &,
+  &:hover,
+  &:focus {
+    color: var(--el-text-color-regular, var(--ku-text-secondary, #6d655a));
+    background-color: var(--el-fill-color-blank, var(--ku-bg-card, #f7f3eb));
+    border-color: var(--el-border-color, var(--ku-border, #c5bcb0));
   }
 }
 
