@@ -1,0 +1,54 @@
+{
+  "name": "@ku-utils/a-custom-columns",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist",
+    "linkDirectory": true
+  },
+  "description": "Angular 22 + ng-zorro-antd 自定义列 — schema 驱动表格列配置，支持多套配置持久化与拖拽排序",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json",
+    "dev": "ng-packagr -p ng-package.json -c tsconfig.lib.json --watch",
+    "typecheck": "tsc -p tsconfig.lib.json --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@angular/cdk": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@ant-design/icons-angular": "^22.0.0",
+    "ng-zorro-antd": "^22.0.0"
+  },
+  "dependencies": {
+    "@ku-utils/utils": "workspace:*",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/cdk": "^22.2.2",
+    "@angular/common": "^22.2.1",
+    "@angular/compiler": "^22.2.1",
+    "@angular/compiler-cli": "^22.2.1",
+    "@angular/core": "^22.2.1",
+    "@angular/forms": "^22.2.1",
+    "@angular/platform-browser": "^22.2.1",
+    "@angular/router": "^22.2.1",
+    "@ant-design/icons-angular": "^22.1.1",
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "angular-eslint": "^22.5.0",
+    "eslint": "^9.27.0",
+    "ng-packagr": "^22.2.4",
+    "ng-zorro-antd": "^22.1.1",
+    "rxjs": "^7.8.2",
+    "typescript": "~6.0.3"
+  }
+}

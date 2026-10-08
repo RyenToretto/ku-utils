@@ -27,10 +27,19 @@ Element Plus 表格用 schema + `useSchemaColumnConfig` 驱动列配置、持久
 5. 配套 rule：`custom-columns-vue3-pattern.mdc`（固定列、slot、嵌套表头约定）。
 6. Demo 页放 Example 模块，生产构建门控禁止打进产物。
 7. React（`@ku-utils/r-custom-columns`）：`useSchemaColumnConfig` 返回值经 `SchemaColumnConfigContext.Provider` 下发，`schemasToColumns` 生成 antd columns；`DoTableHeader` 内含配置抽屉，页面不再单独挂弹层。Vue / Vue2 / React 三包交互 1:1，改一侧须同步其余。
+8. Angular（`@ku-utils/a-custom-columns`）：`createSchemaColumnConfig` 返回 signals 状态，经 `[kuSchemaColumnConfig]` 指令下发；nz-table 模板驱动，`headerRows()` / `visibleLeafSchemas()` 逐行逐列渲染 `ku-schema-header` / `ku-schema-cell`，插槽用 `ng-template[kuSchemaCellDef|kuSchemaHeaderDef]`；拖拽用 CDK DragDrop。Vue / Vue2 / React / Angular 四包交互 1:1。
+
+| 能力       | Vue 3                    | Vue 2（mixin）                | React                             | Angular                                      |
+| ---------- | ------------------------ | ----------------------------- | --------------------------------- | -------------------------------------------- |
+| 状态       | `useSchemaColumnConfig`  | `useSchemaColumnConfig` mixin | `useSchemaColumnConfig` + Context | `createSchemaColumnConfig` + 指令上下文      |
+| 列渲染     | `SchemaColumn` / `v-for` | `ElementTableColumnAdapter`   | `schemasToColumns`                | `ku-schema-header` / `ku-schema-cell`        |
+| 自定义单元 | 具名插槽                 | 具名插槽                      | `cellRender` / `renderHeader`     | `kuSchemaCellDef` / `kuSchemaHeaderDef` 模板 |
+| 透传列属性 | `elAttrs`                | `elAttrs`                     | `antdAttrs`                       | `zorroAttrs`                                 |
+| 拖拽       | vue-draggable-plus       | vuedraggable                  | sortablejs                        | `@angular/cdk/drag-drop`                     |
 
 ## 本仓落点
 
-- `packages/custom-columns` / `packages/v2-custom-columns` / `packages/r-custom-columns`
+- `packages/custom-columns` / `packages/v2-custom-columns` / `packages/r-custom-columns` / `packages/a-custom-columns`
 - `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc`
 - `apps/kv2-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv2-admin/.cursor/rules/custom-columns-vue2-pattern.mdc`
 - `apps/kr-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kr-admin/.cursor/rules/custom-columns-react-pattern.mdc`
