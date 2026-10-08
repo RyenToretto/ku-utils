@@ -159,6 +159,8 @@ service.interceptors.response.use(
     return Promise.reject(new Error(message));
   },
   (error) => {
+    if (axios.isCancel(error)) return Promise.reject(error);
+
     const httpStatus = error?.response?.status as number | undefined;
     const body = error?.response?.data;
     const bodyCode =
