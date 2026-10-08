@@ -287,8 +287,7 @@ const COLUMNS = [
                   </button>
                   <button
                     nz-button
-                    nzType="primary"
-                    nzGhost
+                    class="btn-plain-primary"
                     nzSize="small"
                   >
                     立即使用

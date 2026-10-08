@@ -64,15 +64,16 @@
 }
 
 /*
- * el-button plain 配色：与卡片底混合 light-9 / light-5 / light-8，明暗通用。
+ * el-button plain 配色：读 skin 状态色色阶（与 kv3 同值，明暗通用）。
+ * 常态 light-9 底 / light-5 边，悬停实色，禁用 light-5 字 / light-9 底 / light-8 边。
  * nz-button 无 color/variant 组合（kr `color="green" variant="outlined"`），统一用 `btn-plain-*` 类。
  */
 @mixin plain-button($token) {
   $c: var(--ku-color-#{$token});
 
   color: $c;
-  background: color-mix(in srgb, #{$c} 10%, var(--ku-bg-card));
-  border-color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
+  background: var(--ku-color-#{$token}-light-9);
+  border-color: var(--ku-color-#{$token}-light-5);
 
   &:not([disabled]):hover,
   &:not([disabled]):focus-visible {
@@ -83,13 +84,13 @@
 
   &[disabled],
   &[disabled]:hover {
-    color: color-mix(in srgb, #{$c} 50%, var(--ku-bg-card));
-    background: color-mix(in srgb, #{$c} 10%, var(--ku-bg-card));
-    border-color: color-mix(in srgb, #{$c} 20%, var(--ku-bg-card));
+    color: var(--ku-color-#{$token}-light-5);
+    background: var(--ku-color-#{$token}-light-9);
+    border-color: var(--ku-color-#{$token}-light-8);
   }
 }
 
-@each $name in ('primary', 'success', 'warning') {
+@each $name in ('primary', 'danger', 'success', 'warning') {
   .ant-btn.btn-plain-#{$name} {
     @include plain-button($name);
   }
@@ -388,7 +389,7 @@
   padding: 2px 6px;
   border: 0;
   border-radius: 8px 8px 0 0;
-  background: var(--ku-color-primary-bg, #fbf6ec);
+  background: var(--ku-color-primary-light-9);
   color: var(--ku-color-primary, #9a6328);
   font-family: inherit;
   font-size: 12px;

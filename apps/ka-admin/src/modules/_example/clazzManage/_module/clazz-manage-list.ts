@@ -169,8 +169,7 @@ const COLUMNS = [
                 <div class="line-actions">
                   <button
                     nz-button
-                    nzType="primary"
-                    nzGhost
+                    class="btn-plain-primary"
                     nzSize="small"
                     title="编辑"
                     aria-label="编辑"
@@ -180,8 +179,7 @@ const COLUMNS = [
                   </button>
                   <button
                     nz-button
-                    nzDanger
-                    nzGhost
+                    class="btn-plain-danger"
                     nzSize="small"
                     title="删除"
                     aria-label="删除"
