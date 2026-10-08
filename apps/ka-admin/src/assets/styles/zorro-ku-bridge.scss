@@ -845,6 +845,39 @@
   font-weight: 600;
 }
 
+// ─── 全局行高：ng-zorro reset 把 body 设为 1.5715，kv3 / kr 沿用 html 的 1.15（组件各自声明行高） ───
+body {
+  line-height: inherit;
+}
+
+// ─── Drawer：对齐 kv3 el-drawer / kr Drawer 标题字重、分隔线与关闭按钮 ─────────
+.ant-drawer-header {
+  border-bottom-color: var(--ku-divider);
+}
+
+.ant-drawer-title {
+  font-weight: 600;
+}
+
+.ant-drawer-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  color: var(--ku-text-placeholder);
+  border-radius: 4px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+
+  &:hover {
+    color: var(--ku-text-primary);
+    background: var(--ku-bg-hover);
+  }
+}
+
 // ─── Message：卡片底与留白对齐 kr；ng-zorro 模板写死线性图标，换成 antd 规范的实心图标 ─────────
 .ant-message-notice-content {
   padding: 9px 12px;

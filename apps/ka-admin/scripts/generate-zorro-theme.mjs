@@ -74,6 +74,10 @@ const MODIFY_VARS = {
   // el-alert：8/16 内边距
   'alert-padding-vertical': '8px',
   'alert-padding-horizontal': '16px',
+  // el-drawer：标题 24 行高；页脚不随 modal 归零，保持 8/16
+  'drawer-title-line-height': '24px',
+  'drawer-footer-padding-vertical': '8px',
+  'drawer-footer-padding-horizontal': '16px',
 }
 
 const { css: source } = await less.render(readFileSync(entry, 'utf-8'), {
