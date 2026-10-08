@@ -1,5 +1,5 @@
 import { Select } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export type DoSelectorOption = {
   value: string | number;
@@ -37,37 +37,54 @@ export function DoSelector({
   onSelectChange,
 }: DoSelectorProps) {
   const [remoteOptions, setRemoteOptions] = useState<DoSelectorOption[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [requesting, setRequesting] = useState(false);
+  /** 上次成功发起请求时的 payload 快照；payload 未变则展开不重拉 */
+  const cacheKeyRef = useRef<string | null>(null);
+  const mountedRef = useRef(true);
   const mode = multiple ? 'multiple' : undefined;
   const resolved = payload ? remoteOptions : options;
 
   useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  function fetchOptions() {
     if (!payload) return;
-    let cancelled = false;
-    setLoading(true);
-    void payload
+    const key = JSON.stringify(payload);
+    if (key === cacheKeyRef.current) return;
+    cacheKeyRef.current = key;
+    setRequesting(true);
+    payload
       .requestFunc()
       .then((list) => {
-        if (!cancelled) setRemoteOptions(Array.isArray(list) ? list : []);
+        if (mountedRef.current) setRemoteOptions(Array.isArray(list) ? list : []);
+      })
+      .catch(() => {
+        cacheKeyRef.current = null;
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (mountedRef.current) setRequesting(false);
       });
-    return () => {
-      cancelled = true;
-    };
-  }, [payload]);
+  }
 
   return (
     <Select
       allowClear={clearable}
       disabled={disabled}
-      loading={loading}
       mode={mode}
       placeholder={placeholder}
       style={{ minWidth: 160, ...style }}
-      options={resolved.map((o) => ({ value: o.value, label: o.label }))}
+      options={requesting ? [] : resolved.map((o) => ({ value: o.value, label: o.label }))}
+      notFoundContent={
+        requesting ? <span className="do-selector-loading">加载中...</span> : undefined
+      }
       value={value ?? undefined}
+      onOpenChange={(open) => {
+        if (open) fetchOptions();
+      }}
       onChange={(v) => {
         onChange?.(v ?? null);
         if (!onSelectChange) return;

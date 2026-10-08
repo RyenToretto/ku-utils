@@ -22,7 +22,7 @@ export default function UiKitDoSelectorDemo() {
         return [
           { label: '北京', value: 'bj' },
           { label: '上海', value: 'sh' },
-          { label: '广州', value: 'gz' },
+          { label: '深圳', value: 'sz' },
         ];
       },
     }),
@@ -35,7 +35,6 @@ export default function UiKitDoSelectorDemo() {
         type="warning"
         showIcon
         closable={false}
-        className="ui-kit-demo-alert"
         message="DoSelector 适合简单枚举 / 远程下拉；跨域选实体请用 XxxSelector。"
       />
 

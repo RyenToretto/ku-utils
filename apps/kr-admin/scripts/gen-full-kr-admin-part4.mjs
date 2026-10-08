@@ -124,7 +124,9 @@ write(
     apiList: 'requestClubActivityList',
     apiDelete: 'requestDeleteClubActivity',
     apiEdit: 'requestEditClubActivity',
-  }).replace(/班级/g, '社团').replace(/clazzName/g, 'clubName'),
+  })
+    .replace(/班级/g, '社团')
+    .replace(/clazzName/g, 'clubName'),
 );
 // fix the botched replace - rewrite club properly
 write(
@@ -219,7 +221,7 @@ const uiKitRoutes: RouteObject[] = [
   { path: 'ui-kit/cells', Component: lazy(() => import('../_module/UiKitCellsDemo')), handle: { title: '单元格与编辑器', permission: 'EXAMPLE_MODULE' } },
   { path: 'ui-kit/max-height', Component: lazy(() => import('../_module/UiKitMaxHeightDemo')), handle: { title: '表格 max-height', permission: 'EXAMPLE_MODULE' } },
   { path: 'ui-kit/name-pattern', Component: lazy(() => import('../_module/UiKitNamePatternDemo')), handle: { title: '命名模板', permission: 'EXAMPLE_MODULE' } },
-  { path: 'ui-kit/selector', Component: lazy(() => import('../_module/UiKitSelectorDemo')), handle: { title: 'DoSelector', permission: 'EXAMPLE_MODULE' } },
+  { path: 'ui-kit/selector', Component: lazy(() => import('../_module/UiKitDoSelectorDemo')), handle: { title: 'DoSelector', permission: 'EXAMPLE_MODULE' } },
   { path: 'ui-kit/words-tag', Component: lazy(() => import('../_module/UiKitWordsTagDemo')), handle: { title: 'WordsTag', permission: 'EXAMPLE_MODULE' } },
   { path: 'ui-kit/preview-video', Component: lazy(() => import('../_module/UiKitPreviewVideoDemo')), handle: { title: '预览视频', permission: 'EXAMPLE_MODULE' } },
   { path: 'ui-kit/schedule-week', Component: lazy(() => import('../_module/UiKitScheduleWeekDemo')), handle: { title: '投放时段周', permission: 'EXAMPLE_MODULE' } },
