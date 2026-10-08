@@ -33,15 +33,23 @@
 - 顺序：**日期 → 文本 → 其它非 radio → radio**
 - 范围日期用封装 `DateRange`；默认可清空
 - 单选 ≤3 → 分段 radio（首项空=不限）；≥4/多选/长文案 → select
-- `#ctl` 横向贴卡片右下；搜索 loading 勿撑宽按钮
+- `#ctl` 横向贴卡片右下；搜索按钮只传 loading（禁同时 disabled），宽度由全局按钮样式保证不变（见下「按钮状态」）
 - **离散完成即查**（radio / select / DateRange / 选择器确定 / 关键字清空）；关键字打字不查；禁 `watch(listFilters)`
 
 ### 操作列与动作分区
 
 - `ops-column` 语义标记；对齐交给 EP `align`
 - 行内：`plain` + `small`；**禁 link**；icon 在前、文字在后；删除用 icon、禁再写「删除」文案
-- loading 按钮行内紧凑 `min-width`
+- 行内仅图标小按钮 24×24；带文字的按钮宽度自适应（禁止用「仅图标」尺寸规则误伤文字按钮）
 - 表头「新建」；**批量**→ `#batch`；**页级**→ `#control`（禁止再挂 PageHeader / title / subtitle）
+
+### 按钮状态（四端一致）
+
+1. **loading ≠ disabled**：loading 保持类型原色，整体 `opacity: .65`、不响应悬停 / 点击，禁止遮罩洗白；禁止 loading 时同时传 `disabled`。
+2. **disabled** 对齐 kv3（Element Plus）：实心 `light-5`；plain `light-5 / 9 / 8`；禁写死色值。
+3. **图标显隐不改宽**：loading spinner、条件图标出现 / 消失（含进出场动画）时宽高不变。全局样式用负 margin 抵消图标占位（图标 1em + 间距）；禁止组件内 `position: absolute` 局部 hack 或 `min-width` 兜宽。
+4. 仅图标按钮图标 14px；聚焦态只认键盘 `:focus-visible`，鼠标点击后不残留悬停色。
+5. 验收：逐帧采样按钮宽度（loading 前、中、后），四端一致。
 
 ### Cell
 
@@ -79,4 +87,5 @@
 
 - [ ] 新列表页满足四要素与筛选顺序
 - [ ] 操作列形态符合 plain/small/icon 序
+- [ ] 按钮 loading 保持原色、不带 disabled，loading 前中后宽度不变
 - [ ] Mock / 选择器分别遵守独立模块（不在本文件重复矛盾）

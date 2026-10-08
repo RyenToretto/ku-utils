@@ -34,6 +34,8 @@
 - `.domain-module-main` padding 四边一致（20px）；页内首块勿再叠 `margin-top`，用父级 `gap`。
 - 侧栏多级以 kv3 `app-shell.scss` `.side-menu` 为准：二级起左缘 22 / 34 / 46、引导线 28 / 40 / 52、各级右缘同为 209、激活链与悬停时箭头 / 图标高亮。kr / ka 用 `.ant-menu-sub` 层级选择器补齐（标题宽 `calc(100% - 20px)`、箭头 `inset-inline-end: 26px`）；ka 递归模板投影的 `nz-submenu` 查不到子项，需显式绑定 `ant-menu-submenu-selected`；kv2 Element UI 子项默认 `min-width: 200px` 须清零。
 - body 不设底色（页面底只在 html 的 `--ku-bg-page`）；ng-zorro reset 给 body 的卡片底须覆盖为 `transparent`。
+- 按钮状态四端一致（细则见 [rule-skill-admin-list-filter](../rule-skill-admin-list-filter/)「按钮状态」）：loading 保持原色 + `.65`、不带 disabled；图标显隐宽度不变，各栈在全局桥接样式用负 margin 抵消图标占位——kv3 `app-shell.scss`（`0.5em + 3px`，small `+ 2px`）、kv2 `element-ui-bridge.scss`（`inline-flex` 吞空白，`+ 2.5px`）、kr `antd-ku-bridge.scss`（钉死 antd loading 图标进出场动画，`+ 4px`）、ka `zorro-ku-bridge.scss`（`+ 4px`）。
+- ka 主题生成器额外两处改写：按钮 `:focus` → `:focus-visible`（antd v4 less 的按钮聚焦与悬停同色，鼠标点击后会残留）；实心主按钮字色 `#fff` → `var(--ku-text-on-primary)`（暗色主色变浅，白字对比不足）。ng-zorro 仅图标按钮默认 16px，bridge 统一为 14px。
 
 ## 必须成对的资产
 
