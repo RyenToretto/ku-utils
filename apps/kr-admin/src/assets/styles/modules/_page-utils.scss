@@ -1547,3 +1547,12 @@ el-form-item.do-fill-form > .el-form-item__content {
 .trend-header {
   gap: 4px;
 }
+
+/* el-tag size=small type=warning：高 20，light-9 底 / light-8 边 */
+.badge-header .ant-tag {
+  height: 20px;
+  margin-inline-end: 0;
+  line-height: 18px;
+  background: color-mix(in srgb, var(--ku-color-warning) 10%, var(--ku-bg-card));
+  border-color: color-mix(in srgb, var(--ku-color-warning) 20%, var(--ku-bg-card));
+}

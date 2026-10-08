@@ -1,10 +1,10 @@
-import { LineChartOutlined } from '@ant-design/icons';
+import { FundOutlined } from '@ant-design/icons';
 
 export default function TrendHeader({ label }: { label: string }) {
   return (
     <span className="trend-header">
       {label}
-      <LineChartOutlined />
+      <FundOutlined />
     </span>
   );
 }
