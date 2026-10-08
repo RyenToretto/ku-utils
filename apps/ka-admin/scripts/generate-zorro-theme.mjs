@@ -154,6 +154,14 @@ const TEXT_COLORS = {
   'rgba(0,0,0,0.25)': 'var(--ku-text-disabled)',
   '#bfbfbf': 'var(--ku-text-placeholder)',
   '#a6a6a6': 'var(--ku-text-placeholder)',
+  '#595959': 'var(--ku-text-secondary)',
+  '#ccc': 'var(--ku-text-placeholder)',
+  '#ff4d4f': 'var(--ku-color-danger)',
+  '#fff': 'var(--ku-text-on-primary)',
+  '#ffffff': 'var(--ku-text-on-primary)',
+  'rgba(0,0,0,0.67)': 'var(--ku-text-secondary)',
+  '#d9d9d9': 'var(--ku-text-disabled)',
+  'rgba(0,0,0,0.04)': 'var(--ku-bg-hover)',
 }
 
 /** 背景类属性 */
@@ -171,6 +179,25 @@ const BG_COLORS = {
   'rgba(0,0,0,0.75)': 'var(--ku-bg-tooltip)',
   'rgba(0,0,0,0.45)': 'var(--ku-bg-overlay)',
   'rgba(190,190,190,0.2)': 'var(--ku-bg-hover)',
+  'rgba(150,150,150,0.1)': 'var(--ku-bg-hover)',
+  '#f4f4f4': 'var(--ku-bg-active)',
+  '#e6e6e6': 'var(--ku-bg-active)',
+  '#d9d9d9': 'var(--ku-border-default)',
+  '#ccc': 'var(--ku-text-placeholder)',
+  'rgba(0,0,0,0.25)': 'var(--ku-text-disabled)',
+  'rgba(0,0,0,0.2)': 'var(--ku-text-disabled)',
+  '#ff4d4f': 'var(--ku-color-danger)',
+  '#fff1f0': 'var(--ku-color-danger-bg)',
+  '#e6f4ff': 'var(--ku-color-primary-bg)',
+  '#bae0ff': 'var(--ku-primary-200)',
+  '#f3f3f3': 'var(--ku-bg-active)',
+  '#e1e1e1': 'var(--ku-bg-active)',
+  '#fbfbfb': 'var(--ku-table-header-bg)',
+  'rgba(129,129,129,0.24)': 'var(--ku-bg-active)',
+  'rgba(0,0,0,0.15)': 'var(--ku-border-default)',
+  'rgba(204,204,204,0.06)': 'var(--ku-bg-hover)',
+  'rgba(150,150,150,0.06)': 'var(--ku-bg-hover)',
+  '#ffe58f': 'var(--ku-color-warning-bg)',
 }
 
 /** 边框 / 描边类属性 */
@@ -181,7 +208,31 @@ const BORDER_COLORS = {
   'rgba(0,0,0,0.25)': 'var(--ku-border-hover)',
   '#f5f5f5': 'var(--ku-border-light)',
   '#fff': 'var(--ku-bg-card)',
+  'rgba(100,100,100,0.2)': 'var(--ku-border-light)',
+  'rgba(0,0,0,0.03)': 'var(--ku-border-light)',
 }
+
+/** nz-empty 插画（svg fill / stroke）：明暗都跟卡片底与边框走，否则暗色下是一块浅色图 */
+const EMPTY_IMG_COLORS = {
+  '#f5f5f5': 'var(--ku-bg-active)',
+  '#f5f5f7': 'var(--ku-bg-hover)',
+  '#fafafa': 'var(--ku-table-header-bg)',
+  '#fff': 'var(--ku-bg-card)',
+  '#dce0e6': 'var(--ku-border-default)',
+  '#d9d9d9': 'var(--ku-border-default)',
+  '#aeb8c2': 'var(--ku-text-placeholder)',
+}
+
+/**
+ * 映射不到时允许保留字面量的语境（其余未映射字面量直接让生成失败）：
+ * antd 预设色板（tag / badge / ribbon 的 pink…purple）、暗色菜单 / 布局（本仓不用）、
+ * 图片预览与上传卡片蒙层、取色器、sticky 滚动条、cdk 遮罩、各类阴影与透明。
+ */
+const KEEP_CONTEXT =
+  /ant-(tag|badge-status|ribbon-color|popover|tooltip)-(pink|magenta|red|volcano|orange|yellow|gold|cyan|lime|green|blue|geekblue|purple)|-dark\b|ant-layout-(header|sider)|ant-image-(preview|mask)|ant-upload-list|ant-color-picker|sticky-scroll-bar|cdk-overlay|ant-rate|::selection|week-panel-row-selected|hash-code-primary|qrcode-mask|ant-menu-inline-collapsed-tooltip/
+const KEEP_PROP = /shadow|tap-highlight/
+const KEEP_LITERALS = new Set(['transparent', 'rgba(0,0,0,0)', 'rgba(255,255,255,0)', '#000', '#000000', 'rgba(0,0,0,0.5)', 'rgba(255,255,255,0.01)', 'rgba(0,0,0,0.001)'])
+const unmapped = new Map()
 
 const DROPDOWN_SHADOW =
   '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)'
@@ -211,6 +262,8 @@ const SELECTOR_OVERRIDES = [
   { selector: /^\.ant-tag$/, prop: 'background', value: mix('var(--ku-text-primary)', 3, 'var(--ku-bg-card)') },
   // 实心主按钮字色：暗色下主色变浅，需随 skin 切深字（kv3 / kr 同读 --ku-text-on-primary）
   { selector: /\.ant-btn-primary/, prop: 'color', literal: '#fff', value: 'var(--ku-text-on-primary)' },
+  // tooltip 底走 --ku-bg-tooltip（暗色下是浅底），前景必须反色，否则白字贴浅底
+  { selector: /\.ant-tooltip-inner/, prop: 'color', literal: '#fff', value: 'var(--ku-text-inverse)' },
 ]
 
 let replaced = 0
@@ -245,11 +298,18 @@ function rewriteDeclaration(selector, prop, value) {
     replaced += 1
     return 'var(--ku-shadow-dropdown)'
   }
-  const table = pickTable(prop)
-  if (!table) return value
+  if (KEEP_CONTEXT.test(selector) || KEEP_PROP.test(prop)) return value
+  const table = /ant-empty-img/.test(selector) && (prop === 'fill' || prop === 'stroke') ? EMPTY_IMG_COLORS : pickTable(prop)
   return value.replace(COLOR_LITERAL, (literal) => {
-    const mapped = table[norm(literal)]
-    if (!mapped) return literal
+    const key = norm(literal)
+    const mapped = table?.[key]
+    if (!mapped) {
+      if (!KEEP_LITERALS.has(key)) {
+        const id = `${prop}: ${key}`
+        unmapped.set(id, [...(unmapped.get(id) ?? []), selector.replace(/\s+/g, ' ').slice(0, 80)])
+      }
+      return literal
+    }
     replaced += 1
     return mapped
   })
@@ -269,6 +329,14 @@ css = css.replace(/([^{}]+)\{([^{}]*)\}/g, (_rule, rawSelector, body) => {
   })
   return `${rewriteButtonFocus(rawSelector)}{${nextBody}}`
 })
+
+if (unmapped.size) {
+  for (const [id, selectors] of unmapped) {
+    console.error(`  ${id}  ← ${[...new Set(selectors)].slice(0, 3).join(' | ')}`)
+  }
+  console.error(`[generate-zorro-theme] ${unmapped.size} 个颜色字面量未映射，请补进映射表或 KEEP_*`)
+  process.exit(1)
+}
 
 const header =
   '/* 由 scripts/generate-zorro-theme.mjs 生成，请勿手改。源：ng-zorro-antd.variable.css → tome(--ku-*) */\n'

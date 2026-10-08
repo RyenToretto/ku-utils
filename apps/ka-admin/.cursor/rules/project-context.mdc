@@ -49,7 +49,7 @@ src/modules/<域>/<子业务>/
 
 - 二次确认统一 `injectConfirm()`（`@/plugins/confirm`，实心警示图标、无关闭叉、居中）；提示用 `NzMessageService`
 - 日期适配 `provideNzDateFnsAdapter({ locale: zhCN, firstDayOfWeek: 1 })`；禁已废弃的 `NZ_DATE_LOCALE`
-- 主题：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式 → `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；变量映射 `--ku-*`，less 表达不了的细节进 `zorro-ku-bridge.scss`
+- 主题：`scripts/generate-zorro-theme.mjs` 用 less 编译 ng-zorro 源样式 → `src/assets/styles/generated/ng-zorro-ku.css`（gitignore，`prepare:assets` 生成）；变量映射 `--ku-*`，**未映射的颜色字面量让生成失败**（预设色板 / 阴影等在 `KEEP_*` 显式登记），less 表达不了的细节进 `zorro-ku-bridge.scss`
 - 样式颜色读 `var(--ku-*, <tome 浅色>)`；禁 `--ant-*` 覆写与 ng-zorro 默认色
 - 图标静态注册在 `plugins/zorro-icons.ts`，禁全量动态加载
 
