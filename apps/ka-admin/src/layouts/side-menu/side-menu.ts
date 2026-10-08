@@ -65,6 +65,7 @@ export class MenuInjector {
               [nzTitle]="item.label"
               [nzIcon]="item.icon || null"
               [nzOpen]="isOpen(item.key)"
+              [class.ant-menu-submenu-selected]="activeKeys().includes(item.key)"
               (nzOpenChange)="toggleOpen(item.key, $event)"
             >
               <ul>
@@ -114,11 +115,16 @@ export class SideMenu {
     })),
   );
 
+  /** 当前路由的祖先分组；nz-submenu 的 selected 靠内容查询，递归模板投影的子项查不到，需显式绑定 */
+  protected readonly activeKeys = computed(() =>
+    collectOpenKeysForPath(this.menus(), this.pathname()),
+  );
+
   private readonly openKeys = signal<string[]>([]);
 
   constructor() {
     effect(() => {
-      this.openKeys.set(collectOpenKeysForPath(this.menus(), this.pathname()));
+      this.openKeys.set(this.activeKeys());
     });
   }
 
