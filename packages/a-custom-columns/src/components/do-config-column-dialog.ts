@@ -90,7 +90,7 @@ import { KuDoReadColumnConfig } from './do-read-column-config';
         <div class="drawer-wrap">
           <div class="col-dialog-body">
             <div class="cfg-search">
-              <nz-input-wrapper>
+              <nz-input-wrapper nzAllowClear>
                 <span
                   nzInputPrefix
                   nz-icon
