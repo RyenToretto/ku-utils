@@ -15,7 +15,7 @@
 | --- | ---------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
 | C01 | HeaderProfileMenu + AppearancePicker     | 侧向外观、切肤、瞬时关闭、无残留                          | ✅                                                    |
 | C02 | BrandLogoMark / AdminVersionLogo         | 完整 logo、更新角标                                       | ✅                                                    |
-| C03 | DoFilterPanel                            | 折叠/按钮槽/离散即查/disableFold                          | ⚠️ 离散即查已修（C12），折叠待 F 组验                 |
+| C03 | DoFilterPanel                            | 折叠/按钮槽/离散即查/disableFold                          | ✅ 离散即查（C12）；折叠/展开高度、label auto 已验    |
 | C04 | TableWrap + DoTableHeader                | 工具栏、自定义列入口、高度                                | ⚠️ 待 CC 组复验                                       |
 | C05 | ListPaginationBar                        | 总数/页码/每页/跳页/刷新（刷新按需，对齐 enable-refresh） | ✅                                                    |
 | C06 | CellNameId / CellState / CellDateTime    | 开关确认、只读指示器、时间格式                            | ✅ 列表创建时间统一 CellDateTime                      |
@@ -34,13 +34,13 @@
 
 ## B. 壳层
 
-| ID  | 项                  | 验收要点                                                                                                                                                                                                                                                                                                          | 状态        |
-| --- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| S01 | BaseHeader          | Logo / Demo Tab / 账户菜单 / 外观                                                                                                                                                                                                                                                                                 | ✅          |
-| S02 | DomainModuleShell   | aside 220、主区 padding 20                                                                                                                                                                                                                                                                                        | ✅ 度量一致 |
-| S03 | SideMenu            | 展开链、高亮、图标、暗色、四级导航                                                                                                                                                                                                                                                                                | ⭕️          |
-| S04 | 皮肤桥接 / 样式迁移 | `--ku-*` / dark / Ant token / 弹层暗色；`elTable.scss`、`_page-utils.scss` 大量 `.el-*` 选择器在 antd 下失效（斑马纹、行高、筛选区、分页样式与 kv3 有差）；表格/筛选区/卡片/antd 全局 token（skin/tokens）已迁，分页/下拉/聚焦已迁，余 elInput/elRadio/app-shell 与 `_page-utils` drawer-pick 的失效 `.el-*` 样式 | ⚠️          |
-| S05 | Button 文案         | 两字中文不插空（`button.autoInsertSpace`）                                                                                                                                                                                                                                                                        | ✅          |
+| ID  | 项                  | 验收要点                                                                                                                                                                                                                                                                                                  | 状态        |
+| --- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| S01 | BaseHeader          | Logo / Demo Tab / 账户菜单 / 外观                                                                                                                                                                                                                                                                         | ✅          |
+| S02 | DomainModuleShell   | aside 220、主区 padding 20                                                                                                                                                                                                                                                                                | ✅ 度量一致 |
+| S03 | SideMenu            | 展开链、高亮、图标、暗色、四级导航                                                                                                                                                                                                                                                                        | ⭕️          |
+| S04 | 皮肤桥接 / 样式迁移 | `--ku-*` / dark / Ant token / 弹层暗色；`elTable.scss`、`_page-utils.scss` 大量 `.el-*` 选择器在 antd 下失效（斑马纹、行高、筛选区、分页样式与 kv3 有差）；表格/筛选区/卡片/antd 全局 token（skin/tokens）已迁，分页/下拉/聚焦已迁，余 elRadio/app-shell 与 `_page-utils` drawer-pick 的失效 `.el-*` 样式 | ⚠️          |
+| S05 | Button 文案         | 两字中文不插空（`button.autoInsertSpace`）                                                                                                                                                                                                                                                                | ✅          |
 
 ## C. 叶子页场景清单
 
@@ -89,9 +89,9 @@
 
 | ID      | 路径                                   | 状态 |
 | ------- | -------------------------------------- | ---- |
-| F01–F04 | `do-filter-panel/buttons-1..4`         | ⭕️   |
-| F05–F08 | `do-filter-panel/rows-1..3`、`rows-50` | ⭕️   |
-| F09     | `do-filter-panel/layout-fold`          | ⭕️   |
+| F01–F04 | `do-filter-panel/buttons-1..4`         | ✅   |
+| F05–F08 | `do-filter-panel/rows-1..3`、`rows-50` | ✅   |
+| F09     | `do-filter-panel/layout-fold`          | ✅   |
 
 ### C4 自定义列（8）
 
@@ -156,6 +156,10 @@
 | 2026-10-08 | S04 分页条               | is-background 页码配色/hover/禁用；「前往 N 页」常驻 + 钳位（9→2、0/abc→1，失焦与回车）；N条/页；刷新尺寸 46×32 + loading；删失效 elPagination.scss                                                                                            | db403b3                         |
 | 2026-10-08 | Select 下拉              | 34 高选项、20/32 内距、选中品牌色 700 无底、悬停 fill 底、描边 + 6px 留白；暗色走 skin token（kv3 暗色为 EP 自带色板，不追同值）                                                                                                               | 458fa4d                         |
 | 2026-10-08 | 聚焦/按钮投影            | `controlOutlineWidth: 0`：输入聚焦仅描边、按钮无 2px 底影                                                                                                                                                                                      | 9907ee1                         |
+| 2026-10-08 | F01–F09 筛选面板         | 控件默认宽 194、`labelWidth="auto"`（rows-50 量得 76）、操作按钮间距 12、小号单选 48×24 12/500/r8、demo 下拉补「不限」；删失效 elInput.scss                                                                                                    | 76207b3                         |
+| 2026-10-08 | F 组 fill-viewport       | demo 页根沿用 page-simple-example-list；表格最小高按整表（含表头）200 计，展开后与 kv3 差 1px；layout-fold 无外层滚动                                                                                                                          | eb1474c                         |
+| 2026-10-08 | U01 DoSelector 宽        | 去掉内置 minWidth 160，状态项 220 与 kv3 一致                                                                                                                                                                                                  | 4ecded1                         |
+| 2026-10-08 | ⏭ loading 时序           | React dev 下 Spin 晚一帧出现（渲染开销 + Spin effect 切换），不影响语义                                                                                                                                                                        | —                               |
 | 2026-10-08 | ⏭ 记录                   | 分页 hover 底用 primary 与卡片底 10% 混色（kv3 与 #fff 混），差 ≈7 级；表体常驻滚动条同前                                                                                                                                                      | —                               |
 | 2026-10-08 | 待办                     | `_page-utils` drawer-pick 仍写 `.table-wrap__bd`/`.el-table`（kr 为 `.table-wrap-bd`），随 useDrawerPickListMaxHeight 处理；`r-custom-columns/style.css` 用了不存在的 `--ku-border-color` 等 token，CC 组处理；表格行内图标按钮描边色比 kv3 深 | —                               |
 | 2026-10-08 | 待办                     | `scripts/gen-full-kr-admin*.mjs` 一次性脚手架已过期（重跑会覆盖修复），待用户确认后删除                                                                                                                                                        | —                               |
