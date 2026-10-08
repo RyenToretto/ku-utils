@@ -31,6 +31,8 @@ export default tseslint.config(
       '@angular-eslint/template/prefer-self-closing-tags': 'error',
       '@angular-eslint/template/click-events-have-key-events': 'off',
       '@angular-eslint/template/interactive-supports-focus': 'off',
+      // ng-zorro 的 label[nz-checkbox] / label[nz-radio] 自身即表单控件
+      '@angular-eslint/template/label-has-associated-control': 'off',
     },
   },
 );
