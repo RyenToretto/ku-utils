@@ -1,0 +1,16 @@
+// Angular 组件宿主默认 inline；kv3 / kr 对应根节点是块级 div/section。
+// :where 零特异性，组件自身类（如 .cell-state 的 inline-flex）仍可覆盖。
+:where(
+  ka-do-filter-panel,
+  ka-cell-name-id,
+  ka-cell-state,
+  ka-do-txt-setter,
+  ka-do-words-tag,
+  ka-do-name-pattern,
+  ka-schedule-time-week-picker,
+  ka-coming-soon-layer,
+  [class^='page-'],
+  [class*=' page-']
+) {
+  display: block;
+}

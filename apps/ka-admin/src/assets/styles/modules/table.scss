@@ -1,0 +1,40 @@
+// nz-table 皮肤补充：配色/内边距走 scripts/generate-zorro-theme.mjs + zorro-ku-bridge，这里只放结构样式
+
+.ant-table-wrapper.page-table {
+  .ant-table-thead > tr > th {
+    white-space: nowrap;
+  }
+
+  // el-table .cell 行高 23px
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    line-height: 23px;
+  }
+
+  // el-table 多行表头 thead.is-group th
+  .ant-table .ant-table-thead:has(> tr + tr) > tr > th {
+    padding-block: 3px;
+  }
+
+  // el-table td .cell > .el-button
+  .ant-table-tbody > tr > td > .ant-btn {
+    height: 24px;
+    margin: 2px;
+    padding: 0 5px;
+    vertical-align: middle;
+  }
+
+  // 隔行变色（对齐 kv3 el-table stripe）；`of` 选择器跳过 antd 的 measure-row
+  .ant-table-tbody > tr.ant-table-row:nth-child(even of .ant-table-row) > td {
+    background: var(--ku-table-stripe-bg);
+  }
+
+  .ant-table-tbody > tr.ant-table-row:hover > td,
+  .ant-table-tbody > tr.ant-table-row.current-row:hover > td {
+    background: var(--ku-bg-hover);
+  }
+
+  .ant-table-tbody > tr.ant-table-row:last-child > td {
+    border-bottom-width: 0;
+  }
+}

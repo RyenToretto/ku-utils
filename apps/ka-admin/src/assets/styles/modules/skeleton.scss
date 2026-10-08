@@ -1,0 +1,31 @@
+@use '../common/mixins.scss' as *;
+
+/*
+ * 项目统一骨架屏工具 class (PM 2026-05-18 规范)
+ *
+ * 任何"加载占位"场景, 优先用工具 class:
+ *   <div class="do-skeleton"></div>          // 默认 16px 圆角
+ *   <div class="do-skeleton do-skeleton--md"></div>  // 11px (与 EffectMediaCard 一致)
+ *   <div class="do-skeleton do-skeleton--sm"></div>  // 8px (小卡片 / chip 类)
+ *   <div class="do-skeleton do-skeleton--flat"></div> // 0px (嵌套在已有圆角容器内, 让父 overflow 裁切)
+ *
+ * 需要自定义圆角时, 在 .vue scoped style 内直接 @include doSkeleton(自定义半径).
+ * 视觉与首页 ExploreWaterfallFlow 完全一致, 不要再自己拼 background + ::after + 私有 @keyframes.
+ *
+ * 详见 .cursor/rules/skeleton-loading.mdc
+ */
+.do-skeleton {
+  @include doSkeleton(16px);
+}
+
+.do-skeleton--md {
+  border-radius: 11px;
+}
+
+.do-skeleton--sm {
+  border-radius: 8px;
+}
+
+.do-skeleton--flat {
+  border-radius: 0;
+}

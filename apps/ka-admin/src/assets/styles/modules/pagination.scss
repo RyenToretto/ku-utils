@@ -1,0 +1,91 @@
+// 列表分页条（ListPaginationBar）：对齐 kv3 BasePagination = el-pagination is-background + elPagination.scss
+// 页码按钮 fill 底 + 浅边框，当前页品牌色实底，hover 品牌色字 + primary light-9 底
+
+.table-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  color: var(--ku-text-secondary);
+
+  // el-button 默认尺寸（icon-only 不收成方块）
+  .do-pagination-refresh.ant-btn-icon-only {
+    width: auto;
+    padding-inline: 15px;
+  }
+
+  .ant-pagination .ant-pagination-total-text {
+    margin-inline-end: 16px;
+    color: var(--ku-text-secondary);
+  }
+
+  .ant-pagination .ant-pagination-item,
+  .ant-pagination .ant-pagination-jump-prev,
+  .ant-pagination .ant-pagination-jump-next,
+  .ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+  .ant-pagination .ant-pagination-next .ant-pagination-item-link {
+    color: var(--ku-text-primary);
+    background: var(--ku-table-header-bg);
+    border: 1px solid var(--ku-border-light);
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .ant-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover,
+  .ant-pagination .ant-pagination-jump-prev:hover,
+  .ant-pagination .ant-pagination-jump-next:hover,
+  .ant-pagination
+    .ant-pagination-prev:not(.ant-pagination-disabled):hover
+    .ant-pagination-item-link,
+  .ant-pagination
+    .ant-pagination-next:not(.ant-pagination-disabled):hover
+    .ant-pagination-item-link {
+    color: var(--ku-color-primary);
+    background: color-mix(in srgb, var(--ku-color-primary) 10%, var(--ku-bg-card));
+  }
+
+  .ant-pagination .ant-pagination-item-active,
+  .ant-pagination .ant-pagination-item-active:hover {
+    color: var(--ku-text-on-primary);
+    background: var(--ku-color-primary);
+    border-color: var(--ku-border-light);
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .ant-pagination .ant-pagination-disabled .ant-pagination-item-link,
+  .ant-pagination .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: var(--ku-text-placeholder);
+    background: var(--ku-table-stripe-bg);
+  }
+
+  .do-pagination-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    white-space: nowrap;
+
+    .ant-input {
+      width: 56px;
+      height: 30px;
+      padding: 0 6px;
+      color: var(--ku-text-secondary);
+      text-align: center;
+    }
+  }
+
+  .do-pagination-sizes {
+    width: 128px;
+    margin-left: 8px;
+
+    .ant-select-selection-item {
+      color: var(--ku-text-secondary);
+    }
+  }
+}

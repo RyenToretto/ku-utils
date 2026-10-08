@@ -1,0 +1,13 @@
+{
+  "extends": "@ku-utils/tsconfig/base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["esbuild/**/*.ts", "src/mock/**/*.ts", "src/modules/**/_mock/**/*.ts"]
+}
