@@ -1,6 +1,6 @@
 # @ku-utils/eslint-config
 
-> ESLint Flat Config (v9) 共享配置，支持 Vue 2 / Vue 3 / Nuxt 4。
+> ESLint Flat Config (v9) 共享配置，支持 Vue 2 / Vue 3 / Nuxt 4 / Angular。
 
 ## 安装
 
@@ -10,12 +10,13 @@ pnpm add -D @ku-utils/eslint-config eslint
 
 ## 可用配置
 
-| 导出路径                        | 说明        |
-| ------------------------------- | ----------- |
-| `@ku-utils/eslint-config/base`  | 基础规则    |
-| `@ku-utils/eslint-config/vue2`  | Vue 2 项目  |
-| `@ku-utils/eslint-config/vue3`  | Vue 3 项目  |
-| `@ku-utils/eslint-config/nuxt4` | Nuxt 4 项目 |
+| 导出路径                          | 说明                                                                      |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| `@ku-utils/eslint-config/base`    | 基础规则                                                                  |
+| `@ku-utils/eslint-config/vue2`    | Vue 2 项目                                                                |
+| `@ku-utils/eslint-config/vue3`    | Vue 3 项目                                                                |
+| `@ku-utils/eslint-config/nuxt4`   | Nuxt 4 项目                                                               |
+| `@ku-utils/eslint-config/angular` | Angular 22（需额外安装 `angular-eslint`，可选 peer；含 `.html` 模板规则） |
 
 ## 使用
 

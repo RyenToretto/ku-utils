@@ -6,6 +6,7 @@ export default defineConfig({
     vue2: 'src/vue2.js',
     vue3: 'src/vue3.js',
     nuxt4: 'src/nuxt4.js',
+    angular: 'src/angular.js',
   },
   format: ['esm'],
   clean: true,
@@ -16,5 +17,6 @@ export default defineConfig({
     '@stylistic/eslint-plugin',
     'eslint-plugin-import-x',
     'globals',
+    'angular-eslint',
   ],
 });

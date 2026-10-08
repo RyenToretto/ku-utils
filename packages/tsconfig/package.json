@@ -11,6 +11,7 @@
     "./vue2.json": "./vue2.json",
     "./vue3.json": "./vue3.json",
     "./react.json": "./react.json",
+    "./angular.json": "./angular.json",
     "./nuxt4.json": "./nuxt4.json",
     "./library.json": "./library.json"
   },

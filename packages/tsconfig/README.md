@@ -10,13 +10,15 @@ pnpm add -D @ku-utils/tsconfig
 
 ## 可用配置
 
-| 文件           | 说明        |
-| -------------- | ----------- |
-| `base.json`    | 基础配置    |
-| `vue2.json`    | Vue 2 项目  |
-| `vue3.json`    | Vue 3 项目  |
-| `nuxt4.json`   | Nuxt 4 项目 |
-| `library.json` | 库开发      |
+| 文件           | 说明                                           |
+| -------------- | ---------------------------------------------- |
+| `base.json`    | 基础配置                                       |
+| `vue2.json`    | Vue 2 项目                                     |
+| `vue3.json`    | Vue 3 项目                                     |
+| `react.json`   | React 项目                                     |
+| `angular.json` | Angular 22（需 TypeScript ~6.0；不写 baseUrl） |
+| `nuxt4.json`   | Nuxt 4 项目                                    |
+| `library.json` | 库开发                                         |
 
 ## 使用
 

@@ -19,6 +19,7 @@
     "dev:admin": "pnpm --filter @ku-utils/kv3-admin dev",
     "dev:admin:v2": "pnpm --filter @ku-utils/kv2-admin dev",
     "dev:admin:react": "pnpm --filter @ku-utils/kr-admin dev",
+    "dev:admin:angular": "pnpm --filter @ku-utils/ka-admin dev",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",

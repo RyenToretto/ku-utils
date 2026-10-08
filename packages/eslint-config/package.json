@@ -4,13 +4,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "ku-utils 团队共享 ESLint 配置",
+  "description": "ku-utils 团队共享 ESLint 配置（Vue 2 / Vue 3 / Nuxt 4 / Angular）",
   "type": "module",
   "exports": {
     "./base": "./dist/base.js",
     "./vue2": "./dist/vue2.js",
     "./vue3": "./dist/vue3.js",
-    "./nuxt4": "./dist/nuxt4.js"
+    "./nuxt4": "./dist/nuxt4.js",
+    "./angular": "./dist/angular.js"
   },
   "files": [
     "dist"
@@ -28,9 +29,16 @@
     "globals": "^16.1.0"
   },
   "devDependencies": {
-    "tsup": "^8.5.0"
+    "tsup": "^8.5.0",
+    "angular-eslint": "^22.5.0"
   },
   "peerDependencies": {
-    "eslint": "^9.0.0"
+    "eslint": "^9.0.0",
+    "angular-eslint": "^22.5.0"
+  },
+  "peerDependenciesMeta": {
+    "angular-eslint": {
+      "optional": true
+    }
   }
 }
