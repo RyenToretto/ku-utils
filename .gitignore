@@ -53,4 +53,7 @@ coverage
 
 # Offline tarballs (generated)
 tarballs
+
+# predev / prebuild 生成的版本检测文件
+apps/*/public/data/version.json
 .playwright-mcp/chrome-profile-kr/

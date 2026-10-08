@@ -8,3 +8,7 @@ pnpm-lock.yaml
 *.tsbuildinfo
 .vitepress/dist
 .vitepress/cache
+
+# unplugin 生成，保持生成器原样输出，避免每次启动 dev 产生格式差异
+**/components.d.ts
+**/auto-imports.d.ts
