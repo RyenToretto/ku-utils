@@ -10,7 +10,8 @@ import {
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { zhCN } from 'date-fns/locale';
 import { provideNzConfig } from 'ng-zorro-antd/core/config';
-import { NZ_DATE_LOCALE, provideNzI18n, zh_CN } from 'ng-zorro-antd/i18n';
+import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
+import { provideNzI18n, zh_CN } from 'ng-zorro-antd/i18n';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 
 import { AppBootstrap } from '@/bootstrap/app-bootstrap';
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch(), withInterceptors([apiEnvelopeInterceptor])),
     provideNzI18n(zh_CN),
-    { provide: NZ_DATE_LOCALE, useValue: zhCN },
+    provideNzDateFnsAdapter({ locale: zhCN, firstDayOfWeek: 1 }),
     provideNzIcons(ZORRO_ICONS),
     provideNzConfig({
       message: { nzTop: 8, nzMaxStack: 5 },
