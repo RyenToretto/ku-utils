@@ -884,7 +884,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   user-select: none;
   font-size: 14px;
   line-height: 32px;
-  color: var(--ku-text-primary, var(--ant-color-text));
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .schedule-time-week-picker-inner {
@@ -893,14 +893,14 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .schedule-time-week-picker-main {
-  border: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
-  background: var(--ku-bg-card, var(--ant-color-bg-container, #fff));
+  border: 1px solid var(--ku-border-default, #c5bcb0);
+  background: var(--ku-bg-card, #f7f3eb);
   position: relative;
 }
 
 .schedule-time-week-picker-hd {
   display: flex;
-  background: var(--ant-color-fill-quaternary, #f5f5f5);
+  background: var(--ku-table-stripe-bg, #f3ebe0);
 }
 
 .schedule-time-week-picker-hd-title {
@@ -913,7 +913,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: var(--ku-text-primary, var(--ant-color-text));
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .schedule-time-week-picker-hd-con {
@@ -925,7 +925,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 .schedule-time-week-picker-hd-ranges {
   display: flex;
-  border-bottom: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
+  border-bottom: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .schedule-time-week-picker-range {
@@ -934,7 +934,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   height: 32px;
   line-height: 32px;
   text-align: center;
-  border-left: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
+  border-left: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .schedule-time-week-picker-hd-hours {
@@ -947,7 +947,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   height: 32px;
   line-height: 32px;
   text-align: center;
-  border-left: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
+  border-left: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .schedule-time-week-picker-bd {
@@ -964,7 +964,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   height: 30px;
   line-height: 30px;
   text-align: center;
-  border-top: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
+  border-top: 1px solid var(--ku-border-default, #c5bcb0);
 }
 
 .schedule-time-week-picker-cells {
@@ -984,14 +984,14 @@ el-form-item.do-fill-form > .el-form-item__content {
   flex-shrink: 0;
   border-left: 1px solid var(--ku-border-light, #eee6d8);
   border-top: 1px solid var(--ku-border-light, #eee6d8);
-  background: var(--ant-color-bg-container, #fff);
+  background: var(--ku-bg-card, #f7f3eb);
   cursor: pointer;
   position: relative;
   outline: none;
 }
 
 .schedule-time-week-picker-cell.is-active {
-  background: var(--ku-color-primary, var(--ant-color-primary, #9a6328));
+  background: var(--ku-color-primary, #9a6328);
 }
 
 .schedule-time-week-picker-cell.is-preview::after {
@@ -1007,10 +1007,10 @@ el-form-item.do-fill-form > .el-form-item__content {
 .schedule-time-week-picker-help {
   box-sizing: border-box;
   width: 658px;
-  border: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
+  border: 1px solid var(--ku-border-default, #c5bcb0);
   border-top: none;
   padding: 5px 15px;
-  background: var(--ku-bg-card, var(--ant-color-bg-container, #fff));
+  background: var(--ku-bg-card, #f7f3eb);
 }
 
 .schedule-time-week-picker-help-bar {
@@ -1031,20 +1031,20 @@ el-form-item.do-fill-form > .el-form-item__content {
   width: 14px;
   height: 20px;
   margin-right: 6px;
-  border: 1px solid var(--ant-color-border, var(--ku-border, #ddd4c6));
-  background: var(--ant-color-bg-container, #fff);
+  border: 1px solid var(--ku-border-default, #c5bcb0);
+  background: var(--ku-bg-card, #f7f3eb);
   display: inline-block;
 }
 
 .schedule-time-week-picker-swatch.is-active {
-  background: var(--ku-color-primary, var(--ant-color-primary, #9a6328));
-  border-color: var(--ku-color-primary, var(--ant-color-primary, #9a6328));
+  background: var(--ku-color-primary, #9a6328);
+  border-color: var(--ku-color-primary, #9a6328);
 }
 
 .schedule-time-week-picker-legend-text {
   margin-right: 15px;
   font-size: 14px;
-  color: var(--ku-text-secondary, var(--ant-color-text-secondary));
+  color: var(--ku-text-secondary, #6d655a);
 }
 
 .schedule-time-week-picker-clear {
@@ -1052,7 +1052,7 @@ el-form-item.do-fill-form > .el-form-item__content {
   background: transparent;
   padding: 0;
   font-size: 14px;
-  color: var(--ku-color-primary, var(--ant-color-primary, #9a6328));
+  color: var(--ku-color-primary, #9a6328);
   cursor: pointer;
   line-height: 1.4;
 
@@ -1069,11 +1069,11 @@ el-form-item.do-fill-form > .el-form-item__content {
   margin: 0;
   font-size: 14px;
   line-height: 1.6;
-  color: var(--ku-text-primary, var(--ant-color-text));
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .schedule-time-week-picker-summary-day {
-  color: var(--ku-text-tertiary, #999);
+  color: var(--ku-text-placeholder, #8a8172);
 }
 
 .schedule-time-week-picker-cells .ant-tooltip {
@@ -1114,7 +1114,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .dialog-preview-video-link {
-  color: var(--ku-text-secondary, var(--ant-color-text-secondary));
+  color: var(--ku-text-secondary, #6d655a);
   font-size: 12px;
   line-height: 1.5;
   word-break: break-all;
@@ -1136,8 +1136,8 @@ el-form-item.do-fill-form > .el-form-item__content {
   gap: 8px 20px;
   margin-top: 12px;
   padding: 12px 16px;
-  border-radius: var(--ant-border-radius, 6px);
-  background: var(--ku-fill-light, var(--ant-color-fill-quaternary));
+  border-radius: var(--ku-radius-md, 6px);
+  background: var(--ku-table-stripe-bg, #f3ebe0);
 }
 
 .dialog-preview-video-meta-item {
@@ -1148,12 +1148,12 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .dialog-preview-video-meta-label {
-  color: var(--ku-text-secondary, var(--ant-color-text-secondary));
+  color: var(--ku-text-secondary, #6d655a);
 }
 
 .dialog-preview-video-meta-value {
   font-weight: 600;
-  color: var(--ku-text-primary, var(--ant-color-text));
+  color: var(--ku-text-primary, #4e4540);
 }
 
 .page-ui-kit-preview-video {
@@ -1176,7 +1176,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 
   .ui-kit-demo-hint {
     margin: 8px 0 0;
-    color: var(--ku-text-secondary, var(--ant-color-text-secondary));
+    color: var(--ku-text-secondary, #6d655a);
     font-size: 12px;
   }
 }
@@ -1188,7 +1188,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .roi-normal {
-  color: var(--ku-text-regular, #606266);
+  color: var(--ku-text-secondary, #6d655a);
 }
 
 .amount-cell {

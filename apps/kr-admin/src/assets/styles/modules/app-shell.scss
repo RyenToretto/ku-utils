@@ -66,7 +66,7 @@
   .profile-menu-name {
     font-size: 13.5px;
     font-weight: 600;
-    color: var(--ku-text-primary, var(--ant-color-text));
+    color: var(--ku-text-primary, #4e4540);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -76,13 +76,13 @@
 
   .profile-menu-role {
     font-size: 11.5px;
-    color: var(--ku-text-secondary, var(--ant-color-text-secondary));
+    color: var(--ku-text-secondary, #6d655a);
     line-height: 1.35;
   }
 
   .profile-menu-divider {
     height: 1px;
-    background: var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8));
+    background: var(--ku-border-light, #ddd4c6);
     margin: 2px 4px 6px;
   }
 
@@ -99,7 +99,7 @@
     font-size: 13px;
     font-weight: 500;
     font-family: inherit;
-    color: var(--ku-text-regular, var(--ant-color-text));
+    color: var(--ku-text-secondary, #6d655a);
     transition:
       background 0.15s ease,
       color 0.15s ease;
@@ -113,8 +113,8 @@
     }
 
     &:hover {
-      background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
-      color: var(--ku-text-primary, var(--ant-color-text));
+      background: var(--ku-table-stripe-bg, #f3ebe0);
+      color: var(--ku-text-primary, #4e4540);
 
       .anticon {
         opacity: 1;
@@ -126,12 +126,12 @@
     margin-left: auto;
     font-size: 12px;
     font-weight: 400;
-    color: var(--ku-text-placeholder, var(--ant-color-text-placeholder, #a3988c));
+    color: var(--ku-text-placeholder, #8a8172);
   }
 
   .profile-menu-item-arrow {
     font-size: 12px !important;
-    color: var(--ku-text-placeholder, var(--ant-color-text-placeholder, #a3988c));
+    color: var(--ku-text-placeholder, #8a8172);
     margin-left: 1px;
   }
 }
@@ -146,8 +146,8 @@
   padding: 6px;
   border-radius: 12px;
   width: 160px;
-  background: var(--ku-bg-card, var(--ant-color-bg-elevated, #fff));
-  border: 1px solid var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8));
+  background: var(--ku-bg-card, #f7f3eb);
+  border: 1px solid var(--ku-border-light, #ddd4c6);
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.04),
     0 4px 8px rgba(0, 0, 0, 0.06),
@@ -170,7 +170,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: var(--ku-text-regular, var(--ant-color-text));
+  color: var(--ku-text-secondary, #6d655a);
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
@@ -182,8 +182,8 @@
   text-align: left;
 
   &:hover {
-    background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
-    color: var(--ku-text-primary, var(--ant-color-text));
+    background: var(--ku-table-stripe-bg, #f3ebe0);
+    color: var(--ku-text-primary, #4e4540);
   }
 
   .anticon {

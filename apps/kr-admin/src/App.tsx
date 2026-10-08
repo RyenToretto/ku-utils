@@ -1,13 +1,14 @@
 import { useVersionUpdate } from '@ku-utils/hooks-react';
-import { App as AntdApp, ConfigProvider, theme as antTheme, Spin } from 'antd';
+import { App as AntdApp, ConfigProvider, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import DialogPreviewVideo, { type DialogPreviewVideoRef } from '@/components/DialogPreviewVideo';
 import { useSplashReadiness } from '@/composables/useSplashReadiness';
 import BaseHeader from '@/layouts/BaseHeader';
 import { AntdAppBridge } from '@/plugins/antdApp';
+import { createAntdTheme } from '@/plugins/antdTheme';
 import { useAppStore } from '@/stores/app';
 import { registerPreviewVideoHost } from '@/utils/previewMedia';
 import { fetchStaticVersion } from '@/utils/version';
@@ -20,6 +21,8 @@ export default function App() {
   const isDark =
     themeMode === 'dark' ||
     (themeMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  const antdTheme = useMemo(() => createAntdTheme(isDark), [isDark]);
 
   useEffect(() => {
     setRouterReady(true);
@@ -46,28 +49,7 @@ export default function App() {
     <ConfigProvider
       locale={zhCN}
       button={{ autoInsertSpace: false }}
-      theme={{
-        algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
-        token: {
-          colorPrimary: '#9a6328',
-          borderRadius: 6,
-        },
-        components: {
-          Table: {
-            colorText: 'var(--ku-text-secondary)',
-            colorBgContainer: 'var(--ku-bg-card)',
-            headerBg: 'var(--ku-bg-card)',
-            headerColor: 'var(--ku-text-primary)',
-            headerSplitColor: 'transparent',
-            borderColor: 'var(--ku-border-light)',
-            rowHoverBg: 'var(--ku-bg-hover)',
-            rowSelectedBg: 'var(--ku-primary-50)',
-            rowSelectedHoverBg: 'var(--ku-bg-hover)',
-            cellPaddingBlockMD: 8,
-            cellPaddingInlineMD: 8,
-          },
-        },
-      }}
+      theme={antdTheme}
     >
       <AntdApp component={false}>
         <AntdAppBridge />
