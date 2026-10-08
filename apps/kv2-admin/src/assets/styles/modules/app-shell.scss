@@ -1163,7 +1163,8 @@ html.dark {
     background var(--el-transition-duration-fast) ease,
     color var(--el-transition-duration-fast) ease;
 
-  .el-icon {
+  .el-icon,
+  .side-menu-icon {
     font-size: 18px;
     width: 18px;
     min-width: 18px;
@@ -1182,7 +1183,9 @@ html.dark {
     background-color: var(--ku-bg-sidebar-hover) !important;
     color: var(--ku-text-on-sidebar, var(--ku-text-primary));
 
-    .el-icon {
+    .el-icon,
+    .side-menu-icon,
+    .el-submenu__icon-arrow {
       color: var(--ku-text-on-sidebar, var(--ku-text-primary));
     }
   }
@@ -1192,7 +1195,9 @@ html.dark {
 .side-menu .el-submenu.is-active > .el-submenu__title {
   color: var(--ku-text-on-sidebar, var(--ku-text-primary));
 
-  .el-icon {
+  .el-icon,
+  .side-menu-icon,
+  .el-submenu__icon-arrow {
     color: var(--ku-text-on-sidebar, var(--ku-text-primary));
   }
 }
@@ -1269,6 +1274,7 @@ html.dark {
 /* 二级起公共叶子态 */
 .sidebar-nav .el-submenu .el-menu-item,
 .side-menu .el-submenu .el-menu-item {
+  min-width: 0;
   height: 36px;
   line-height: 36px;
   margin: 1px 10px 1px 22px;

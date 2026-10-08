@@ -91,12 +91,20 @@ const leafChildren = computed((): SideMenuLeaf[] =>
 
 <style lang="scss" scoped>
 .side-menu-icon {
-  margin-right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  font-size: 18px;
   font-style: normal;
   vertical-align: middle;
 
   > * {
-    vertical-align: middle;
+    width: 1em;
+    height: 1em;
   }
 }
 </style>
