@@ -712,15 +712,49 @@ el-form-item.do-fill-form > .el-form-item__content {
 
   &.inline {
     display: inline-flex;
+    align-items: center;
+
+    .txt-set-btn {
+      display: inline-flex;
+      justify-content: flex-start;
+    }
   }
 
   .txt-set-btn {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
     cursor: pointer;
-  }
-}
+    user-select: none;
 
-.line-txt {
-  color: #918364;
+    > .anticon {
+      margin-left: 2px;
+      color: var(--ku-text-placeholder, #8a8172);
+      font-size: 16px;
+    }
+
+    > span {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      border-radius: 2px;
+      color: var(--ku-text-placeholder, #8a8172);
+      transition:
+        color 0.3s linear,
+        background-color 0.3s linear;
+    }
+
+    &.changing > span,
+    &:hover > span {
+      color: var(--ku-text-primary, #4e4540);
+      background-color: var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
+    }
+  }
 }
 
 .page-ui-kit-name-pattern,
