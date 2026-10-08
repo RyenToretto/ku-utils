@@ -39,7 +39,8 @@ export default function DialogEditSimpleExample({
   }, [open, row, form]);
 
   async function handleOk() {
-    const values = await form.validateFields();
+    const values = await form.validateFields().catch(() => null);
+    if (!values) return;
     setLoading(true);
     try {
       await requestEditSimpleExample({

@@ -36,7 +36,8 @@ export default function DialogEditClazzManage({
   }, [open, row, form, status.CLAZZ_STATUS_ENABLED]);
 
   async function handleOk() {
-    const values = await form.validateFields();
+    const values = await form.validateFields().catch(() => null);
+    if (!values) return;
     const school = values.school as SchoolSelectorValue;
     const schoolObj = school && !Array.isArray(school) ? school : null;
     setLoading(true);

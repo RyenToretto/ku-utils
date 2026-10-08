@@ -40,7 +40,8 @@ export default function DialogEditClubActivity({
   }, [open, row, form, status.CLUB_STATUS_ENABLED]);
 
   async function handleOk() {
-    const values = await form.validateFields();
+    const values = await form.validateFields().catch(() => null);
+    if (!values) return;
     const schoolsVal = (values.schools || []) as Array<{ id: string; label: string }>;
     setLoading(true);
     try {

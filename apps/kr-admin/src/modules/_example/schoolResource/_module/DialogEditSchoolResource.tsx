@@ -33,7 +33,8 @@ export default function DialogEditSchoolResource({
   }, [open, row, form, status.SCHOOL_STATUS_ENABLED]);
 
   async function handleOk() {
-    const values = await form.validateFields();
+    const values = await form.validateFields().catch(() => null);
+    if (!values) return;
     setLoading(true);
     try {
       await requestEditSchoolResource({ id: row?.id, ...values });

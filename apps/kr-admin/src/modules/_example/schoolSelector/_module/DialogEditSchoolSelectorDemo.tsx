@@ -57,7 +57,8 @@ export default function DialogEditSchoolSelectorDemo({
       destroyOnHidden
       onCancel={onClose}
       onOk={async () => {
-        const values = await form.validateFields();
+        const values = await form.validateFields().catch(() => null);
+        if (!values) return;
         const single =
           values.schoolSingle && !Array.isArray(values.schoolSingle) ? values.schoolSingle : null;
         const multi = Array.isArray(values.schoolMulti) ? values.schoolMulti : [];
