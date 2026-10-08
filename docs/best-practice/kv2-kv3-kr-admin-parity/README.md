@@ -21,7 +21,7 @@
 - **唯一金标** `@ku-utils/skin`（tome）；禁止 apps 自造第二套色板。
 - kv3：Element Plus 原生消费 `--el-*`（skin 已桥接）。
 - kv2：Element UI chalk 之后加载 `element-ui-bridge.scss`。
-- kr：Ant Design 通过 app 内 `antd-ku-bridge.scss` 把 `--ant-*` 绑回 `--ku-*`。
+- kr：Ant Design 主题由 `plugins/antdTheme.ts` 读 `@ku-utils/skin/tokens` 明暗色值生成（`ConfigProvider theme`）；`antd-ku-bridge.scss` 只放 token 覆盖不到的结构样式，均读 `--ku-*`。
 - kr：确认框 / 提示一律走 `@/plugins/antdApp`（antd `<App>` 上下文实例），禁止 `Modal.confirm` / `message.xxx` 静态方法——React 19 下不渲染且不跟随暗色；`main.tsx` 引入 `@ant-design/v5-patch-for-react-19`。
 - **禁止**页级 `PageHeader` / title / subtitle（三端一致）。
 - `.domain-module-main` padding 四边一致（20px）；页内首块勿再叠 `margin-top`，用父级 `gap`。

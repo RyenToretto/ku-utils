@@ -41,6 +41,7 @@ src/modules/<域>/<子业务>/
 - **禁止** `Modal.confirm` / `message.xxx` / `notification.xxx` 等 antd 静态方法：React 19 下不渲染（点击无响应），且吃不到暗色主题
 - 统一 `import { message, modal, notification } from '@/plugins/antdApp'`（`<App>` 上下文实例；axios 等非组件代码同样适用）
 - `main.tsx` 首行保留 `@ant-design/v5-patch-for-react-19`
+- 主题只在 `plugins/antdTheme.ts` 由 `@ku-utils/skin/tokens` 生成（含 Table 等组件 token）；样式颜色读 `var(--ku-*, <tome 浅色>)`，禁止 `--ant-*` 覆写与 antd 默认色
 
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
 
