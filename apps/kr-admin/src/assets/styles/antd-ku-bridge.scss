@@ -225,7 +225,9 @@
  * loading：antd 原生即保持类型原色 + .65；对齐 EP 不响应悬停，避免 loading 中闪 hover 色。
  * spinner 净占位为 0：负 margin 抵消 1em + 8px gap。
  * antd 对 loading 图标做 width / margin / scale 进出场动画，且退场时 .ant-btn-loading 已先移除，
- * 所以只认图标包裹层本身（仅 loading 与退场期间存在）并钉死动画，否则进出场各跳一次。
+ * 所以只认图标包裹层本身（仅 loading 与退场期间存在），钉死 width / margin / scale，否则进出场各跳一次。
+ * opacity 必须保留过渡：rc-motion 靠 transitionend 结束退场并移除图标（无超时兜底），
+ * 全部钉死会让 spinner 永远留在按钮里。
  */
 .ant-btn-loading {
   pointer-events: none;
@@ -235,9 +237,8 @@
   > .ant-btn-loading-icon {
     width: auto !important;
     margin-inline: calc(-0.5em - 4px) 0 !important;
-    opacity: 1 !important;
     transform: none !important;
-    transition: none !important;
+    transition-property: opacity !important;
   }
 
   > .ant-btn-loading-icon + span {
