@@ -12,6 +12,12 @@ type Row = {
   status?: number;
 };
 
+type FormValues = {
+  pkg: string;
+  exampleName: string;
+  status: number;
+};
+
 export type DialogEditSimpleExampleProps = {
   open: boolean;
   row?: Row | null;
@@ -25,9 +31,10 @@ export default function DialogEditSimpleExample({
   onClose,
   onSuccess,
 }: DialogEditSimpleExampleProps) {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<FormValues>();
   const [loading, setLoading] = useState(false);
   const statusOptions = maps.example.simpleExample.exampleStatus.options;
+  const isEdit = !!row?.id;
 
   useEffect(() => {
     if (!open) return;
@@ -44,13 +51,13 @@ export default function DialogEditSimpleExample({
     setLoading(true);
     try {
       await requestEditSimpleExample({
-        id: row?.id,
-        exampleName: values.exampleName,
+        id: row?.id || undefined,
+        exampleName: values.exampleName.trim(),
         status: values.status,
       });
-      message.success(row?.id ? '已保存' : '已创建');
-      onSuccess();
+      message.success(isEdit ? '修改成功' : '创建成功');
       onClose();
+      onSuccess();
     } finally {
       setLoading(false);
     }
@@ -58,38 +65,50 @@ export default function DialogEditSimpleExample({
 
   return (
     <Modal
-      title={row?.id ? '编辑示例' : '新建示例'}
+      title={
+        <span>
+          {isEdit ? '修改' : '添加'}示例
+          {isEdit ? <span className="dialog-title-tips">(ID: {row?.id})</span> : null}
+        </span>
+      }
       open={open}
       onCancel={onClose}
       onOk={handleOk}
+      okText="确 定"
+      cancelText="取 消"
       confirmLoading={loading}
       destroyOnHidden
       width={520}
     >
       <Form
         form={form}
-        layout="vertical"
+        layout="horizontal"
+        labelCol={{ flex: '100px' }}
+        className="do-dialog-content-box"
       >
         <Form.Item
           name="pkg"
-          label="包名"
+          label="产品包名"
+          rules={[{ required: true, whitespace: true, message: '请输入产品包名' }]}
         >
-          <Input placeholder="可选包名" />
+          <Input
+            allowClear
+            placeholder="请输入产品包名"
+          />
         </Form.Item>
         <Form.Item
           name="exampleName"
           label="示例名称"
-          rules={[{ required: true, message: '请输入示例名称' }]}
+          rules={[{ required: true, whitespace: true, message: '请输入示例名称' }]}
         >
           <Input
+            allowClear
             placeholder="请输入示例名称"
-            maxLength={64}
           />
         </Form.Item>
         <Form.Item
           name="status"
           label="状态"
-          rules={[{ required: true, message: '请选择状态' }]}
         >
           <Radio.Group options={statusOptions} />
         </Form.Item>

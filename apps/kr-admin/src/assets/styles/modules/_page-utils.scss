@@ -571,6 +571,13 @@ el-form-item.do-fill-form > .el-form-item__content {
   min-width: 120px;
 }
 
+.dialog-title-tips {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ku-text-secondary, #909399);
+}
+
 .dialog-edit-school-selector-demo-tips {
   margin-left: 6px;
   font-size: 13px;
