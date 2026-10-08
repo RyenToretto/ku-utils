@@ -47,9 +47,6 @@ export function schemaToColumn<T extends Record<string, unknown> = Record<string
     schema.label
   );
 
-  const fixed =
-    schema.fixed === true ? ('left' as const) : schema.fixed === false ? undefined : schema.fixed;
-
   return {
     key: schema.prop || schema.label,
     dataIndex: schema.prop,
@@ -57,7 +54,6 @@ export function schemaToColumn<T extends Record<string, unknown> = Record<string
     width: schema.width,
     minWidth: schema.minWidth,
     align: schema.align || 'left',
-    fixed,
     sorter: schema.sortable ? true : undefined,
     ellipsis: schema.showOverflowTooltip ? { showTitle: true } : undefined,
     render: (value: unknown, record: T, index: number) => {

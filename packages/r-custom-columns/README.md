@@ -10,7 +10,7 @@ React + Ant Design 5 自定义列组件库，对应 Vue 3 包 `@ku-utils/custom-
 pnpm add @ku-utils/r-custom-columns
 ```
 
-Peer：`react` / `react-dom` / `antd` >= 5。
+Peer：`react` / `react-dom` >= 18，`antd` >= 5.21（列 `minWidth`）。
 
 ```ts
 import '@ku-utils/r-custom-columns/style.css';
@@ -31,7 +31,7 @@ import {
 import '@ku-utils/r-custom-columns/style.css';
 
 const columnSchemas: ColumnSchema[] = [
-  { prop: 'name', label: '名称', isDefault: true, fixed: 'left' },
+  { prop: 'name', label: '名称', isDefault: true, fixed: true },
   { prop: 'amount', label: '金额', group: '财务', renderType: 'float', isDefault: true },
   { prop: 'rate', label: '转化率', group: '财务', renderType: 'percent' },
   { prop: 'createdAt', label: '创建时间', group: '其它' },
@@ -99,6 +99,9 @@ function OrderList() {
 ### `schemasToColumns(schemas, { formatCell })`
 
 将 `ColumnSchema[]` 转为 Ant Design `ColumnsType`。嵌套表头用 `children`；自定义单元格用 `cellRender`，透传用 `antdAttrs`。
+
+- `minWidth` → 列 `minWidth`（不当固定宽）；需要 el-table 式按 minWidth 比例分余宽时由业务侧计算 `width`
+- `fixed` 只表示「弹窗中不可取消勾选」，不决定列钉在左右；需要钉列用 `antdAttrs: { fixed: 'left' }`
 
 ### 组件
 
