@@ -103,6 +103,22 @@
   }
 }
 
+/* Select 下拉：对齐 kv3 el-select-dropdown 描边与 6px 上下留白（antd 面板内距为 paddingXXS 四边），选中项悬停仍给 fill 底 */
+.ant-select-dropdown {
+  padding: 6px 0;
+  border: 1px solid var(--ku-border-light);
+
+  .ant-select-item {
+    border-radius: 0;
+  }
+
+  .ant-select-item-option-selected.ant-select-item-option-active:not(
+      .ant-select-item-option-disabled
+    ) {
+    background: var(--ku-table-stripe-bg);
+  }
+}
+
 .do-filter-panel {
   box-sizing: border-box;
   width: 100%;

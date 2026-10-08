@@ -111,6 +111,20 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         titleFontSize: 18,
         titleLineHeight: 24 / 18,
       },
+      // 对齐 kv3 el-select-dropdown：34 高选项、20/32 内距、次级色文字；选中品牌色粗体无底，悬停 fill-light 底；面板 4 圆角
+      Select: {
+        colorText: ku['text-secondary'],
+        optionHeight: 34,
+        optionLineHeight: '34px',
+        optionPadding: '0 32px 0 20px',
+        optionFontSize: 14,
+        optionSelectedBg: 'transparent',
+        optionSelectedColor: ku['color-primary'],
+        optionSelectedFontWeight: 700,
+        optionActiveBg: ku['table-stripe-bg'],
+        borderRadiusLG: 4,
+        boxShadowSecondary: ku['shadow-dropdown'],
+      },
       // 对齐 kv3 el-form：项间距 18、标签次级色
       Form: {
         itemMarginBottom: 18,
