@@ -8,6 +8,7 @@ alwaysApply: false
 
 - 对话与 commit message 使用中文
 - 本目录是 Vue 2.7 + Vite + Element UI 管理端 starter，workspace 消费 `@ku-utils/utils`、`仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate``、`@ku-utils/v2-custom-columns`
+- **皮肤**：Element UI 样式只用 `scripts/generate-element-theme.mjs` 生成的 `assets/styles/generated/element-ui-ku.css`（chalk 写死色值 → `--el-*` / `--ku-*`，`prepare:assets` 生成），**禁止**引入 `element-ui/lib/theme-chalk/index.css`；颜色 / 弹层阴影漏了改生成器映射表，`element-ui-bridge.scss` 只写与 Element Plus 的结构差异（尺寸、间距、按钮态——鼠标 `:focus` 回落静止态，仅 `:focus-visible` 描边）；从 kv3 搬样式 / 模板必须改成 Element UI 的 DOM、类名与 prop（EP 的 `--el-border`、`.el-input__wrapper`、`show-after` / `teleported` 等在 EU 不存在，照抄即失效），`pnpm audit:ep`（prebuild 自动跑）兜底，并用 kv3↔kv2 同态计算样式对比验收；对齐目标是 kv3 **实际渲染值**（kv3 部分覆写被 EP 组件样式盖掉，以计算样式为准）
 - **控制台零异常**：`predev`/`prebuild` 跑 `ensure-vue-demi-vue27`（Pinia 的 vue-demi 必须 isVue2）；跨文件 type alias props 用运行时 `PropType`，禁 `| null`（详见 `docs/best-practice/admin-parity/`）
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv2-admin/docs/admin-list-page-pattern.md`
@@ -33,7 +34,7 @@ src/modules/<域>/<子业务>/
 5. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate`` 的 `useMaxHeight`）
 6. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查；禁 `watch(listFilters)`；分组筛选 / 非表单节点用 `disableFold`
 7. **禁止页面态 `PageHeader` / 页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回；组件可保留但业务页零引用
-8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
+8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`_page-utils.scss` 全局 `.el-dialog__wrapper` flex 居中，勿再传 `top`）
 9. 自定义列：`@ku-utils/v2-custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
 10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
 

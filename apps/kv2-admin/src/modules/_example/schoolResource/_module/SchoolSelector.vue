@@ -283,21 +283,20 @@ onBeforeUnmount(() => {
 .school-selector-trigger {
   width: 100%;
 
-  :deep(.el-select__wrapper) {
+  :deep(.el-input__inner) {
     box-sizing: border-box;
     min-height: var(--el-component-size);
   }
 }
 
 .school-selector.is-empty .school-selector-trigger {
-  :deep(.el-select__wrapper) {
+  :deep(.el-input__inner) {
     height: var(--el-component-size);
   }
 }
 </style>
 
 <style lang="scss">
-.school-selector-dropdown.el-select__popper,
 .school-selector-dropdown {
   display: none !important;
 }

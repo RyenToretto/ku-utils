@@ -7,8 +7,10 @@
   "scripts": {
     "ensure-vue-demi": "node ./scripts/ensure-vue-demi-vue27.mjs",
     "dev": "vite --host",
-    "predev": "node ./scripts/ensure-vue-demi-vue27.mjs && node ./scripts/generate-static-version.mjs",
-    "prebuild": "node ./scripts/ensure-vue-demi-vue27.mjs && node ./scripts/generate-static-version.mjs",
+    "predev": "pnpm run prepare:assets",
+    "prebuild": "pnpm run prepare:assets && pnpm run audit:ep",
+    "prepare:assets": "node ./scripts/ensure-vue-demi-vue27.mjs && node ./scripts/generate-static-version.mjs && node ./scripts/generate-element-theme.mjs",
+    "audit:ep": "node ./scripts/audit-ep-leftovers.mjs",
     "build": "vite build",
     "typecheck": "vue-tsc -p tsconfig.app.json --noEmit",
     "preview": "vite preview"

@@ -6,7 +6,6 @@
     class="dialog-preview-video"
     append-to-body
     destroy-on-close
-    align-center
     @closed="resetPanel"
   >
     <div

@@ -45,7 +45,7 @@
               v-for="cellIndex in CELL_COUNT"
               :key="cellIndex - 1"
               :content="cellTitle(cellIndex - 1)"
-              :show-after="800"
+              :open-delay="800"
               :disabled="isMove"
               placement="top"
               effect="dark"
@@ -458,13 +458,5 @@ defineExpose({
 
 .schedule-time-week-picker-summary-day {
   color: var(--ku-text-placeholder, #8a8172);
-}
-
-.schedule-time-week-picker-cells :deep(.el-tooltip__trigger) {
-  display: block;
-  width: 12px;
-  height: 30px;
-  flex-shrink: 0;
-  line-height: 0;
 }
 </style>

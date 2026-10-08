@@ -7,8 +7,6 @@ import locale from 'element-ui/lib/locale/lang/zh-CN';
 import type { PluginObject } from 'vue';
 import Vue from 'vue';
 
-import 'element-ui/lib/theme-chalk/index.css';
-
 /**
  * 不设全局 size，与 kv3 `el-config-provider`（无 size）对齐：
  * 筛选主按钮 / radio 用默认尺寸；表格操作等显式 size="small"。

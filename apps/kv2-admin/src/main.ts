@@ -4,7 +4,7 @@ import Vue, { type Component } from 'vue';
 import 'dayjs/locale/zh-cn';
 import 'nprogress/nprogress.css';
 import '@ku-utils/v2-custom-columns/style';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/assets/styles/generated/element-ui-ku.css';
 import '@ku-utils/skin';
 import '@/assets/styles/index.scss';
 

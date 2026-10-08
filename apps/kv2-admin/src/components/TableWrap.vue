@@ -115,9 +115,9 @@ withDefaults(
       margin-right: -1px;
       border-radius: 0;
       &:active {
-        color: #fff;
-        border-color: #3a8ee6;
-        background-color: #3a8ee6;
+        color: var(--ku-text-on-primary);
+        border-color: var(--el-color-primary-dark-2);
+        background-color: var(--el-color-primary-dark-2);
       }
       &.mr-10 {
         margin-right: 10px;
@@ -126,7 +126,7 @@ withDefaults(
         border-radius: 3px;
       }
       &:hover {
-        border: 1px solid #3a8ee6;
+        border: 1px solid var(--el-color-primary);
         position: relative;
         z-index: 1;
       }

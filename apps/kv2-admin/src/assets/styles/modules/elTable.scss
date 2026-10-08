@@ -152,11 +152,8 @@
     > .el-table.el-table--border,
     &.el-table--border {
       border-width: 0;
-      .el-table__inner-wrapper::before,
-      .el-table__inner-wrapper::after,
-      .el-table__border-bottom-patch,
-      .el-table__border-right-patch,
-      .el-table__border-left-patch,
+      .el-table__fixed::before,
+      .el-table__fixed-right::before,
       &::before,
       &::after {
         display: none;
@@ -237,9 +234,9 @@
     }
   }
   .cell {
-    padding-left: 8px;
-    padding-right: 8px;
-    line-height: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+    line-height: 23px;
   }
   // 表头强制不折行
   th {
@@ -880,11 +877,17 @@ td.el-table__cell {
 
 /**
  * 限宽 70vw、限高 40vh，仅内容超高才出滚动条。
- * 限高与滚动必须落在内容子节点上：箭头是绝对定位 + 旋转伪元素，会把根节点的
- * scrollHeight 恒定撑出约 10px，一旦在根节点开 overflow，短内容也会长期出现滚动条。
+ * 限高与滚动必须落在内容子节点上：箭头是绝对定位元素，在根节点开 overflow 会把它裁掉。
+ * Element UI 的下拉 / 日期面板也挂 .el-popper，只能收窄到 popover，否则会改坏它们的内部滚动结构。
  */
-.el-popper {
-  > *:not(.el-popper__arrow) {
+.el-tooltip__popper {
+  max-width: 70vw;
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
+.el-popover.el-popper {
+  > *:not(.popper__arrow) {
     display: block;
     box-sizing: border-box;
     max-width: 70vw;

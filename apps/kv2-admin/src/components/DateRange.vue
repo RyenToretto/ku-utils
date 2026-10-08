@@ -9,6 +9,7 @@
     :format="resolvedFormat"
     :value-format="resolvedValueFormat"
     :clearable="resolvedClearable"
+    :align="resolvedAlign"
     :range-separator="rangeSeparator"
     :start-placeholder="startPlaceholder"
     :end-placeholder="endPlaceholder"
@@ -64,6 +65,8 @@ const resolvedSize = computed(() => {
   if (size === 'default' || size == null || size === '') return undefined;
   return size as string;
 });
+/** EP 弹层默认 placement=bottom（居中），EU 默认 align=left */
+const resolvedAlign = computed(() => (typeof attrs.align === 'string' ? attrs.align : 'center'));
 const rangeSeparator = computed(() =>
   typeof attrs.rangeSeparator === 'string' ? attrs.rangeSeparator : '至',
 );
@@ -149,6 +152,7 @@ const pickerOptions = computed(() => {
       ? (attrs.pickerOptions as Record<string, unknown>)
       : {};
   return {
+    firstDayOfWeek: 1,
     shortcuts: (fromAttrs.shortcuts as typeof defaultShortcuts) || defaultShortcuts,
     disabledDate:
       (fromAttrs.disabledDate as ((time: Date) => boolean) | undefined) ||

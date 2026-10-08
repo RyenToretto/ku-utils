@@ -232,19 +232,20 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* ─── 全局响应式约束 ─────────────────────────────────────────── */
 
-/* 弹窗不超出视口；垂直居中走 ElConfigProvider dialog.alignCenter（勿再写死 margin-top） */
-.el-overlay-dialog .el-dialog {
+/* 弹窗视口居中且不超出视口（与 kv3 alignCenter 一致；Element UI 的 top 是内联 margin-top，需压掉） */
+.el-dialog__wrapper {
+  display: flex;
+}
+
+.el-dialog__wrapper > .el-dialog:not(.is-fullscreen) {
   display: flex;
   flex-direction: column;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
+  margin: auto !important;
 }
 
-.el-overlay-dialog .el-dialog.is-align-center {
-  margin: auto;
-}
-
-.el-overlay-dialog .el-dialog__body {
+.el-dialog__wrapper .el-dialog__body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-x: hidden;
@@ -254,13 +255,6 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* Drawer 内点选/列表：配合 useDrawerPickListMaxHeight（禁止写死 max-height px） */
 .drawer-model-selector {
-  .el-drawer__footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-top: 12px;
-  }
-
   .el-drawer__body {
     overflow: hidden;
     display: flex;
@@ -312,7 +306,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 /* ─── flex-drawer 表单类 Drawer 高度铺满 ─────────────────────── */
 /*
  * 挂在 el-drawer 的 class 上（可与业务 class 并存）。
- * 让 header / footer 固定，body 与 .do-drawer__view / 内嵌 el-form / .do-form-section
+ * 让 header 固定（Element UI 抽屉无 footer 插槽，底部按钮放 body 内），body 与 .do-drawer__view / 内嵌 el-form / .do-form-section
  * 纵向撑满剩余高度，右侧可滚动区吃掉空白，避免短表单在高抽屉里上下大块留白。
  *
  *   <el-drawer class="dialog-xxx flex-drawer">
@@ -335,11 +329,6 @@ el-form-item.do-fill-form > .el-form-item__content {
     overflow: hidden;
     padding-top: var(--flex-drawer-body-padding-y);
     padding-bottom: var(--flex-drawer-body-padding-y);
-  }
-
-  .el-drawer__footer {
-    flex-shrink: 0;
-    padding-top: 12px;
   }
 
   .do-drawer__view {

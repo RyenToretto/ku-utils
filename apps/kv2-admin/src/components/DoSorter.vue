@@ -8,8 +8,7 @@
       placement="bottom-end"
       trigger="click"
       :width="280"
-      :show-arrow="false"
-      teleported
+      :visible-arrow="false"
       popper-class="do-sorter-popover"
     >
       <template #reference>

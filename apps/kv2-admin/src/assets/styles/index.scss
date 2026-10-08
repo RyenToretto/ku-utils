@@ -2,12 +2,11 @@
 @forward './modules/base/index.scss';
 @forward './modules/transition/index.scss';
 
-/* Element UI chalk → skin token（必须在业务覆写之前，覆盖 #409EFF） */
+/* Element UI → Element Plus 结构对齐（颜色由生成主题负责；须在业务覆写之前） */
 @forward './modules/element-ui-bridge.scss';
 
 @forward './modules/elInput.scss';
 @forward './modules/elPagination.scss';
-@forward './modules/elRadio.scss';
 @forward './modules/elTable.scss';
 @forward './modules/icon.scss';
 @forward './modules/layout.scss';
