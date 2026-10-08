@@ -10,7 +10,6 @@ export default function DoFilterPanelScenarioDemo() {
 
   return (
     <SimpleExampleList
-      pageClassName="page-do-filter-panel-scenario"
       filterButtonCount={scenario.buttonCount}
       filterFieldCount={scenario.filterCount}
       filterLine={scenario.line}

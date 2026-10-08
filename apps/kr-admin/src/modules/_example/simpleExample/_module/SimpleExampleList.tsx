@@ -40,7 +40,6 @@ export type SimpleExampleListProps = {
   filterButtonCount?: number;
   filterLine?: number;
   fillViewportLayout?: boolean;
-  pageClassName?: string;
 };
 
 export default function SimpleExampleList({
@@ -48,7 +47,6 @@ export default function SimpleExampleList({
   filterButtonCount = 2,
   filterLine,
   fillViewportLayout = false,
-  pageClassName = 'page-simple-example-list',
 }: SimpleExampleListProps) {
   const statusMap = maps.example.simpleExample.exampleStatus;
   const taskMap = maps.example.simpleExample.exampleTaskAction;
@@ -92,7 +90,7 @@ export default function SimpleExampleList({
     immediate: true,
   });
 
-  const maxHeight = useAdminTableMaxHeight(`.${pageClassName}`, 400);
+  const maxHeight = useAdminTableMaxHeight('.page-simple-example-list', 400);
 
   function handleReset() {
     if (isFilterPanelDemo) {
@@ -260,7 +258,7 @@ export default function SimpleExampleList({
 
   return (
     <div
-      className={[pageClassName, fillViewportLayout ? 'fill-viewport' : '']
+      className={['page-simple-example-list', fillViewportLayout ? 'fill-viewport' : '']
         .filter(Boolean)
         .join(' ')}
     >

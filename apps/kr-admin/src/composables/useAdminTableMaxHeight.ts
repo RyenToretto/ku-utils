@@ -145,11 +145,13 @@ export function useAdminTableMaxHeight(
 
     const scrollerPaddingBottom = getScrollerPaddingBottom(scroller);
     const chromeHeight = getTableChromeHeight(table);
+    // minHeight 与 kv3 el-table max-height 同口径（含表头），表体保底需扣表头
+    const minBodyHeight = minHeight - chromeHeight;
     const measured = measureAdminTableMaxHeight(scroller, contain, table) - chromeHeight;
     if (measured <= 0) {
-      return Math.max(baseMaxHeight - scrollerPaddingBottom - chromeHeight, minHeight);
+      return Math.max(baseMaxHeight - scrollerPaddingBottom - chromeHeight, minBodyHeight);
     }
 
-    return Math.max(Math.floor(measured) - 1, minHeight);
+    return Math.max(Math.floor(measured) - 1, minBodyHeight);
   }, [baseMaxHeight, layoutRevision, minHeight, pageSelector]);
 }
