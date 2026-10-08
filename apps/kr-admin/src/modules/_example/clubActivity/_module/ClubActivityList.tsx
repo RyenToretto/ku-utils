@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Input, Radio, Table, Tag } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
-import { useState } from 'react';
+import type { ColumnsType } from 'antd/es/table';
+import { useRef, useState } from 'react';
 
 import DialogEditClubActivity from './DialogEditClubActivity';
 
@@ -9,9 +9,11 @@ import CellDateTime from '@/components/CellDateTime';
 import CellNameId from '@/components/CellNameId';
 import CellState from '@/components/CellState';
 import DoFilterPanel from '@/components/DoFilterPanel';
+import { DoSelectBatchBox, createSelectColumn } from '@/components/DoSelectCell';
 import ListPaginationBar from '@/components/ListPaginationBar';
 import TableWrap from '@/components/TableWrap';
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
+import { useRowSelector } from '@/composables/useRowSelector';
 import { useTableQuery } from '@/composables/useTableQuery';
 import maps from '@/maps';
 import {
@@ -30,11 +32,10 @@ export default function ClubActivityList() {
   const status = maps.example.clubActivity.clubStatus;
   const [editOpen, setEditOpen] = useState(false);
   const [editRow, setEditRow] = useState<ClubActivityRow | null>(null);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<ClubActivityRow[]>([]);
   const [batchEnableLoading, setBatchEnableLoading] = useState(false);
   const [batchDisableLoading, setBatchDisableLoading] = useState(false);
   const [statusSwitchingIds, setStatusSwitchingIds] = useState<Record<string, boolean>>({});
+  const clearSelectionRef = useRef<() => void>(() => {});
 
   const {
     listFilters,
@@ -54,16 +55,15 @@ export default function ClubActivityList() {
       requestClubActivityList(query, signal) as Promise<{
         data: { lists: ClubActivityRow[]; total: number };
       }>,
+    onLoaded: () => clearSelectionRef.current(),
   });
+  const selector = useRowSelector<ClubActivityRow>({ tableData, lineKey: 'id', isMultiple: true });
+  const { selectRows, statusOfSelect, toggleBatchSelect, clearSelection } = selector;
+  clearSelectionRef.current = clearSelection;
   const maxHeight = useAdminTableMaxHeight('.page-club-activity', 400);
 
-  function clearSelection() {
-    setSelectedKeys([]);
-    setSelectedRows([]);
-  }
-
   async function toBatchSwitch(nextStatus: number) {
-    const ids = selectedRows.map((row) => row.id);
+    const ids = selectRows.map((row) => row.id);
     if (!ids.length) return;
     const actionLabel = nextStatus === CLUB_STATUS_ENABLED ? '启用' : '停用';
     modal.confirm({
@@ -102,6 +102,7 @@ export default function ClubActivityList() {
   }
 
   const columns: ColumnsType<ClubActivityRow> = [
+    createSelectColumn(selector, { batchHeader: false }),
     {
       title: '社团名称',
       dataIndex: 'clubName',
@@ -213,16 +214,6 @@ export default function ClubActivityList() {
     },
   ];
 
-  const rowSelection: TableProps<ClubActivityRow>['rowSelection'] = {
-    type: 'checkbox',
-    selectedRowKeys: selectedKeys,
-    onChange: (keys, rows) => {
-      setSelectedKeys(keys);
-      setSelectedRows(rows);
-    },
-    columnWidth: 55,
-  };
-
   return (
     <div className="page-club-activity">
       <DoFilterPanel
@@ -268,13 +259,40 @@ export default function ClubActivityList() {
         enableDoHeader
         batch={
           <div className="batch-control">
+            <div
+              className={[
+                'batch-select-control',
+                statusOfSelect !== 'none-selected' ? 'is-active' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              role="checkbox"
+              aria-checked={
+                statusOfSelect === 'all-selected'
+                  ? 'true'
+                  : statusOfSelect === 'half-selected'
+                    ? 'mixed'
+                    : 'false'
+              }
+              tabIndex={0}
+              onClick={toggleBatchSelect}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggleBatchSelect();
+                }
+              }}
+            >
+              <DoSelectBatchBox status={statusOfSelect} />
+              <span className="batch-select-label">全选本页</span>
+            </div>
             <span>批量操作：</span>
             <Button
               className="ml-5"
               color="green"
               variant="outlined"
               size="small"
-              disabled={!selectedRows.length}
+              disabled={!selectRows.length}
               loading={batchEnableLoading}
               onClick={() => void toBatchSwitch(CLUB_STATUS_ENABLED)}
             >
@@ -285,7 +303,7 @@ export default function ClubActivityList() {
               color="orange"
               variant="outlined"
               size="small"
-              disabled={!selectedRows.length}
+              disabled={!selectRows.length}
               loading={batchDisableLoading}
               onClick={() => void toBatchSwitch(CLUB_STATUS_DISABLED)}
             >
@@ -315,7 +333,6 @@ export default function ClubActivityList() {
           bordered
           size="middle"
           scroll={{ y: maxHeight }}
-          rowSelection={rowSelection}
         />
       </TableWrap>
       <DialogEditClubActivity
