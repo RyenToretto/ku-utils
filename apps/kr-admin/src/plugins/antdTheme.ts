@@ -132,6 +132,14 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         buttonColor: ku['text-secondary'],
         borderRadiusSM: 8,
       },
+      // 对齐 kv3 el-checkbox：14px 方框
+      Checkbox: {
+        controlInteractiveSize: 14,
+      },
+      // 对齐 kv3 el-drawer：卡片底色
+      Drawer: {
+        colorBgElevated: ku['bg-card'],
+      },
       // 对齐 kv3 el-form：项间距 18、标签次级色
       Form: {
         itemMarginBottom: 18,

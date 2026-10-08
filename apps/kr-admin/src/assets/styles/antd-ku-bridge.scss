@@ -15,6 +15,26 @@
   min-width: 0;
 }
 
+/* kv3 el-checkbox：选中文字品牌色；禁用文字 placeholder 色，禁用且选中为 border-light 底 + placeholder 勾 */
+.ant-checkbox-wrapper.ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled)
+  .ant-checkbox
+  + span {
+  color: var(--ku-color-primary);
+}
+
+.ant-checkbox-wrapper.ant-checkbox-wrapper-disabled .ant-checkbox.ant-checkbox-disabled + span {
+  color: var(--ku-text-placeholder);
+}
+
+.ant-checkbox-wrapper .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner {
+  background: var(--ku-border-light);
+  border-color: var(--ku-border-default);
+
+  &::after {
+    border-color: var(--ku-text-placeholder);
+  }
+}
+
 /* kv3 TableWrap :deep(.do-table-header) > .table-control */
 .table-wrap > .do-table-header > .table-control {
   box-sizing: border-box;
