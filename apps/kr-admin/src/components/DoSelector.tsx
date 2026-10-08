@@ -76,7 +76,8 @@ export function DoSelector({
       disabled={disabled}
       mode={mode}
       placeholder={placeholder}
-      style={{ minWidth: 160, ...style }}
+      className="do-selector"
+      style={style}
       options={requesting ? [] : resolved.map((o) => ({ value: o.value, label: o.label }))}
       notFoundContent={
         requesting ? <span className="do-selector-loading">加载中...</span> : undefined
