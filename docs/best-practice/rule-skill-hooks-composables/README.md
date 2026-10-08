@@ -20,8 +20,8 @@ Vue 3 composables 的放置、命名、与业务页面协作方式。
 
 ## 最佳实践（精炼）
 
-1. 通用能力进共享包（如 `@ku-utils/hooks`：`useLoading` / `useCountdown` / …）；业务专用放 `src/composables`。
-2. 命名：`useXxx`；返回值结构稳定，避免隐式依赖全局单例（除非文档声明）。
+1. 通用能力进共享包（如 `@ku-utils/hooks`：`useLoading` / `useCountdown` / …）；业务专用放 `src/composables`。跨栈能力（`useMaxHeight` / `useVersionUpdate`）同步落 `@ku-utils/hooks-react` 与 `@ku-utils/hooks-angular`。
+2. 命名：Vue / React `useXxx`；Angular `injectXxx`（返回 Signal，注入上下文调用，`DestroyRef` 清理）；返回值结构稳定，避免隐式依赖全局单例（除非文档声明）。
 3. 管理端列表查询：`apps/kv3-admin` 用 `useTableQuery`（abort / `tableLoadFailed` / `refresh({ silent })`）；**不要**再引入他仓分页适配层。
 4. 列表高度：优先 `useMaxHeight` / 仓内 `useAdminTableMaxHeight`；抽屉点选用 `useDrawerPickListMaxHeight`，禁止魔法数字散落。
 5. 不在 hook 内做路由跳转/弹 message，除非该 hook 的职责就是「页面流程」。
@@ -29,7 +29,7 @@ Vue 3 composables 的放置、命名、与业务页面协作方式。
 
 ## 本仓落点
 
-- `packages/hooks`
+- `packages/hooks`、`packages/hooks-react`、`packages/hooks-angular`
 - [`.cursor/rules/hooks-guide.mdc`](../../../.cursor/rules/hooks-guide.mdc)
 - [`.cursor/skills/hooks/SKILL.md`](../../../.cursor/skills/hooks/SKILL.md)
 - kv3-admin：`src/composables/useTableQuery.ts`、`useAdminTableMaxHeight.ts`、`useDrawerPickListMaxHeight.ts` 等

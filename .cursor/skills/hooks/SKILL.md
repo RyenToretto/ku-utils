@@ -32,9 +32,19 @@ sed -n '1,80p' packages/hooks/src/index.ts
 | `useCountdown`   | 验证码倒计时                                                |
 | `useDialogState` | 弹层可见与载荷                                              |
 
+React / Angular 对应包：
+
+| Vue 3（`@ku-utils/hooks`） | React（`@ku-utils/hooks-react`） | Angular（`@ku-utils/hooks-angular`） |
+| -------------------------- | -------------------------------- | ------------------------------------ |
+| `useMaxHeight`             | `useMaxHeight`                   | `injectMaxHeight` → `Signal<number>` |
+| `useVersionUpdate`         | `useVersionUpdate`               | `injectVersionUpdate` → Signal 集合  |
+
+Angular 版须在注入上下文（字段初始化/构造函数）调用，不手写 `ngOnDestroy` 清理。
+
 ## Step 2：选型
 
 - **跨 Vue3 应用可复用** → 加到 `packages/hooks`，发版后消费方升版本（本仓 apps 用 `workspace:*`）
+- **跨栈通用（高度/版本检测这类）** → 三个包同步实现同语义 API
 - **仅管理端表格壳** → `apps/kv3-admin/src/composables`（如 `useTableQuery`、`useAdminTableMaxHeight`）
 
 ## Step 3：kv3-admin 列表与高度

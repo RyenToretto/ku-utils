@@ -10,7 +10,9 @@
         "scripts/**",
         "tsup.config.*",
         "vite.config.*",
+        "ng-package.json",
         "tsconfig.json",
+        "tsconfig.lib.json",
         "package.json"
       ],
       "outputs": ["dist/**", ".output/**", ".vitepress/dist/**"]
@@ -36,7 +38,7 @@
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "tsconfig.json", "package.json"],
+      "inputs": ["src/**", "tsconfig.json", "tsconfig.lib.json", "package.json"],
       "outputs": []
     },
     "clean": {

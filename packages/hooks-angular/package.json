@@ -1,0 +1,41 @@
+{
+  "name": "@ku-utils/hooks-angular",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist",
+    "linkDirectory": true
+  },
+  "description": "ku-utils Angular 注入函数（injectMaxHeight / injectVersionUpdate，基于 signals）",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json",
+    "dev": "ng-packagr -p ng-package.json -c tsconfig.lib.json --watch",
+    "typecheck": "tsc -p tsconfig.lib.json --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@angular/core": "^22.0.0"
+  },
+  "dependencies": {
+    "@ku-utils/utils": "workspace:*",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/compiler": "^22.2.1",
+    "@angular/compiler-cli": "^22.2.1",
+    "@angular/core": "^22.2.1",
+    "@ku-utils/eslint-config": "workspace:*",
+    "@ku-utils/tsconfig": "workspace:*",
+    "angular-eslint": "^22.5.0",
+    "eslint": "^9.27.0",
+    "ng-packagr": "^22.2.4",
+    "typescript": "~6.0.3"
+  }
+}

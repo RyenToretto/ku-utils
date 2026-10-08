@@ -10,14 +10,16 @@ alwaysApply: false
 
 | 能力 | 放置 |
 | --- | --- |
-| 通用、可跨仓复用 | `@ku-utils/hooks`（`packages/hooks`） |
+| 通用、可跨仓复用 | `@ku-utils/hooks`（Vue 3）/ `@ku-utils/hooks-react` / `@ku-utils/hooks-angular` |
 | 仅本应用（如管理端表格高度） | `apps/<app>/src/composables` |
 
 优先用共享包，禁止在业务页复制粘贴 loading / countdown / clipboard 逻辑。
 
+四栈同名语义：`useMaxHeight` / `useVersionUpdate`（Vue、React）↔ `injectMaxHeight` / `injectVersionUpdate`（Angular，返回 Signal，须在注入上下文调用，`DestroyRef` 自动清理）。kv2 仓内 `src/lib` 自带同语义实现。
+
 ## 命名与职责
 
-- 命名：`useXxx`
+- 命名：Vue / React `useXxx`；Angular `injectXxx`
 - 返回值结构稳定；避免隐式依赖未文档化的全局单例
 - **不要**在通用 hook 内做路由跳转 / `ElMessage`，除非该 hook 职责就是页面流程
 
@@ -33,9 +35,11 @@ kv3-admin：
 
 禁止魔法数字散落当表格高度。禁止在 List 外另造分页状态与 `useTableQuery` 双轨。
 
+kr-admin / ka-admin 同形：`useTableQuery` ↔ `injectTableQuery`，`useAdminTableMaxHeight` ↔ `injectAdminTableMaxHeight`。
+
 ## 新增 hook
 
-1. 先评估能否进 `@ku-utils/hooks`
+1. 先评估能否进 `@ku-utils/hooks`（跨栈能力须同步 hooks-react / hooks-angular）
 2. 有简短 JSDoc + 从 `packages/hooks/src/index.ts` 导出
 3. 改包后 `pnpm --filter @ku-utils/hooks build`
 4. 细则见 `.cursor/skills/hooks/SKILL.md`
