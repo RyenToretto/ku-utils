@@ -32,6 +32,14 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
       colorWarning: ku['color-warning'],
       colorError: ku['color-danger'],
       colorInfo: ku['color-info'],
+      colorSuccessBg: ku['color-success-bg'],
+      colorSuccessBorder: ku['color-success-border'],
+      colorWarningBg: ku['color-warning-bg'],
+      colorWarningBorder: ku['color-warning-border'],
+      colorErrorBg: ku['color-danger-bg'],
+      colorErrorBorder: ku['color-danger-border'],
+      colorInfoBg: ku['color-info-bg'],
+      colorInfoBorder: ku['color-info-border'],
       colorLink: ku['text-link'],
       colorLinkHover: ku['text-link-hover'],
       colorText: ku['text-primary'],
@@ -76,6 +84,12 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         rowSelectedHoverBg: ku['bg-hover'],
         cellPaddingBlockMD: 8,
         cellPaddingInlineMD: 8,
+      },
+      // 对齐 kv3 el-alert：无边框、16px 内边距、标题行高 24
+      Alert: {
+        defaultPadding: '8px 16px',
+        lineWidth: 0,
+        lineHeight: 24 / 14,
       },
     },
   };
