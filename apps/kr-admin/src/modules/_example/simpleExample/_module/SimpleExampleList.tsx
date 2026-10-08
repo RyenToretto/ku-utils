@@ -383,7 +383,6 @@ export default function SimpleExampleList({
             loading={tableLoading}
             onPageChange={(p) => void handlePageChange(p)}
             onSizeChange={(s) => void handleSizeChange(s)}
-            onRefresh={() => void search(false)}
           />
         }
       >
