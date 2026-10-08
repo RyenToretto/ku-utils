@@ -457,7 +457,7 @@ defineExpose({
 }
 
 .schedule-time-week-picker-summary-day {
-  color: var(--ku-text-tertiary, #999);
+  color: var(--ku-text-placeholder, #8a8172);
 }
 
 .schedule-time-week-picker-cells :deep(.el-tooltip__trigger) {
