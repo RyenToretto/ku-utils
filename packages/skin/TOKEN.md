@@ -4,7 +4,7 @@
 
 - 「层」= `base`（`src/base-tokens.js` + `src/el-base.css`，所有皮肤共用，不随明暗/品牌变化）或 `theme`（`src/themes/*.js`，随皮肤和 `html.dark` 变化）。
 - 颜色类 token 只有 `theme` 层会变；`base` 层的间距/圆角/字号/阴影/层级/中性灰阶所有皮肤、明暗模式都一致。
-- Element Plus 的 `--el-*` 不在本表重复列出：结构类（背景/文字/边框/表格/菜单……）全部是 `var(--ku-*)` 的直接转发，颜色阶（`--el-color-{primary,success,warning,danger,error,info}-{light-1..9,dark-2,rgb}`)由 `scripts/generate.mjs` 用 `mix()` 从对应 `--ku-color-*` 基色现算，不是独立契约。
+- Element Plus 的 `--el-*` 不在本表重复列出：结构类（背景/文字/边框/表格/菜单……）与颜色阶（`--el-color-{primary,success,warning,danger,error,info}-{light-1..9,dark-2,rgb}`）全部是 `var(--ku-*)` 的直接转发，不是独立契约。转发声明在 `:root, html.dark` 共享块，与 Element Plus `dark/css-vars.css` 同优先级，**skin 必须在它之后引入**。
 
 ## base 层（`--ku-*`，所有皮肤共用）
 
@@ -36,6 +36,17 @@
 | `--ku-color-{success,warning,danger,info}-bg` | 状态色浅底（Tag / 提示条背景）                                           |
 | `--ku-color-{success,warning,danger}-border`  | 状态色浅描边（`info` 同样有 `-border`）                                  |
 | `--ku-{success,warning,danger}-600`           | 状态色 hover/深一档（按钮 hover、Tag 文字），由 `mix()` 现算，不是手写值 |
+
+### 状态色色阶（primary / success / warning / danger / info）
+
+由 `mix()` 从品牌基色现算（明：往白混；暗：往 `#141414` 混），算法同 Element Plus。非 Element 栈（antd / ng-zorro 的 plain 按钮等）要与 Element Plus 同值时读这一组，不读 `--el-*`。
+
+| 变量                                       | 说明                                                          |
+| ------------------------------------------ | ------------------------------------------------------------- |
+| `--ku-color-{family}-light-1` … `-light-9` | 浅阶（plain 按钮：常态 9 底 / 5 边，禁用 5 字 / 9 底 / 8 边） |
+| `--ku-color-{family}-dark-2`               | 深一阶（明：往黑混 20%；暗：往白混 20%）                      |
+| `--ku-color-{family}-rgb`                  | 基色 `r, g, b` 三元组，供 `rgba()` 组合                       |
+| `--ku-color-{family}-ramp-base`            | 色阶基色（= 对应 `--ku-color-{family}`）                      |
 
 ### 背景 / 表面
 

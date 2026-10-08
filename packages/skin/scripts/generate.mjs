@@ -4,12 +4,12 @@
  * 皮肤是数据（src/themes/tome.js），CSS 是产物。本脚本：
  * 1. 读 src/base-tokens.js + src/el-base.css，拼成与皮肤无关的基础层；
  * 2. 读金标皮肤 src/themes/tome.js 的品牌语义色（light/dark），转成 --ku-*；
- * 3. 用 mix() 从品牌基色现算 Element Plus 的 --el-color-* 全套色阶（light-1..9 /
- *    dark-2 / rgb），不手写第二套色板；
- * 4. Element Plus 的结构类变量（bg/text/border/fill/menu/table/... ）统一写成
- *    var(--ku-*) 引用，只需在 :root 声明一次——html.dark 只要重新声明对应的
- *    --ku-* 原值，这些 --el-* 会通过变量引用自动跟着换，不必在 html.dark 里
- *    重复声明第二遍。
+ * 3. 用 mix() 从品牌基色现算状态色全套色阶 --ku-color-<family>-light-1..9 /
+ *    dark-2 / rgb（明暗各一套真实值），不手写第二套色板；
+ * 4. Element Plus 变量（结构类 bg/text/border/fill/menu/table/... 与 --el-color-*
+ *    色阶）全部写成 var(--ku-*) 转发，声明在 `:root, html.dark` 共享块：
+ *    Element Plus 的 dark/css-vars.css 也在 html.dark 上声明这些变量，只写 :root
+ *    会被它按优先级压过；共享块与它同优先级，靠 skin 后引入取胜。
  *
  * 唯一金标皮肤：tome。新增皮肤需明确产品需求后再扩 THEME_FILES。
  */
@@ -114,17 +114,30 @@ function primaryScaleToVarLines(scale, indent = '  ') {
     .join('\n');
 }
 
-function elColorRampToVarLines(name, ramp, indent = '  ') {
-  const lines = [`${indent}--el-color-${name}: var(--ku-color-${name}-ramp-base);`];
-  for (let i = 1; i <= 9; i += 1) {
-    lines.push(`${indent}--el-color-${name}-light-${i}: ${ramp[`light-${i}`]};`);
-  }
-  lines.push(`${indent}--el-color-${name}-dark-2: ${ramp['dark-2']};`);
-  lines.push(`${indent}--el-color-${name}-rgb: ${ramp.rgb};`);
-  return lines.join('\n');
+const RAMP_STEPS = [...Array.from({ length: 9 }, (_, i) => `light-${i + 1}`), 'dark-2', 'rgb'];
+
+function kuColorRampToVarLines(family, ramp, indent = '  ') {
+  return RAMP_STEPS.map((step) => `${indent}--ku-color-${family}-${step}: ${ramp[step]};`).join(
+    '\n',
+  );
 }
 
-/** Element Plus 结构类变量：全部转发到 --ku-*，只需要声明一次。 */
+/** Element Plus 色阶：转发到 --ku-color-*；danger 同时提供 EP 的 error 别名。 */
+function elColorRampForwardLines(indent = '  ') {
+  return COLOR_FAMILIES.flatMap((family) => {
+    const names = family === 'danger' ? ['danger', 'error'] : [family];
+    return names.map((name) =>
+      [
+        `${indent}--el-color-${name}: var(--ku-color-${family}-ramp-base);`,
+        ...RAMP_STEPS.map(
+          (step) => `${indent}--el-color-${name}-${step}: var(--ku-color-${family}-${step});`,
+        ),
+      ].join('\n'),
+    );
+  }).join('\n\n');
+}
+
+/** Element Plus 结构类变量：全部转发到 --ku-*。 */
 const EL_STRUCTURAL_BLOCK = `\
   --el-bg-color: var(--ku-bg-card);
   --el-bg-color-page: var(--ku-bg-page-from);
@@ -199,25 +212,13 @@ function resolveBase(theme, mode, family) {
 }
 
 function buildRampBlock(theme, mode) {
-  const lines = COLOR_FAMILIES.map((family) => {
-    const base = resolveBase(theme, mode, family);
-    const ramp = buildElRamp(base, { dark: mode === 'dark' });
-    const block = [elColorRampToVarLines(family, ramp)];
-    if (family === 'danger') {
-      // Element Plus 同时使用 danger / error 两个别名，值完全一致。
-      block.push(elColorRampToVarLines('error', ramp));
-    }
-    return block.join('\n');
-  });
-  return lines.join('\n\n');
-}
-
-function buildRampBaseVars(theme, mode) {
   return COLOR_FAMILIES.map((family) => {
     const base = resolveBase(theme, mode, family);
-    const alias = family === 'danger' ? ['danger', 'error'] : [family];
-    return alias.map((name) => `  --ku-color-${name}-ramp-base: ${base};`).join('\n');
-  }).join('\n');
+    return [
+      `  --ku-color-${family}-ramp-base: ${base};`,
+      kuColorRampToVarLines(family, buildElRamp(base, { dark: mode === 'dark' })),
+    ].join('\n');
+  }).join('\n\n');
 }
 
 /**
@@ -286,16 +287,19 @@ function buildThemeCss(theme, { baseTokens, elBaseCss }) {
     `  --ku-scrollbar-width: ${theme.layout.scrollbarWidth};`,
     `  --ku-layout-aside-width: ${theme.layout.asideWidth};`,
     '',
-    '  /* ---- Element Plus 桥接（结构类，转发到 --ku-*） ---- */',
-    EL_STRUCTURAL_BLOCK,
-    '',
-    '',
     '  /* ---- 状态色深一档（按钮 hover / Tag 文字，由品牌基色现算） ---- */',
     buildStatusHoverVars(theme, 'light'),
     '',
-    '  /* ---- Element Plus 桥接（色阶，由品牌基色现算） ---- */',
-    buildRampBaseVars(theme, 'light'),
+    '  /* ---- 状态色色阶（由品牌基色现算） ---- */',
     buildRampBlock(theme, 'light'),
+  ].join('\n');
+
+  const elBridgeLines = [
+    '  /* ---- Element Plus 桥接（结构类，转发到 --ku-*） ---- */',
+    EL_STRUCTURAL_BLOCK,
+    '',
+    '  /* ---- Element Plus 桥接（色阶，转发到 --ku-color-*） ---- */',
+    elColorRampForwardLines(),
   ].join('\n');
 
   const darkLines = [
@@ -307,8 +311,7 @@ function buildThemeCss(theme, { baseTokens, elBaseCss }) {
     '  /* ---- 状态色深一档（Dark 覆写，由品牌基色现算） ---- */',
     buildStatusHoverVars(theme, 'dark'),
     '',
-    '  /* ---- Element Plus 桥接（色阶，Dark 覆写） ---- */',
-    buildRampBaseVars(theme, 'dark'),
+    '  /* ---- 状态色色阶（Dark 覆写，由品牌基色现算） ---- */',
     buildRampBlock(theme, 'dark'),
   ].join('\n');
 
@@ -322,6 +325,11 @@ ${elBaseCss.trim()}
 
 :root {
 ${rootLines}
+}
+
+:root,
+html.dark {
+${elBridgeLines}
 }
 
 ${buildScrollbarAndSelectionRules()}

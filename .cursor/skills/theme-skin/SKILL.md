@@ -17,6 +17,8 @@ description: >-
 3. **唯一金标皮肤 `tome`**：应用入口 `import '@ku-utils/skin'`（= tome）；不维护多套备选皮肤，不搞运行时多皮肤切换。
 4. 明暗只认 `html.dark`（禁止 `data-theme` / 页面自造暗色选择器当主方案）。
 5. **JS 主题系统（antd）**吃 `@ku-utils/skin/tokens` 的已解析色值（`tome.light` / `tome.dark`），不写 `var(--ku-*)`（无法派生色阶），也不在 apps 手抄 hex；暗色算法会改写种子色，品牌/状态色需按皮肤值钉回（见 kr-admin `plugins/antdTheme.ts`）。
+6. **状态色色阶**读 `--ku-color-{family}-light-1..9` / `-dark-2` / `-rgb`（明暗各一套，算法同 Element Plus）；非 Element 栈要与 kv3 同值时用它，禁止读 `--el-*` 或自己 `color-mix` 近似。
+7. **引入顺序**：`--el-*` 转发在 `:root, html.dark` 共享块，与 Element Plus `dark/css-vars.css` 同优先级，skin 必须在它之后引入，否则暗色被 Element Plus 灰色系压过。
 
 ## mask ≠ overlay（强制）
 

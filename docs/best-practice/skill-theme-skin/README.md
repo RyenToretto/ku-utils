@@ -22,7 +22,8 @@
 
 1. 应用引入金标皮肤 CSS（`@ku-utils/skin` = `tome`）；**apps 不自建第二套色板**。
 2. 组件写 `var(--ku-token, <tome 浅色 fallback>)`，不把皮肤 CSS 打进 library 产物。
-3. Element Plus：结构变量转发 `--ku-*`；色阶由脚本从品牌色生成。
+3. Element Plus：结构变量与色阶全部转发 `--ku-*`（色阶 `--ku-color-{family}-light-1..9` / `-dark-2` / `-rgb` 由脚本从品牌色生成）；转发写在 `:root, html.dark` 共享块，skin 须在 Element Plus `dark/css-vars.css` 之后引入。
+   非 Element 栈（antd / ng-zorro 的 plain 按钮等）与 Element Plus 同值时读 `--ku-color-*` 色阶，禁读 `--el-*`、禁自己 `color-mix` 近似。
 4. **`--el-mask-color` → loading 浅色**（`--ku-loading-bg`）；**`--el-overlay-color` → 弹层深色**（`--ku-bg-overlay`）。勿混用。
 5. 契约变更：新增 token 走 minor；改名删除走 major（见 TOKEN.md）。
 6. **`--el-fill-color` / `-light` 用内容区中性底**（斑马纹 / 表头），不要指到侧栏。深色侧栏会让文字按钮和表格 hover 字色消失。
@@ -44,3 +45,4 @@
 - [ ] 弹层遮罩仍足够暗
 - [ ] packages/ui 无硬编码品牌色（允许 fallback）
 - [ ] antd 应用明暗切换后正文色 / 主按钮 / 卡片底与 `--ku-*` 一致
+- [ ] Element Plus 应用暗色下 `--el-bg-color` / `--el-text-color-*` 等为 skin 值，而非 Element Plus 灰色系

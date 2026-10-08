@@ -14,7 +14,7 @@ pnpm add @ku-utils/skin
 
 ```ts
 // main.ts / main.js —— 越早引入越好，第三方 CSS 之后、业务样式之前
-import 'element-plus/theme-chalk/dark/css-vars.css'; // 用 Element Plus 才需要
+import 'element-plus/theme-chalk/dark/css-vars.css'; // 用 Element Plus 才需要；必须在 skin 之前
 import '@ku-utils/skin'; // 默认 = tome
 import '@ku-utils/ui/style';
 ```
@@ -58,8 +58,8 @@ document.documentElement.classList.toggle('dark', isDark);
 
 ## 设计原则
 
-- **皮肤是数据，CSS 是产物**：金标皮肤在 `src/themes/tome.js` 里只维护品牌语义色，`scripts/generate.mjs` 现算 Element Plus 的完整色阶（`light-1..9` / `dark-2` / `rgb`），不手写第二套色板。
-- **一层语义，桥接 Element Plus**：业务和 `Du*` 组件只读 `--ku-*`；`--el-*` 全部是 `var(--ku-*)` 的转发或现算结果。
+- **皮肤是数据，CSS 是产物**：金标皮肤在 `src/themes/tome.js` 里只维护品牌语义色，`scripts/generate.mjs` 现算状态色完整色阶 `--ku-color-{family}-light-1..9` / `dark-2` / `rgb`，不手写第二套色板；antd / ng-zorro 等非 Element 栈要与 Element Plus 同值时直接读这组变量。
+- **一层语义，桥接 Element Plus**：业务和 `Du*` 组件只读 `--ku-*`；`--el-*` 全部是 `var(--ku-*)` 的转发，声明在 `:root, html.dark` 共享块（与 Element Plus `dark/css-vars.css` 同优先级），所以 skin 必须在它之后引入。
 - **组件库带 fallback、不打皮肤 CSS**：`packages/ui` 等写成 `var(--ku-xxx, <tome 浅色值>)`，应用 `import '@ku-utils/skin'` 后走金标变量。
 - **不维护多套备选皮肤**：变更色值只改 `tome.js` 后 `pnpm --filter @ku-utils/skin build`。
 
