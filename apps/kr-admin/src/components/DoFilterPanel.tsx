@@ -142,7 +142,6 @@ export function DoFilterPanel({
             <Button
               type="primary"
               loading={loading}
-              disabled={loading}
               onClick={() => {
                 if (!loading) onSearch?.(true);
               }}

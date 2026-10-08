@@ -1,5 +1,5 @@
 ---
-description: kr-admin starter 约定。写列表页、表格、筛选、弹层、自定义列时读取。
+description: kr-admin starter 约定。写列表页、表格、筛选、弹层、按钮、自定义列时读取。
 globs:
 alwaysApply: false
 ---
@@ -47,6 +47,16 @@ src/modules/<域>/<子业务>/
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
 
 局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。
+
+## 按钮状态（强制，四端一致）
+
+1. **loading ≠ disabled**：loading 保持类型原色（实心 / outlined / 默认），整体 `opacity: .65`、不响应悬停与点击，禁止遮罩洗白；**禁止** loading 时再传 `disabled`（防重复提交靠 loading 自身 + 处理函数守卫）
+2. **disabled** 对齐 kv3（Element Plus）：实心 `light-5`，plain `light-5 / 9 / 8`，读 `--ku-*`，禁写死色值
+3. **图标显隐不改宽**：loading spinner、条件图标出现 / 消失时按钮宽高不变，进出场动画期间也不变。由全局样式用负 margin 抵消图标占位（图标 1em + 间距）；**禁止**组件内 `position: absolute` 局部 hack、禁止用 `min-width` 兜宽
+4. 仅图标按钮图标 14px；行内仅图标小按钮 24×24，带文字的按钮宽度自适应
+5. 聚焦态只认键盘 `:focus-visible`，鼠标点击后不得残留悬停色
+6. 新增 / 改按钮形态后，在四端逐帧采样按钮宽度（loading 前、中、后）验收
+7. 本端落点：`assets/styles/antd-ku-bridge.scss`。antd v5 对 `.ant-btn-loading-icon` 做 width / margin / scale 进出场动画，且退场时 `.ant-btn-loading` 已先移除，所以规则只挂图标包裹层本身并用 `!important` 钉死动画，抵消 `0.5em + 4px`
 
 ## Demo 模块索引
 
