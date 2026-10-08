@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import DialogEditSchoolResource from './DialogEditSchoolResource';
 
+import CellDateTime from '@/components/CellDateTime';
 import CellNameId from '@/components/CellNameId';
 import CellState from '@/components/CellState';
 import DoFilterPanel from '@/components/DoFilterPanel';
@@ -199,7 +200,7 @@ export default function SchoolResourceList({
         title: '创建时间',
         dataIndex: 'createTime',
         minWidth: 160,
-        render: (v) => v || '—',
+        render: (v) => <CellDateTime value={v} />,
       },
       {
         title: (
