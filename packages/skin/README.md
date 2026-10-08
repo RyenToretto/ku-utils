@@ -31,6 +31,19 @@ import '@ku-utils/skin/tome';
 import '@ku-utils/skin/base';
 ```
 
+## JS 主题系统（antd 等）
+
+antd 这类需要用真实色值派生 hover/active 色阶的主题系统，不能吃 `var(--ku-*)`。用已解析的明暗两套色值（键名 = `--ku-*` 去前缀，暗色已合并在浅色之上）：
+
+```ts
+import tome from '@ku-utils/skin/tokens';
+
+const ku = isDark ? tome.dark : tome.light;
+ku['color-primary']; // 浅色 #9a6328 / 暗色 #e0a060
+```
+
+CSS 仍需照常 `import '@ku-utils/skin'`；`tokens` 只给 JS 主题配置用，不替代 `--ku-*`。
+
 ## 明暗切换
 
 本包不做运行时换肤逻辑，只提供 `:root`（Light）+ `html.dark`（Dark）两套变量。切换暗色只需要在 `<html>` 上加/去掉 `dark` class：

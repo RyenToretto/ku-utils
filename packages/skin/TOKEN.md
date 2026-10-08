@@ -95,6 +95,7 @@
 
 - `packages/ui` 组件内联样式绑定的 `--ku-liquid-glass-*`、`--ku-liquid-floating-bar-*`：组件私有、运行时由 props 计算，不是皮肤契约。
 - `apps/kv3-admin` 业务代码已全量直连 `--ku-*`，不保留旧无前缀变量（`--primary-color`、`--bg-page` 等）的别名/桥接层。
+- **JS 消费**：`@ku-utils/skin/tokens` 导出 `tome.light` / `tome.dark` 已解析色值（同名去前缀），供 antd 等 JS 主题派生色阶；与 CSS 变量同源同步生成。
 - **唯一金标皮肤是 `tome`**。包默认导出 `index.css` = `tome`；不维护多套备选皮肤。改色只动 `src/themes/tome.js` 后 `pnpm --filter @ku-utils/skin build`。
 
 ## 变更记录

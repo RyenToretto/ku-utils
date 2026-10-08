@@ -44,7 +44,10 @@ function hexToRgb(hex) {
 }
 
 function rgbToHex({ r, g, b }) {
-  const toHex = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+  const toHex = (n) =>
+    Math.max(0, Math.min(255, Math.round(n)))
+      .toString(16)
+      .padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
@@ -278,19 +281,19 @@ function buildThemeCss(theme, { baseTokens, elBaseCss }) {
     `  /* ---- ${theme.label} · 品牌语义色（Light） ---- */`,
     primaryScaleToVarLines(theme.light.primaryScale),
     semanticToVarLines(theme.light),
-    `  --ku-bg-page: var(--ku-bg-page-from);`,
-    `  --ku-bg-page-gradient: linear-gradient(135deg, var(--ku-bg-page-from) 0%, var(--ku-bg-page-to) 100%);`,
+    '  --ku-bg-page: var(--ku-bg-page-from);',
+    '  --ku-bg-page-gradient: linear-gradient(135deg, var(--ku-bg-page-from) 0%, var(--ku-bg-page-to) 100%);',
     `  --ku-scrollbar-width: ${theme.layout.scrollbarWidth};`,
     `  --ku-layout-aside-width: ${theme.layout.asideWidth};`,
     '',
-    `  /* ---- Element Plus 桥接（结构类，转发到 --ku-*） ---- */`,
+    '  /* ---- Element Plus 桥接（结构类，转发到 --ku-*） ---- */',
     EL_STRUCTURAL_BLOCK,
     '',
     '',
-    `  /* ---- 状态色深一档（按钮 hover / Tag 文字，由品牌基色现算） ---- */`,
+    '  /* ---- 状态色深一档（按钮 hover / Tag 文字，由品牌基色现算） ---- */',
     buildStatusHoverVars(theme, 'light'),
     '',
-    `  /* ---- Element Plus 桥接（色阶，由品牌基色现算） ---- */`,
+    '  /* ---- Element Plus 桥接（色阶，由品牌基色现算） ---- */',
     buildRampBaseVars(theme, 'light'),
     buildRampBlock(theme, 'light'),
   ].join('\n');
@@ -301,10 +304,10 @@ function buildThemeCss(theme, { baseTokens, elBaseCss }) {
     `  /* ---- ${theme.label} · 品牌语义色（Dark 覆写） ---- */`,
     semanticToVarLines(theme.dark),
     '',
-    `  /* ---- 状态色深一档（Dark 覆写，由品牌基色现算） ---- */`,
+    '  /* ---- 状态色深一档（Dark 覆写，由品牌基色现算） ---- */',
     buildStatusHoverVars(theme, 'dark'),
     '',
-    `  /* ---- Element Plus 桥接（色阶，Dark 覆写） ---- */`,
+    '  /* ---- Element Plus 桥接（色阶，Dark 覆写） ---- */',
     buildRampBaseVars(theme, 'dark'),
     buildRampBlock(theme, 'dark'),
   ].join('\n');
@@ -327,6 +330,43 @@ html.dark {
 ${darkLines}
 }
 `;
+}
+
+/**
+ * 把皮肤数据拍平成「明 / 暗两套已解析色值」：供 antd 等需要真实色值做派生计算的
+ * JS 主题系统消费（CSS 变量 var() 无法参与派生）。键名与 --ku-* 去前缀一致。
+ */
+function resolvePalettes(theme) {
+  const { primaryScale, ...lightSemantic } = theme.light;
+  const scale = Object.fromEntries(
+    Object.entries(primaryScale).map(([step, value]) => [`primary-${step}`, value]),
+  );
+  const light = { ...scale, ...lightSemantic };
+  const dark = { ...light, ...theme.dark };
+  return { light, dark };
+}
+
+function buildTokensModule(themes) {
+  const entries = themes.map((theme) => [theme.id, resolvePalettes(theme)]);
+  const keys = Object.keys(entries[0][1].light);
+  const js = [
+    '// 由 scripts/generate.mjs 生成，请勿手改。',
+    ...entries.map(
+      ([id, palettes]) => `export const ${id} = ${JSON.stringify(palettes, null, 2)};`,
+    ),
+    `export default ${DEFAULT_THEME};`,
+    '',
+  ].join('\n');
+  const dts = [
+    '// 由 scripts/generate.mjs 生成，请勿手改。',
+    `export type KuSkinTokenKey =\n${keys.map((k) => `  | '${k}'`).join('\n')};`,
+    'export type KuSkinPalette = Readonly<Record<KuSkinTokenKey, string>>;',
+    'export interface KuSkinPalettes {\n  readonly light: KuSkinPalette;\n  readonly dark: KuSkinPalette;\n}',
+    ...entries.map(([id]) => `export declare const ${id}: KuSkinPalettes;`),
+    `export default ${DEFAULT_THEME};`,
+    '',
+  ].join('\n');
+  return { js, dts };
 }
 
 async function loadThemes() {
@@ -355,6 +395,10 @@ async function build() {
 
   const baseOnlyCss = `${elBaseCss.trim()}\n\n:root {\n${toVarLines('ku', baseTokens)}\n}\n`;
   writeFileSync(resolve(distDir, 'base.css'), baseOnlyCss);
+
+  const tokensModule = buildTokensModule(themes);
+  writeFileSync(resolve(distDir, 'tokens.js'), tokensModule.js);
+  writeFileSync(resolve(distDir, 'tokens.d.ts'), tokensModule.dts);
 
   // eslint-disable-next-line no-console
   console.log(`@ku-utils/skin built: ${themes.map((t) => t.id).join(', ')}`);

@@ -28,10 +28,12 @@
 6. **`--el-fill-color` / `-light` 用内容区中性底**（斑马纹 / 表头），不要指到侧栏。深色侧栏会让文字按钮和表格 hover 字色消失。
 7. **正文字体用系统 UI 无衬线**（`base-tokens` 的 `--ku-font-family-base`）。禁止未托管宋体/衬线进 body；不引入第三方品牌字体文件。
 8. **唯一金标 `tome`**，不维护多套备选皮肤。
+9. **JS 主题系统（antd）用 `@ku-utils/skin/tokens` 已解析色值**：不写 `var()`（无法派生色阶）、不手抄 hex、不靠 `:root --ant-*`（未开 cssVar 不生效）；暗色算法改写的品牌/状态色按皮肤值钉回。
 
 ## 本仓落点
 
-- `packages/skin` + `TOKEN.md`
+- `packages/skin` + `TOKEN.md`（CSS：`@ku-utils/skin`；JS：`@ku-utils/skin/tokens`）
+- antd 接入：`apps/kr-admin/src/plugins/antdTheme.ts`
 - [`.cursor/skills/theme-skin/SKILL.md`](../../../.cursor/skills/theme-skin/SKILL.md)
 - 约束摘要亦见根 `project-context` / `vue-standards`（`--ku-*` fallback）
 
@@ -40,3 +42,4 @@
 - [ ] 表格 `v-loading` 为浅色磨砂，非黑色大罩
 - [ ] 弹层遮罩仍足够暗
 - [ ] packages/ui 无硬编码品牌色（允许 fallback）
+- [ ] antd 应用明暗切换后正文色 / 主按钮 / 卡片底与 `--ku-*` 一致

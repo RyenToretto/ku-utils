@@ -4,12 +4,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "ku-utils 团队统一皮肤：--ku-* 语义变量 + Element Plus --el-* 桥接（唯一金标 tome）",
+  "description": "ku-utils 团队统一皮肤：--ku-* 语义变量 + Element Plus --el-* 桥接 + 已解析明暗色值（唯一金标 tome）",
   "type": "module",
   "exports": {
     ".": "./dist/index.css",
     "./tome": "./dist/tome.css",
-    "./base": "./dist/base.css"
+    "./base": "./dist/base.css",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    }
   },
   "files": [
     "dist",

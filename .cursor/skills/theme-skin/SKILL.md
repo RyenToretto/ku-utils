@@ -2,7 +2,7 @@
 name: theme-skin
 description: >-
   @ku-utils/skin 统一皮肤与 Design Token。新增/修改 token、换肤、v-loading 遮罩色、
-  Element Plus --el-* 桥接、packages 内 var(--ku-*, fallback) 写法时使用。
+  Element Plus --el-* 桥接、antd 主题接入（skin/tokens）、packages 内 var(--ku-*, fallback) 写法时使用。
 ---
 
 # Theme Skin（@ku-utils/skin）
@@ -16,6 +16,7 @@ description: >-
 2. **packages 内必须带 fallback**：`var(--ku-xxx, <tome 浅色值>)`，不把 skin CSS 打进组件库产物。
 3. **唯一金标皮肤 `tome`**：应用入口 `import '@ku-utils/skin'`（= tome）；不维护多套备选皮肤，不搞运行时多皮肤切换。
 4. 明暗只认 `html.dark`（禁止 `data-theme` / 页面自造暗色选择器当主方案）。
+5. **JS 主题系统（antd）**吃 `@ku-utils/skin/tokens` 的已解析色值（`tome.light` / `tome.dark`），不写 `var(--ku-*)`（无法派生色阶），也不在 apps 手抄 hex；暗色算法会改写种子色，品牌/状态色需按皮肤值钉回（见 kr-admin `plugins/antdTheme.ts`）。
 
 ## mask ≠ overlay（强制）
 
@@ -51,5 +52,6 @@ pnpm --filter @ku-utils/skin build   # 或包内 generate 脚本
 ## 禁止
 
 - apps 复制一份 hex 色板当「本地皮肤」
+- antd 靠 `:root { --ant-* }` 覆写主题（未开 cssVar 时不生效）
 - packages 写死品牌 hex 且无 `--ku-*` fallback
 - mask / overlay 混用
