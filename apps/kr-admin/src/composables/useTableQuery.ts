@@ -100,12 +100,11 @@ export function useTableQuery<
     [enablePagination, fetcher, transformQuery, onLoaded, onError],
   );
 
+  /** 同步写 filtersRef，保证紧随其后的 search() 读到最新筛选项（勿把副作用塞进 setState updater） */
   const setListFilters = useCallback((patch: Partial<TFilter>) => {
-    setFilters((prev) => {
-      const next = { ...prev, ...patch };
-      filtersRef.current = next;
-      return next;
-    });
+    const next = { ...filtersRef.current, ...patch } as TFilter;
+    filtersRef.current = next;
+    setFilters(next);
   }, []);
 
   /** 同步写回 filtersRef 后立刻 search，避免 setState 批处理导致旧筛选项 */
