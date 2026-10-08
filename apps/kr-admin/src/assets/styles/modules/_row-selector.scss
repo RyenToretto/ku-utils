@@ -20,7 +20,7 @@
   position: relative;
   z-index: 2;
 
-  .el-icon {
+  .anticon {
     opacity: 0;
     font-size: 12px;
   }
@@ -33,7 +33,7 @@
     border-color: var(--ku-color-primary);
     background: var(--ku-color-primary);
 
-    .el-icon {
+    .anticon {
       opacity: 1;
     }
   }
@@ -42,7 +42,7 @@
     border-radius: 50%;
 
     &.active {
-      .el-icon {
+      .anticon {
         display: none;
       }
 
@@ -71,7 +71,7 @@
       border-color: var(--ku-color-primary);
       background: var(--ku-color-primary);
 
-      .el-icon {
+      .anticon {
         opacity: 1;
       }
     }
@@ -80,7 +80,7 @@
       border-color: var(--ku-color-primary);
       background: var(--ku-color-primary);
 
-      .el-icon {
+      .anticon {
         opacity: 1;
       }
     }

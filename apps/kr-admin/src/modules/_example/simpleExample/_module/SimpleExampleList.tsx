@@ -40,7 +40,6 @@ export type SimpleExampleListProps = {
   filterButtonCount?: number;
   filterLine?: number;
   fillViewportLayout?: boolean;
-  enableBatchSelect?: boolean;
   pageClassName?: string;
 };
 
@@ -49,7 +48,6 @@ export default function SimpleExampleList({
   filterButtonCount = 2,
   filterLine,
   fillViewportLayout = false,
-  enableBatchSelect = false,
   pageClassName = 'page-simple-example-list',
 }: SimpleExampleListProps) {
   const statusMap = maps.example.simpleExample.exampleStatus;
@@ -60,7 +58,6 @@ export default function SimpleExampleList({
 
   const [editOpen, setEditOpen] = useState(false);
   const [editRow, setEditRow] = useState<SimpleExampleRow | null>(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [statusSwitchingIds, setStatusSwitchingIds] = useState<Record<string, boolean>>({});
   const [demoFilters, setDemoFilters] = useState<Record<string, string>>(() =>
     isFilterPanelDemo ? createDoFilterPanelDemoFilters(filterFieldCount!) : {},
@@ -379,69 +376,6 @@ export default function SimpleExampleList({
       </DoFilterPanel>
 
       <TableWrap
-        batch={
-          enableBatchSelect
-            ? (() => {
-                const pageIds = tableData.map((r) => r.id as React.Key);
-                const pageIdSet = new Set(pageIds);
-                const selectedOnPage = pageIds.filter((id) => selectedRowKeys.includes(id));
-                const statusOfSelect =
-                  !pageIds.length || selectedOnPage.length === 0
-                    ? 'none-selected'
-                    : selectedOnPage.length === pageIds.length
-                      ? 'all-selected'
-                      : 'half-selected';
-                const toggleBatchSelect = () => {
-                  if (statusOfSelect === 'all-selected') {
-                    setSelectedRowKeys((prev) => prev.filter((k) => !pageIdSet.has(k)));
-                  } else {
-                    setSelectedRowKeys((prev) => Array.from(new Set([...prev, ...pageIds])));
-                  }
-                };
-                return (
-                  <div
-                    className={[
-                      'batch-select-control',
-                      statusOfSelect !== 'none-selected' ? 'is-active' : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    role="checkbox"
-                    aria-checked={
-                      statusOfSelect === 'all-selected'
-                        ? 'true'
-                        : statusOfSelect === 'half-selected'
-                          ? 'mixed'
-                          : 'false'
-                    }
-                    tabIndex={0}
-                    onClick={toggleBatchSelect}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleBatchSelect();
-                      }
-                    }}
-                  >
-                    <div
-                      className={[
-                        'do-select-cell',
-                        'batch-select-box',
-                        statusOfSelect,
-                        statusOfSelect !== 'none-selected' ? 'active' : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ')}
-                    />
-                    <span className="batch-select-label">全选本页</span>
-                    {selectedRowKeys.length ? (
-                      <span className="batch-select-count">已选 {selectedRowKeys.length}</span>
-                    ) : null}
-                  </div>
-                );
-              })()
-            : null
-        }
         footer={
           <ListPaginationBar
             pageNum={listFilters.pageNum || 1}
@@ -467,14 +401,6 @@ export default function SimpleExampleList({
           locale={{
             emptyText: tableLoadFailed ? '加载失败，请重试' : '暂无数据',
           }}
-          rowSelection={
-            enableBatchSelect
-              ? {
-                  selectedRowKeys,
-                  onChange: setSelectedRowKeys,
-                }
-              : undefined
-          }
         />
       </TableWrap>
 

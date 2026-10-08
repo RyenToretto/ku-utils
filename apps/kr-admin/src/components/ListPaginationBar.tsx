@@ -9,10 +9,11 @@ export type ListPaginationBarProps = {
   pageSizeOptions?: string[];
   onPageChange: (page: number) => void;
   onSizeChange: (size: number) => void;
-  onRefresh: () => void;
+  /** 传入即显示刷新按钮（对齐 kv3 BasePagination enable-refresh） */
+  onRefresh?: () => void;
 };
 
-/** 列表底部分页条：刷新 + Pagination，对齐 kv3 BasePagination(enable-refresh)。 */
+/** 列表底部分页条：可选刷新 + Pagination，对齐 kv3 BasePagination。 */
 export function ListPaginationBar({
   pageNum,
   pageSize,
@@ -25,14 +26,16 @@ export function ListPaginationBar({
 }: ListPaginationBarProps) {
   return (
     <div className="table-pagination-bar">
-      <Button
-        type="text"
-        size="small"
-        icon={<ReloadOutlined spin={loading} />}
-        aria-label="刷新"
-        title="刷新"
-        onClick={onRefresh}
-      />
+      {onRefresh ? (
+        <Button
+          type="text"
+          size="small"
+          icon={<ReloadOutlined spin={loading} />}
+          aria-label="刷新"
+          title="刷新"
+          onClick={onRefresh}
+        />
+      ) : null}
       <Pagination
         current={pageNum}
         pageSize={pageSize}

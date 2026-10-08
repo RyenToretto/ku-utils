@@ -1,10 +1,5 @@
-import SimpleExampleList from './_module/SimpleExampleList';
+import SimpleExampleBatchSelectList from './_module/SimpleExampleBatchSelectList';
 
 export default function SimpleExampleBatchSelectLayer() {
-  return (
-    <SimpleExampleList
-      enableBatchSelect
-      pageClassName="page-simple-example-batch-select"
-    />
-  );
+  return <SimpleExampleBatchSelectList />;
 }
