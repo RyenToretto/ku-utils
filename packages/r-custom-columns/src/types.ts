@@ -82,8 +82,6 @@ export interface CustomColumnMessages {
   configNameRequired: string;
   configNameExists: string;
   configSaved: string;
-  moveUp: string;
-  moveDown: string;
 }
 
 /** 弹窗内部使用的扁平列元数据 */

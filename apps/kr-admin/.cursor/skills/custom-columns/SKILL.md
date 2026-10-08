@@ -1,22 +1,22 @@
 ---
 name: custom-columns
-description: Vue3 自定义列接入指南（@ku-utils/r-custom-columns）。当需要为 Ant Design 表格页面增加「自定义列」能力（schema + v-for 驱动、列配置持久化、拖拽排序、分组导航、嵌套表头）时使用。
+description: React 自定义列接入指南（@ku-utils/r-custom-columns）。当需要为 Ant Design 表格页面增加「自定义列」能力（schema 驱动列、列配置持久化、配置抽屉拖拽排序、分组导航、嵌套表头）时使用。
 ---
 
-# Vue3 自定义列接入 Skill
+# React 自定义列接入 Skill
 
-`@ku-utils/r-custom-columns` 是基于 Vue3 + Ant Design 的自定义列方案，核心是 `useSchemaColumnConfig` composable + `DoTableHeader` / `DoConfigColumnDialog` / `DoReadColumnConfig` / `SchemaColumn` 组件，通过 `provide/inject` 协作，schema 驱动 `v-for` 渲染，配置持久化到 localStorage。
+`@ku-utils/r-custom-columns` 是 React + Ant Design 5 的自定义列方案，与 Vue 3 包 `@ku-utils/custom-columns` 交互 1:1：`useSchemaColumnConfig` hook + `SchemaColumnConfigContext` 下发，`DoTableHeader`（悬停列出本地配置、内含配置抽屉）读取 Context，`schemasToColumns` 把 schema 转为 antd `columns`，配置持久化到 localStorage。
 
 ## Step 0：确认依赖
 
-消费项目已安装 `@ku-utils/r-custom-columns`，并在入口引入样式：
+消费项目已安装 `@ku-utils/r-custom-columns`（peer：`react`/`react-dom` >= 18、`antd` >= 5.21、`@ant-design/icons` >= 5），入口引入样式：
 
 ```ts
-// main.ts
-import '@ku-utils/r-custom-columns/style';
+// main.tsx
+import '@ku-utils/r-custom-columns/style.css';
 ```
 
-`DoTableHeader` 通常由项目的 `TableWrap` 容器在 `enable-do-header` 时渲染，无需全局注册。
+`DoTableHeader` 由项目 `TableWrap` 在 `enableDoHeader` 时渲染；页面无需再挂配置弹层。
 
 ## Step 1：定义列 schema
 
@@ -35,94 +35,74 @@ export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
     renderType: 'float',
     renderArgs: [2, true],
   },
-  {
-    prop: 'requestCount',
-    label: '请求数',
-    group: '统计',
-    align: 'right',
-    renderType: 'integer',
-    isDefault: true,
-  },
+  { prop: 'requestCount', label: '请求数', group: '统计', renderType: 'integer', isDefault: true },
 ];
 ```
 
 字段说明：
 
 - `prop`：叶子列必填，全局唯一稳定（配置存储 key）
-- `label`：列头文字
-- `group`：弹窗左侧分组（默认「未分组」）
+- `label`：列头文字；`group`：抽屉左侧分组（默认「未分组」）
 - `renderType` / `renderArgs`：内置格式化（text / integer / float / percent）
-- `cellComponent`：自定义单元格组件（props: row/column/index/schema）
+- `cellRender({ value, record, index, schema })`：自定义单元格；`antdAttrs`：透传 antd 列属性
 - `renderHeader` / `headerTooltip`：自定义列头
-- `isDefault`：无缓存时默认显示
-- `children`：嵌套表头子列
-- `fixed`：固定列（弹窗中不可取消勾选）
+- `isDefault`：无缓存时默认显示；`children`：嵌套表头子列
+- `fixed`：抽屉中不可取消勾选（不决定钉列；钉列用 `antdAttrs: { fixed: 'left' }`）
 
-## Step 2：页面 setup 调用 composable
+## Step 2：页面调用 hook 并下发 Context
 
-```ts
-import { useSchemaColumnConfig } from '@ku-utils/r-custom-columns';
+```tsx
+import {
+  SchemaColumnConfigContext,
+  schemasToColumns,
+  useSchemaColumnConfig,
+} from '@ku-utils/r-custom-columns';
 
-const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConfig({
+const config = useSchemaColumnConfig({
   columnSchemas: USER_COLUMN_SCHEMAS,
   storageKey: 'admin_users_col',
   schemaVersion: 1,
 });
-```
 
-## Step 3：模板组合
+const columns = [
+  { title: 'ID', dataIndex: 'id', width: 80, fixed: 'left' },
+  ...schemasToColumns(config.visibleSchemas, { formatCell: config.formatSchemaCell }),
+];
 
-```vue
-<TableWrap enable-do-header :disabled-column-config="false">
-  <el-table :key="tableRenderKey" :data="list" border>
-    <el-table-column prop="id" label="ID" fixed="left" width="80" />
-    <el-table-column
-      v-for="schema in visibleSchemas"
-      :key="schema.prop"
-      :prop="schema.prop"
-      :label="schema.label"
-      :min-width="schema.minWidth"
-      :align="schema.align || 'left'"
-      v-bind="schema.elAttrs || {}"
+return (
+  <SchemaColumnConfigContext.Provider value={config}>
+    <TableWrap
+      enableDoHeader
+      disabledColumnConfig={false}
     >
-      <template #default="{ row, column, $index }">
-        <component :is="schema.cellComponent" v-if="schema.cellComponent"
-          :row="row" :column="column" :index="$index" :schema="schema" />
-        <span v-else>{{ formatSchemaCell(row[column.property], schema) }}</span>
-      </template>
-    </el-table-column>
-  </el-table>
-</TableWrap>
-```
-
-嵌套表头改用内置递归组件：
-
-```vue
-<SchemaColumn
-  v-for="schema in visibleSchemas"
-  :key="schema.prop || schema.label"
-  :schema="schema"
-  :format-cell="formatSchemaCell"
-/>
+      <Table
+        key={config.tableRenderKey}
+        rowKey="id"
+        columns={columns}
+        dataSource={list}
+      />
+    </TableWrap>
+  </SchemaColumnConfigContext.Provider>
+);
 ```
 
 ## API 速查
 
-`useSchemaColumnConfig(options)` 返回：
+`useSchemaColumnConfig(options)` 返回（即 Context 值）：
 
-| 返回值                                                              | 说明                                |
-| ------------------------------------------------------------------- | ----------------------------------- |
-| `visibleSchemas`                                                    | 当前应渲染的列 schema（模板 v-for） |
-| `tableRenderKey`                                                    | el-table :key 强制重建              |
-| `formatSchemaCell(val, schema)`                                     | 单元格格式化                        |
-| `applyColumnConfig` / `saveConfigToLocal` / `removeConfigFromLocal` | 配置增删改                          |
-| `readCacheConfig` / `getDefaultConfig`                              | 配置读取                            |
+| 返回值                                                              | 说明                                 |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| `visibleSchemas`                                                    | 当前应渲染的列 schema（已过滤/排序） |
+| `tableRenderKey`                                                    | Table `key`，列变化时强制重建        |
+| `formatSchemaCell(val, schema)`                                     | 单元格格式化                         |
+| `applyColumnConfig` / `saveConfigToLocal` / `removeConfigFromLocal` | 配置增删改                           |
+| `readCacheConfig` / `getDefaultConfig`                              | 配置读取                             |
 
-options：`{ columnSchemas, storageKey?, schemaVersion?, alwaysVisibleColumns?, maxConfigCount?, maxSelectCount?, onDialogClose?, onLabelChange? }`
+options：`{ columnSchemas, storageKey?, schemaVersion?, alwaysVisibleColumns?, maxConfigCount?, maxSelectCount?, messages?, onDialogClose?, onLabelChange? }`
 
 ## FAQ
 
-- **列顺序改了不生效**：检查 `el-table` 是否绑定 `:key="tableRenderKey"`
+- **列顺序改了不生效**：检查 Table 是否绑定 `key={config.tableRenderKey}`
 - **配置互相覆盖**：检查 `storageKey` 是否全局唯一
 - **旧缓存导致新列不显示**：字段重命名/删除时递增 `schemaVersion`
-- **自定义列按钮不显示**：`TableWrap` 需 `enable-do-header` + `:disabled-column-config="false"`
+- **自定义列按钮不显示**：`TableWrap` 需 `enableDoHeader` + `disabledColumnConfig={false}`，且在 `SchemaColumnConfigContext.Provider` 内

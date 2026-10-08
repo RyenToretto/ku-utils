@@ -37,8 +37,6 @@ export const DEFAULT_CUSTOM_COLUMN_MESSAGES: CustomColumnMessages = {
   configNameRequired: '请输入配置名称',
   configNameExists: '配置名称已存在，请使用其他名称',
   configSaved: '配置已保存',
-  moveUp: '上移',
-  moveDown: '下移',
 };
 
 function flattenLeafSchemas(schemas: ColumnSchema[]): ColumnSchema[] {
@@ -172,7 +170,7 @@ function createInitialState(
 /**
  * React 自定义列核心 hook（schema 驱动）。
  *
- * 返回可见列、弹窗开关与 localStorage 持久化能力，配合 DoTableHeader / DoConfigColumnDialog 使用。
+ * 返回可见列与 localStorage 持久化能力；经 SchemaColumnConfigContext 下发给 DoTableHeader（内含配置抽屉）。
  */
 export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
   const {
@@ -203,7 +201,6 @@ export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
   optionsRef.current = options;
 
   const [storage, setStorage] = useState<TableStorage>(() => createInitialState(options, messages));
-  const [configVisible, setConfigVisible] = useState(false);
 
   const originStorageKey = useMemo(
     () => resolveStorageKey(storageKey, schemaVersion),
@@ -270,7 +267,7 @@ export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
     }));
   }, [getConfigurableSchemas, getActiveConfig, isSchemaVisible, messages.groupFallback, storage]);
 
-  const visibleColumns = useMemo<ColumnSchema[]>(() => {
+  const visibleSchemas = useMemo<ColumnSchema[]>(() => {
     const schemas = columnSchemas || [];
     const activeConfig = getActiveConfig();
     const allLeaves = getConfigurableSchemas();
@@ -300,7 +297,7 @@ export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
       .filter((s): s is ColumnSchema => !!s);
   }, [columnSchemas, getActiveConfig, getConfigurableSchemas, storage]);
 
-  const tableRenderKey = useMemo(() => getLeafProps(visibleColumns).join(','), [visibleColumns]);
+  const tableRenderKey = useMemo(() => getLeafProps(visibleSchemas).join(','), [visibleSchemas]);
 
   const readCacheConfig = useCallback((): TableStorage | null => {
     const raw = readRawCache();
@@ -463,46 +460,9 @@ export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
     }
   }, []);
 
-  const openConfig = useCallback(() => setConfigVisible(true), []);
-
-  const closeConfig = useCallback(() => {
-    setConfigVisible(false);
-    onDialogClose?.();
-  }, [onDialogClose]);
-
-  /** 应用当前选中的 prop 列表到激活配置 */
-  const applyConfig = useCallback(
-    (columns: string[], label?: string) => {
-      applyColumnConfig({
-        label: label || storage.activeColumnConfigLabel || defaultConfigLabel,
-        columns,
-      });
-    },
-    [applyColumnConfig, storage.activeColumnConfigLabel, defaultConfigLabel],
-  );
-
-  /** 重置为默认配置（isDefault 优先，否则全量） */
-  const resetConfig = useCallback(() => {
-    const all = getConfigurableSchemas();
-    const defaultCols = all.filter((s) => s.isDefault);
-    const columns = (defaultCols.length ? defaultCols : all)
-      .map((s) => s.prop)
-      .filter((p): p is string => !!p);
-    applyColumnConfig({ label: defaultConfigLabel, columns });
-  }, [getConfigurableSchemas, applyColumnConfig, defaultConfigLabel]);
-
   return {
-    /** 原始 schema（入参透传） */
-    schemas: columnSchemas,
     /** 当前可见列 schema（已按配置过滤/排序） */
-    visibleColumns,
-    /** 别名：与 Vue 包 visibleSchemas 对齐 */
-    visibleSchemas: visibleColumns,
-    openConfig,
-    closeConfig,
-    configVisible,
-    applyConfig,
-    resetConfig,
+    visibleSchemas,
     tableColumns,
     tableRenderKey,
     activeColumnConfigLabel: storage.activeColumnConfigLabel,
@@ -519,6 +479,7 @@ export function useSchemaColumnConfig(options: SchemaColumnConfigOptions) {
     removeConfigFromLocal,
     formatSchemaCell,
     existAlreadyWithSystem,
+    onDialogClose,
   };
 }
 

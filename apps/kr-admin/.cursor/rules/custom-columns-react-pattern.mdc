@@ -6,7 +6,8 @@ alwaysApply: false
 
 # 自定义列（React）
 
-- 使用 `useSchemaColumnConfig` + `schemasToColumns` + `DoTableHeader` / `DoConfigColumnDialog`
+- 使用 `useSchemaColumnConfig` + `schemasToColumns` + `DoTableHeader`（内含配置抽屉，页面不再单独挂弹层）
 - `storageKey` 全局唯一；破坏性 schema 变更递增 `schemaVersion`
-- 用 `SchemaColumnConfigContext.Provider` 包裹表格工具栏与弹层
+- 用 `SchemaColumnConfigContext.Provider` 包裹 `TableWrap`（`enableDoHeader` + `disabledColumnConfig={false}`）与表格
+- 交互与 Vue 包 1:1（悬停列配置、抽屉分组/搜索/拖拽/存读本地）；改一侧须同步另一侧
 - 禁止给 Vue 包加 React 双轨；新能力只进 `@ku-utils/r-custom-columns`

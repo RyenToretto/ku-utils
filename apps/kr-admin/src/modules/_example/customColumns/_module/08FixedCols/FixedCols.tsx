@@ -1,5 +1,4 @@
 import {
-  DoConfigColumnDialog,
   SchemaColumnConfigContext,
   schemasToColumns,
   useSchemaColumnConfig,
@@ -76,7 +75,6 @@ export default function FixedCols() {
             scroll={{ x: true, y: maxHeight }}
           />
         </TableWrap>
-        <DoConfigColumnDialog />
       </div>
     </SchemaColumnConfigContext.Provider>
   );

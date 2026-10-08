@@ -25,8 +25,6 @@ export const DEMO_CUSTOM_COLUMN_MESSAGES: CustomColumnMessages = {
   configNameRequired: '请输入配置名称',
   configNameExists: '配置名称已存在',
   configSaved: '配置已保存',
-  moveUp: '上移',
-  moveDown: '下移',
 };
 
 export const BASIC_COLUMN_SCHEMAS: ColumnSchema[] = [

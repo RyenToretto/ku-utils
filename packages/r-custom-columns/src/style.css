@@ -7,7 +7,7 @@
   width: 100%;
   padding: 10px 10px 12px;
   margin-bottom: 0;
-  border-bottom: 1px solid var(--ku-border-light, #eee6d8);
+  border-bottom: 1px solid var(--ku-border-light, #ddd4c6);
 }
 
 .do-table-header .table-batch,
@@ -32,124 +32,467 @@
   cursor: help;
 }
 
+/* ---------- 本地配置列表（DoReadColumnConfig） ---------- */
+
+.do-table-config-popper,
+.read-from-local-popper {
+  width: 240px;
+}
+
+.save-to-local-popper {
+  width: 520px;
+}
+
+.do-table-config-popper .ant-popover-inner,
+.read-from-local-popper .ant-popover-inner,
+.save-to-local-popper .ant-popover-inner {
+  border: 1px solid var(--ku-border-light, #ddd4c6);
+  border-radius: 4px;
+}
+
+.do-read-column-config {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.do-read-column-config .read-from-local-line {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 10px 0 0;
+}
+
+.do-read-column-config .read-from-local-config {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 12px;
+  background-color: var(--ku-bg-card-elevated, #fcf8f2);
+  opacity: 0.5;
+}
+
+.do-read-column-config .read-from-local-config.active,
+.do-read-column-config .read-from-local-config:hover {
+  background-color: var(--ku-bg-card, #f7f3eb);
+  border-color: var(--ku-color-primary, #9a6328);
+  color: var(--ku-color-primary, #9a6328);
+}
+
+.do-read-column-config .read-from-local-config.active {
+  opacity: 1;
+}
+
+.do-read-column-config .read-from-local-delete {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  display: none;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.do-read-column-config .read-from-local-delete:hover {
+  color: var(--ku-color-danger, #9f6559);
+}
+
+.do-read-column-config .read-from-local-line:hover .read-from-local-delete {
+  display: block;
+}
+
+/* ---------- 配置抽屉（DoConfigColumnDialog） ---------- */
+
+.do-config-column-dialog {
+  line-height: normal;
+}
+
+.do-config-column-dialog .ant-drawer-header {
+  margin-bottom: 32px;
+  padding: 20px 20px 0;
+  border-bottom: 0;
+}
+
+.do-config-column-dialog .ant-drawer-title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--ku-text-primary, #4e4540);
+}
+
+.do-config-column-dialog .ant-drawer-extra {
+  display: flex;
+}
+
+.do-config-column-dialog .drawer-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 20px;
+  color: var(--ku-text-primary, #4e4540);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.do-config-column-dialog .drawer-close:hover {
+  color: var(--ku-color-primary, #9a6328);
+}
+
+.do-config-column-dialog .drawer-title .tips.status-warning {
+  color: var(--ku-color-warning, #d4a017);
+}
+
+.do-config-column-dialog .drawer-title .tips.status-success {
+  color: var(--ku-color-success, #3d9a5c);
+}
+
+.do-config-column-dialog .ant-drawer-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.do-config-column-dialog .drawer-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.do-config-column-dialog .col-dialog-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 0 12px;
+  overflow: hidden;
+}
+
 .do-config-column-dialog .cfg-search {
-  margin-bottom: 12px;
+  flex-shrink: 0;
+  padding: 0 20px;
+}
+
+.do-config-column-dialog .cfg-search .ant-input-affix-wrapper {
+  height: 24px;
+  padding: 1px 7px;
+}
+
+.do-config-column-dialog .cfg-search .ant-input-affix-wrapper,
+.do-config-column-dialog .cfg-search .ant-input {
+  font-size: 12px;
 }
 
 .do-config-column-dialog .cfg-panels {
-  display: grid;
-  grid-template-columns: 1fr 240px;
-  gap: 16px;
-  min-height: 360px;
-  max-height: 520px;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid var(--ku-border-light, #ddd4c6);
+  border-radius: 2px;
+}
+
+.do-config-column-dialog .cfg-left {
+  flex-shrink: 0;
+  width: 240px;
+  padding: 8px 0;
+  overflow-y: auto;
+  background: var(--ku-bg-card-elevated, #fcf8f2);
+  border-right: 1px solid var(--ku-border-light, #ddd4c6);
+}
+
+.do-config-column-dialog .nav-link {
+  padding: 8px 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ku-text-secondary, #6d655a);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.do-config-column-dialog .nav-link:hover {
+  color: var(--ku-text-primary, #4e4540);
+  background: var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
+}
+
+.do-config-column-dialog .nav-link.active {
+  font-weight: 500;
+  color: var(--ku-color-primary, #9a6328);
+  background: var(--ku-color-primary-bg, #fbf6ec);
 }
 
 .do-config-column-dialog .cfg-mid {
-  overflow: auto;
-  border: 1px solid var(--ku-border-color, #e5e7eb);
-  border-radius: 6px;
-  padding: 8px 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.do-config-column-dialog .grp-head {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px 8px;
+  background: var(--ku-bg-card, #f7f3eb);
+}
+
+.do-config-column-dialog .grp-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ku-text-primary, #4e4540);
+}
+
+.do-config-column-dialog .grp-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.do-config-column-dialog .grp-actions a {
+  font-size: 12px;
+  color: var(--ku-color-primary, #9a6328);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.do-config-column-dialog .grp-actions a:hover {
+  text-decoration: underline;
+}
+
+.do-config-column-dialog .grp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 8px;
+  padding: 0 30px;
+}
+
+.do-config-column-dialog .grp-item {
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.do-config-column-dialog .grp-item .ant-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  margin-inline-end: 0;
+}
+
+.do-config-column-dialog .grp-item .ant-checkbox + span {
+  padding-inline-end: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ku-text-secondary, #6d655a);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.do-config-column-dialog .grp-empty {
+  padding: 48px 16px;
+  font-size: 13px;
+  color: var(--ku-text-placeholder, #8a8172);
+  text-align: center;
 }
 
 .do-config-column-dialog .cfg-right {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--ku-border-color, #e5e7eb);
-  border-radius: 6px;
-  overflow: hidden;
+  flex-shrink: 0;
+  width: 280px;
+  background: var(--ku-bg-card, #f7f3eb);
+  border-left: 1px solid var(--ku-border-light, #ddd4c6);
 }
 
 .do-config-column-dialog .sel-header {
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  border-bottom: 1px solid var(--ku-border-color, #e5e7eb);
-  background: var(--ku-fill-color-lighter, #f9fafb);
-}
-
-.do-config-column-dialog .sel-list {
-  flex: 1;
-  overflow: auto;
-  padding: 4px 0;
-}
-
-.do-config-column-dialog .sel-item {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
-  padding: 4px 8px 4px 12px;
+  padding: 10px 12px;
+  background: var(--ku-table-header-bg, #ebe3d4);
+  border-bottom: 1px solid var(--ku-border-light, #ddd4c6);
+}
+
+.do-config-column-dialog .sel-count {
   font-size: 13px;
+  font-weight: 500;
+  color: var(--ku-text-secondary, #6d655a);
 }
 
-.do-config-column-dialog .sel-item:hover {
-  background: var(--ku-fill-color-light, #f3f4f6);
+.do-config-column-dialog .sel-reset {
+  font-size: 12px;
+  color: var(--ku-color-primary, #9a6328);
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.do-config-column-dialog .sel-label {
+.do-config-column-dialog .sel-reset:hover {
+  text-decoration: underline;
+}
+
+.do-config-column-dialog .sel-body {
+  display: flex;
   flex: 1;
-  min-width: 0;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.do-config-column-dialog .sel-fix-zone {
+  flex-shrink: 0;
+}
+
+.do-config-column-dialog .sel-fix-row {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--ku-table-header-bg, #ebe3d4);
+  border-bottom: 1px solid var(--ku-bg-hover, rgba(154, 99, 40, 0.12));
+}
+
+.do-config-column-dialog .sel-lock {
+  flex-shrink: 0;
+  margin-right: 8px;
+  font-size: 12px;
+  color: var(--ku-text-disabled, #a89f90);
+}
+
+.do-config-column-dialog .sel-fix-name {
   overflow: hidden;
+  font-size: 13px;
+  color: var(--ku-text-secondary, #6d655a);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.do-config-column-dialog .sel-actions {
+.do-config-column-dialog .sel-sepline {
   display: flex;
   flex-shrink: 0;
-  gap: 0;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--ku-bg-card, #f7f3eb);
 }
 
-.do-config-column-dialog .grp-section + .grp-section {
-  margin-top: 12px;
+.do-config-column-dialog .sel-sepline::before,
+.do-config-column-dialog .sel-sepline::after {
+  flex: 1;
+  content: '';
+  border-top: 1px dashed var(--ku-border-default, #c5bcb0);
 }
 
-.do-config-column-dialog .grp-head {
+.do-config-column-dialog .sel-septip {
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--ku-text-disabled, #a89f90);
+  white-space: nowrap;
+}
+
+.do-config-column-dialog .sel-drag-zone {
+  flex: 1;
+}
+
+.do-config-column-dialog .sel-drag-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  height: 36px;
+  padding: 0 4px 0 8px;
+  border-bottom: 1px solid var(--ku-table-header-bg, #ebe3d4);
+  transition: background 0.12s;
 }
 
-.do-config-column-dialog .grp-label {
-  font-weight: 600;
+.do-config-column-dialog .sel-drag-row:hover {
+  background: var(--ku-table-header-bg, #ebe3d4);
+}
+
+.do-config-column-dialog .sel-drag-handle {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 100%;
+  color: var(--ku-text-disabled, #a89f90);
+  cursor: grab;
+}
+
+.do-config-column-dialog .sel-drag-handle:active {
+  cursor: grabbing;
+}
+
+.do-config-column-dialog .sel-drag-dots {
+  display: inline-block;
+  width: 6px;
+  height: 14px;
+  background-image: radial-gradient(circle, currentColor 1.2px, transparent 1.2px);
+  background-repeat: repeat;
+  background-size: 3px 4px;
+}
+
+.do-config-column-dialog .sel-drag-name {
+  flex: 1;
+  margin: 0 4px;
+  overflow: hidden;
   font-size: 13px;
+  color: var(--ku-text-primary, #4e4540);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.do-config-column-dialog .grp-actions {
+.do-config-column-dialog .sel-remove {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  color: var(--ku-text-disabled, #a89f90);
+  cursor: pointer;
+  border-radius: 3px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.do-config-column-dialog .sel-remove:hover {
+  color: var(--ku-color-danger, #9f6559);
+  background: var(--ku-color-danger-bg, #fdf2f0);
+}
+
+.do-config-column-dialog .sel-empty {
+  padding: 24px 12px;
+  font-size: 13px;
+  color: var(--ku-text-disabled, #a89f90);
+  text-align: center;
+}
+
+.do-config-column-dialog .drawer-foot {
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-top: 1px solid var(--ku-border-light, #ddd4c6);
+}
+
+.do-config-column-dialog .left-btn-group > button {
+  margin-right: 10px;
+}
+
+.do-config-column-dialog .right-btn-group {
   display: flex;
   gap: 12px;
-  font-size: 12px;
 }
 
-.do-config-column-dialog .grp-actions a {
-  color: var(--ku-color-primary, #1677ff);
-}
-
-.do-config-column-dialog .grp-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 6px 8px;
-}
-
-.do-config-column-dialog .grp-item {
-  font-size: 13px;
-}
-
-.do-config-column-dialog .grp-empty {
-  padding: 24px;
-  text-align: center;
-  color: var(--ku-text-color-secondary, #9ca3af);
-  font-size: 13px;
-}
-
-@media (max-width: 640px) {
-  .do-config-column-dialog .cfg-panels {
-    grid-template-columns: 1fr;
-    max-height: none;
-  }
-
-  .do-config-column-dialog .cfg-right {
-    min-height: 180px;
-  }
+.save-to-local-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

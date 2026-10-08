@@ -1,6 +1,5 @@
 import {
   useSchemaColumnConfig,
-  DoConfigColumnDialog,
   schemasToColumns,
   SchemaColumnConfigContext,
 } from '@ku-utils/r-custom-columns';
@@ -125,7 +124,6 @@ export default function CustomColumnsDemo({
             }}
           />
         </TableWrap>
-        <DoConfigColumnDialog />
       </div>
     </SchemaColumnConfigContext.Provider>
   );

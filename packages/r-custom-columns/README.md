@@ -10,7 +10,7 @@ React + Ant Design 5 自定义列组件库，对应 Vue 3 包 `@ku-utils/custom-
 pnpm add @ku-utils/r-custom-columns
 ```
 
-Peer：`react` / `react-dom` >= 18，`antd` >= 5.21（列 `minWidth`）。
+Peer：`react` / `react-dom` >= 18，`antd` >= 5.21（列 `minWidth`），`@ant-design/icons` >= 5。
 
 ```ts
 import '@ku-utils/r-custom-columns/style.css';
@@ -24,7 +24,6 @@ import {
   useSchemaColumnConfig,
   SchemaColumnConfigContext,
   DoTableHeader,
-  DoConfigColumnDialog,
   schemasToColumns,
   type ColumnSchema,
 } from '@ku-utils/r-custom-columns';
@@ -44,54 +43,34 @@ function OrderList() {
     schemaVersion: 1,
   });
 
-  const columns = schemasToColumns(config.visibleColumns, {
+  const columns = schemasToColumns(config.visibleSchemas, {
     formatCell: config.formatSchemaCell,
   });
 
   return (
     <SchemaColumnConfigContext.Provider value={config}>
-      <DoTableHeader />
+      <DoTableHeader disabledColumnConfig={false} />
       <Table
         key={config.tableRenderKey}
         rowKey="id"
         columns={columns}
         dataSource={[]}
       />
-      <DoConfigColumnDialog />
     </SchemaColumnConfigContext.Provider>
   );
 }
-```
-
-不使用 Context 时，也可命令式传 props：
-
-```tsx
-<DoTableHeader onOpen={config.openConfig} />
-<DoConfigColumnDialog
-  open={config.configVisible}
-  onCancel={config.closeConfig}
-  tableColumns={config.tableColumns}
-  messages={config.messages}
-  onSave={(cols) => {
-    config.applyConfig(cols);
-    config.closeConfig();
-  }}
-  onReset={config.resetConfig}
-/>
 ```
 
 ## API 摘要
 
 ### `useSchemaColumnConfig(options)`
 
+返回值即 `SchemaColumnConfigContext` 的值：
+
 | 返回值                                                                                                       | 说明                                   |
 | ------------------------------------------------------------------------------------------------------------ | -------------------------------------- |
-| `schemas`                                                                                                    | 入参 schema                            |
-| `visibleColumns` / `visibleSchemas`                                                                          | 当前可见列（已过滤/排序）              |
-| `openConfig` / `closeConfig` / `configVisible`                                                               | 弹窗开关                               |
-| `applyConfig(columns, label?)`                                                                               | 应用选中列到激活配置并写缓存           |
-| `resetConfig()`                                                                                              | 重置为默认（`isDefault` 优先）         |
-| `tableColumns`                                                                                               | 弹窗用扁平元数据                       |
+| `visibleSchemas`                                                                                             | 当前可见列（已过滤/排序）              |
+| `tableColumns`                                                                                               | 抽屉用扁平元数据                       |
 | `tableRenderKey`                                                                                             | 列变化时建议作为 Table `key`           |
 | `formatSchemaCell`                                                                                           | `float` / `percent` / `integer` 格式化 |
 | `readCacheConfig` / `getDefaultConfig` / `applyColumnConfig` / `saveConfigToLocal` / `removeConfigFromLocal` | 存储辅助                               |
@@ -105,8 +84,11 @@ function OrderList() {
 
 ### 组件
 
-- **DoTableHeader** — 「自定义列」按钮（可插 `batch` / `control`）
-- **DoConfigColumnDialog** — 勾选 + 上移/下移排序的配置 Modal（MVP，非完整拖拽/多套命名配置 UI）
+交互与 Vue 包 1:1：
+
+- **DoTableHeader** — 左 `batch`、右 `control` +「自定义列」（`disabledColumnConfig` 默认 `true` 即隐藏）；悬停列出本地配置，选中即应用，「自定义配置」打开配置抽屉
+- **DoConfigColumnDialog** — 1000px 抽屉：搜索、左侧分组导航（滚动联动）、中间分组勾选（全选/反选）、右侧已选列（固定区 + 拖拽排序）、存到本地 / 读取本地 / 取消 / 完成；`ref.showConfigColumnDialog(config?)` 打开
+- **DoReadColumnConfig** — 本地配置列表（悬停非系统配置可删除）
 
 ## 与 Vue 包差异
 
@@ -114,8 +96,8 @@ function OrderList() {
 | --------------------------- | --------------------------- |
 | `cellComponent` / `elAttrs` | `cellRender` / `antdAttrs`  |
 | `provide` + inject          | `SchemaColumnConfigContext` |
-| Element Plus + Drawer       | Ant Design Modal            |
-| `vue-draggable-plus`        | 上移/下移按钮（MVP）        |
+| Element Plus Drawer/Popover | Ant Design Drawer/Popover   |
+| `vue-draggable-plus`        | `sortablejs`（同一引擎）    |
 
 ## 开发
 

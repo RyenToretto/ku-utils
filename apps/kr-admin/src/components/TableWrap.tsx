@@ -37,10 +37,9 @@ export function TableWrap({
     >
       {enableDoHeader ? (
         <DoTableHeader
-          disabled={disabledColumnConfig}
-          // workspace 内 @types/react 大版本差导致 ReactNode 名义不兼容，运行时一致
-          batch={batch as never}
-          control={control as never}
+          disabledColumnConfig={disabledColumnConfig}
+          batch={batch}
+          control={control}
         />
       ) : null}
 

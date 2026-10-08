@@ -26,12 +26,14 @@ Element Plus 表格用 schema + `useSchemaColumnConfig` 驱动列配置、持久
 4. 配置持久化 key 按「用户 + 页面」隔离，禁止全局串页。
 5. 配套 rule：`custom-columns-vue3-pattern.mdc`（固定列、slot、嵌套表头约定）。
 6. Demo 页放 Example 模块，生产构建门控禁止打进产物。
+7. React（`@ku-utils/r-custom-columns`）：`useSchemaColumnConfig` 返回值经 `SchemaColumnConfigContext.Provider` 下发，`schemasToColumns` 生成 antd columns；`DoTableHeader` 内含配置抽屉，页面不再单独挂弹层。Vue / Vue2 / React 三包交互 1:1，改一侧须同步其余。
 
 ## 本仓落点
 
-- `packages/custom-columns`
-- `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`
-- `apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc`
+- `packages/custom-columns` / `packages/v2-custom-columns` / `packages/r-custom-columns`
+- `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc`
+- `apps/kv2-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv2-admin/.cursor/rules/custom-columns-vue2-pattern.mdc`
+- `apps/kr-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kr-admin/.cursor/rules/custom-columns-react-pattern.mdc`
 
 ## 验收清单
 

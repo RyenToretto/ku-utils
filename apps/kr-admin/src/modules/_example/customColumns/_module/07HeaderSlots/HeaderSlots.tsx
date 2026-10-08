@@ -1,6 +1,5 @@
 import {
   useSchemaColumnConfig,
-  DoConfigColumnDialog,
   schemasToColumns,
   SchemaColumnConfigContext,
   type ColumnSchema,
@@ -138,7 +137,6 @@ export default function HeaderSlots() {
             scroll={{ x: true, y: maxHeight }}
           />
         </TableWrap>
-        <DoConfigColumnDialog />
       </div>
     </SchemaColumnConfigContext.Provider>
   );

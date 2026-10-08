@@ -15,13 +15,23 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'antd', '@ku-utils/utils'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'antd',
+        /^@ant-design\/icons/,
+        'sortablejs',
+        '@ku-utils/utils',
+      ],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'jsxRuntime',
           antd: 'antd',
+          '@ant-design/icons': 'icons',
+          sortablejs: 'Sortable',
           '@ku-utils/utils': 'KuUtils',
         },
         assetFileNames: (assetInfo) => {

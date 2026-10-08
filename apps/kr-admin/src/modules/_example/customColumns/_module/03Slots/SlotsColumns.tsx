@@ -1,6 +1,5 @@
 import {
   useSchemaColumnConfig,
-  DoConfigColumnDialog,
   schemasToColumns,
   SchemaColumnConfigContext,
   type ColumnSchema,
@@ -34,17 +33,19 @@ export default function SlotsColumns() {
 
   const visibleWithSlots = useMemo<ColumnSchema[]>(
     () =>
+      // 本页只演示插槽，不接排序（schema 自带 sortable 不生效）
       config.visibleSchemas.map((schema) =>
         schema.prop === 'roi'
           ? {
               ...schema,
+              sortable: false,
               cellRender: ({ value, record, schema: s }) => (
                 <span className={Number(record.roi) >= 1.8 ? 'roi-high' : 'roi-normal'}>
                   {config.formatSchemaCell(value, s)}
                 </span>
               ),
             }
-          : schema,
+          : { ...schema, sortable: false },
       ),
     [config],
   );
@@ -89,7 +90,6 @@ export default function SlotsColumns() {
             scroll={{ x: true, y: maxHeight }}
           />
         </TableWrap>
-        <DoConfigColumnDialog />
       </div>
     </SchemaColumnConfigContext.Provider>
   );
