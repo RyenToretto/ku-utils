@@ -160,6 +160,7 @@ export default function UiKitPanelDemo() {
   return (
     <div className="page-ui-kit-panel">
       <DoFilterPanel
+        labelWidth={80}
         line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}

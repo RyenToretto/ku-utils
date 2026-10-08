@@ -525,7 +525,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .do-filter-field-label-sm {
-  min-width: 52px;
+  --do-filter-label-width: 52px;
 }
 
 .page-school-resource-list {
@@ -574,7 +574,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .do-filter-field-label-wide {
-  min-width: 120px;
+  --do-filter-label-width: 120px;
 }
 
 .school-selector {

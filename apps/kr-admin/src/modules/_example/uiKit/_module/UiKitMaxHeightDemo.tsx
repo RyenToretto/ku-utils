@@ -179,6 +179,7 @@ export default function UiKitMaxHeightDemo() {
   return (
     <div className="page-ui-kit-max-height">
       <DoFilterPanel
+        labelWidth={80}
         line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}

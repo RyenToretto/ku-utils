@@ -76,59 +76,113 @@ html.dark {
 }
 
 .do-filter-panel {
-  margin-bottom: 12px;
-  padding: 12px 16px;
-  background: var(--ku-bg-card, #fff);
-  border: 1px solid var(--ku-border-light, #eee6d8);
-  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-bottom: 18px;
 }
 
 .do-filter-box {
+  position: relative;
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  gap: 18px;
+  align-items: stretch;
+  padding-right: 18px;
+  background: var(--ku-bg-card, #f7f3eb);
+  border: 1px solid var(--ku-border-light, #ddd4c6);
+  border-radius: 4px;
+  box-shadow: var(--ku-shadow-dropdown, 0 6px 20px rgba(46, 39, 43, 0.12));
 }
 
 .do-filter-body {
+  position: relative;
   flex: 1;
   min-width: 0;
+  padding: 18px 0;
 }
 
+.do-filter-wrapper {
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+/* 行距 = 控件 32px + 上下 10px，与 eachLineHeight=52 对应 */
 .do-filter-content {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 16px;
   align-items: center;
-}
-
-.do-filter-ctl {
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.do-filter-fold-toggle {
-  margin-top: 8px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ku-color-primary, #9a6328);
-  cursor: pointer;
-  font-size: 13px;
+  margin: -10px 0;
+  padding-left: 18px;
 }
 
 .do-filter-field {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  min-height: 32px;
+  margin: 10px 10px 10px 0;
 }
 
 .do-filter-field-label {
-  color: var(--ku-text-secondary, #8a7f74);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-width: var(--do-filter-label-width, 0);
+  padding-right: 12px;
+  color: var(--ku-text-secondary, #6d655a);
+  font-size: 14px;
+  line-height: 32px;
+  text-align: right;
   white-space: nowrap;
-  font-size: 13px;
+}
+
+.do-filter-ctl {
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  align-self: flex-end;
+  padding-bottom: 18px;
+
+  .ant-btn {
+    position: relative;
+    min-width: 76px;
+    padding-inline: 24px;
+  }
+
+  /* loading 图标进文档流会把按钮撑宽，改为落在左侧 padding 内 */
+  .ant-btn-loading > .ant-btn-icon {
+    position: absolute;
+    left: 8px;
+    margin: 0;
+  }
+}
+
+.more-filter-option {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: var(--ku-primary-50, #fbf6ec);
+  color: var(--ku-color-primary, #9a6328);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 17px;
+  cursor: pointer;
+  transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .do-filter-wrapper {
+    transition: none;
+  }
 }
 
 .domain-module-shell {

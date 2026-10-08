@@ -217,6 +217,7 @@ export default function ClubActivityList() {
   return (
     <div className="page-club-activity">
       <DoFilterPanel
+        labelWidth={80}
         line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}

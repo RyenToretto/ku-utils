@@ -148,6 +148,7 @@ export default function ClazzManageList() {
   return (
     <div className="page-clazz-manage">
       <DoFilterPanel
+        labelWidth={80}
         line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}

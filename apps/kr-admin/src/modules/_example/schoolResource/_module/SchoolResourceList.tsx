@@ -267,6 +267,7 @@ export default function SchoolResourceList({
   return (
     <div className={pageClass}>
       <DoFilterPanel
+        labelWidth={80}
         line={1}
         loading={tableLoading}
         onSearch={() => void search(true)}
