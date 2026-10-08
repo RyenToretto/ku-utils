@@ -30,7 +30,13 @@ export default function AppearancePicker({
             key={opt.value}
             type="button"
             className={`appearance-option${active ? ' is-active' : ''}`}
-            onClick={() => onChange(opt.value)}
+            onPointerDown={(e) => {
+              // 账户 Popover 在 mousedown 阶段就会因「外部点击」卸掉侧栏；
+              // 在 pointerdown 切肤，保证真实鼠标也能落到 onChange
+              if (e.button !== 0) return;
+              e.preventDefault();
+              onChange(opt.value);
+            }}
           >
             <span>{labels[opt.value]}</span>
             {active ? <CheckOutlined /> : null}

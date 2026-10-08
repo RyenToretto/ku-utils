@@ -5,6 +5,15 @@
 .profile-menu-popover {
   z-index: 1100 !important;
 
+  /* leave 兜底：motion=false 未生效时仍瞬时隐藏，避免卡顿 */
+  &.ant-zoom-big-leave,
+  &.ant-zoom-big-leave-active,
+  &.ant-zoom-big-leave-start {
+    display: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
   .ant-popover-arrow {
     display: none;
   }
@@ -127,70 +136,64 @@
   }
 }
 
-/* 外观侧向弹层（与 kv3 appearance-menu-popover 对齐，挂 body） */
-.appearance-menu-popover {
-  z-index: 1200 !important;
+/* 外观侧向弹层（自管 portal，对齐 kv3 left-start 浮层） */
+.appearance-menu-popover-portal {
+  z-index: 1200;
+  box-sizing: border-box;
+}
 
-  .ant-popover-arrow {
-    display: none;
+.appearance-menu-popover-inner {
+  padding: 6px;
+  border-radius: 12px;
+  width: 160px;
+  background: var(--ku-bg-card, var(--ant-color-bg-elevated, #fff));
+  border: 1px solid var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.appearance-menu-popover-portal .appearance-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.appearance-menu-popover-portal .appearance-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ku-text-regular, var(--ant-color-text));
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  user-select: none;
+  text-align: left;
+
+  &:hover {
+    background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
+    color: var(--ku-text-primary, var(--ant-color-text));
   }
 
-  .ant-popover-inner {
-    padding: 6px !important;
-    border-radius: 12px !important;
-    width: 160px;
-    border: 1px solid var(--ku-border-light, var(--ant-color-border-secondary, #eee6d8)) !important;
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.04),
-      0 4px 8px rgba(0, 0, 0, 0.06),
-      0 12px 28px rgba(0, 0, 0, 0.1) !important;
+  .anticon {
+    font-size: 14px;
+    flex-shrink: 0;
   }
+}
 
-  .ant-popover-inner-content {
-    padding: 0 !important;
-  }
-
-  .appearance-options {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .appearance-option {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 7px 10px;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--ku-text-regular, var(--ant-color-text));
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: inherit;
-    transition:
-      background 0.15s ease,
-      color 0.15s ease;
-    user-select: none;
-    text-align: left;
-
-    &:hover {
-      background: var(--ku-fill-light, var(--ant-color-fill-tertiary, #f5f0e6));
-      color: var(--ku-text-primary, var(--ant-color-text));
-    }
-
-    .anticon {
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-  }
-
-  .appearance-option.is-active {
-    color: var(--ku-color-primary);
-  }
+.appearance-menu-popover-portal .appearance-option.is-active {
+  color: var(--ku-color-primary);
 }
 
 // ─── 整体布局 ─────────────────────────────────────────────────
