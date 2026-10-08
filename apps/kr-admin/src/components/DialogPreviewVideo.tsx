@@ -1,13 +1,5 @@
 import { Modal } from 'antd';
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 import { isAudioUrl, type PreviewMediaRaw } from '@/utils/previewMedia';
 
@@ -42,6 +34,15 @@ function applyRawMeta(raw?: PreviewMediaRaw): MediaInfo {
   return info;
 }
 
+async function doPlay(el: HTMLVideoElement | HTMLAudioElement) {
+  try {
+    el.muted = false;
+    await el.play();
+  } catch {
+    /* 自动播放策略可能拦截，保留 controls 供手动播放 */
+  }
+}
+
 const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPreviewVideo(_, ref) {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [mediaUrl, setMediaUrl] = useState('');
@@ -49,9 +50,11 @@ const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPrev
   const [rawInfo, setRawInfo] = useState<PreviewMediaRaw>({});
   const [mediaInfo, setMediaInfo] = useState<MediaInfo>({});
   const playerRef = useRef<HTMLVideoElement | HTMLAudioElement | null>(null);
-  const setPlayerRef = (el: HTMLVideoElement | HTMLAudioElement | null) => {
+  /** Modal 内容挂载后才有播放器节点，在挂载时机起播 */
+  const setPlayerRef = useCallback((el: HTMLVideoElement | HTMLAudioElement | null) => {
     playerRef.current = el;
-  };
+    if (el) void doPlay(el);
+  }, []);
 
   const dialogTitle = useMemo(() => {
     if (rawInfo.name) return String(rawInfo.name);
@@ -76,33 +79,8 @@ const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPrev
     }
   }
 
-  async function doPlay() {
-    try {
-      const el = playerRef.current;
-      if (!el) return;
-      if ('muted' in el) el.muted = false;
-      await el.play?.();
-    } catch {
-      /* 自动播放策略可能拦截，保留 controls 供手动播放 */
-    }
-  }
-
-  async function loadVideoMetaFromElement() {
-    const el = playerRef.current;
-    if (!el || !('videoWidth' in el)) return;
-    await new Promise<void>((resolve) => {
-      const video = el as HTMLVideoElement;
-      if (video.readyState >= 1) {
-        resolve();
-        return;
-      }
-      const onMeta = () => {
-        video.removeEventListener('loadedmetadata', onMeta);
-        resolve();
-      };
-      video.addEventListener('loadedmetadata', onMeta);
-    });
-    const video = el as HTMLVideoElement;
+  function onVideoMeta(e: React.SyntheticEvent<HTMLVideoElement>) {
+    const video = e.currentTarget;
     setMediaInfo((prev) => {
       const next = { ...prev };
       if (video.videoWidth) next.width = video.videoWidth;
@@ -131,24 +109,6 @@ const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPrev
   }, []);
 
   useImperativeHandle(ref, () => ({ play }), [play]);
-
-  useEffect(() => {
-    if (!dialogVisible || !mediaUrl) return;
-    let cancelled = false;
-    (async () => {
-      if (!isAudio) {
-        try {
-          await loadVideoMetaFromElement();
-        } catch {
-          /* empty */
-        }
-      }
-      if (!cancelled) await doPlay();
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [dialogVisible, mediaUrl, isAudio]);
 
   return (
     <Modal
@@ -183,6 +143,7 @@ const DialogPreviewVideo = forwardRef<DialogPreviewVideoRef>(function DialogPrev
           controls
           muted
           playsInline
+          onLoadedMetadata={onVideoMeta}
         />
       )}
 

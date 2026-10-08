@@ -1447,11 +1447,11 @@ el-form-item.do-fill-form > .el-form-item__content {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 8px 12px 0;
+  padding: 8px 12px 16px;
 }
 
 .dialog-preview-video-link {
-  color: var(--ku-text-secondary, #6d655a);
+  color: var(--ku-text-placeholder);
   font-size: 12px;
   line-height: 1.5;
   word-break: break-all;
@@ -1473,8 +1473,8 @@ el-form-item.do-fill-form > .el-form-item__content {
   gap: 8px 20px;
   margin-top: 12px;
   padding: 12px 16px;
-  border-radius: var(--ku-radius-md, 6px);
-  background: var(--ku-table-stripe-bg, #f3ebe0);
+  border-radius: 8px;
+  background: var(--ku-table-stripe-bg);
 }
 
 .dialog-preview-video-meta-item {
@@ -1485,12 +1485,12 @@ el-form-item.do-fill-form > .el-form-item__content {
 }
 
 .dialog-preview-video-meta-label {
-  color: var(--ku-text-secondary, #6d655a);
+  color: var(--ku-text-placeholder);
 }
 
 .dialog-preview-video-meta-value {
   font-weight: 600;
-  color: var(--ku-text-primary, #4e4540);
+  color: var(--ku-text-primary);
 }
 
 .page-ui-kit-preview-video {
@@ -1505,16 +1505,11 @@ el-form-item.do-fill-form > .el-form-item__content {
     font-weight: 600;
   }
 
+  /* kv3：行 gap 8 + el-button 相邻 margin-left 12 */
   .ui-kit-demo-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .ui-kit-demo-hint {
-    margin: 8px 0 0;
-    color: var(--ku-text-secondary, #6d655a);
-    font-size: 12px;
+    gap: 8px 20px;
   }
 }
 
