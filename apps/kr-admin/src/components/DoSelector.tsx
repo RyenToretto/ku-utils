@@ -102,7 +102,4 @@ export function DoSelector({
   );
 }
 
-export { DoWordsTag } from './DoWordsTag';
-export type { DoWordsTagProps } from './DoWordsTag';
-
 export default DoSelector;
