@@ -21,11 +21,16 @@
     :align="schema.align || 'left'"
     :sortable="schema.sortable || false"
     :show-overflow-tooltip="schema.showOverflowTooltip"
-    :render-header="schema.renderHeader || undefined"
     v-bind="schema.elAttrs || {}"
   >
     <template
-      v-if="schema.headerTooltip"
+      v-if="schema.renderHeader"
+      #header="scope"
+    >
+      <HeaderRender :scope="scope" />
+    </template>
+    <template
+      v-else-if="schema.headerTooltip"
       #header
     >
       <el-tooltip
@@ -58,6 +63,9 @@ const props = defineProps<{
   schema: ColumnSchema;
   formatCell?: (val: unknown, schema: ColumnSchema) => string;
 }>();
+
+/** el-table-column 的 render-header 已废弃（运行时告警），改走 #header 插槽，入参同 { column, $index } */
+const HeaderRender = (p: { scope: unknown }) => props.schema.renderHeader?.(p.scope);
 
 function resolveCell(row: Record<string, unknown>, column: { property?: string }): string {
   const val = column.property ? row[column.property] : undefined;
