@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitepress';
 
+import { repoLinks } from './repo-links';
+
 const opsSidebar = [
   {
     text: '运维与部署',
@@ -17,6 +19,9 @@ export default defineConfig({
   description: 'ku-utils 前端团队公共库文档',
   lang: 'zh-CN',
   base: '/',
+  markdown: {
+    config: repoLinks,
+  },
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/getting-started' },
