@@ -74,7 +74,6 @@ export default function SimpleExampleList({
     tableData,
     tableTotal,
     tableLoading,
-    tableLoadFailed,
     search,
     reset,
     patchRow,
@@ -398,9 +397,6 @@ export default function SimpleExampleList({
           bordered
           size="middle"
           scroll={{ y: maxHeight }}
-          locale={{
-            emptyText: tableLoadFailed ? '加载失败，请重试' : '暂无数据',
-          }}
         />
       </TableWrap>
 

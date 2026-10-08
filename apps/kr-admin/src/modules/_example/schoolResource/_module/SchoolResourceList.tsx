@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Input, Radio, Table } from 'antd';
+import { Button, Empty, Input, Radio, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 
@@ -373,20 +373,24 @@ export default function SchoolResourceList({
           scroll={{ y: maxHeight }}
           locale={{
             emptyText: tableLoadFailed ? (
-              <div>
-                <div>列表加载失败</div>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description="列表加载失败"
+              >
                 <Button
                   type="primary"
                   ghost
                   size="small"
-                  style={{ marginTop: 8 }}
                   onClick={() => void search(false)}
                 >
                   重试
                 </Button>
-              </div>
-            ) : (
-              '暂无数据'
+              </Empty>
+            ) : tableLoading ? null : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description="暂无数据"
+              />
             ),
           }}
           rowClassName={(row) =>
