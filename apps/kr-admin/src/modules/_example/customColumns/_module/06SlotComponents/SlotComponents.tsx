@@ -121,14 +121,13 @@ export default function SlotComponents() {
         >
           <Table
             key={config.tableRenderKey}
-            className="do-inner-scroller page-table hide-table-border"
+            className="do-inner-scroller page-table"
             size="middle"
             rowKey="id"
             loading={tableLoading}
             columns={columns}
             dataSource={tableData}
             pagination={false}
-            bordered
             scroll={{ x: true, y: maxHeight }}
           />
         </TableWrap>

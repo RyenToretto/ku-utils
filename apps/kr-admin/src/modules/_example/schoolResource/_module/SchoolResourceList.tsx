@@ -358,7 +358,6 @@ export default function SchoolResourceList({
           className={[
             'do-inner-scroller',
             'page-table',
-            'hide-table-border',
             inDialog ? 'school-resource-pick-table' : '',
           ]
             .filter(Boolean)
@@ -368,7 +367,6 @@ export default function SchoolResourceList({
           dataSource={tableData}
           columns={columns}
           pagination={false}
-          bordered
           size="middle"
           scroll={{ y: maxHeight }}
           locale={{

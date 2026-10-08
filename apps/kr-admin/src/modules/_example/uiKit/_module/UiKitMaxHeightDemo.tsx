@@ -286,13 +286,12 @@ export default function UiKitMaxHeightDemo() {
         }
       >
         <Table
-          className="do-inner-scroller page-table hide-table-border"
+          className="do-inner-scroller page-table"
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
           columns={columns}
           pagination={false}
-          bordered
           size="middle"
           scroll={{ x: 1400, y: maxHeight }}
         />

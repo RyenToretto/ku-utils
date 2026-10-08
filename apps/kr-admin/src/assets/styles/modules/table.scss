@@ -1,0 +1,21 @@
+// antd Table 皮肤补充：配色/内边距走 App.tsx ConfigProvider components.Table，这里只放 token 覆盖不到的结构样式
+
+.ant-table-wrapper.page-table {
+  .ant-table-thead > tr > th {
+    white-space: nowrap;
+  }
+
+  // 隔行变色（对齐 kv3 el-table stripe）；`of` 选择器跳过 antd 的 measure-row
+  .ant-table-tbody > tr.ant-table-row:nth-child(even of .ant-table-row) > td {
+    background: var(--ku-table-stripe-bg);
+  }
+
+  .ant-table-tbody > tr.ant-table-row:hover > td,
+  .ant-table-tbody > tr.ant-table-row.current-row:hover > td {
+    background: var(--ku-bg-hover);
+  }
+
+  .ant-table-tbody > tr.ant-table-row:last-child > td {
+    border-bottom-width: 0;
+  }
+}

@@ -388,13 +388,12 @@ export default function SimpleExampleList({
         }
       >
         <Table
-          className="do-inner-scroller page-table hide-table-border"
+          className="do-inner-scroller page-table"
           rowKey="id"
           loading={tableLoading}
           dataSource={tableData}
           columns={columns}
           pagination={false}
-          bordered
           size="middle"
           scroll={{ y: maxHeight }}
         />

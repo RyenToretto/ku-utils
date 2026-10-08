@@ -119,14 +119,13 @@ export default function CustomColumnsDemo({
         >
           <Table
             key={config.tableRenderKey}
-            className="do-inner-scroller page-table hide-table-border"
+            className="do-inner-scroller page-table"
             size="middle"
             rowKey="id"
             loading={tableLoading}
             columns={columns}
             dataSource={rows}
             pagination={false}
-            bordered
             scroll={{ x: true, y: maxHeight }}
             onChange={(_p, _f, sorter) => {
               const one = Array.isArray(sorter) ? sorter[0] : sorter;

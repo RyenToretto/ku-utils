@@ -52,6 +52,21 @@ export default function App() {
           colorPrimary: '#9a6328',
           borderRadius: 6,
         },
+        components: {
+          Table: {
+            colorText: 'var(--ku-text-secondary)',
+            colorBgContainer: 'var(--ku-bg-card)',
+            headerBg: 'var(--ku-bg-card)',
+            headerColor: 'var(--ku-text-primary)',
+            headerSplitColor: 'transparent',
+            borderColor: 'var(--ku-border-light)',
+            rowHoverBg: 'var(--ku-bg-hover)',
+            rowSelectedBg: 'var(--ku-primary-50)',
+            rowSelectedHoverBg: 'var(--ku-bg-hover)',
+            cellPaddingBlockMD: 8,
+            cellPaddingInlineMD: 8,
+          },
+        },
       }}
     >
       <AntdApp component={false}>
