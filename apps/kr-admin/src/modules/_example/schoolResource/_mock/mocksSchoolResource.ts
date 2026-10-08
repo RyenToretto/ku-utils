@@ -113,22 +113,67 @@ const mocksSchoolResource: MockMethod[] = [
   {
     url: '/api/example/school',
     method: 'POST',
-    response: () => defaultSuccess,
+    response: ({ body }) => {
+      const payload = (body || {}) as {
+        schoolName?: string;
+        status?: number;
+        remark?: string;
+      };
+      const nextId = String(
+        Math.max(0, ...SEED_LISTS.map((row) => Number(row.id) || 0)) + 1,
+      );
+      SEED_LISTS.unshift({
+        id: nextId,
+        schoolName: payload.schoolName || `新学校${nextId}`,
+        status: payload.status ?? SCHOOL_STATUS_ENABLED,
+        remark: payload.remark || '',
+        createTime: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      });
+      return defaultSuccess;
+    },
   },
   {
     url: '/api/example/school/:id',
     method: 'PUT',
-    response: () => defaultSuccess,
+    response: ({ body, params }) => {
+      const payload = (body || {}) as {
+        id?: string;
+        schoolName?: string;
+        status?: number;
+        remark?: string;
+      };
+      const id = String(payload.id || params?.id || '');
+      const row = SEED_LISTS.find((item) => item.id === id);
+      if (row) {
+        if (payload.schoolName != null) row.schoolName = payload.schoolName;
+        if (payload.status != null) row.status = Number(payload.status);
+        if (payload.remark != null) row.remark = payload.remark;
+      }
+      return defaultSuccess;
+    },
   },
   {
     url: '/api/example/school/:id',
     method: 'DELETE',
-    response: () => defaultSuccess,
+    response: ({ params }) => {
+      const id = String(params?.id || '');
+      const idx = SEED_LISTS.findIndex((item) => item.id === id);
+      if (idx >= 0) SEED_LISTS.splice(idx, 1);
+      return defaultSuccess;
+    },
   },
   {
     url: '/api/example/school/batch',
     method: 'POST',
-    response: () => defaultSuccess,
+    response: ({ body }) => {
+      const payload = (body || {}) as { ids?: string[]; status?: number };
+      const ids = new Set((payload.ids || []).map(String));
+      const nextStatus = Number(payload.status);
+      for (const row of SEED_LISTS) {
+        if (ids.has(row.id)) row.status = nextStatus;
+      }
+      return defaultSuccess;
+    },
   },
 ];
 
