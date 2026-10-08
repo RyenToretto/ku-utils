@@ -53,7 +53,7 @@ export default function SchoolSelector({
         options={selected.map((s) => ({ value: s.id, label: s.label }))}
         tagRender={(props) => <Tag {...props}>{props.label}</Tag>}
         onClear={() => onChange?.(multiple ? [] : null)}
-        onDropdownVisibleChange={(visible) => {
+        onOpenChange={(visible) => {
           if (visible && !disabled) setOpen(true);
         }}
       />
