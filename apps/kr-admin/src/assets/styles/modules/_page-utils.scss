@@ -550,7 +550,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 .page-example-school-selector-demo-card {
   padding: 16px;
-  background: var(--ku-bg-elevated, #fff);
+  background: var(--ku-bg-card, #f7f3eb);
   border-radius: 8px;
 }
 
@@ -633,10 +633,6 @@ el-form-item.do-fill-form > .el-form-item__content {
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  .demo-card {
-    background: var(--ku-bg-elevated, #fff);
-  }
 
   .demo-row {
     display: flex;
@@ -801,10 +797,10 @@ el-form-item.do-fill-form > .el-form-item__content {
     left: 0;
     min-width: 220px;
     padding: 8px;
-    background: var(--ku-bg-elevated, #fff);
-    border: 1px solid var(--ku-border-color, #e8e4df);
+    background: var(--ku-bg-card-elevated, #fcf8f2);
+    border: 1px solid var(--ku-border-light, #ddd4c6);
     border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--ku-shadow-dropdown, 0 6px 20px rgba(46, 39, 43, 0.12));
   }
 
   .do-name-pattern-list {

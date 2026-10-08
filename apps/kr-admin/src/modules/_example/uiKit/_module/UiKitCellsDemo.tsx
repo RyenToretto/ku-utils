@@ -29,7 +29,7 @@ export default function UiKitCellsDemo() {
     try {
       await new Promise((r) => setTimeout(r, 400));
       setSwitchValue(Number(next));
-      message.success(Number(next) === 1 ? '已启用' : '已停用');
+      message.success('状态已切换');
     } finally {
       setSwitching(false);
     }
@@ -133,7 +133,7 @@ export default function UiKitCellsDemo() {
             newValue={score}
             onOk={(v) => {
               setScore(v);
-              message.success(`评分已更新为 ${v}`);
+              message.success(`评分更新为 ${v}`);
             }}
           >
             评分 {score}

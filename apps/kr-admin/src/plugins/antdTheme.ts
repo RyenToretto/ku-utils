@@ -52,6 +52,19 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
       borderRadius: 6,
     },
     components: {
+      // 对齐 kv3 el-card：标题常规字重、18/20 内边距、4px 圆角；default / small 同尺寸
+      Card: {
+        headerHeight: 54,
+        headerHeightSM: 54,
+        headerPadding: 20,
+        headerPaddingSM: 20,
+        headerFontSize: 14,
+        headerFontSizeSM: 14,
+        bodyPadding: 20,
+        bodyPaddingSM: 20,
+        fontWeightStrong: 400,
+        borderRadiusLG: 4,
+      },
       Table: {
         colorText: ku['text-secondary'],
         headerBg: ku['bg-card'],
