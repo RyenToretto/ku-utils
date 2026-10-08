@@ -32,6 +32,8 @@
 - ka ↔ kr 固定换算：ng-zorro modal 无 content 级 padding → ka 内距 = kr `bodyStyle` + 16；antd v5 `Paragraph` 是 `div` → ka 用 `<div nz-typography>`；el plain / kr outlined → ka `btn-plain-*`。
 - **禁止**页级 `PageHeader` / title / subtitle（四端一致）。
 - `.domain-module-main` padding 四边一致（20px）；页内首块勿再叠 `margin-top`，用父级 `gap`。
+- 侧栏多级以 kv3 `app-shell.scss` `.side-menu` 为准：二级起左缘 22 / 34 / 46、引导线 28 / 40 / 52、各级右缘同为 209、激活链与悬停时箭头 / 图标高亮。kr / ka 用 `.ant-menu-sub` 层级选择器补齐（标题宽 `calc(100% - 20px)`、箭头 `inset-inline-end: 26px`）；ka 递归模板投影的 `nz-submenu` 查不到子项，需显式绑定 `ant-menu-submenu-selected`；kv2 Element UI 子项默认 `min-width: 200px` 须清零。
+- body 不设底色（页面底只在 html 的 `--ku-bg-page`）；ng-zorro reset 给 body 的卡片底须覆盖为 `transparent`。
 
 ## 必须成对的资产
 
