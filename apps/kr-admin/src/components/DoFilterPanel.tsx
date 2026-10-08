@@ -1,14 +1,21 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from 'react';
 
 export type DoFilterPanelProps = {
   line?: number;
   /** 分组式筛选 / 含非表单节点时关掉按行折叠，交给内容自然撑开 */
   disableFold?: boolean;
   eachLineHeight?: number;
-  /** 筛选项标签宽度（px，含右侧 12px 间距），对齐 kv3 el-form label-width */
-  labelWidth?: number;
+  /** 筛选项标签宽度（px，含右侧 12px 间距）；'auto' 取最宽标签，对齐 kv3 el-form label-width */
+  labelWidth?: number | 'auto';
   maxCtlWidth?: string;
   hideSearch?: boolean;
   mainText?: string;
@@ -37,6 +44,7 @@ export function DoFilterPanel({
   const contentRef = useRef<HTMLDivElement>(null);
   const [isFold, setIsFold] = useState(true);
   const [lineCount, setLineCount] = useState(line);
+  const [autoLabelWidth, setAutoLabelWidth] = useState<number>();
 
   useEffect(() => {
     const el = contentRef.current;
@@ -57,14 +65,36 @@ export function DoFilterPanel({
     };
   }, [eachLineHeight]);
 
+  useLayoutEffect(() => {
+    const el = contentRef.current;
+    if (labelWidth !== 'auto' || !el) return;
+    // el-form label-width="auto"：所有标签取文字自然宽度 + 右内距的最大值
+    const measure = () => {
+      const range = document.createRange();
+      let max = 0;
+      el.querySelectorAll<HTMLElement>('.do-filter-field-label').forEach((label) => {
+        range.selectNodeContents(label);
+        const pad = Number.parseFloat(getComputedStyle(label).paddingRight) || 0;
+        max = Math.max(max, Math.ceil(range.getBoundingClientRect().width + pad));
+      });
+      setAutoLabelWidth(max || undefined);
+    };
+    measure();
+    void document.fonts?.ready.then(measure);
+    const mo = new MutationObserver(measure);
+    mo.observe(el, { childList: true, subtree: true, characterData: true });
+    return () => mo.disconnect();
+  }, [labelWidth]);
+
   const canFold = !disableFold && lineCount > line;
   const wrapperHeight = disableFold
     ? 'auto'
     : `${(canFold && isFold ? line : lineCount) * eachLineHeight - PANEL_GAP}px`;
 
+  const resolvedLabelWidth = labelWidth === 'auto' ? autoLabelWidth : labelWidth;
   const panelStyle =
-    labelWidth != null
-      ? ({ '--do-filter-label-width': `${labelWidth}px` } as CSSProperties)
+    resolvedLabelWidth != null
+      ? ({ '--do-filter-label-width': `${resolvedLabelWidth}px` } as CSSProperties)
       : undefined;
 
   return (

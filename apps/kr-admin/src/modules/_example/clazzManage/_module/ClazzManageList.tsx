@@ -166,7 +166,6 @@ export default function ClazzManageList() {
           <Input
             allowClear
             placeholder="不限"
-            style={{ width: 180 }}
             value={listFilters.clazzName}
             onChange={(e) => setListFilters({ clazzName: e.target.value })}
             onPressEnter={() => void search(true)}

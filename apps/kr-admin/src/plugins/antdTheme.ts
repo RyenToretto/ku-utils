@@ -127,6 +127,11 @@ export function createAntdTheme(isDark: boolean): ThemeConfig {
         borderRadiusLG: 4,
         boxShadowSecondary: ku['shadow-dropdown'],
       },
+      // 对齐 kv3 el-radio-button：默认态次级色；small 端头同 base 8 圆角（内距/字号见 antd-ku-bridge）
+      Radio: {
+        buttonColor: ku['text-secondary'],
+        borderRadiusSM: 8,
+      },
       // 对齐 kv3 el-form：项间距 18、标签次级色
       Form: {
         itemMarginBottom: 18,

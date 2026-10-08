@@ -235,7 +235,6 @@ export default function ClubActivityList() {
           <Input
             allowClear
             placeholder="不限"
-            style={{ width: 180 }}
             value={listFilters.clubName}
             onChange={(e) => setListFilters({ clubName: e.target.value })}
             onPressEnter={() => void search(true)}

@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Input, Radio, Select, Space, Table } from 'antd';
+import { Button, Input, Radio, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useMemo, useState } from 'react';
 
@@ -232,7 +232,7 @@ export default function SimpleExampleList({
 
   const ctl =
     resolvedButtonCount >= 2 ? (
-      <Space>
+      <>
         <Button
           disabled={tableLoading}
           onClick={handleReset}
@@ -255,7 +255,7 @@ export default function SimpleExampleList({
             更多
           </Button>
         ) : null}
-      </Space>
+      </>
     ) : null;
 
   return (
@@ -266,6 +266,7 @@ export default function SimpleExampleList({
     >
       <DoFilterPanel
         line={resolvedFilterLine}
+        labelWidth={isFilterPanelDemo ? 'auto' : 80}
         loading={tableLoading}
         onSearch={() => void search(true)}
         ctl={ctl}
@@ -282,7 +283,6 @@ export default function SimpleExampleList({
                   <Input
                     allowClear
                     placeholder="不限"
-                    style={{ width: 140 }}
                     value={demoFilters[field.key] ?? ''}
                     onChange={(e) =>
                       setDemoFilters((prev) => ({ ...prev, [field.key]: e.target.value }))
@@ -294,10 +294,10 @@ export default function SimpleExampleList({
                   <Select
                     allowClear
                     placeholder="不限"
-                    style={{ width: 140 }}
-                    value={demoFilters[field.key] || undefined}
+                    value={demoFilters[field.key] ?? ''}
                     onChange={(v) => setDemoFilters((prev) => ({ ...prev, [field.key]: v ?? '' }))}
                     options={[
+                      { label: '不限', value: '' },
                       { label: '启用', value: '1' },
                       { label: '停用', value: '0' },
                     ]}
@@ -331,7 +331,6 @@ export default function SimpleExampleList({
                 <Input
                   allowClear
                   placeholder="不限"
-                  style={{ width: 180 }}
                   value={listFilters.exampleName}
                   onChange={(e) => setListFilters({ exampleName: e.target.value })}
                   onPressEnter={() => void search(true)}

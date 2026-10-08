@@ -115,7 +115,6 @@ export default function SimpleExampleBatchSelectList() {
           <Input
             allowClear
             placeholder="不限"
-            style={{ width: 180 }}
             value={listFilters.exampleName}
             onChange={(e) => setListFilters({ exampleName: e.target.value })}
             onPressEnter={() => void search(true)}

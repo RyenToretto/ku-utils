@@ -287,7 +287,6 @@ export default function SchoolResourceList({
           <Input
             allowClear
             placeholder="不限"
-            style={{ width: 180 }}
             value={listFilters.schoolName}
             onChange={(e) => setListFilters({ schoolName: e.target.value })}
             onPressEnter={() => void search(true)}
