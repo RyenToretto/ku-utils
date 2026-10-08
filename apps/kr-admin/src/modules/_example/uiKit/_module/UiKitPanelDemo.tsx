@@ -60,6 +60,7 @@ export default function UiKitPanelDemo() {
     reset,
     handlePageChange,
     handleSizeChange,
+    patchRow,
   } = useTableQuery<
     DemoRow,
     { keyword: string; status: string | number; dateRange: DateRangeValue }
@@ -110,15 +111,13 @@ export default function UiKitPanelDemo() {
             switchable
             switching={!!row.switching}
             onSwitch={(val) => {
-              setRows((prev) => prev.map((r) => (r.id === row.id ? { ...r, switching: true } : r)));
+              const isRow = (r: DemoRow) => r.id === row.id;
+              patchRow(isRow, { switching: true });
               window.setTimeout(() => {
-                setRows((prev) =>
-                  prev.map((r) =>
-                    r.id === row.id ? { ...r, status: Number(val), switching: false } : r,
-                  ),
-                );
-                message.success(`已${Number(val) === 1 ? '启用' : '禁用'}：${row.name}`);
-                void search(false);
+                const status = Number(val);
+                setRows((prev) => prev.map((r) => (isRow(r) ? { ...r, status } : r)));
+                patchRow(isRow, { status, switching: false });
+                message.success(`已${status === 1 ? '启用' : '禁用'}：${row.name}`);
               }, 400);
             }}
           />
@@ -141,17 +140,12 @@ export default function UiKitPanelDemo() {
             newValue={row.amount}
             changing={!!row.amountChanging}
             onOk={(val) => {
-              setRows((prev) =>
-                prev.map((r) => (r.id === row.id ? { ...r, amountChanging: true } : r)),
-              );
+              const isRow = (r: DemoRow) => r.id === row.id;
+              patchRow(isRow, { amountChanging: true });
               window.setTimeout(() => {
-                setRows((prev) =>
-                  prev.map((r) =>
-                    r.id === row.id ? { ...r, amount: val, amountChanging: false } : r,
-                  ),
-                );
+                setRows((prev) => prev.map((r) => (isRow(r) ? { ...r, amount: val } : r)));
+                patchRow(isRow, { amount: val, amountChanging: false });
                 message.success(`数量已更新为 ${val}`);
-                void search(false);
               }, 350);
             }}
           >
@@ -160,7 +154,7 @@ export default function UiKitPanelDemo() {
         ),
       },
     ],
-    [search],
+    [patchRow],
   );
 
   return (
@@ -242,7 +236,6 @@ export default function UiKitPanelDemo() {
             loading={tableLoading}
             onPageChange={(p) => void handlePageChange(p)}
             onSizeChange={(s) => void handleSizeChange(s)}
-            onRefresh={() => void search(false)}
           />
         }
       >
