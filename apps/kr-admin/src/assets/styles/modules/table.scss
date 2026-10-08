@@ -11,6 +11,11 @@
     line-height: 23px;
   }
 
+  // el-table 多行表头 thead.is-group th
+  .ant-table .ant-table-thead:has(> tr + tr) > tr > th {
+    padding-block: 3px;
+  }
+
   // el-table td .cell > .el-button
   .ant-table-tbody > tr > td > .ant-btn {
     height: 24px;

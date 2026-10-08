@@ -1511,6 +1511,32 @@ el-form-item.do-fill-form > .el-form-item__content {
   width: 100%;
 }
 
+/* 对齐 el-rate：高 32、星 18 + 间距 6；未亮星同 --el-fill-color，亮星同 --el-rate-fill-color */
+.do-rate {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.do-rate-item {
+  position: relative;
+  display: inline-flex;
+  margin-right: 6px;
+  color: var(--ku-table-header-bg);
+  font-size: 18px;
+}
+
+.do-rate-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: inline-flex;
+  overflow: hidden;
+  color: #f7ba2a;
+}
+
 .badge-header,
 .trend-header {
   display: inline-flex;
