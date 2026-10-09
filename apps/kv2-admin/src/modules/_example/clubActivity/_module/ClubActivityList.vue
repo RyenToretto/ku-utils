@@ -175,7 +175,7 @@
               :switching="isStatusSwitching(row.id)"
               active-tips="确认启用该社团？"
               inactive-tips="确认停用该社团？"
-              @switch="switchClubStatus.bind(null, row)"
+              @switch="switchClubStatus(row, $event)"
             />
           </template>
         </el-table-column>

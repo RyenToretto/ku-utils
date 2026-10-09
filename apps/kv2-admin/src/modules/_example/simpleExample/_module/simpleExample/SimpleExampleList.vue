@@ -190,7 +190,7 @@
               :switching="isStatusSwitching(row.id)"
               active-tips="确认启用该示例？"
               inactive-tips="确认停用该示例？"
-              @switch="switchExampleStatus.bind(null, row)"
+              @switch="switchExampleStatus(row, $event)"
             />
           </template>
         </el-table-column>

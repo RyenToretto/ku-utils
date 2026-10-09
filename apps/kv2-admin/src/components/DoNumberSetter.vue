@@ -6,63 +6,72 @@
 
     <el-popover
       v-if="!disabled"
-      v-model="popoverShow"
-      width="auto"
+      ref="popoverRef"
       trigger="click"
-      placement="right-end"
-      @hide="resetForm"
+      placement="bottom-end"
+      :width="220"
+      popper-class="do-number-setter-popper"
+      @show="onShow"
+      @after-enter="onAfterEnter"
+      @hide="editing = false"
+      @after-leave="onAfterLeave"
     >
-      <div class="do-number-setter-popover">
+      <div
+        class="do-number-setter-popover"
+        @submit.prevent
+      >
+        <div
+          v-if="label"
+          class="do-number-setter-title"
+        >
+          {{ label }}
+        </div>
         <el-form
           ref="refForm"
-          class="do-number-setter-form"
           :model="form"
           :rules="rules"
-          @submit.prevent
         >
-          <el-form-item
-            :label="label"
-            prop="newValue"
-          >
-            <el-input-number
-              v-model="form.newValue"
-              :min="+minNum"
-              :max="Number.MAX_SAFE_INTEGER"
-              placeholder=""
-            />
+          <el-form-item prop="newValue">
+            <div @keyup.enter="confirm">
+              <el-input-number
+                ref="inputRef"
+                v-model="form.newValue"
+                class="do-number-setter-input"
+                :min="+minNum"
+                :max="Number.MAX_SAFE_INTEGER"
+                :placeholder="resolvedPlaceholder"
+              />
+            </div>
           </el-form-item>
         </el-form>
-
         <div class="do-number-setter-footer">
-          <div class="do-number-setter-btn-box">
-            <el-button
-              size="small"
-              @click="close"
-            >
-              取消
-            </el-button>
-            <el-button
-              type="primary"
-              size="small"
-              @click="confirm"
-            >
-              确定
-            </el-button>
-          </div>
+          <el-button
+            size="small"
+            @click="close"
+          >
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="confirm"
+          >
+            确定
+          </el-button>
         </div>
       </div>
 
       <template #reference>
-        <div
+        <span
           v-if="$slots.reference"
-          @click="showPopover"
+          class="do-number-setter-reference"
         >
           <slot name="reference" />
-        </div>
-
+        </span>
         <span
           v-else
           class="do-number-setter-control"
+          :class="{ 'is-changing': changing, 'is-active': editing }"
         >
           <el-icon
             v-if="changing"
@@ -70,10 +79,7 @@
           >
             <Loading />
           </el-icon>
-          <el-icon
-            v-else
-            @click="showPopover"
-          >
+          <el-icon v-else>
             <Edit />
           </el-icon>
         </span>
@@ -87,6 +93,9 @@ import { computed, reactive, ref } from 'vue';
 
 import { Edit, Loading } from '@/components/icons/elIcons';
 import type { FormInstance, FormItemValidator } from '@/types/element-ui-form';
+
+type PopoverInstance = { doClose: () => void };
+type InputNumberInstance = { focus: () => void };
 
 const props = withDefaults(
   defineProps<{
@@ -114,7 +123,7 @@ const emit = defineEmits<{
   (e: 'close'): void;
   (e: 'ok', value: number | undefined): void;
 }>();
-const resolvedPlaceholder = computed(() => props.placeholder ?? '请输入');
+const resolvedPlaceholder = computed(() => props.placeholder ?? `请输入${props.label}`);
 
 const validation: FormItemValidator = (_rule, value, callback) => {
   if (!value && value !== 0) {
@@ -124,43 +133,43 @@ const validation: FormItemValidator = (_rule, value, callback) => {
   callback();
 };
 
-const popoverShow = ref(false);
-const refForm = ref<FormInstance | null>(null);
+const editing = ref(false);
+const popoverRef = ref<PopoverInstance>();
+const refForm = ref<FormInstance>();
+const inputRef = ref<InputNumberInstance>();
 const form = reactive({ newValue: undefined as number | undefined });
 const rules = { newValue: [{ validator: validation }] };
 
+const close = () => {
+  popoverRef.value?.doClose();
+};
+
 const confirm = () => {
   refForm.value?.validate((isOk) => {
-    if (isOk) {
-      if (props.changing) return;
-      if (form.newValue !== props.num) emit('ok', form.newValue);
-      popoverShow.value = false;
-    }
+    if (!isOk || props.changing) return;
+    if (form.newValue !== props.num) emit('ok', form.newValue);
+    close();
   });
 };
 
-const showPopover = () => {
+const onShow = () => {
   if (props.changing) {
-    popoverShow.value = false;
+    close();
     return;
   }
-  try {
-    refForm.value?.clearValidate();
-  } catch {
-    /* noop */
-  }
-  form.newValue = props.newValue as number | undefined;
-  popoverShow.value = true;
+  editing.value = true;
+  refForm.value?.clearValidate();
+  form.newValue = props.newValue === undefined ? undefined : Number(props.newValue);
   emit('open');
 };
 
-const close = () => {
-  popoverShow.value = false;
+const onAfterEnter = () => {
+  inputRef.value?.focus();
 };
 
-const resetForm = () => {
+const onAfterLeave = () => {
   form.newValue = undefined;
-  refForm.value?.resetFields();
+  refForm.value?.clearValidate();
   emit('close');
 };
 </script>
@@ -173,13 +182,24 @@ const resetForm = () => {
 
   .do-number-setter-control {
     box-sizing: border-box;
-    margin-left: 5px;
-    padding: 0 5px;
+    margin-left: 4px;
+    padding: 4px;
+    border-radius: 4px;
     color: var(--ku-color-primary);
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.2s;
+
+    &:hover,
+    &.is-active {
+      background-color: var(--ku-color-primary-bg);
+    }
+
+    &.is-changing {
+      cursor: default;
+    }
   }
 
   .do-rotate {
@@ -199,27 +219,24 @@ const resetForm = () => {
 
 <style lang="scss">
 .do-number-setter-popover {
-  padding: 6px 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  .do-number-setter-form > .el-form-item:first-child {
-    margin-bottom: 0;
+  .do-number-setter-title {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ku-text-primary);
   }
 
-  .el-form-item__content > .el-form-item__error {
-    position: absolute;
+  .do-number-setter-input {
+    width: 100%;
   }
 
   .do-number-setter-footer {
-    box-sizing: border-box;
-    padding-left: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 
-    .do-number-setter-btn-box {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+    .el-button + .el-button {
+      margin-left: 0;
     }
   }
 }

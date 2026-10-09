@@ -175,7 +175,7 @@
               :switching="isStatusSwitching(row.id)"
               active-tips="确认启用该学校？"
               inactive-tips="确认停用该学校？"
-              @switch="switchSchoolStatus.bind(null, row)"
+              @switch="switchSchoolStatus(row, $event)"
             />
           </template>
         </el-table-column>

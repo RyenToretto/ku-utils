@@ -4,18 +4,20 @@
     :class="{ inline }"
   >
     <el-popover
-      v-if="!isDisabled"
-      v-model="popoverShow"
-      width="400"
-      :placement="popoverPlacement"
+      v-if="!disabled"
+      ref="popoverRef"
+      trigger="click"
+      :width="280"
+      :placement="placement"
       popper-class="popper-txt-setter"
-      @hide="resetForm"
+      @show="onShow"
+      @after-enter="onAfterEnter"
+      @after-leave="onAfterLeave"
     >
       <template #reference>
         <div
           class="txt-set-btn"
           :class="{ changing }"
-          @click="showPopover"
         >
           <el-icon
             v-if="changing"
@@ -27,61 +29,63 @@
         </div>
       </template>
 
-      <template #default>
-        <div class="do-txtsetter-popover">
-          <el-form
-            ref="refForm"
-            class="do-txtsetter-form"
-            :model="form"
-            :rules="rules"
-            @submit.prevent
-          >
-            <el-form-item prop="newValue">
+      <div
+        class="do-txtsetter-popover"
+        @submit.prevent
+      >
+        <el-form
+          ref="refForm"
+          :model="form"
+          :rules="rules"
+        >
+          <el-form-item prop="newValue">
+            <div @keydown.enter="confirm">
               <el-input
+                ref="inputRef"
                 v-model="form.newValue"
                 type="text"
                 clearable
                 autocomplete="off"
+                :placeholder="resolvedPlaceholder"
               />
-            </el-form-item>
-          </el-form>
-
-          <div class="do-txtsetter-footer">
-            <div class="do-txtsetter-btn-box">
-              <el-button
-                size="small"
-                @click="close"
-              >
-                取消
-              </el-button>
-              <el-button
-                type="primary"
-                size="small"
-                @click="confirm"
-              >
-                确定
-              </el-button>
             </div>
-          </div>
+          </el-form-item>
+        </el-form>
+        <div class="do-txtsetter-footer">
+          <el-button
+            size="small"
+            @click="close"
+          >
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="confirm"
+          >
+            确定
+          </el-button>
         </div>
-      </template>
+      </div>
     </el-popover>
+    <slot v-else />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import { Loading } from '@/components/icons/elIcons';
 import type { FormInstance, FormItemValidator } from '@/types/element-ui-form';
 
-type Placement = string;
+type PopoverInstance = { doClose: () => void };
+type InputInstance = { focus: () => void };
 
 const props = withDefaults(
   defineProps<{
     initValue?: string | number;
     required?: boolean;
-    placement?: Placement;
+    placement?: string;
     noOpen?: boolean;
     changing?: boolean;
     placeholder?: string;
@@ -95,7 +99,7 @@ const props = withDefaults(
   {
     initValue: '',
     required: true,
-    placement: 'right-end',
+    placement: 'bottom-start',
     noOpen: false,
     changing: false,
     placeholder: undefined,
@@ -114,8 +118,6 @@ const emit = defineEmits<{
   (e: 'ok', value: string | undefined): void;
 }>();
 
-const isDisabled = computed(() => props.disabled);
-const popoverPlacement = computed(() => props.placement);
 const resolvedPlaceholder = computed(() => props.placeholder ?? '请输入');
 const resolvedErrorHolder = computed(() => props.errorHolder ?? '请输入整数');
 
@@ -128,58 +130,49 @@ const validation: FormItemValidator = (_rule, value, callback) => {
     callback(new Error(resolvedErrorHolder.value));
     return;
   }
-  if (props.required && !strVal && strVal !== '0') {
+  if (props.required && !strVal) {
     callback(new Error(resolvedPlaceholder.value));
     return;
   }
   callback();
 };
 
-const popoverShow = ref(false);
-const refForm = ref<FormInstance | null>(null);
+const popoverRef = ref<PopoverInstance>();
+const refForm = ref<FormInstance>();
+const inputRef = ref<InputInstance>();
 const form = reactive({ newValue: '' as string | undefined });
 const rules = { newValue: [{ validator: validation }] };
 
+const close = () => {
+  popoverRef.value?.doClose();
+};
+
 const confirm = () => {
   refForm.value?.validate((isOk) => {
-    if (isOk) {
-      if (props.changing) return;
-      const originValue = props.initValue !== undefined ? `${props.initValue}` : undefined;
-      if (form.newValue !== originValue) emit('ok', form.newValue);
-      popoverShow.value = false;
-    }
+    if (!isOk || props.changing) return;
+    if (form.newValue !== `${props.initValue}`) emit('ok', form.newValue);
+    close();
   });
 };
 
-const showPopover = () => {
+const onShow = () => {
   if (props.noOpen || props.changing) {
-    popoverShow.value = false;
+    close();
     return;
   }
-  try {
-    refForm.value?.clearValidate();
-  } catch {
-    /* noop */
-  }
-  form.newValue = props.initValue !== undefined ? `${props.initValue}` : '';
-  popoverShow.value = true;
+  refForm.value?.clearValidate();
+  form.newValue = `${props.initValue}`;
   emit('open');
 };
 
-const close = () => {
-  popoverShow.value = false;
+const onAfterEnter = () => {
+  inputRef.value?.focus();
 };
 
-const resetForm = () => {
+const onAfterLeave = () => {
   form.newValue = '';
-  nextTick(() => {
-    try {
-      refForm.value?.clearValidate();
-    } catch {
-      /* noop */
-    }
-    emit('close');
-  });
+  refForm.value?.clearValidate();
+  emit('close');
 };
 </script>
 
@@ -210,7 +203,7 @@ const resetForm = () => {
   .do-rotate {
     animation: rotating 1.5s linear infinite;
     margin-left: 2px;
-    color: #918364;
+    color: var(--ku-text-placeholder);
     font-size: 16px;
   }
 
@@ -218,7 +211,7 @@ const resetForm = () => {
     box-sizing: border-box;
     padding: 5px;
     border-radius: 2px;
-    color: #918364;
+    color: var(--ku-text-placeholder);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -230,8 +223,8 @@ const resetForm = () => {
   &.changing,
   &:hover {
     > span {
-      color: #422e0d;
-      background-color: #eef5fe;
+      color: var(--ku-text-primary);
+      background-color: var(--ku-bg-hover);
     }
   }
 }
@@ -270,37 +263,14 @@ const resetForm = () => {
   }
 }
 
-div.el-popper.popper-txt-setter {
-  box-sizing: border-box;
-}
-
 .do-txtsetter-popover {
-  box-sizing: border-box;
-  padding: 5px 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  .do-txtsetter-form {
-    flex: 1;
-
-    > .el-form-item:first-child {
-      margin-bottom: 0;
-    }
-
-    .el-form-item__content > .el-form-item__error {
-      position: absolute;
-    }
-  }
-
   .do-txtsetter-footer {
-    box-sizing: border-box;
-    padding-left: 5px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 
-    .do-txtsetter-btn-box {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
+    .el-button + .el-button {
+      margin-left: 0;
     }
   }
 }

@@ -21,6 +21,8 @@
         <el-form-item label="关键字">
           <DoTxtSetter
             inline
+            :required="false"
+            placeholder="请输入关键字"
             :init-value="listFilters.keyword"
             @ok="onKeywordOk"
           >
@@ -97,7 +99,7 @@
               :value="row.status"
               switchable
               :switching="row.switching"
-              @switch="onToggleStatus.bind(null, row)"
+              @switch="onToggleStatus(row, $event)"
             />
           </template>
         </el-table-column>
@@ -118,10 +120,11 @@
         >
           <template #default="{ row }">
             <DoNumberSetter
+              label="数量"
               :num="row.amount"
               :new-value="row.amount"
               :changing="row.amountChanging"
-              @ok="onAmountOk.bind(null, row)"
+              @ok="onAmountOk(row, $event)"
             >
               {{ row.amount }}
             </DoNumberSetter>
