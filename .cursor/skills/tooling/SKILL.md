@@ -17,7 +17,7 @@ description: >-
 
 ## ESLint 9 Flat Config
 
-- 预设：`base` / `vue2` / `vue3` / `nuxt4`（按项目选）
+- 预设：`base` / `vue2` / `vue3` / `nuxt4` / `angular`（按项目选；React 无专用预设，直接用 `base`）
 - 根 `eslint.config.js`：本仓用 vue3 并关闭 `vue/block-lang`（兼容 Vue2 包）
 - **stylistic（semi/indent 等）交给 Prettier**，勿与 ESLint 重复开战
 
@@ -25,6 +25,8 @@ description: >-
 
 - `base.json`：`noEmit: true`（apps 防冗余产物）
 - `library.json`：覆盖 `noEmit: false` + `declaration: true`（供 tsup/Vite 出类型）
+- 框架预设：`vue2` / `vue3` / `nuxt4` / `react` / `angular`（apps 继承对应预设）
+- `paths` 写 `./` 相对路径，**不写** `baseUrl`（TypeScript 6 已废弃，typecheck 直接报错）
 
 ## Prettier
 
@@ -34,6 +36,8 @@ description: >-
 ## pnpm strict
 
 `shamefully-hoist=false`：消费方必须**显式**声明依赖（含根目录 lint-staged 用的 eslint-config）。
+
+每个跑 `tsc` / `vue-tsc` 的 app 必须显式声明 `typescript`（全仓 `^5.9.3`；ka 因 Angular 22 用 `~6.0.3`）。漏声明时 vue-tsc 的 peer 会被解析到别的 workspace 的 TS 版本，typecheck 结果随安装顺序漂移。
 
 ## 改配置时
 

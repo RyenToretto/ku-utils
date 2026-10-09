@@ -20,10 +20,10 @@ ESLint Flat Config、Prettier、tsconfig 分层；pnpm strict 下显式依赖。
 
 ## 最佳实践（精炼）
 
-1. ESLint 9 Flat Config；vue2/vue3/nuxt 分文件；与 Prettier 冲突的 stylistic 交给 Prettier。
-2. tsconfig：`base`（apps `noEmit: true`）与 `library`（发声明）分离。
-3. 共享配置发成包（`@ku-utils/eslint-config` 等），消费方显式依赖（`shamefully-hoist=false`）。
-4. 每个 config 配套 skill：何时改、如何扩展 overrides。
+1. ESLint 9 Flat Config；`base` / `vue2` / `vue3` / `nuxt4` / `angular` 分文件（React 直接用 `base`）；与 Prettier 冲突的 stylistic 交给 Prettier；根 `eslint.config.js` 用 vue3 并关闭 `vue/block-lang`（兼容 Vue 2）。
+2. tsconfig：`base`（apps `noEmit: true`）与 `library`（发声明）分离；框架预设 `vue2` / `vue3` / `nuxt4` / `react` / `angular`；`paths` 用 `./` 相对路径、不写已废弃的 `baseUrl`。
+3. 共享配置发成包（`@ku-utils/eslint-config` 等），消费方显式依赖（`shamefully-hoist=false`）；跑 `tsc` / `vue-tsc` 的 app 显式声明 `typescript`，避免 peer 解析到别的 workspace 的 TS 版本。
+4. 三类 config 合并为一个 tooling skill：何时改、如何扩展 overrides、改完如何冒烟。
 5. 根目录 lint-staged：eslint --fix → prettier --write。
 
 ## 本仓落点
