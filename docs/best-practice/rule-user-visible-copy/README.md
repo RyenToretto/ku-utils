@@ -43,7 +43,7 @@ Toast / 空态 / 表单 label·placeholder·tip·校验 message / Dialog 正文 
 
 ### 表单校验文案
 
-禁 `el-form-item` 布尔 `required` 触发英文默认句；rules 的 `required: true` 必须带中文（或 i18n）`message`。
+禁表单项只写布尔 `required` 触发英文默认句（Element `el-form-item`、antd `Form.Item`）；rules 的 `required: true` 必须带中文（或 i18n）`message`。Angular Reactive Forms 在 `nz-form-control [nzErrorTip]` 给中文文案，禁露 `Validators.required` 默认 key。
 
 ## 验收清单
 

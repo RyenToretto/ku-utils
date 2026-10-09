@@ -1,7 +1,7 @@
 ---
 description: kr-admin 用户可见文案 — Toast/空态/校验禁开发态泄漏
 globs:
-  - '**/*.{vue,ts}'
+  - '**/*.{ts,tsx}'
 alwaysApply: false
 ---
 
@@ -26,4 +26,4 @@ Toast / 空态 / 表单 label·placeholder·tip·校验 message / Dialog 正文 
 
 ## 表单校验
 
-禁 `el-form-item` 布尔 `required` 触发英文默认句；rules 的 `required: true` 必须带中文 `message`。
+禁 antd `Form.Item` 只写布尔 `required`（会露出英文默认句）；`rules={[{ required: true, message: '…' }]}` 必须带中文 `message`。
