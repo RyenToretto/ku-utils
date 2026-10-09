@@ -30,16 +30,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-
-import { useRoute } from '@/shims/vue-router-composables';
+import { useRoute } from 'vue-router/composables';
 
 const route = useRoute();
 
-const title = computed(() => String(route.meta.title || '功能'));
-const permission = computed(() => String(route.meta.permission || ''));
-const owner = computed(() => String(route.meta.owner || '待认领'));
-const backendReady = computed(() => route.meta.backendReady !== false);
-const docsHint = computed(() => String(route.meta.docsPath || ''));
+const title = computed(() => String(route.meta?.title || '功能'));
+const permission = computed(() => String(route.meta?.permission || ''));
+const owner = computed(() => String(route.meta?.owner || '待认领'));
+const backendReady = computed(() => route.meta?.backendReady !== false);
+const docsHint = computed(() => String(route.meta?.docsPath || ''));
 
 const emptyDescription = computed(() => `${title.value} · 页面建设中，欢迎认领开发`);
 </script>

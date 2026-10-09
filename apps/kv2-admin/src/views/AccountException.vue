@@ -53,12 +53,12 @@
 <script setup lang="ts">
 import { Message as ElMessage } from 'element-ui';
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router/composables';
 
 import AuthStatusShell from './AuthStatusShell.vue';
 
 import { Lock } from '@/components/icons/elIcons';
 import { MODULE_PERMISSION_KEYS } from '@/maps/common/dspPermission';
-import { useRouter } from '@/shims/vue-router-composables';
 import { useUserStore } from '@/stores/user';
 import {
   isUserInfoMissingLocalUserCode,
@@ -123,7 +123,6 @@ async function handleRetry() {
     }
     ElMessage.error({
       message: '暂时无法刷新账号状态，请稍后重试',
-      grouping: true,
       showClose: true,
     });
   } finally {

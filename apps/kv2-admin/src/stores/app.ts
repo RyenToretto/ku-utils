@@ -21,7 +21,8 @@ export const useAppStore = defineStore('app', {
     theme: getStoredTheme() as ThemeMode,
   }),
   actions: {
-    applyTheme(mode = this.theme) {
+    applyTheme(target?: ThemeMode) {
+      const mode = target ?? this.theme;
       const isDark = mode === 'dark' || (mode === 'system' && getSystemThemeQuery().matches);
       document.documentElement.classList.toggle('dark', isDark);
     },

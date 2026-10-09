@@ -1,4 +1,4 @@
-/** Element UI 表单类型占位（替代 element-plus 类型导入） */
+/** Element UI 表单类型（Element UI 未导出校验规则类型，按 async-validator 约定声明） */
 export type FormInstance = {
   validate: (cb?: (valid: boolean) => void) => Promise<boolean> | void;
   validateField: (prop: string | string[], cb?: (error?: string) => void) => void;
@@ -6,7 +6,21 @@ export type FormInstance = {
   clearValidate: (props?: string | string[]) => void;
 };
 
-export type FormRules = Record<string, unknown | unknown[]>;
+export type FormItemValidator = (
+  rule: unknown,
+  value: unknown,
+  callback: (error?: Error) => void,
+) => void;
+
+export type FormItemRule = {
+  required?: boolean;
+  message?: string;
+  trigger?: 'blur' | 'change' | Array<'blur' | 'change'>;
+  validator?: FormItemValidator;
+  [key: string]: unknown;
+};
+
+export type FormRules = Record<string, FormItemRule | FormItemRule[]>;
 
 export type SelectInstance = {
   blur: () => void;

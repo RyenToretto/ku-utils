@@ -2,10 +2,10 @@ interface RouterTarget {
   fullPath?: string;
 }
 
+/** vue-router@3：onError 不带目标路由且不可注销，目标由 beforeEach 记录 */
 interface RouterLike {
-  onError: (
-    handler: (error: Error, to: RouterTarget | string | null | undefined) => void,
-  ) => void | (() => void);
+  beforeEach: (guard: (to: RouterTarget, from: RouterTarget, next: () => void) => void) => unknown;
+  onError: (handler: (error: Error) => void) => void;
 }
 
 export interface ChunkErrorHandlerEnvironment {
@@ -65,11 +65,8 @@ function canReload(environment: ChunkErrorHandlerEnvironment): boolean {
   }
 }
 
-function resolveTarget(
-  baseUrl: string,
-  to: RouterTarget | string | null | undefined,
-): string | null {
-  const fullPath = typeof to === 'string' ? to : to?.fullPath;
+function resolveTarget(baseUrl: string, to: RouterTarget | null): string | null {
+  const fullPath = to?.fullPath;
   if (!fullPath) return null;
 
   const base = baseUrl.replace(/\/+$/, '');
@@ -86,16 +83,23 @@ export function setupChunkErrorHandler(
   environment: ChunkErrorHandlerEnvironment = createBrowserEnvironment(),
 ): () => void {
   let routerHandled = false;
+  let disposed = false;
+  let pendingTarget: RouterTarget | null = null;
 
-  const removeRouterHandler = router.onError((error, to) => {
-    if (!isChunkLoadError(error) || !canReload(environment)) return;
+  const removeGuard = router.beforeEach((to, _from, next) => {
+    pendingTarget = to;
+    next();
+  });
+
+  router.onError((error) => {
+    if (disposed || !isChunkLoadError(error) || !canReload(environment)) return;
 
     routerHandled = true;
     environment.schedule(() => {
       routerHandled = false;
     });
 
-    const target = resolveTarget(environment.baseUrl, to);
+    const target = resolveTarget(environment.baseUrl, pendingTarget);
     if (target) environment.assign(target);
     else environment.reload();
   });
@@ -115,7 +119,8 @@ export function setupChunkErrorHandler(
   environment.addUnhandledRejectionListener(handleUnhandledRejection);
 
   return () => {
-    if (typeof removeRouterHandler === 'function') removeRouterHandler();
+    disposed = true;
+    if (typeof removeGuard === 'function') removeGuard();
     environment.removeUnhandledRejectionListener(handleUnhandledRejection);
   };
 }

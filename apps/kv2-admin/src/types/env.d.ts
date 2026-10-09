@@ -22,6 +22,17 @@ declare module '*.vue' {
   export default component;
 }
 
+declare module 'element-ui/lib/locale/lang/zh-CN' {
+  const lang: Record<string, unknown>;
+  export default lang;
+}
+
+declare module 'element-ui/src/utils/clickoutside' {
+  import type { DirectiveOptions } from 'vue';
+  const clickoutside: DirectiveOptions;
+  export default clickoutside;
+}
+
 declare module '*.md?raw' {
   const content: string;
   export default content;

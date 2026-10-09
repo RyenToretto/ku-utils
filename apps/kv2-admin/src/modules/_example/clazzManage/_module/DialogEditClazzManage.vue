@@ -88,7 +88,7 @@ import type { SchoolSelectorValue } from '@/modules/_example/schoolResource/_mod
 import type { FormInstance, FormRules } from '@/types/element-ui-form';
 
 const emit = defineEmits<{
-  success: [];
+  (e: 'success'): void;
 }>();
 
 const dialogVisible = ref(false);

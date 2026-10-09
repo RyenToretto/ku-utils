@@ -35,6 +35,8 @@ Element UI 对不认识的类名、`--el-*` 变量、prop **静默忽略**：照
 | `teleported` / `align-center` | `append-to-body`（默认已挂 body）/ 无（全局已居中） |
 | `el-drawer` 的 `class` / `:close-on-click-modal` / `#header` / `#footer` | `custom-class` / `:wrapper-closable` / `#title` / 无（脚部放 body 内） |
 | `el-dialog` 的 `#header` | `#title` |
+| `el-table-column` 的 `#header` / `render-header` | `#header`（`render-header` 已废弃，控制台告警） |
+| `el-sub-menu` / `ElMessage({ grouping })` | `el-submenu` / 无 `grouping` 选项 |
 
 <!-- bp-lint-ignore-end -->
 

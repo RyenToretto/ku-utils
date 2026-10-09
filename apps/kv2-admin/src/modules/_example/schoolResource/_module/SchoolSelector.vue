@@ -72,7 +72,7 @@ import type { SelectInstance } from '@/types/element-ui-form';
 type SchoolPickProp = {
   id: string;
   label: string;
-  item?: unknown;
+  item: SchoolResourceRow;
 };
 
 /**
@@ -81,8 +81,8 @@ type SchoolPickProp = {
  */
 const props = withDefaults(
   defineProps<{
-    /** Vue2 v-model → value / input；清空用 undefined */
-    value?: SchoolPickProp | SchoolPickProp[];
+    /** Vue2 v-model → value / input；清空时 emit undefined，入参兼容表单初值 null */
+    value?: SchoolPickProp | SchoolPickProp[] | null;
     multiple?: boolean;
     disabled?: boolean;
     clearable?: boolean;
@@ -102,8 +102,8 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  input: [value: SchoolSelectorValue | SchoolSelectorValue[] | undefined];
-  change: [value: SchoolSelectorValue | SchoolSelectorValue[] | undefined];
+  (e: 'input', value: SchoolSelectorValue | SchoolSelectorValue[] | undefined): void;
+  (e: 'change', value: SchoolSelectorValue | SchoolSelectorValue[] | undefined): void;
 }>();
 
 const rootRef = ref<HTMLElement>();

@@ -86,9 +86,7 @@
 import { computed, reactive, ref } from 'vue';
 
 import { Edit, Loading } from '@/components/icons/elIcons';
-import type { FormInstance } from '@/types/element-ui-form';
-
-type FormItemRule = Record<string, unknown>;
+import type { FormInstance, FormItemValidator } from '@/types/element-ui-form';
 
 const props = withDefaults(
   defineProps<{
@@ -111,10 +109,14 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{ open: []; close: []; ok: [value: number | undefined] }>();
+const emit = defineEmits<{
+  (e: 'open'): void;
+  (e: 'close'): void;
+  (e: 'ok', value: number | undefined): void;
+}>();
 const resolvedPlaceholder = computed(() => props.placeholder ?? '请输入');
 
-const validation: FormItemRule['validator'] = (_rule, value, callback) => {
+const validation: FormItemValidator = (_rule, value, callback) => {
   if (!value && value !== 0) {
     callback(new Error(resolvedPlaceholder.value));
     return;

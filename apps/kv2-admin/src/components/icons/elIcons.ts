@@ -116,11 +116,6 @@ const RESERVED_GLOBAL_IDS = new Set(['Filter', 'Menu']);
 
 export function registerElIcons() {
   Vue.component('ElIcon', ElIcon);
-  // Element UI 注册名为 ElSubmenu；从 EP 迁来的模板仍写 el-sub-menu
-  const ElSubmenu = Vue.component('ElSubmenu');
-  if (ElSubmenu) {
-    Vue.component('ElSubMenu', ElSubmenu);
-  }
 
   Object.entries(ICON_COMPONENTS).forEach(([name, comp]) => {
     // Filter/Menu 与 SVG/HTML 保留标签冲突；业务侧用 import { Filter } 即可

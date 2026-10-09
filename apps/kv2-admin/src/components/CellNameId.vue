@@ -49,9 +49,9 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  click: [event: MouseEvent];
-  'name-click': [event: MouseEvent];
-  'id-click': [event: MouseEvent];
+  (e: 'click', event: MouseEvent): void;
+  (e: 'name-click', event: MouseEvent): void;
+  (e: 'id-click', event: MouseEvent): void;
 }>();
 
 const useSplitClick = computed(() => props.nameClickable || props.idClickable);

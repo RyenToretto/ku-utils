@@ -49,10 +49,6 @@ export default defineConfig(async ({ mode, command }): Promise<UserConfig> => {
         '@example-maps': exampleMaps,
         '@example-mocks': exampleMocks,
         '@header-example-tab': exampleTab,
-        // Vue Router 4 composables → 本仓 shim（vue-router@3）
-        'vue-router/composables': fileURLToPath(
-          new URL('./src/shims/vue-router-composables.ts', import.meta.url),
-        ),
       },
     },
     server: createServerConfig(useMock, proxyTarget, port, command === 'serve'),

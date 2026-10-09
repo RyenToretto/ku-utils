@@ -151,7 +151,9 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{ search: [toFirstPage: boolean] }>();
+const emit = defineEmits<{
+  (e: 'search', toFirstPage: boolean): void;
+}>();
 const resolvedMainText = computed(() => props.mainText ?? '搜索');
 
 const ctlStyle = computed<CSSProperties>(() => {

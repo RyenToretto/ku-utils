@@ -22,7 +22,7 @@ Vue 3 `<script setup>`、块顺序、CSS 类名拼接禁令、优先复用共享
 
 1. 块顺序：`<template>` → `<script>` → `<style>`。
 2. Vue 3：`<script setup lang="ts">`；`defineProps` / `defineEmits` 类型声明；需要组件名时 `defineOptions({ name })`。
-   Vue 2.7：同样默认 `<script setup lang="ts">`；依赖 mixin 的组件用 Options API；跨文件 type alias 的 props 用运行时 `PropType`，禁 `| null`。
+   Vue 2.7：同样默认 `<script setup lang="ts">`；依赖 mixin 的组件用 Options API；跨文件 type alias 的 props 用运行时 `PropType`，禁 `| null`；`defineEmits` 只用调用签名（`{ (e: 'x', v: T): void }`，不认 3.3+ 具名元组，由 `vue-tsc` 类型检查兜住）；路由 composable 用 vue-router 3.6 官方 `vue-router/composables`，`route.meta` 读字段带可选链。
 3. CSS：**禁止** `&-suffix` / `&__elem` 类名拼接；允许 `&.modifier`。
 4. 主题色用设计 token（本生态为 `--ku-*`），packages 内写 `var(--ku-*, <tome 浅色 fallback>)`。
 5. 工具函数优先共享库（如 `@ku-utils/utils`），禁止重复造 debounce 等；公共类型优先 `@ku-utils/types`。

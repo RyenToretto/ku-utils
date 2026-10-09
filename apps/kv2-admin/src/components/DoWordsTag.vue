@@ -152,8 +152,8 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  input: [string[]];
-  change: [string[]];
+  (e: 'input', value: string[]): void;
+  (e: 'change', value: string[]): void;
 }>();
 
 const inputRef = ref<{ focus?: () => void } | null>(null);

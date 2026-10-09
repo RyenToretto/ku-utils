@@ -73,9 +73,8 @@
 import { computed, nextTick, reactive, ref } from 'vue';
 
 import { Loading } from '@/components/icons/elIcons';
-import type { FormInstance } from '@/types/element-ui-form';
+import type { FormInstance, FormItemValidator } from '@/types/element-ui-form';
 
-type FormItemRule = Record<string, unknown>;
 type Placement = string;
 
 const props = withDefaults(
@@ -109,14 +108,18 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{ close: []; open: []; ok: [value: string | undefined] }>();
+const emit = defineEmits<{
+  (e: 'close'): void;
+  (e: 'open'): void;
+  (e: 'ok', value: string | undefined): void;
+}>();
 
 const isDisabled = computed(() => props.disabled);
 const popoverPlacement = computed(() => props.placement);
 const resolvedPlaceholder = computed(() => props.placeholder ?? '请输入');
 const resolvedErrorHolder = computed(() => props.errorHolder ?? '请输入整数');
 
-const validation: FormItemRule['validator'] = (_rule, value, callback) => {
+const validation: FormItemValidator = (_rule, value, callback) => {
   const strVal = String(value ?? '');
   const badNum = !Number.isInteger(+strVal);
   const badMin = !badNum && props.min !== undefined ? +strVal < props.min : false;

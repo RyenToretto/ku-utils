@@ -2,11 +2,11 @@
   <div
     class="app-entry"
     :class="{
-      'hide-header': route.meta.hideHeader,
+      'hide-header': route.meta?.hideHeader,
     }"
   >
     <BaseHeader
-      v-if="!route.meta.hideHeader"
+      v-if="!route.meta?.hideHeader"
       :has-update="hasUpdate"
       @refresh="refreshForUpdate"
     />
@@ -19,13 +19,13 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router/composables';
 
 import DialogPreviewVideo from '@/components/DialogPreviewVideo.vue';
 import { useSplashReadiness } from '@/composables/useSplashReadiness';
 import BaseHeader from '@/layouts/BaseHeader.vue';
 import { useVersionUpdate } from '@/lib/useVersionUpdate';
 import { routerReady } from '@/router';
-import { useRoute } from '@/shims/vue-router-composables';
 import { registerPreviewVideoHost } from '@/utils/previewMedia';
 import { fetchStaticVersion } from '@/utils/version';
 

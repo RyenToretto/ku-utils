@@ -59,11 +59,11 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  'update:pageNum': [val: number];
-  'update:pageSize': [val: number];
-  'page-change': [page: number];
-  'size-change': [size: number];
-  refresh: [];
+  (e: 'update:pageNum', val: number): void;
+  (e: 'update:pageSize', val: number): void;
+  (e: 'page-change', page: number): void;
+  (e: 'size-change', size: number): void;
+  (e: 'refresh'): void;
 }>();
 
 const resolvedLayout = computed(() => (props.mode === 'total' ? 'total' : props.layout));

@@ -27,6 +27,8 @@ alwaysApply: false
 - 默认 `<script setup lang="ts">`（2.7 内置；无 `defineOptions`，需要组件名时另写普通 `<script>` 导出 `name`）
 - 依赖 mixin 的组件（如 `@ku-utils/v2-custom-columns` 的 `useSchemaColumnConfig`）用 Options API，可配 `setup()` 复用 composable
 - 跨文件 type alias 作 props 类型时用运行时 `PropType` 声明，禁 `| null`（2.7 编译器解析不了跨文件类型，控制台报错）
+- `defineEmits` 只用调用签名 `defineEmits<{ (e: 'change', val: T): void }>()`；2.7 不认 3.3+ 的具名元组写法 `{ change: [val: T] }`（vue-tsc 报 TS2349，`pnpm typecheck` 拦截）
+- `useRoute` / `useRouter` 从 `vue-router/composables` 引入（vue-router 3.6 官方提供，禁自写 shim）；`route.meta` 可能为空，读字段用 `route.meta?.xxx`
 
 ## 通用规范
 - 使用 @ku-utils/* 系列包，不重复造轮子

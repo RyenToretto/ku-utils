@@ -43,8 +43,7 @@
 
 <script setup lang="ts">
 import { computed, type Component } from 'vue';
-
-import { useRouter } from '@/shims/vue-router-composables';
+import { useRouter } from 'vue-router/composables';
 
 export type SideMenuNode = {
   path: string;

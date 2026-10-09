@@ -83,7 +83,7 @@ type DemoFormState = {
 };
 
 const emit = defineEmits<{
-  success: [payload: DemoFormState];
+  (e: 'success', payload: DemoFormState): void;
 }>();
 
 const dialogVisible = ref(false);

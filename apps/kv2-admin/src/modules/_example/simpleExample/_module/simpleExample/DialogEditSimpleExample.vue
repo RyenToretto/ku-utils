@@ -88,7 +88,7 @@ import { EXAMPLE_STATUS_ENABLED } from '@/modules/_example/simpleExample/_map/ex
 import type { FormInstance, FormRules } from '@/types/element-ui-form';
 
 const emit = defineEmits<{
-  success: [];
+  (e: 'success'): void;
 }>();
 
 const dialogVisible = ref(false);

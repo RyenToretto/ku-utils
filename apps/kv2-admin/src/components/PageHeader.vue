@@ -72,8 +72,7 @@
  * 顶栏 + 侧栏已表达页面身份。见 project-context / admin-list-page-pattern。
  */
 import { computed } from 'vue';
-
-import { useRoute } from '@/shims/vue-router-composables';
+import { useRoute } from 'vue-router/composables';
 
 export type PageBreadcrumbItem = {
   label: string;

@@ -79,7 +79,7 @@ import { CLUB_STATUS_ENABLED } from '../_map/clubStatus';
 import type { FormInstance, FormRules } from '@/types/element-ui-form';
 
 const emit = defineEmits<{
-  success: [];
+  (e: 'success'): void;
 }>();
 
 const dialogVisible = ref(false);

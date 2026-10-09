@@ -6,13 +6,13 @@
 </template>
 
 <script setup lang="ts">
-import { markRaw, ref } from 'vue';
+import { markRaw, shallowRef } from 'vue';
 
 import { Collection, Filter, Grid, Menu, Share } from '@/components/icons/elIcons';
 import DomainModuleShell from '@/layouts/DomainModuleShell.vue';
 import type { SideMenuNode } from '@/layouts/sideMenu/SideMenuItem.vue';
 
-const menus = ref<SideMenuNode[]>([
+const menus = shallowRef<SideMenuNode[]>([
   {
     path: '/example/simple',
     title: '示例管理',

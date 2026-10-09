@@ -41,7 +41,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  refresh: [];
+  (e: 'refresh'): void;
 }>();
 
 const userStore = useUserStore();

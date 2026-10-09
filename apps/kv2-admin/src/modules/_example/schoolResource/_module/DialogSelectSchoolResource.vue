@@ -73,7 +73,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  change: [value: SchoolResourceRow | SchoolResourceRow[] | undefined];
+  (e: 'change', value: SchoolResourceRow | SchoolResourceRow[] | undefined): void;
 }>();
 
 const dialogVisible = ref(false);

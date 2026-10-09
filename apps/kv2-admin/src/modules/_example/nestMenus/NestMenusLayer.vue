@@ -33,16 +33,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-
-import { useRoute } from '@/shims/vue-router-composables';
+import { useRoute } from 'vue-router/composables';
 
 const route = useRoute();
 
-const nestLevel = computed(() => Number(route.meta.nestLevel) || 4);
+const nestLevel = computed(() => Number(route.meta?.nestLevel) || 4);
 const nestTrail = computed(() => {
-  const trail = route.meta.nestTrail;
+  const trail = route.meta?.nestTrail;
   if (Array.isArray(trail) && trail.length) return trail as string[];
-  const fallback = typeof route.meta.title === 'string' ? route.meta.title : '多级导航';
+  const fallback = typeof route.meta?.title === 'string' ? route.meta?.title : '多级导航';
   return [fallback];
 });
 </script>

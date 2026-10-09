@@ -14,10 +14,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRoute } from 'vue-router/composables';
 
 import SideMenuItem, { type SideMenuNode } from './SideMenuItem.vue';
-
-import { useRoute } from '@/shims/vue-router-composables';
 
 const props = defineProps<{
   data: SideMenuNode[];
@@ -26,7 +25,7 @@ const props = defineProps<{
 const route = useRoute();
 
 const menuList = computed(() => props.data || []);
-const activePath = computed(() => (route.meta.activePath as string) || route.path);
+const activePath = computed(() => (route.meta?.activePath as string) || route.path);
 
 defineExpose({
   useOversea(navList: SideMenuNode[]) {

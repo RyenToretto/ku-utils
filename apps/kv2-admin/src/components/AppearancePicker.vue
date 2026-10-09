@@ -37,7 +37,7 @@ const props = withDefaults(
 );
 
 defineEmits<{
-  input: [value: ThemeMode];
+  (e: 'input', value: ThemeMode): void;
 }>();
 
 const defaultThemeLabels: Record<ThemeMode, string> = {

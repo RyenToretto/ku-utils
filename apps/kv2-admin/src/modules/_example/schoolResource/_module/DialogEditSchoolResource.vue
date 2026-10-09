@@ -90,7 +90,7 @@ import { SCHOOL_STATUS_ENABLED } from '@/modules/_example/schoolResource/_map/sc
 import type { FormInstance, FormRules } from '@/types/element-ui-form';
 
 const emit = defineEmits<{
-  success: [];
+  (e: 'success'): void;
 }>();
 
 const dialogVisible = ref(false);

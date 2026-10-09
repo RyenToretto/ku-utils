@@ -324,10 +324,10 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  change: [value: SchoolResourceRow | SchoolResourceRow[] | undefined];
-  'refresh-start': [];
-  loaded: [];
-  'load-failed': [];
+  (e: 'change', value: SchoolResourceRow | SchoolResourceRow[] | undefined): void;
+  (e: 'refresh-start'): void;
+  (e: 'loaded'): void;
+  (e: 'load-failed'): void;
 }>();
 
 const pageMaxHeight = useAdminTableMaxHeight('.page-school-resource-list', 400);

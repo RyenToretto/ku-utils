@@ -110,9 +110,9 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  'update:orderBy': [value: string];
-  'update:sequence': [value: string];
-  change: [payload: DoSorterChangePayload];
+  (e: 'update:orderBy', value: string): void;
+  (e: 'update:sequence', value: string): void;
+  (e: 'change', payload: DoSorterChangePayload): void;
 }>();
 
 const popoverVisible = ref(false);

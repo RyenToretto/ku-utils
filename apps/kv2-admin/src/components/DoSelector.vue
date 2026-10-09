@@ -78,9 +78,9 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  input: [value: unknown];
-  change: [value: unknown];
-  'select-change': [item: OptionItem | undefined];
+  (e: 'input', value: unknown): void;
+  (e: 'change', value: unknown): void;
+  (e: 'select-change', item: OptionItem | undefined): void;
 }>();
 const attrs = useAttrs();
 const requesting = ref(false);

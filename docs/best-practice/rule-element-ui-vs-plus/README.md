@@ -36,6 +36,8 @@ Element UI 对未知类名、`--el-*` 变量、prop **静默忽略**，从 Eleme
 | `teleported` / `align-center`                                            | `append-to-body` / 无                                                  |
 | `el-drawer` 的 `class` / `:close-on-click-modal` / `#header` / `#footer` | `custom-class` / `:wrapper-closable` / `#title` / 无（脚部放 body 内） |
 | `el-dialog` 的 `#header`                                                 | `#title`                                                               |
+| `el-table-column` 的 `#header` / `render-header`                         | `#header`（`render-header` 已废弃，控制台告警）                        |
+| `el-sub-menu` / `ElMessage({ grouping })`                                | `el-submenu` / 无 `grouping` 选项                                      |
 
 4. **已知语义差异主动处理**：根上组件变量 EU 不读、EP 重声明（以通用中性色为准）；下拉 / 日期 / popover 都挂 `.el-popper`，禁全局 `.el-popper > *`；EU 鼠标 `:focus` 沿用悬停色（回落静止态，仅 `:focus-visible` 描边），MessageBox 确认钮同挂 `--default` / `--primary` 且打开即聚焦；EU 通配规则（如 `.el-pagination span:not([class*=suffix])`）优先级高，覆写前先查命中规则；EU 选中 `value=""` 选项而 EP 视 `''` 为空显示占位（保留，属框架语义）；EU 原生滚动条占位，与 EP 浮层滚动条有约一条滚动条宽的差。
 5. **脚本兜底**：`audit:ep` 扫 EU 端源码中不存在的 `.el-*` 类名、未声明且无 fallback 的 `var(--el-*)`、模板里的 EP 专有 prop，以及同名组件的 EP 专有 prop / 插槽（抽屉 `close-on-click-modal` / `#header` / `#footer`、对话框 `#header`），挂 `prebuild`。

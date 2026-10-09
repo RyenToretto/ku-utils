@@ -7,7 +7,7 @@
     </aside>
     <div
       class="domain-module-main"
-      :class="{ 'use-full-view': route.meta.useFullView }"
+      :class="{ 'use-full-view': route.meta?.useFullView }"
     >
       <router-view />
     </div>
@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router/composables';
 
 import SideMenu from '@/layouts/sideMenu/index.vue';
 import type { SideMenuNode } from '@/layouts/sideMenu/SideMenuItem.vue';
-import { useRoute, useRouter } from '@/shims/vue-router-composables';
 
 const props = defineProps<{
   menus: SideMenuNode[];
@@ -39,7 +39,7 @@ function firstLeafPath(node: string | SideMenuNode | undefined): string | undefi
 }
 
 function triggerMenu() {
-  if (!route.meta.isHeaderTab) return;
+  if (!route.meta?.isHeaderTab) return;
   const leaf = firstLeafPath(props.menus[0]);
   if (leaf && route.path === props.moduleRootPath) {
     router.replace(leaf).catch(console.error);

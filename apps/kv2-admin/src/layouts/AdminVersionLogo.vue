@@ -39,7 +39,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  refresh: [];
+  (e: 'refresh'): void;
 }>();
 
 const actionAttrs = computed(() => ({

@@ -114,8 +114,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  input: [string];
-  change: [string];
+  (e: 'input', value: string): void;
+  (e: 'change', value: string): void;
 }>();
 
 const WEEK_LABELS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];

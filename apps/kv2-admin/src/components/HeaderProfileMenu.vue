@@ -116,9 +116,9 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  logout: [];
-  'change-password': [];
-  'set-theme': [mode: ThemeMode];
+  (e: 'logout'): void;
+  (e: 'change-password'): void;
+  (e: 'set-theme', mode: ThemeMode): void;
 }>();
 
 const profileMenuVisible = ref(false);
