@@ -26,10 +26,11 @@ type(scope): 中文描述
 
 - `type` / `scope` 英文；**描述必须中文**。
 - 常用 type：`feat` `fix` `docs` `style` `refactor` `perf` `test` `build` `ci` `chore` `revert` `release`。
-- scope：包名或模块名（如 `utils` / `kv3-admin` / `skin`）；无明确 scope 可省略括号。
-- 由 commitlint + husky 强制；Agent **仅在用户明确要求提交时** 才 commit。
+- scope：包名或 app 名（如 `utils` / `kv3-admin` / `skin`），以 commitlint `scope-enum` 为准（本仓为警告级）；新包同步加入；无明确 scope 可省略括号。
+- **强制边界写实**：commitlint 硬拒绝 type 枚举、header > 100、subject 首字母大写、AI 署名 trailer；**中文描述没有脚本校验，靠约定**——规则里不得声称 hook 会拦英文。
+- Agent **仅在用户明确要求提交时** 才 commit。
 - 禁止 `--no-verify`（除非用户明确要求）。
-- **禁止 AI 署名 trailer**：不得写入 `Co-authored-by: Cursor <cursoragent@cursor.com>`（及同类 Cursor/`cursoragent@` 行）；commitlint 规则 `forbid-ai-coauthor` 硬拒绝。husky `commit-msg` 会先剥离 Cursor Agent 自动注入的该行再校验。
+- **禁止 AI 署名 trailer**：不得写入 `Co-authored-by: Cursor <cursoragent@cursor.com>`（及同类 Cursor/`cursoragent@` 行）；commitlint 规则 `forbid-ai-coauthor` 硬拒绝；husky `commit-msg` 只跑 `commitlint --edit`，不做剥离。
 
 ## 本仓落点
 
@@ -38,6 +39,6 @@ type(scope): 中文描述
 
 ## 验收清单
 
-- [ ] 故意写英文 subject 会被 hook 拒绝（若已接 commitlint）
+- [ ] 首字母大写的 subject、超长 header 会被 hook 拒绝；英文 subject 不会被拦（靠约定，review 时检查）
 - [ ] 带 `Co-authored-by: Cursor <cursoragent@cursor.com>` 的 message 会被 commitlint 拒绝
 - [ ] README/规则中有正反示例

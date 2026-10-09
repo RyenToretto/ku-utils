@@ -31,7 +31,7 @@ ku-utils/
 │   ├── eslint-config/     构建: tsup       ESLint Flat Config（含 vue2/vue3/nuxt4 子配置）
 │   ├── prettier-config/   构建: 无（纯JSON） Prettier 共享配置
 │   ├── tsconfig/          构建: 无（纯JSON） TypeScript 配置集（base/library/vue3/vue2/nuxt4）
-│   ├── stylelint-config/  构建: tsup       Stylelint 配置
+│   ├── stylelint-config/  构建: 无（纯JS） Stylelint 配置
 │   ├── utils/             构建: tsup       纯函数工具库（零框架依赖）
 │   ├── hooks/             构建: tsup       Vue 3 Composables（useLoading/useCountdown/useClipboard...）
 │   ├── directives/        构建: tsup       Vue 3 自定义指令（vLoading/vPermission/vDebounce）
@@ -44,8 +44,8 @@ ku-utils/
 │   ├── nuxt-module/       构建: nuxt-module-builder   Nuxt 4 集成模块
 │   ├── hooks-react/       构建: tsup       React Hooks（与 hooks 对齐）
 │   ├── hooks-angular/     构建: ng-packagr Angular 注入函数（signals；与 hooks 对齐）
-│   ├── custom-columns/    构建: tsup       Vue 3 自定义列
-│   ├── v2-custom-columns/ 构建: tsup       Vue 2 自定义列
+│   ├── custom-columns/    构建: Vite       Vue 3 自定义列
+│   ├── v2-custom-columns/ 构建: Vite       Vue 2 自定义列
 │   ├── r-custom-columns/  构建: Vite       React 自定义列（antd）
 │   └── a-custom-columns/  构建: ng-packagr Angular 自定义列（ng-zorro）
 ├── tools/              # CLI 工具（2 个）
@@ -60,7 +60,7 @@ ku-utils/
 │   ├── kr-admin/          React 19 + Ant Design 管理端 starter（四生）
 │   └── ka-admin/          Angular 22 + ng-zorro 管理端 starter（四生）
 ├── docs/               # VitePress 文档站
-├── .cursor/rules/      # AI 开发规范（4 个 .mdc 文件）
+├── .cursor/rules/      # AI 开发规范（7 个 .mdc；skills 3 个，与 docs/best-practice 双向同步）
 ├── .vscode/settings.json  # IDE 配置
 ├── turbo.json          # Turborepo 任务配置
 ├── pnpm-workspace.yaml # pnpm workspace 声明
@@ -148,7 +148,7 @@ type(scope): 中文描述
 - type: feat / fix / docs / style / refactor / perf / test / build / ci / chore / revert / release
 - scope: 包名（如 utils / hooks / ui）
 - 示例: `feat(utils): 新增货币格式化函数`
-- 由 commitlint + husky pre-commit hook 强制执行
+- 格式由 commitlint（husky `commit-msg`）校验；中文描述无脚本校验，靠约定
 - lint-staged 会依次执行 eslint --fix → prettier --write
 
 ## Vue SFC 规范

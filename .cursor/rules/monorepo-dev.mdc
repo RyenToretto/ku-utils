@@ -15,8 +15,9 @@ alwaysApply: false
 ## 开发流程
 - 新增公共功能先评估是否可以放入现有的 @ku-utils/* 包
 - 如需新增包，在 packages/ 目录创建
-- 每个包必须有 README.md、tsconfig.json、package.json
-- 构建使用 tsup（纯 TS 库）或 Vite（Vue 组件库）
+- 每个包必须有 README.md、package.json（`publishConfig.access` 为 `public`）；有 TS 源码的包另需 tsconfig（ng-packagr 包为 `tsconfig.lib.json`）
+- 新包加进 `commitlint.config.js` 的 `scope-enum`
+- 构建工具按包类型：纯 TS 库 tsup；Vue / React 组件库 Vite；Angular 库 ng-packagr；Nuxt 模块 nuxt-module-build；皮肤自定义脚本；纯配置包（prettier / stylelint / tsconfig）无构建
 
 ## 版本发布
 - 使用 `pnpm changeset` 创建变更记录
@@ -26,7 +27,7 @@ alwaysApply: false
 
 ## Commit 规范
 - 格式：`type(scope): 中文描述`
-- type: feat / fix / docs / style / refactor / perf / test / build / ci / chore（保持英文）
-- scope: 包名（如 utils / hooks / ui）（保持英文）
-- message 描述部分尽量使用中文，例如：`feat(utils): 新增日期格式化函数`
-- body 和 footer 部分也建议使用中文
+- type: feat / fix / docs / style / refactor / perf / test / build / ci / chore / revert / release（保持英文）
+- scope: 包名或 app 名（如 utils / hooks / kv3-admin），列表以 `commitlint.config.js` 为准
+- 描述部分**必须**使用中文，例如：`feat(utils): 新增日期格式化函数`；body 和 footer 也用中文
+- 细则见 `commit-message.mdc`

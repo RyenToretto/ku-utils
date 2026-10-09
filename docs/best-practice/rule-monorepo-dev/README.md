@@ -21,10 +21,10 @@ pnpm workspace 依赖管理、新增包、Changesets 发版与 commit scope。
 ## 最佳实践（精炼）
 
 1. **包管理**：pnpm；根加依赖 `pnpm add -wD <pkg>`；子包 `pnpm add <pkg> --filter <workspace>`；仓内引用 `workspace:*`。
-2. **新增能力**：先评估是否进现有 `@ku-utils/*`；确需新包则在 `packages/` 创建，必备 README / tsconfig / package.json（含 `publishConfig.access=public`）。
-3. **构建**：纯 TS 用 tsup；Vue 组件库用 Vite。
+2. **新增能力**：先评估是否进现有 `@ku-utils/*`；确需新包则在 `packages/` 创建，必备 README + package.json（含 `publishConfig.access=public`），有 TS 源码另需 tsconfig；新包加入 commitlint `scope-enum`。
+3. **构建**：按包类型选——纯 TS 库 tsup；Vue / React 组件库 Vite；Angular 库 ng-packagr；Nuxt 模块 nuxt-module-build；皮肤自定义生成脚本；纯配置包无构建。
 4. **发版**：`pnpm changeset` → 合入 main → Version Packages PR → npm + tag；紧急本地 `pnpm release` 后 `git push --follow-tags`；semver：patch / minor / major。
-5. **Commit**：`type(scope): 中文描述`；scope 为包名（与 `rule-commit-message` 一致）。
+5. **Commit**：`type(scope): 中文描述`（中文必须，靠约定）；type 含 `revert` / `release`；scope 为包名或 app 名（与 `rule-commit-message` 一致）。
 
 ## 本仓落点
 

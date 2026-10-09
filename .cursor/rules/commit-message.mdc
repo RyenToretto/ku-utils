@@ -18,6 +18,15 @@ type(scope): 中文描述
 - subject 描述部分**必须使用中文**，禁止使用英文描述
 - body 和 footer 也使用中文
 
+## 哪些靠钩子、哪些靠约定
+
+| 约束 | 强制方式 |
+| --- | --- |
+| type 枚举、header ≤ 100、subject 不得首字母大写、禁 AI 署名 trailer | commitlint（husky `commit-msg`）硬拒绝 |
+| scope 枚举 | commitlint 警告（级别 1） |
+| subject / body 使用中文 | **无脚本校验，靠约定**：提交前自查 |
+| 改 `.cursor` rule/skill 须同步 `docs/best-practice` | husky `pre-commit` 跑 `check-bp-sync` |
+
 ## type 取值
 
 | type | 含义 |
@@ -37,7 +46,11 @@ type(scope): 中文描述
 
 ## scope 取值
 
-使用包名：eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / skin / constants / i18n / types / nuxt-module / custom-columns / v2-custom-columns / cli / create-app / kv3-admin / docs / deps / ci / release
+与 `commitlint.config.js` 的 `scope-enum` 一致（级别 1：不在列表只警告，仍应选列表内的）：
+
+eslint-config / prettier-config / tsconfig / stylelint-config / utils / hooks / directives / ui / ui-vue2 / skin / constants / i18n / types / nuxt-module / custom-columns / v2-custom-columns / r-custom-columns / hooks-react / a-custom-columns / hooks-angular / cli / create-app / kv3-admin / kv2-admin / kr-admin / ka-admin / docs / deps / ci / release
+
+跨多个 app / 包的改动选主要落点；无明确 scope 可省略括号。
 
 ## 示例
 
@@ -54,7 +67,8 @@ build: 修复 tsconfig 导致 apps 生成冗余编译产物
 ```
 feat(utils): add formatCurrency function     ← 禁止英文描述
 Fix bug                                       ← 禁止无 type 格式
-feat: 新增功能新增功能新增功能...              ← 禁止超过 100 字符
+feat(utils): Add ...                          ← subject 禁止首字母大写（subject-case）
+feat: 新增功能新增功能新增功能...              ← header 禁止超过 100 字符
 ```
 
 - **禁止**在 commit message 中加入 AI / 工具署名 trailer，尤其是：
@@ -62,5 +76,4 @@ feat: 新增功能新增功能新增功能...              ← 禁止超过 100 
   Co-authored-by: Cursor <cursoragent@cursor.com>
   ```
   以及任意 `Co-authored-by: …Cursor…` / `cursoragent@` 形式。
-  - commitlint 规则 `forbid-ai-coauthor` 硬拒绝。
-  - husky `commit-msg` 会先剥离 Cursor Agent 自动注入的该行，再跑 commitlint（避免 Agent 提交被平台强行注入拦死）。
+  - commitlint 规则 `forbid-ai-coauthor` 硬拒绝；husky `commit-msg` 只跑 `commitlint --edit`，**不会**自动剥离——平台注入了该行就会被拦，须改用不注入 trailer 的方式提交。
