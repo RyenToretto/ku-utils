@@ -22,7 +22,7 @@
 
 1. 应用引入金标皮肤 CSS（`@ku-utils/skin` = `tome`）；**apps 不自建第二套色板**。
 2. 组件写 `var(--ku-token, <tome 浅色 fallback>)`，不把皮肤 CSS 打进 library 产物。
-3. Element Plus：结构变量与色阶全部转发 `--ku-*`（色阶 `--ku-color-{family}-light-1..9` / `-dark-2` / `-rgb` 由脚本从品牌色生成）；转发写在 `:root, html.dark` 共享块，skin 须在 Element Plus `dark/css-vars.css` 之后引入。
+3. Element Plus：结构变量与色阶全部转发 `--ku-*`（色阶 `--ku-color-{family}-light-1..9` / `-dark-2` / `-rgb` 由脚本从品牌色生成）；转发写在 `:root, html.dark` 共享块，skin 须在 Element Plus `element-plus/theme-chalk/dark/css-vars.css` 之后引入。明暗只认 `html.dark`，禁 `data-theme` / 页面自造暗色选择器当主方案。
    非 Element 栈（antd / ng-zorro 的 plain 按钮等）与 Element Plus 同值时读 `--ku-color-*` 色阶，禁读 `--el-*`、禁自己 `color-mix` 近似。
 4. **`--el-mask-color` → loading 浅色**（`--ku-loading-bg`）；**`--el-overlay-color` → 弹层深色**（`--ku-bg-overlay`）。勿混用。
 5. 契约变更：新增 token 走 minor；改名删除走 major（见 TOKEN.md）。
@@ -31,7 +31,7 @@
 8. **唯一金标 `tome`**，不维护多套备选皮肤。
 9. **JS 主题系统（antd）用 `@ku-utils/skin/tokens` 已解析色值**：不写 `var()`（无法派生色阶）、不手抄 hex、不靠 `:root --ant-*`（未开 cssVar 不生效）；暗色算法改写的品牌/状态色按皮肤值钉回。
 10. **编译期写死色值的组件库（Element UI chalk / ng-zorro less）用构建期生成器整体换皮**：按「属性语境 + 字面量」映射到中性色表与状态色阶，目标是 Element Plus 组件内实际生效值（EP 在组件选择器上重新声明 `--el-input-bg-color` 等，默认指回通用中性色，`:root` 上的同名组件变量对 EP 不生效）；弹层 / 对话框阴影整值映射到 `--el-box-shadow*`；未映射字面量让生成失败，保留项显式登记；产物 gitignore、`predev` / `prebuild` 生成，不再引入原始主题 CSS。手写「换色覆写层」永远补不全（radio 悬停、表格行悬停、弹层底色都会漏）。
-11. **验收覆盖悬停与弹层**：四端明暗实测表格行 / radio / 菜单 / 分页悬停与头像菜单、下拉、日期面板、对话框、确认框；出现蓝紫色相或暗色大块浅底即漏色。apps 禁写 `var(--未定义变量, #hex)`。
+11. **验收覆盖悬停与弹层**：四端明暗实测表格行 / radio / 菜单 / 分页悬停与头像菜单、下拉、日期面板、对话框、确认框；出现蓝紫色相或暗色大块浅底即漏色。apps 禁写 `var(--未定义变量, #hex)`（fallback 永远生效 = 写死色值）与 Element 默认蓝 `#409eff` / `#3a8ee6` 等字面量。
 
 ## 本仓落点
 

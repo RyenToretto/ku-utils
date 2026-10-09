@@ -18,7 +18,7 @@ description: >-
 4. 明暗只认 `html.dark`（禁止 `data-theme` / 页面自造暗色选择器当主方案）。
 5. **JS 主题系统（antd）**吃 `@ku-utils/skin/tokens` 的已解析色值（`tome.light` / `tome.dark`），不写 `var(--ku-*)`（无法派生色阶），也不在 apps 手抄 hex；暗色算法会改写种子色，品牌/状态色需按皮肤值钉回（见 kr-admin `plugins/antdTheme.ts`）。
 6. **状态色色阶**读 `--ku-color-{family}-light-1..9` / `-dark-2` / `-rgb`（明暗各一套，算法同 Element Plus）；非 Element 栈要与 kv3 同值时用它，禁止读 `--el-*` 或自己 `color-mix` 近似。
-7. **引入顺序**：`--el-*` 转发在 `:root, html.dark` 共享块，与 Element Plus `dark/css-vars.css` 同优先级，skin 必须在它之后引入，否则暗色被 Element Plus 灰色系压过。
+7. **引入顺序**：`--el-*` 转发在 `:root, html.dark` 共享块，与 Element Plus `element-plus/theme-chalk/dark/css-vars.css` 同优先级，skin 必须在它之后引入，否则暗色被 Element Plus 灰色系压过。
 8. **编译期写死色值的组件库**（Element UI chalk、ng-zorro less）用**构建期生成器**整体换皮，不手写「换色覆写层」：按「属性语境 + 字面量」映射到中性色表与状态色阶（目标是 Element Plus **组件内实际生效值**：EP 在组件选择器上重新声明 `--el-input-bg-color` 等组件级变量，默认指回通用中性色，skin 在 `:root` 的同名组件变量对 EP 不生效，非 Element Plus 栈不要去读）；弹层 / 对话框 / 抽屉阴影整值映射到 `--el-box-shadow*`（明暗各一套）；**映射不到的字面量必须让生成失败**，确需保留（预设色板、细阴影、取色器、恒白开关钮等）显式登记。生成产物 gitignore，`predev` / `prebuild` 生成，且不得再引入原始主题 CSS。
 9. **验收要过悬停与弹层**：静态页面看不出漏色，四端明暗都要实测表格行 / radio / 菜单 / 分页悬停、头像菜单、下拉、日期面板、对话框、确认框；屏幕上出现蓝 / 紫色相或暗色下大块浅底即为漏色（tome 无蓝紫色相）。
 
