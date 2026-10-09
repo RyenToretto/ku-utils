@@ -52,6 +52,7 @@
 | 前后端文档增量              | [rule-fe-be-doc-sync](../rule-fe-be-doc-sync/)                   | 按需                       |
 | Vue SFC / CSS               | [rule-vue-sfc-standards](../rule-vue-sfc-standards/)             | `*.vue`                    |
 | 皮肤                        | [skill-theme-skin](../skill-theme-skin/)                         | skill                      |
+| Element UI ↔ Element Plus   | [rule-element-ui-vs-plus](../rule-element-ui-vs-plus/)           | EU 端 `src/**`             |
 | Hooks                       | [rule-skill-hooks-composables](../rule-skill-hooks-composables/) | skill+rule                 |
 | 自定义列                    | [rule-skill-custom-columns](../rule-skill-custom-columns/)       | skill+rule                 |
 

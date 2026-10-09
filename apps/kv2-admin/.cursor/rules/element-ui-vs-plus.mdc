@@ -1,0 +1,46 @@
+---
+description: Element UI（kv2）↔ Element Plus（kv3）差异与移植约束。从 kv3 搬模板 / 样式、改 Element UI 外观、对齐 kv3 视觉时读取。
+globs: apps/kv2-admin/src/**/*.{vue,scss,css,ts},apps/kv2-admin/scripts/*.mjs
+alwaysApply: false
+---
+
+# Element UI ↔ Element Plus 移植约束
+
+Element UI 对不认识的类名、`--el-*` 变量、prop **静默忽略**：照抄 kv3 不报错、不生效。对齐目标是 kv3 的**实际渲染值**（计算样式），不是 kv3 SCSS 里写的值——kv3 部分覆写被 EP 组件样式盖掉（分页圆角写 6 实际 2、表格 `.cell` 写 8 实际 12）。
+
+## 改动落点（只放一处）
+
+| 差异类型 | 落点 |
+| --- | --- |
+| 颜色、弹层阴影 | `scripts/generate-element-theme.mjs` 映射表（未映射即失败；禁手写换色覆写） |
+| 尺寸 / 间距 / 圆角 / 状态（EU 与 EP 结构差异） | `assets/styles/modules/element-ui-bridge.scss` |
+| 组件默认行为（周一开头、弹层居中等） | 全局包装组件（如 `DateRange.vue`），不在每个页面传 |
+| 页面业务样式 | 按 EU DOM 写，不留 EP 选择器 |
+
+## 移植对照（高频）
+
+| Element Plus（kv3） | Element UI（kv2） |
+| --- | --- |
+| `.el-input__wrapper`（内阴影描边） | `.el-input__inner`（真 border，内距少 1px 补偿） |
+| `.el-select__wrapper` / `.el-select__popper` | `.el-select .el-input__inner` / `.el-select-dropdown` |
+| `.el-pager li.is-active` / `.el-popper__arrow` | `.el-pager li.active` / `.popper__arrow` |
+| `.el-overlay-dialog` / `.el-drawer__footer` | `.el-dialog__wrapper` / 无（脚部放 body 内） |
+| `.el-tooltip__trigger` | 无包裹层，`el-tooltip` 类挂在子元素上 |
+| `var(--el-border)` / `--el-disabled-bg-color` / `--el-color-white` | 不存在：写展开值或通用变量 |
+| `show-after` / `hide-after` / `show-arrow` | `open-delay` / `close-delay` / `visible-arrow` |
+| `teleported` / `align-center` | `append-to-body`（默认已挂 body）/ 无（全局已居中） |
+
+## 已知语义差异（写代码时主动处理）
+
+1. 根上的组件变量（`--el-input-*`、`--el-table-*`）EU 不读；EP 又在组件选择器上重声明——都以通用中性色为准。
+2. 下拉 / 日期面板 / popover 都挂 `.el-popper`：禁写 `.el-popper > *` 之类全局规则，会改坏内部滚动。
+3. EU 鼠标 `:focus` 沿用悬停色；本仓已回落静止态，新按钮类型同样处理。MessageBox 确认钮同时挂 `--default` 与 `--primary` 且打开即聚焦。
+4. EU `.el-pagination span:not([class*=suffix])` 等通配规则优先级高，覆写前先查命中规则。
+5. EU 选中 `value=""` 的选项；EP 视 `''` 为空并显示占位（「不限」显示差异，属框架语义，保留）。
+6. EU 原生滚动条占位（表格 gutter、`el-scrollbar__wrap` 负 margin），EP 为浮层滚动条，宽度差 ≈ 滚动条宽。
+
+## 验收（改外观必做）
+
+1. `pnpm --filter @ku-utils/kv2-admin audit:ep` 为 0（prebuild 自动跑；查不存在的类名 / 未声明变量 / EP 专有 prop）
+2. kv3↔kv2 同路由同状态对比**计算样式与几何**，明暗各一遍，含悬停、聚焦、展开的下拉 / 日期 / 对话框 / 确认框
+3. 新发现的映射或差异：补进本 rule 对照表 + `docs/best-practice/rule-element-ui-vs-plus/`；能脚本化的补进 `audit-ep-leftovers.mjs`

@@ -8,7 +8,7 @@ alwaysApply: false
 
 - 对话与 commit message 使用中文
 - 本目录是 Vue 2.7 + Vite + Element UI 管理端 starter，workspace 消费 `@ku-utils/utils`、`仓内 `@/lib/useMaxHeight` / `@/lib/useVersionUpdate``、`@ku-utils/v2-custom-columns`
-- **皮肤**：Element UI 样式只用 `scripts/generate-element-theme.mjs` 生成的 `assets/styles/generated/element-ui-ku.css`（chalk 写死色值 → `--el-*` / `--ku-*`，`prepare:assets` 生成），**禁止**引入 `element-ui/lib/theme-chalk/index.css`；颜色 / 弹层阴影漏了改生成器映射表，`element-ui-bridge.scss` 只写与 Element Plus 的结构差异（尺寸、间距、按钮态——鼠标 `:focus` 回落静止态，仅 `:focus-visible` 描边）；从 kv3 搬样式 / 模板必须改成 Element UI 的 DOM、类名与 prop（EP 的 `--el-border`、`.el-input__wrapper`、`show-after` / `teleported` 等在 EU 不存在，照抄即失效），`pnpm audit:ep`（prebuild 自动跑）兜底，并用 kv3↔kv2 同态计算样式对比验收；对齐目标是 kv3 **实际渲染值**（kv3 部分覆写被 EP 组件样式盖掉，以计算样式为准）
+- **皮肤**：Element UI 样式只用 `scripts/generate-element-theme.mjs` 生成的 `assets/styles/generated/element-ui-ku.css`（chalk 写死色值 → `--el-*` / `--ku-*`，`prepare:assets` 生成），**禁止**引入 `element-ui/lib/theme-chalk/index.css`；从 kv3 搬模板 / 样式、改 Element UI 外观一律按同目录 `element-ui-vs-plus.mdc`（落点分层、移植对照、语义差异、`audit:ep` + 计算样式验收）
 - **控制台零异常**：`predev`/`prebuild` 跑 `ensure-vue-demi-vue27`（Pinia 的 vue-demi 必须 isVue2）；跨文件 type alias props 用运行时 `PropType`，禁 `| null`（详见 `docs/best-practice/admin-parity/`）
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv2-admin/docs/admin-list-page-pattern.md`
@@ -76,3 +76,4 @@ src/modules/<域>/<子业务>/
 | `user-visible-copy` | 用户可见文案禁开发态泄漏 |
 | `task-ledger` | 精简台账 `docs/task/` |
 | `custom-columns-vue2-pattern` | 自定义列 |
+| `element-ui-vs-plus` | Element UI ↔ Element Plus 移植与视觉对齐 |

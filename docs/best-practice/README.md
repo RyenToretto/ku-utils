@@ -49,6 +49,7 @@
 | 12   | [rule-user-visible-copy](./rule-user-visible-copy/)             | rule       | 用户可见文案             | 88   |
 | 13   | [rule-task-ledger](./rule-task-ledger/)                         | rule       | 任务台账与 wait 队列     | 78   |
 | 13b  | [admin-parity](./admin-parity/)                                 | 约定       | kv3/kv2/kr/ka 管理端四生 | —    |
+| 13c  | [rule-element-ui-vs-plus](./rule-element-ui-vs-plus/)           | rule       | EU ↔ EP 移植与视觉对齐   | 89   |
 | 14   | [rule-fe-be-doc-sync](./rule-fe-be-doc-sync/)                   | rule+skill | 合同与上游增量同步       | 80   |
 | 15   | [rule-skill-hooks-composables](./rule-skill-hooks-composables/) | rule+skill | hooks 约定               | 85   |
 | 16   | [rule-skill-custom-columns](./rule-skill-custom-columns/)       | rule+skill | Vue3 自定义列            | 93   |

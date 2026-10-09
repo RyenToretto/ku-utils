@@ -13,6 +13,7 @@ alwaysApply: false
 - Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
 - **模块化最佳实践**（列表/选择器/Mock 等专题，避免巨石 context）：仓库根 `docs/best-practice/`（见 `_decomposition/README.md` 与模块地图 B 组）
 - **四生金标**：kv2-admin / kr-admin / ka-admin 以本端为准 1:1 对齐；改动须同步其余三端（见 `docs/best-practice/admin-parity/`）
+- **覆写 Element Plus 须确认生效**：EP 按需组件样式在应用样式之后加载，且组件变量（`--el-pagination-*`、`--el-table-*` 等）在组件选择器上重声明，同优先级覆写会被静默盖掉——以浏览器计算样式验收，盖不住的要么提优先级、要么删掉，勿留死代码；同步到 kv2 时按 `apps/kv2-admin/.cursor/rules/element-ui-vs-plus.mdc` 转换 DOM / 变量 / prop
 
 ## 目录骨架
 

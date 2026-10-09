@@ -76,5 +76,6 @@ pnpm release   # 本地紧急发版
 | 前后端增量 | `docs/best-practice/rule-fe-be-doc-sync` |
 | 自定义列 | `docs/best-practice/rule-skill-custom-columns` |
 | 皮肤 | `docs/best-practice/skill-theme-skin` |
+| Element UI ↔ Element Plus | `docs/best-practice/rule-element-ui-vs-plus` |
 
 kv3-admin / kv2-admin / kr-admin / ka-admin 列表约定分别以各自 `apps/*/.cursor/rules/project-context.mdc` 为运行摘要；四生同步见 `docs/best-practice/admin-parity/`（任一端改动须同步其余三端），细则对齐上表模块。开发端口：kv3=`3111`，kv2=`3222`，kr=`3333`，ka=`3444`（`pnpm dev:admin` / `dev:admin:v2` / `dev:admin:react` / `dev:admin:angular`）。
