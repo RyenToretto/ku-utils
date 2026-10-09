@@ -1,17 +1,29 @@
 ---
 description: Angular 自定义列模式约束（@ku-utils/a-custom-columns）
-globs: apps/ka-admin/**/*.ts
+globs:
+  - '**/*-columns*.ts'
+  - '**/*-list.ts'
 alwaysApply: false
 ---
 
 # 自定义列（Angular）
 
-- 字段初始化处 `createSchemaColumnConfig({ columnSchemas, storageKey, schemaVersion, messages })`（纯构造，无需注入上下文）
-- 宿主元素挂 `[kuSchemaColumnConfig]="config"`；其子树内的 `ku-do-table-header`（`ka-table-wrap` 的 `[enableDoHeader]="true"` + `[disabledColumnConfig]="false"`）、`ku-schema-cell`、`ku-schema-header` 自动取用
-- nz-table 模板驱动：`thead` 遍历 `config.headerRows()`（colspan / rowspan），`tbody` 遍历 `config.visibleLeafSchemas()`；列宽交给 `injectFlexColumns(signal)` → `[nzWidthConfig]`
-- 单元格 / 表头覆盖：`<ng-template kuSchemaCellDef="prop" let-row="row" let-text="text">`、`<ng-template kuSchemaHeaderDef="prop" let-schema>`；模板写在 `[kuSchemaColumnConfig]` 宿主的内容里
+使用 `@ku-utils/a-custom-columns` 的 `createSchemaColumnConfig`（signals）+ `[kuSchemaColumnConfig]` 指令 + nz-table 模板驱动。
+
+## 接入要求
+
+1. 样式已在 `angular.json` `styles` 预载 `node_modules/@ku-utils/a-custom-columns/style.css`，组件内勿重复引入
+2. 复杂 schema 放入同模块 `_utils/*-schemas.ts`；叶子列 `prop` 全局稳定且唯一
+3. 字段初始化处 `createSchemaColumnConfig({ columnSchemas, storageKey, schemaVersion, messages })`（纯构造，无需注入上下文）；`storageKey` 唯一、`schemaVersion` 从 1 开始、`messages` 全部中文
+4. 宿主元素挂 `[kuSchemaColumnConfig]="config"`；其子树内的 `ku-do-table-header`（`ka-table-wrap` 的 `[enableDoHeader]="true"` + `[disabledColumnConfig]="false"`）、`ku-schema-cell`、`ku-schema-header` 自动取用
+5. nz-table 模板驱动：`thead` 遍历 `config.headerRows()`（colspan / rowspan），`tbody` 遍历 `config.visibleLeafSchemas()`；列宽交给 `injectFlexColumns(signal)` → `[nzWidthConfig]`
+6. 单元格 / 表头覆盖：`<ng-template kuSchemaCellDef="prop" let-row="row" let-text="text">`、`<ng-template kuSchemaHeaderDef="prop" let-schema>`；模板写在 `[kuSchemaColumnConfig]` 宿主的内容里
+
+## 约束
+
 - `schema.fixed` 只表示抽屉内不可取消勾选；钉列用 `zorroAttrs.nzLeft / nzRight`；省略提示用 `showOverflowTooltip` + `zorroAttrs.nzEllipsis`
 - 排序走受控 `[nzSortOrder]` + `(nzSortOrderChange)`，页面自己排序数据（不设 `nzSortFn`）
-- `storageKey` 全局唯一；破坏性 schema 变更递增 `schemaVersion`
-- 交互与 Vue / React 包 1:1（悬停列配置、抽屉分组/搜索/拖拽/存读本地）；改一侧须同步另三端
+- 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级
+- `storageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
+- 交互与 Vue 3 / Vue 2 / React 包 1:1（悬停列配置、抽屉分组/搜索/拖拽/存读本地）；改一端须同步另三端
 - 样板：`src/modules/_example/customColumns/_module/custom-columns-table.ts`（01–08 共用）

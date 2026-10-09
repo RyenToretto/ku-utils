@@ -4,32 +4,39 @@ globs:
 alwaysApply: false
 ---
 
-# DoCustomColumns v3（Vue 2.7）开发模式
+# DoCustomColumns（Vue 2.7）开发模式
 
-使用 `@ku-utils/v2-custom-columns` 的 `useSchemaColumnConfig` + schema + `v-for` 模式。
+`@ku-utils/v2-custom-columns` 是 **Options API mixin**：`mixins: [useSchemaColumnConfig]` + `data()` 声明 schema + 模板 `v-for="schema in visibleSchemas"`。包为纯 JS，无 composable、无 `SchemaColumn` 组件、无 `messages` 选项（弹窗文案包内中文）。
 
 ## 接入要求
 
-1. `apps/kv2-admin/src/main.ts` 只全局引入一次 `@ku-utils/v2-custom-columns/style`
-2. 复杂 schema 放入同模块 `*ColumnSchemas.ts`；叶子列 `prop` 全局稳定且唯一
-3. 页面调用 `useSchemaColumnConfig`，提供唯一 `storageKey`、从 1 开始的 `schemaVersion` 和完整中文 `CustomColumnMessages`
-4. `TableWrap` 启用 `enable-do-header`，并设置 `:disabled-column-config="false"`
-5. 表格放在独立 `XxxList.vue`；固定身份列和操作列写在 schema 循环外
-6. 必须把 `tableRenderKey` 绑定到 `el-table :key`
+1. `src/main.ts` 只全局引入一次 `@ku-utils/v2-custom-columns/style`；`DoTableHeader` 由 `TableWrap` 在 `enable-do-header` 时渲染，页面不再 import
+2. 复杂 schema 放入同模块 `_utils/*Schemas.ts`；`ColumnSchema` 类型为仓内声明（包不导出类型）；叶子列 `prop` 全局稳定且唯一
+3. 表格放在独立 `XxxList.vue`；`mixins: [useSchemaColumnConfig]`，`data()` 提供 `columnSchemas`、唯一 `schemaStorageKey`、从 1 开始的 `schemaVersion`
+4. 固定身份列和操作列写在 `v-for` 之外，并在 `alwaysVisibleColumns` 登记（弹窗固定区置顶展示）
+5. `TableWrap` 启用 `enable-do-header`，并设置 `:disabled-column-config="false"`
+6. 必须把 `tableRenderKey` 绑定到 `el-table :key`（Vue 2 复用 `el-table-column` 不会重排）
 
-```ts
-const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConfig({
-  columnSchemas: COLUMN_SCHEMAS,
-  storageKey: 'kv3-xxx-columns',
-  schemaVersion: 1,
-  messages: CUSTOM_COLUMN_MESSAGES
-})
+```js
+import { useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
+
+export default {
+  mixins: [useSchemaColumnConfig],
+  data() {
+    return {
+      columnSchemas: XXX_COLUMN_SCHEMAS,
+      schemaStorageKey: 'kv2-xxx-columns',
+      schemaVersion: 1,
+      alwaysVisibleColumns: [{ prop: 'id', label: 'ID' }],
+    };
+  },
+};
 ```
 
-## schema 约束
+## 约束
 
-- 数字列右对齐，并按金额、整数、比例语义格式化
-- 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级
-- `storageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
-- `CustomColumnMessages` 全部字段必须显式提供中文值
-- 嵌套表头优先使用包提供的 `SchemaColumn`；自定义 cell 使用独立 Vue 2.7 SFC
+- 数字列右对齐，并按金额、整数、比例语义格式化（`formatSchemaCell(row[schema.prop], schema)`）
+- 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级（存储 key 含 `_sv${schemaVersion}`，旧缓存自然失效）
+- `schemaStorageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
+- 嵌套表头：`visibleSchemas` 返回裁剪后的树，模板须递归渲染 `children`（自写局部递归列组件，包不提供）
+- 自定义 cell 使用独立 Vue 2.7 SFC；`ElementTableColumnAdapter` 只服务旧 `tableControl` 迁移，新页面禁用

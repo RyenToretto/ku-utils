@@ -58,13 +58,13 @@
 
 ## PARITY 模块清单
 
-| 模块                                     | kv3           | kv2      | kr      | ka                |
-| ---------------------------------------- | ------------- | -------- | ------- | ----------------- |
-| schoolResource + SchoolSelector Demo     | ✅            | ✅       | ✅      | ✅                |
-| clazzManage / clubActivity               | ✅            | ✅       | ✅      | ✅                |
-| simpleExample（含 batch-select）         | ✅            | ✅       | ✅      | ✅                |
-| nestMenus                                | ✅            | ✅       | ✅      | ✅                |
-| uiKit 全路径                             | ✅            | ✅       | ✅      | ✅                |
-| doFilterPanel 9 场景                     | ✅            | ✅       | ✅      | ✅                |
-| customColumns 01–08                      | ✅ composable | ✅ mixin | ✅ hook | ✅ signals + 指令 |
-| rules / skills / admin-list-page-pattern | ✅            | ✅       | ✅      | ✅                |
+| 模块                                     | kv3           | kv2                                 | kr      | ka                |
+| ---------------------------------------- | ------------- | ----------------------------------- | ------- | ----------------- |
+| schoolResource + SchoolSelector Demo     | ✅            | ✅                                  | ✅      | ✅                |
+| clazzManage / clubActivity               | ✅            | ✅                                  | ✅      | ✅                |
+| simpleExample（含 batch-select）         | ✅            | ✅                                  | ✅      | ✅                |
+| nestMenus                                | ✅            | ✅                                  | ✅      | ✅                |
+| uiKit 全路径                             | ✅            | ✅                                  | ✅      | ✅                |
+| doFilterPanel 9 场景                     | ✅            | ✅                                  | ✅      | ✅                |
+| customColumns 01–08                      | ✅ composable | ⚠️ mixin（02–08 暂复用基础 schema） | ✅ hook | ✅ signals + 指令 |
+| rules / skills / admin-list-page-pattern | ✅            | ✅                                  | ✅      | ✅                |

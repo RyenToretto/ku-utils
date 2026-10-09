@@ -39,7 +39,11 @@ export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
 - `isDefault`：无缓存时默认显示；`children`：嵌套表头
 - `fixed`：抽屉中不可取消勾选（不决定钉列）
 
-## Step 2：页面
+## Step 2：创建配置
+
+字段初始化处 `createSchemaColumnConfig`（纯构造，无需注入上下文），见下方类体 `config`；`messages` 传中文文案。
+
+## Step 3：模板组合
 
 ```ts
 @Component({
@@ -109,6 +113,7 @@ export class UserList {
     columnSchemas: USER_COLUMN_SCHEMAS,
     storageKey: 'admin_users_col',
     schemaVersion: 1,
+    messages: CUSTOM_COLUMN_MESSAGES,
   });
 }
 ```

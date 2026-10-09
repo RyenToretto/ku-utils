@@ -1,13 +1,38 @@
 ---
 description: React 自定义列模式约束（@ku-utils/r-custom-columns）
-globs: apps/kr-admin/**/*.{ts,tsx}
+globs:
+  - '**/*Columns*.tsx'
+  - '**/*List.tsx'
 alwaysApply: false
 ---
 
 # 自定义列（React）
 
-- 使用 `useSchemaColumnConfig` + `schemasToColumns` + `DoTableHeader`（内含配置抽屉，页面不再单独挂弹层）
-- `storageKey` 全局唯一；破坏性 schema 变更递增 `schemaVersion`
-- 用 `SchemaColumnConfigContext.Provider` 包裹 `TableWrap`（`enableDoHeader` + `disabledColumnConfig={false}`）与表格
-- 交互与 Vue 包 1:1（悬停列配置、抽屉分组/搜索/拖拽/存读本地）；改一侧须同步另一侧
+使用 `@ku-utils/r-custom-columns` 的 `useSchemaColumnConfig` + `schemasToColumns` + `DoTableHeader`（内含配置抽屉，页面不再单独挂弹层）。
+
+## 接入要求
+
+1. `src/main.tsx` 只全局引入一次 `@ku-utils/r-custom-columns/style.css`
+2. 复杂 schema 放入同模块 `_utils/*Schemas.ts`；叶子列 `prop` 全局稳定且唯一
+3. 页面调用 `useSchemaColumnConfig`，提供唯一 `storageKey`、从 1 开始的 `schemaVersion` 和完整中文 `messages`
+4. 用 `SchemaColumnConfigContext.Provider value={config}` 包裹 `TableWrap`（`enableDoHeader` + `disabledColumnConfig={false}`）与表格
+5. 表格放在独立 `XxxList.tsx`；固定身份列和操作列写在 `schemasToColumns` 结果之外
+6. antd `Table` 绑定 `key={config.tableRenderKey}`
+
+```tsx
+const config = useSchemaColumnConfig({
+  columnSchemas: COLUMN_SCHEMAS,
+  storageKey: 'kr-xxx-columns',
+  schemaVersion: 1,
+  messages: CUSTOM_COLUMN_MESSAGES,
+});
+```
+
+## 约束
+
+- 数字列右对齐，并按金额、整数、比例语义格式化（`schemasToColumns(..., { formatCell: config.formatSchemaCell })`）
+- 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级
+- `storageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
+- 自定义单元格 / 表头用 schema 的 `cellRender` / `renderHeader`；透传 antd 列属性用 `antdAttrs`
+- 交互与 Vue 3 / Vue 2 / Angular 包 1:1（悬停列配置、抽屉分组/搜索/拖拽/存读本地）；改一端须同步另三端
 - 禁止给 Vue 包加 React 双轨；新能力只进 `@ku-utils/r-custom-columns`

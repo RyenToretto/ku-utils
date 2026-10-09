@@ -49,7 +49,7 @@ export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
 - `isDefault`：无缓存时默认显示；`children`：嵌套表头子列
 - `fixed`：抽屉中不可取消勾选（不决定钉列；钉列用 `antdAttrs: { fixed: 'left' }`）
 
-## Step 2：页面调用 hook 并下发 Context
+## Step 2：页面调用 hook
 
 ```tsx
 import {
@@ -62,8 +62,13 @@ const config = useSchemaColumnConfig({
   columnSchemas: USER_COLUMN_SCHEMAS,
   storageKey: 'admin_users_col',
   schemaVersion: 1,
+  messages: CUSTOM_COLUMN_MESSAGES, // 中文文案，覆盖 DEFAULT_CUSTOM_COLUMN_MESSAGES
 });
+```
 
+## Step 3：下发 Context 并组合表格
+
+```tsx
 const columns = [
   { title: 'ID', dataIndex: 'id', width: 80, fixed: 'left' },
   ...schemasToColumns(config.visibleSchemas, { formatCell: config.formatSchemaCell }),

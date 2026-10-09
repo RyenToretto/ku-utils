@@ -67,6 +67,7 @@ const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConf
   columnSchemas: USER_COLUMN_SCHEMAS,
   storageKey: 'admin_users_col',
   schemaVersion: 1,
+  messages: CUSTOM_COLUMN_MESSAGES, // 中文文案，全部字段显式提供
 });
 ```
 

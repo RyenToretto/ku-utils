@@ -36,7 +36,7 @@ src/modules/<域>/<子业务>/
 6. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查；禁 `watch(listFilters)`；分组筛选 / 非表单节点用 `disableFold`
 7. **禁止页面态 `PageHeader` / 页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回；组件可保留但业务页零引用
 8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`_page-utils.scss` 全局 `.el-dialog__wrapper` flex 居中，勿再传 `top`）
-9. 自定义列：`@ku-utils/v2-custom-columns` 的 `mixins: [useSchemaColumnConfig]` + `schemaStorageKey`（Vue 2 无 composable，细则见 `custom-columns-vue2-pattern`）
+9. 自定义列：`@ku-utils/v2-custom-columns` 的 `mixins: [useSchemaColumnConfig]` + `schemaStorageKey`（Vue 2 无 composable，细则见 `custom-columns-vue2-pattern`）；Demo 02–08 暂复用基础 schema，嵌套表头 / 插槽以 kv3 Demo 为范本
 10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
 
 全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
