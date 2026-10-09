@@ -29,7 +29,7 @@
 
 ### 加载边界
 
-- Mock **只**由构建插件 / 中间件加载聚合入口；**业务 / `$MAPS` / 页面禁止** import `_mock` 当字典
+- Mock **只**由构建插件 / 中间件加载聚合入口；**业务 / 全局字典（Vue `$MAPS`、React / Angular `@/maps`）/ 页面禁止** import `_mock` 当字典
 - `/api/*` 未命中须回 JSON 信封，**禁止** `next()` 回落 SPA HTML
 
 ### 信封（按仓填写）

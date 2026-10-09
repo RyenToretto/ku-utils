@@ -1,5 +1,5 @@
 ---
-description: kr-admin API 合同 — requestXxx、信封 code:0/data、$MAPS、禁兼容
+description: kr-admin API 合同 — requestXxx、信封 code:0/data、maps、禁兼容
 globs:
   - '**/_api/**'
   - '**/_map/**'
@@ -28,17 +28,18 @@ alwaysApply: false
 
 - 业务唯一实现在 `modules/.../_api`；页面只调 **`requestXxx`**
 - 禁页面散落 URL / 拼 wire payload；禁 `api/common` 对业务 `_api` 二次 re-export 当共用出口
+- 取消请求传 `AbortSignal`（`AbortController.signal`）；被中止的请求不弹错误提示
 - GET 数组交给序列化；禁页面 `.join(',')`
 
-## `$MAPS` / 字典
+## `maps` / 字典
 
-- 不走接口的稳定码表 → `_map` 聚合进 `$MAPS` 再引用
+- 不走接口的稳定码表 → `_map` 聚合进 `@/maps` 再引用
 - 有 enums/options 专用接口 → 必须 `_api` 请求；空/失败禁伪造下拉
 - 禁页面 magic string 作主真源
 
 ## 响应示例边界
 
-文档 JSON「响应示例」**只读形状**（键名、分页、信封），**不得**把示例枚举项/label 抄进 `$MAPS` / 页面 options。  
+文档 JSON「响应示例」**只读形状**（键名、分页、信封），**不得**把示例枚举项/label 抄进 `maps` / 页面 options。  
 真源优先级：已确认合同 → 后端已落地 → **运行时字典接口** → Mock → 文档示例（只读形状）。
 
 ## Agent 自检（写选项前）

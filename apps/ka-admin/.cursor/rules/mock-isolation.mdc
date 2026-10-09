@@ -23,7 +23,7 @@ alwaysApply: false
 | ------ | ------------------------------- |
 | 成功码 | `code === 0`（number）          |
 | 载荷   | `data`                          |
-| 工具   | `ok()` / `pageOk()`（`@/mock/utils`） |
+| 工具   | `ok()` / `pageOk()` / `defaultSuccess`（`@/mock/utils`） |
 
 Mock、`_api`、拦截器必须同形；**禁止**双码兼容（如同时认 `0` 与 `'0000'`）或改载荷字段名。
 

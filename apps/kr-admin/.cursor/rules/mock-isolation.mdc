@@ -13,7 +13,7 @@ alwaysApply: false
 
 ## 加载边界
 
-- Mock **只**由 Vite 插件（`dspMockPlugin` + `@example-mocks`）聚合加载；**业务 / `$MAPS` / 页面禁止** import `_mock` 当字典或种子
+- Mock **只**由 Vite 插件（`dspMockPlugin` + `@example-mocks`）聚合加载；**业务 / `maps` / 页面禁止** import `_mock` 当字典或种子
 - `/api/*` 未命中须回 JSON 信封，**禁止** `next()` 回落 SPA HTML
 
 ## 本仓信封（冻结）

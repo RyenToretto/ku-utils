@@ -32,7 +32,9 @@
 
 - 业务唯一实现在 `modules/.../_api`；页面只调 **`requestXxx`**；禁页面散落 URL / 拼 wire payload
 - 禁 `api/common` 对业务 `_api` 二次 re-export 当「共用出口」
+- 取消请求传 `AbortSignal`（`AbortController.signal`）；拦截器识别取消（axios `isCancel` / Angular 中止）后直接 reject，不弹错误提示
 - GET 数组：交给序列化（如 qs `arrayFormat: 'comma'`）；禁页面 `.join(',')`
+- 全局字典入口按栈命名：Vue `$MAPS`，React / Angular `import maps from '@/maps'`；下文 `$MAPS` 泛指该入口
 
 ### 合同冻结与禁兼容
 

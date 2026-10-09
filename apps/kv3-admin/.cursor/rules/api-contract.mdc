@@ -28,6 +28,7 @@ alwaysApply: false
 
 - 业务唯一实现在 `modules/.../_api`；页面只调 **`requestXxx`**
 - 禁页面散落 URL / 拼 wire payload；禁 `api/common` 对业务 `_api` 二次 re-export 当共用出口
+- 取消请求传 `AbortSignal`（`AbortController.signal`）；被中止的请求不弹错误提示
 - GET 数组交给序列化；禁页面 `.join(',')`
 
 ## `$MAPS` / 字典
