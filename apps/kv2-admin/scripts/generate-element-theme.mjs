@@ -173,8 +173,8 @@ const KEEP_SELECTOR =
 
 /**
  * 按选择器定点覆写，先于色阶与通用表命中（首条匹配生效）。
- * Element Plus 的组件级变量（--el-input-bg-color 等）在组件选择器上重新声明，默认值就是通用中性色，
- * 所以通用表已与 kv3 一致；这里只放 chalk 与 Element Plus 取值不同、或通用表表达不了的语义。
+ * Element Plus 的组件级变量（--el-input-bg-color 等）在组件选择器上重新声明，默认值多为通用中性色；
+ * 这里只放 chalk 与 Element Plus 取值不同、或通用表表达不了的语义（如随上下文变化的 --el-fill-color-blank）。
  */
 const SELECTOR_OVERRIDES = [
   // 分页按钮底：chalk 是 info-light-9，Element Plus 是 --el-pagination-button-bg-color: var(--el-fill-color)
@@ -185,6 +185,13 @@ const SELECTOR_OVERRIDES = [
       /el-switch__core:after|el-radio__inner::after|el-checkbox__inner::after|is-indeterminate \.el-checkbox__inner::before|^\.el-slider__button$/,
     literal: '#fff',
     value: '#fff',
+  },
+  // 输入类控件底：Element Plus 走 --el-fill-color-blank（浅色弹层里改为弹层底，见 element-ui-bridge.scss）
+  {
+    selector: /el-input__inner|el-textarea__inner|el-checkbox__inner|el-radio__inner/,
+    prop: /^background(-color)?$/,
+    literal: '#fff',
+    value: 'var(--el-fill-color-blank)',
   },
   // 深色 tooltip：前景用反色文字
   { selector: /is-dark/, prop: /^color$/, literal: '#fff', value: 'var(--ku-text-inverse)' },

@@ -4,7 +4,8 @@
  * 1. `.el-*` 类名在 Element UI chalk 里不存在（如 `.el-input__wrapper` / `.el-overlay-dialog`）；
  * 2. `var(--el-*)` 既不在 skin / 生成主题 / 本仓样式里声明（如 EP 才有的 `--el-border`）；
  * 3. 模板里的 EP 专有 prop（如 `show-after` / `teleported`），EU 静默忽略；
- * 4. 同名组件在 EP / EU 的 prop 与插槽差异（如 EP `el-drawer` 的 `close-on-click-modal` / `#header` / `#footer`）。
+ * 4. 同名组件在 EP / EU 的 prop 与插槽差异（如 EP `el-drawer` 的 `close-on-click-modal` / `#header` / `#footer`）；
+ * 5. 用到按 EU 40px 输入高推导尺寸的复合组件，但 `element-ui-bridge.scss` 没有对应桥接段。
  * 有问题即退出 1；`prepare:assets` 之后、提交前跑。
  */
 
@@ -56,6 +57,19 @@ const TAG_DIFFS = {
   },
   'el-dialog': { props: {}, slots: { header: '#title' } },
 }
+/**
+ * EU 按 $--input-height（40px）推导容器行高 / 按钮宽 / 内距的复合组件 → bridge 须有的选择器。
+ * bridge 把 .el-input__inner 压到 32px 后，这些组件不跟着桥接就会出现按钮 / 图标越界、容器比输入框高。
+ */
+const SIZE_DERIVED = {
+  'el-input-number': '.el-input-number',
+  'el-cascader': '.el-cascader',
+  'el-color-picker': '.el-color-picker',
+  'el-date-picker': '.el-date-editor',
+  'el-time-picker': '.el-date-editor',
+  'el-time-select': '.el-date-editor',
+}
+const bridge = readFileSync(resolve(APP_ROOT, 'src/assets/styles/modules/element-ui-bridge.scss'), 'utf-8')
 
 const chalkClasses = new Set(chalk.match(/\.el-[\w-]+/g)?.map((c) => c.slice(1)))
 const declared = new Set(
@@ -89,6 +103,11 @@ for (const [file, text] of sources) {
         for (const [slot, eu] of Object.entries(slots)) {
           if (new RegExp(`<template\\s+(#|v-slot:)${slot}\\b`).test(block)) problems.push([file, `${tag} 的 EP 插槽「#${slot}」→ ${eu}`])
         }
+      }
+    }
+    for (const [tag, selector] of Object.entries(SIZE_DERIVED)) {
+      if (new RegExp(`<${tag}\\b`).test(template) && !bridge.includes(selector)) {
+        problems.push([file, `${tag} 尺寸按 EU 40px 推导，element-ui-bridge.scss 缺 ${selector} 桥接段`])
       }
     }
   }

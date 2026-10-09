@@ -401,6 +401,11 @@
   border-color: var(--el-color-primary-light-5, var(--el-color-primary-light-3)) !important;
 }
 
+/* EP 浅色弹层（.el-popper.is-light）把 --el-fill-color-blank 改为弹层底：弹层内输入框 / 按钮与弹层同底 */
+.el-popper:not(.is-dark) {
+  --el-fill-color-blank: var(--el-bg-color-overlay);
+}
+
 /* —— Input / Select 尺寸 —— */
 .el-input__inner {
   height: var(--el-component-size, 32px);
@@ -468,6 +473,58 @@
 
 .el-select .el-input .el-select__caret {
   width: 14px;
+}
+
+/* —— Input number：EU 按 40px 推导容器行高 / 按钮宽 / 文字内距，跟随控件高度（EP 按钮 32×30、文字距外缘 42） —— */
+.el-input-number {
+  line-height: calc(var(--el-component-size, 32px) - 2px);
+  vertical-align: top;
+}
+
+.el-input-number__increase,
+.el-input-number__decrease {
+  width: var(--el-component-size, 32px);
+}
+
+.el-input-number__increase {
+  border-radius: 0 var(--el-border-radius-base, 8px) var(--el-border-radius-base, 8px) 0;
+}
+
+.el-input-number__decrease {
+  border-radius: var(--el-border-radius-base, 8px) 0 0 var(--el-border-radius-base, 8px);
+}
+
+.el-input-number .el-input__inner {
+  padding-right: calc(var(--el-component-size, 32px) + 9px);
+  padding-left: calc(var(--el-component-size, 32px) + 9px);
+}
+
+.el-input-number.is-without-controls .el-input__inner {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.el-input-number.is-controls-right .el-input__inner {
+  padding-left: 10px;
+}
+
+.el-input-number.is-controls-right .el-input-number__increase,
+.el-input-number.is-controls-right .el-input-number__decrease {
+  line-height: calc((var(--el-component-size, 32px) - 2px) / 2);
+}
+
+.el-input-number--small {
+  line-height: 22px;
+
+  .el-input-number__increase,
+  .el-input-number__decrease {
+    width: 24px;
+  }
+
+  .el-input__inner {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
 }
 
 /* —— Date range：EP 结构（输入透明底 30px 高、分隔符 flex 居中、图标 14px） —— */

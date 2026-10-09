@@ -37,20 +37,25 @@ Element UI 对不认识的类名、`--el-*` 变量、prop **静默忽略**：照
 | `el-dialog` 的 `#header` | `#title` |
 | `el-table-column` 的 `#header` / `render-header` | `#header`（`render-header` 已废弃，控制台告警） |
 | `el-sub-menu` / `ElMessage({ grouping })` | `el-submenu` / 无 `grouping` 选项 |
+| `el-popover` 的 `ref.hide()` / `:disabled` / `@before-enter` | `ref.doClose()` / `@show` 里判断后 `doClose()`（`disabled` 仍静默翻 `showPopper`，解禁后自动弹出）/ `@show` |
 
 <!-- bp-lint-ignore-end -->
 
 ## 已知语义差异（写代码时主动处理）
 
-1. 根上的组件变量（`--el-input-*`、`--el-table-*`）EU 不读；EP 又在组件选择器上重声明——都以通用中性色为准。
+1. 根上的组件变量（`--el-input-*`、`--el-table-*`）EU 不读；EP 又在组件选择器上重声明——都以通用中性色为准（例外见第 10 条）。
 2. 下拉 / 日期面板 / popover 都挂 `.el-popper`：禁写 `.el-popper > *` 之类全局规则，会改坏内部滚动。
 3. EU 鼠标 `:focus` 沿用悬停色；本仓已回落静止态、仅键盘 `:focus-visible` 描边，新按钮类型同样处理。MessageBox 确认钮同时挂 `--default` 与 `--primary` 且打开即聚焦。
 4. EU `.el-pagination span:not([class*=suffix])` 等通配规则优先级高，覆写前先查命中规则。
 5. EU 选中 `value=""` 的选项；EP 视 `''` 为空并显示占位（「不限」显示差异，属框架语义，保留）。
 6. EU 原生滚动条占位（表格 gutter、`el-scrollbar__wrap` 负 margin），EP 为浮层滚动条，宽度差 ≈ 滚动条宽。
+7. Vue 2 组件监听只收 `$emit`：`el-input` / `el-input-number` / `el-form` 不抛 `keyup` / `keydown` / `submit`，写在组件上静默失效（根 ESLint 走 vue3 规则禁 `.native`）。监听挂原生包裹元素：输入框外包 `<div @keydown.enter>`（数字框值在 change 后才提交，用 `@keyup.enter`），表单外层原生节点挂 `@submit.prevent` 拦单字段回车刷新。
+8. 模板事件不写 `@ok="fn.bind(null, row)"`：Vue 2 编译成返回绑定函数、不调用；单参事件写 `@ok="fn(row, $event)"`。
+9. EU 复合组件按 `$--input-height`（40px）推导尺寸：`el-input-number` 容器行高 / 按钮宽 / 文字内距，`el-cascader`、`el-color-picker`、`el-date-editor` 同理。bridge 把 `.el-input__inner` 压到 32px 后，用到这些组件就要在 bridge 补对应段（否则按钮越界、容器比输入框高）；`audit:ep` 按模板用到即校验。
+10. EP 浅色弹层（`.el-popper.is-light`）把 `--el-fill-color-blank` 改为弹层底，弹层内输入框 / 按钮与弹层同底：生成器把输入类白底映射到 `--el-fill-color-blank`，bridge 在 `.el-popper:not(.is-dark)` 上声明。
 
 ## 验收（改外观必做）
 
-1. `pnpm --filter @ku-utils/kv2-admin audit:ep` 为 0（prebuild 自动跑；查不存在的类名 / 未声明变量 / EP 专有 prop / 抽屉与对话框的 EP prop、插槽）
-2. kv3↔kv2 同路由同状态对比**计算样式与几何**，明暗各一遍，含悬停、聚焦、展开的下拉 / 日期 / 对话框 / 确认框
+1. `pnpm --filter @ku-utils/kv2-admin audit:ep` 为 0（prebuild 自动跑；查不存在的类名 / 未声明变量 / EP 专有 prop / 抽屉与对话框的 EP prop、插槽 / 尺寸派生组件缺桥接）
+2. kv3↔kv2 同路由同状态对比**计算样式与几何**，明暗各一遍，含悬停、聚焦、展开的下拉 / 日期 / 对话框 / 确认框 / 行内编辑弹层；输入类控件里的按钮、图标不得超出输入框，容器与输入框同高
 3. 新发现的映射或差异：补进本 rule 对照表 + `docs/best-practice/rule-element-ui-vs-plus/`；能脚本化的补进 `audit-ep-leftovers.mjs`
