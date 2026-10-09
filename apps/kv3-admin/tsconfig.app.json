@@ -1,7 +1,6 @@
 {
   "extends": "@ku-utils/tsconfig/vue3.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       // 仅 Demo 开关用（固定 4 个）；新增业务域走 @/*，勿往这里加 paths

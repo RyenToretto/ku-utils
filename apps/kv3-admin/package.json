@@ -38,6 +38,7 @@
     "@types/qs": "^6.9.18",
     "@vitejs/plugin-vue": "^6.0.7",
     "sass": "^1.100.0",
+    "typescript": "^5.9.3",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-element-plus": "^0.11.2",
     "unplugin-vue-components": "^32.1.0",

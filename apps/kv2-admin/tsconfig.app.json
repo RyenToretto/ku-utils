@@ -1,7 +1,6 @@
 {
   "extends": "@ku-utils/tsconfig/vue2.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@example-routes": ["./src/stubs/emptyExampleRoutes.ts"],

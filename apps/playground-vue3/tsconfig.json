@@ -1,7 +1,6 @@
 {
   "extends": "@ku-utils/tsconfig/vue3.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

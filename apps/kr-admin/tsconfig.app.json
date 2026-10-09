@@ -1,7 +1,6 @@
 {
   "extends": "@ku-utils/tsconfig/react.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@example-routes": ["./src/modules/_example/_router/index.tsx"],
