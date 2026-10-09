@@ -4,19 +4,23 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Vue 2 自定义列组件库 — schema + v-for 驱动，支持多套配置持久化、拖拽排序、分组导航",
+  "description": "Vue 2 自定义列组件库 — schema + v-for 驱动，基于 Element UI，支持多套配置持久化、拖拽排序、分组导航、嵌套表头",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./style": "./dist/style.css"
+    "./style": "./dist/style.css",
+    "./style.css": "./dist/style.css"
   },
   "files": [
     "dist",
+    "types",
     "rules",
     "skills",
     "scripts"

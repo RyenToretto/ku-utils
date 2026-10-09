@@ -116,7 +116,7 @@ export interface SchemaColumnConfigOptions {
   defaultConfigLabel?: string;
   /** 未命名配置名称，默认「未命名配置」 */
   noNameLabel?: string;
-  /** 组件内置 UI 文案；未传时默认英文 */
+  /** 组件内置 UI 文案；未传字段回落 `DEFAULT_CUSTOM_COLUMN_MESSAGES`（中文） */
   messages?: Partial<CustomColumnMessages>;
   /** 弹窗取消/关闭回调 */
   onDialogClose?: (() => void) | null;

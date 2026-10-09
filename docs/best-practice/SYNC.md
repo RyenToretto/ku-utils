@@ -8,7 +8,7 @@
 
 ## 已落地（必须双向同步）
 
-| 本仓真源（`.cursor`）                                            | best-practice 模块                                                                                                                                  | 备注                                         |
+| 本仓真源（`.cursor` / 随包分发）                                 | best-practice 模块                                                                                                                                  | 备注                                         |
 | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | `.cursor/rules/best-practice-sync.mdc`                           | [SYNC.md](./SYNC.md) + [README.md](./README.md)                                                                                                     | 同步机制                                     |
 | `.cursor/rules/project-context.mdc`                              | [rule-project-context](./rule-project-context/)                                                                                                     | 瘦身壳 + 模块化索引                          |
@@ -65,6 +65,10 @@
 | `apps/kv3-admin/.cursor/rules/user-visible-copy.mdc`             | [rule-user-visible-copy](./rule-user-visible-copy/)                                                                                                 |                                              |
 | `apps/kv3-admin/.cursor/rules/api-contract.mdc`                  | [rule-api-contract](./rule-api-contract/)                                                                                                           |                                              |
 | `apps/kv3-admin/.cursor/rules/task-ledger.mdc`                   | [rule-task-ledger](./rule-task-ledger/)                                                                                                             | 精简台账                                     |
+| `packages/custom-columns/rules/custom-columns-vue3-pattern.mdc`  | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                                                           | 随包分发（postinstall）                      |
+| `packages/custom-columns/skills/custom-columns/SKILL.md`         | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                                                           | 随包分发（postinstall）                      |
+| `packages/v2-custom-columns/rules/v2-custom-columns-pattern.mdc` | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                                                           | 随包分发（postinstall）                      |
+| `packages/v2-custom-columns/skills/v2-custom-columns/SKILL.md`   | [rule-skill-custom-columns](./rule-skill-custom-columns/)                                                                                           | 随包分发（postinstall）                      |
 
 ## 参考模块（本仓尚无独立 rule/skill）
 
@@ -93,7 +97,7 @@
 `scripts/check-bp-sync.mjs` 以本文件「已落地」表为唯一输入，检查三层：
 
 1. **登记**：未登记 / 已失效 / 模块缺 README / 模块地图缺登记
-2. **内容**（`scripts/bp-content-lint.mjs`）：反引号路径存在、globs 命中且 app 规则用相对路径、app 规则无别栈专有写法、四端同名 rule/skill 二级标题一致
+2. **内容**（`scripts/bp-content-lint.mjs`）：反引号路径存在、globs 命中且 app 规则用相对路径、app 规则与随包副本无别栈专有写法、四端同名 rule/skill（含随包副本）二级标题一致
 3. **配对**：改真源须同时改模块，改已落地模块须同时改任一真源；对侧已核对一致时用 trailer `BP-Sync-Reviewed: <对侧路径>` 豁免
 
 | 时机           | 入口                                                           | 不一致时                          |
@@ -107,6 +111,6 @@
 
 ## Agent 操作清单
 
-改本仓 `.cursor/rules|skills` → 更新对应 BP 模块。  
+改本仓 `.cursor/rules|skills` 或随包分发的 `packages/<包>/rules|skills` → 更新对应 BP 模块。  
 改已落地 BP 模块 → 回写 `.cursor`。  
 新增参考模块并在业务仓落地 `.cursor` 后 → 升格 SYNC 上表。

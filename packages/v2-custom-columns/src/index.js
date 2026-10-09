@@ -4,7 +4,7 @@
  * Vue 2 自定义列组件库 — schema + v-for 驱动
  *
  * 使用方式：
- *   import { useSchemaColumnConfig, DoTableHeader } from '@ku-utils/v2-custom-columns'
+ *   import { useSchemaColumnConfig, DoTableHeader, SchemaColumn } from '@ku-utils/v2-custom-columns'
  *   import '@ku-utils/v2-custom-columns/style'
  */
 
@@ -13,11 +13,12 @@ export { default as ElementTableColumnAdapter } from './mixins/ElementTableColum
 export { default as DoConfigColumnDialog } from './components/DoConfigColumnDialog.vue';
 export { default as DoReadColumnConfig } from './components/DoReadColumnConfig.vue';
 export { default as DoTableHeader } from './components/DoTableHeader.vue';
+export { default as SchemaColumn } from './components/SchemaColumn.vue';
 export { transferTF } from '@ku-utils/utils';
 
 /**
  * Vue 插件安装函数
- * 全局注册所有组件：DoTableHeader、DoConfigColumnDialog、DoReadColumnConfig
+ * 全局注册所有组件：DoTableHeader、DoConfigColumnDialog、DoReadColumnConfig、SchemaColumn
  *
  * 用法：
  *   import Vue from 'vue'
@@ -28,8 +29,9 @@ export { transferTF } from '@ku-utils/utils';
 import DoConfigColumnDialog from './components/DoConfigColumnDialog.vue';
 import DoReadColumnConfig from './components/DoReadColumnConfig.vue';
 import DoTableHeader from './components/DoTableHeader.vue';
+import SchemaColumn from './components/SchemaColumn.vue';
 
-const components = [DoTableHeader, DoConfigColumnDialog, DoReadColumnConfig];
+const components = [DoTableHeader, DoConfigColumnDialog, DoReadColumnConfig, SchemaColumn];
 
 function install(Vue) {
   components.forEach((component) => {

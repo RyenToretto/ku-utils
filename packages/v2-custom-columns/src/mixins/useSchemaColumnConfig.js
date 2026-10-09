@@ -30,7 +30,7 @@
  *   无需手动清理旧数据（旧 key 自然失效）。
  */
 
-import { transferTF } from '@ku-utils/utils';
+import { formatThousands, transferTF } from '@ku-utils/utils';
 
 export default {
   provide() {
@@ -51,7 +51,7 @@ export default {
 
       /**
        * schemaStorageKey: localStorage 基础 key，消费方按需覆盖
-       * 最终 key = `${schemaStorageKey}_${routePath}_v${schemaVersion}`
+       * 最终 key = `${schemaStorageKey}_${routePath}_${$VERSION_INFO.version}_sv${schemaVersion}`
        */
       schemaStorageKey: 'schema_col_config',
 
@@ -525,33 +525,31 @@ export default {
     },
 
     /**
-     * 格式化 schema 列的单元格值（替代模板中 filter 调用）
+     * 按 renderType 内置格式化单元格（与 @ku-utils/custom-columns 逐分支一致）
      */
     formatSchemaCell(val, schema) {
       if (val === null || val === undefined || val === '') return '-';
-
-      const filters = this.$options.filters || {};
-
-      const applyFilter = (filterFn, ...args) => {
-        if (typeof filterFn !== 'function') return val;
-        const result = filterFn(val, ...args);
-        return result === null || result === undefined || result === '' ? '-' : result;
-      };
+      const num = Number(val);
 
       switch (schema.renderType) {
-        case 'float':
-        case 'roi-link': {
+        case 'float': {
           const [digits = 2, noZero = true] = schema.renderArgs || [];
-          return applyFilter(filters.float, digits, noZero);
+          if (Number.isNaN(num)) return String(val);
+          if (noZero && num === 0) return '-';
+          return formatThousands(num.toFixed(digits)) || String(val);
         }
         case 'percent': {
           const [digits = 1, noZero = true] = schema.renderArgs || [];
-          return applyFilter(filters.percent, digits, noZero);
+          if (Number.isNaN(num)) return String(val);
+          if (noZero && num === 0) return '-';
+          return `${(num * 100).toFixed(digits)}%`;
         }
-        case 'integer':
-          return applyFilter(filters.integer);
+        case 'integer': {
+          if (Number.isNaN(num)) return String(val);
+          return formatThousands(String(Math.round(num))) || String(val);
+        }
         default:
-          return val === '' ? '-' : val;
+          return String(val);
       }
     },
 

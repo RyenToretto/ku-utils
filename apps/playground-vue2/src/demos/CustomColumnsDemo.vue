@@ -47,31 +47,11 @@
 </template>
 
 <script>
-import { formatPercent, formatThousands } from '@ku-utils/utils';
 import { DoTableHeader, useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
 
 export default {
   name: 'CustomColumnsDemo',
   components: { DoTableHeader },
-  filters: {
-    integer(val) {
-      const n = Number(val);
-      if (Number.isNaN(n)) return val;
-      return formatThousands(String(Math.round(n))) || String(val);
-    },
-    float(val, digits = 2, noZero = true) {
-      const n = Number(val);
-      if (Number.isNaN(n)) return val;
-      if (noZero && n === 0) return '-';
-      return formatThousands(n.toFixed(digits)) || String(val);
-    },
-    percent(val, digits = 1, noZero = true) {
-      const n = Number(val);
-      if (Number.isNaN(n)) return val;
-      if (noZero && n === 0) return '-';
-      return formatPercent(n, digits);
-    },
-  },
   mixins: [useSchemaColumnConfig],
   data() {
     return {

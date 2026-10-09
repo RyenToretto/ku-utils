@@ -9,14 +9,12 @@ description: Vue3 自定义列接入指南（@ku-utils/custom-columns）。当�
 
 ## Step 0：确认依赖
 
-消费项目已安装 `@ku-utils/custom-columns`，并在入口引入样式：
+消费项目已安装 `@ku-utils/custom-columns`（peer：`vue` ^3.4、`element-plus` >= 2.3、`@element-plus/icons-vue` >= 2），并在入口引入样式：
 
 ```ts
 // main.ts
 import '@ku-utils/custom-columns/style';
 ```
-
-`DoTableHeader` 通常由项目的 `TableWrap` 容器在 `enable-do-header` 时渲染，无需全局注册。
 
 ## Step 1：定义列 schema
 
@@ -54,6 +52,7 @@ export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
 - `renderType` / `renderArgs`：内置格式化（text / integer / float / percent）
 - `cellComponent`：自定义单元格组件（props: row/column/index/schema）
 - `renderHeader` / `headerTooltip`：自定义列头
+- `elAttrs`：透传 `el-table-column` 原生属性
 - `isDefault`：无缓存时默认显示
 - `children`：嵌套表头子列
 - `fixed`：固定列（弹窗中不可取消勾选）
@@ -67,32 +66,34 @@ const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConf
   columnSchemas: USER_COLUMN_SCHEMAS,
   storageKey: 'admin_users_col',
   schemaVersion: 1,
+  messages: CUSTOM_COLUMN_MESSAGES, // 中文文案，全部字段显式提供
 });
 ```
 
 ## Step 3：模板组合
 
+`DoTableHeader` 须放在调用 composable 的组件内部（它 inject 列配置）；项目有 `TableWrap` 时用 `enable-do-header` 渲染，否则直接放表格上方：
+
 ```vue
-<TableWrap enable-do-header :disabled-column-config="false">
-  <el-table :key="tableRenderKey" :data="list" border>
-    <el-table-column prop="id" label="ID" fixed="left" width="80" />
-    <el-table-column
-      v-for="schema in visibleSchemas"
-      :key="schema.prop"
-      :prop="schema.prop"
-      :label="schema.label"
-      :min-width="schema.minWidth"
-      :align="schema.align || 'left'"
-      v-bind="schema.elAttrs || {}"
-    >
-      <template #default="{ row, column, $index }">
-        <component :is="schema.cellComponent" v-if="schema.cellComponent"
-          :row="row" :column="column" :index="$index" :schema="schema" />
-        <span v-else>{{ formatSchemaCell(row[column.property], schema) }}</span>
-      </template>
-    </el-table-column>
-  </el-table>
-</TableWrap>
+<DoTableHeader :disabled-column-config="false" />
+<el-table :key="tableRenderKey" :data="list" border>
+  <el-table-column prop="id" label="ID" fixed="left" width="80" />
+  <el-table-column
+    v-for="schema in visibleSchemas"
+    :key="schema.prop"
+    :prop="schema.prop"
+    :label="schema.label"
+    :min-width="schema.minWidth"
+    :align="schema.align || 'left'"
+    v-bind="schema.elAttrs || {}"
+  >
+    <template #default="{ row, column, $index }">
+      <component :is="schema.cellComponent" v-if="schema.cellComponent"
+        :row="row" :column="column" :index="$index" :schema="schema" />
+      <span v-else>{{ formatSchemaCell(row[column.property], schema) }}</span>
+    </template>
+  </el-table-column>
+</el-table>
 ```
 
 嵌套表头改用内置递归组件：
@@ -118,11 +119,13 @@ const { visibleSchemas, tableRenderKey, formatSchemaCell } = useSchemaColumnConf
 | `applyColumnConfig` / `saveConfigToLocal` / `removeConfigFromLocal` | 配置增删改                          |
 | `readCacheConfig` / `getDefaultConfig`                              | 配置读取                            |
 
-options：`{ columnSchemas, storageKey?, schemaVersion?, alwaysVisibleColumns?, maxConfigCount?, maxSelectCount?, onDialogClose?, onLabelChange? }`
+options：`{ columnSchemas, storageKey?, schemaVersion?, alwaysVisibleColumns?, maxConfigCount?, maxSelectCount?, defaultConfigLabel?, noNameLabel?, messages?, onDialogClose?, onLabelChange? }`
+
+存储 key：`${storageKey}_${pathname}_sv${schemaVersion}`。
 
 ## FAQ
 
 - **列顺序改了不生效**：检查 `el-table` 是否绑定 `:key="tableRenderKey"`
 - **配置互相覆盖**：检查 `storageKey` 是否全局唯一
 - **旧缓存导致新列不显示**：字段重命名/删除时递增 `schemaVersion`
-- **自定义列按钮不显示**：`TableWrap` 需 `enable-do-header` + `:disabled-column-config="false"`
+- **自定义列按钮不显示**：`DoTableHeader` 需 `:disabled-column-config="false"`，且位于调用 composable 的组件内部

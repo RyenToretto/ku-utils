@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 校验 `.cursor` rules/skills ↔ `docs/best-practice` 双向同步（对照表真源：docs/best-practice/SYNC.md「已落地」表）。
+ * 校验 `.cursor` rules/skills（含随包分发的 `packages/<包>/rules|skills`）↔ `docs/best-practice` 双向同步（对照表真源：docs/best-practice/SYNC.md「已落地」表）。
  *
  * 1. 登记：仓内每个 rule/skill 都在 SYNC 登记、登记的文件都存在、引用的模块目录有 README 且在模块地图里。
  * 2. 内容：见 bp-content-lint.mjs（路径存在、globs 命中、技术栈不串、四生同名同节）。
@@ -20,13 +20,12 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { lintContent } from './bp-content-lint.mjs';
+import { lintContent, SOURCE_RE } from './bp-content-lint.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BP = 'docs/best-practice';
 const SYNC = `${BP}/SYNC.md`;
 const MAP = `${BP}/README.md`;
-const SOURCE_RE = /(^|\/)\.cursor\/(rules\/[^/]+\.mdc|skills\/.+\/SKILL\.md)$/;
 const TRAILER = 'BP-Sync-Reviewed';
 
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf-8' });

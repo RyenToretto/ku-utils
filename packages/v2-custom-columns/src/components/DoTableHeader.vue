@@ -51,6 +51,7 @@ import DoConfigColumnDialog from './DoConfigColumnDialog.vue';
 import DoReadColumnConfig from './DoReadColumnConfig.vue';
 
 export default {
+  name: 'DoTableHeader',
   components: {
     DoReadColumnConfig,
     DoConfigColumnDialog,

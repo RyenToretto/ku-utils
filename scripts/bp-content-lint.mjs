@@ -2,8 +2,8 @@
  * `.cursor` rules/skills 与 best-practice 的内容级校验（登记对齐 ≠ 内容对齐，能机械判定的都在这里兜住）：
  * 1. 路径：正文反引号里的路径必须真实存在（app 内规则先在本 app 内找，再找全仓）。
  * 2. globs：每个 glob 至少命中一个文件；app 内规则相对 app 目录书写。
- * 3. 技术栈：各 app 规则不得出现别栈专有写法（照抄金标端最常见的失真）。
- * 4. 四生结构：四端同名 rule/skill 的二级标题集合一致（缺节即缺约束）。
+ * 3. 技术栈：各 app 规则与随包副本不得出现别栈专有写法（照抄金标端最常见的失真）。
+ * 4. 四生结构：四端同名 rule/skill（含随包副本）的二级标题集合一致（缺节即缺约束）。
  * 例外：`<!-- bp-lint-ignore-start/end -->` 包住的行跳过技术栈检查（两栈对照表）；写了技术栈名的小节不参与四生结构比较。
  */
 
@@ -12,7 +12,18 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const ADMINS = ['kv3-admin', 'kv2-admin', 'kr-admin', 'ka-admin'];
-const SOURCE_RE = /(^|\/)\.cursor\/(rules\/[^/]+\.mdc|skills\/.+\/SKILL\.md)$/;
+/** 真源：仓内 `.cursor` rules/skills，以及随包分发（postinstall 复制到消费方 `.cursor/`）的 `packages/<包>/rules|skills` */
+const RULE_OR_SKILL = String.raw`(rules\/[^/]+\.mdc|skills\/.+\/SKILL\.md)`;
+export const SOURCE_RE = new RegExp(
+  String.raw`(^|\/)\.cursor\/${RULE_OR_SKILL}$|^packages\/[^/]+\/${RULE_OR_SKILL}$`,
+);
+/** 随包分发的副本按目标技术栈套用对应 app 的禁用写法 */
+const PACKAGE_STACK = {
+  'custom-columns': 'kv3-admin',
+  'v2-custom-columns': 'kv2-admin',
+  'r-custom-columns': 'kr-admin',
+  'a-custom-columns': 'ka-admin',
+};
 const BP_README_RE = /^docs\/best-practice\/[^/_][^/]*\/README\.md$/;
 
 const VUE_ONLY = [
@@ -143,6 +154,7 @@ export function lintContent(view, landedModules) {
   const files = view.files;
   const fileSet = new Set(files);
   const appOf = (f) => f.match(/^apps\/([^/]+)\//)?.[1];
+  const packageOf = (f) => f.match(/^packages\/([^/]+)\/(?:rules|skills)\//)?.[1];
   const filesByApp = new Map();
   for (const f of files) {
     const app = appOf(f);
@@ -193,19 +205,28 @@ export function lintContent(view, landedModules) {
         if (!list.some((p) => re.test(p))) problems.push(`globs 落空：${f} 的 \`${g}\` 未命中任何文件`);
       }
 
-      const forbidden = app ? STACK_FORBIDDEN[app] : undefined;
+      const stack = app ?? PACKAGE_STACK[packageOf(f)];
+      const forbidden = stack ? STACK_FORBIDDEN[stack] : undefined;
       if (forbidden) {
         for (const line of stackCheckedLines(lines)) {
           const hit = forbidden.find((re) => re.test(line));
-          if (hit) problems.push(`技术栈失真：${f} 出现 ${app} 不存在的写法 ${hit.exec(line)[0]}：${line.trim().slice(0, 80)}`);
+          if (hit) problems.push(`技术栈失真：${f} 出现 ${stack} 不存在的写法 ${hit.exec(line)[0]}：${line.trim().slice(0, 80)}`);
         }
       }
     }
   }
 
+  /** 四端 app 与随包副本的同名 rule/skill 归到同一组比较结构 */
+  const sameNameKey = (f) =>
+    f
+      .replace(/^apps\/[^/]+\/\.cursor\//, '')
+      .replace(/^packages\/[^/]+\//, '')
+      .replace(/\b(?:v2|r|a)-custom-columns/g, 'custom-columns')
+      .replace(/custom-columns-[a-z0-9]+-pattern/, 'custom-columns-pattern');
   const sameName = new Map();
-  for (const f of files.filter((x) => SOURCE_RE.test(x) && ADMINS.includes(appOf(x)))) {
-    const key = f.replace(/^apps\/[^/]+\//, '').replace(/custom-columns-[a-z0-9]+-pattern/, 'custom-columns-pattern');
+  const comparable = (x) => SOURCE_RE.test(x) && (ADMINS.includes(appOf(x)) || packageOf(x));
+  for (const f of files.filter(comparable)) {
+    const key = sameNameKey(f);
     sameName.set(key, [...(sameName.get(key) ?? []), f]);
   }
   for (const [key, group] of sameName) {

@@ -20,9 +20,9 @@
 
 ## 最佳实践（精炼）
 
-1. 依赖：`@ku-utils/custom-columns` + 入口 `import '@ku-utils/custom-columns/style'`。
-2. 定义 `ColumnSchema[]`；Vue 3 用 `useSchemaColumnConfig` + `v-for` / `SchemaColumn`；Vue 2 用 `mixins: [useSchemaColumnConfig]` + `data()` 声明 `columnSchemas` / `schemaStorageKey` / `schemaVersion`（纯 JS，无 composable / `SchemaColumn` / `messages`）。
-3. `TableWrap`（或等价）在需要时 `enable-do-header`，渲染 `DoTableHeader`。
+1. 依赖：对应栈的包（`@ku-utils/custom-columns` / `v2-custom-columns` / `r-custom-columns` / `a-custom-columns`）+ 入口只引一次样式（Vue / React `import '<包>/style'`；Angular 在 `angular.json` `styles` 登记 `style.css`）。
+2. 定义 `ColumnSchema[]`（类型由各包导出）；Vue 3 用 `useSchemaColumnConfig` + `v-for` / `SchemaColumn`；Vue 2 用 `mixins: [useSchemaColumnConfig]` + `data()` 声明 `columnSchemas` / `schemaStorageKey` / `schemaVersion`，嵌套表头同用包导出的 `SchemaColumn`（无 composable / `messages`）。`formatSchemaCell` 两包逐分支一致内置格式化（`integer` / `float` / `percent`），不依赖消费方 filter。
+3. `TableWrap`（或等价）在需要时 `enable-do-header`，渲染 `DoTableHeader`；`DoTableHeader` 必须位于提供配置（composable / mixin）的组件内部。
 4. 配置持久化 key 按「页面」隔离：`${storageKey}_${pathname}_sv${schemaVersion}`（Vue 2 另含应用版本号），**无用户维度**——多账号共用浏览器须隔离时，`storageKey` 自带用户 ID。
 5. 硬约束（四端 rule 同条）：
    - `storageKey` 页面唯一，禁止手写 localStorage 或另建 `visibleColumns` 状态
@@ -31,22 +31,22 @@
    - 固定身份列与操作列写在 schema 循环外（Vue 2 另登记 `alwaysVisibleColumns`）
    - Vue 3 / Vue 2 / React 表格绑定 `tableRenderKey` 作 key 强制重建（Angular 由 `@for` track 处理）
    - 文案：Vue 3 / React / Angular 显式传全中文 `messages`；Vue 2 包内置中文
-6. Demo 页放 Example 模块，生产构建门控禁止打进产物。
+6. Demo 页放 Example 模块（四端 01–08 一一对应：基础 / elAttrs / Slot / 嵌套 / 版本 / 单元格 / 表头 / 固定列），生产构建门控禁止打进产物。
 7. React（`@ku-utils/r-custom-columns`）：`useSchemaColumnConfig` 返回值经 `SchemaColumnConfigContext.Provider` 下发，`schemasToColumns` 生成 antd columns；`DoTableHeader` 内含配置抽屉，页面不再单独挂弹层。Vue / Vue2 / React 三包交互 1:1，改一侧须同步其余。
 8. Angular（`@ku-utils/a-custom-columns`）：`createSchemaColumnConfig` 返回 signals 状态，经 `[kuSchemaColumnConfig]` 指令下发；nz-table 模板驱动，`headerRows()` / `visibleLeafSchemas()` 逐行逐列渲染 `ku-schema-header` / `ku-schema-cell`，插槽用 `ng-template[kuSchemaCellDef|kuSchemaHeaderDef]`；拖拽用 CDK DragDrop。Vue / Vue2 / React / Angular 四包交互 1:1。
 
-| 能力       | Vue 3                    | Vue 2（mixin）                            | React                             | Angular                                      |
-| ---------- | ------------------------ | ----------------------------------------- | --------------------------------- | -------------------------------------------- |
-| 状态       | `useSchemaColumnConfig`  | `useSchemaColumnConfig` mixin             | `useSchemaColumnConfig` + Context | `createSchemaColumnConfig` + 指令上下文      |
-| 列渲染     | `SchemaColumn` / `v-for` | `v-for` `el-table-column`（嵌套自写递归） | `schemasToColumns`                | `ku-schema-header` / `ku-schema-cell`        |
-| 自定义单元 | 具名插槽                 | 具名插槽                                  | `cellRender` / `renderHeader`     | `kuSchemaCellDef` / `kuSchemaHeaderDef` 模板 |
-| 透传列属性 | `elAttrs`                | `elAttrs`                                 | `antdAttrs`                       | `zorroAttrs`                                 |
-| 拖拽       | vue-draggable-plus       | vuedraggable                              | sortablejs                        | `@angular/cdk/drag-drop`                     |
+| 能力       | Vue 3                    | Vue 2（mixin）                | React                             | Angular                                      |
+| ---------- | ------------------------ | ----------------------------- | --------------------------------- | -------------------------------------------- |
+| 状态       | `useSchemaColumnConfig`  | `useSchemaColumnConfig` mixin | `useSchemaColumnConfig` + Context | `createSchemaColumnConfig` + 指令上下文      |
+| 列渲染     | `SchemaColumn` / `v-for` | `SchemaColumn` / `v-for`      | `schemasToColumns`                | `ku-schema-header` / `ku-schema-cell`        |
+| 自定义单元 | 具名插槽                 | 具名插槽                      | `cellRender` / `renderHeader`     | `kuSchemaCellDef` / `kuSchemaHeaderDef` 模板 |
+| 透传列属性 | `elAttrs`                | `elAttrs`                     | `antdAttrs`                       | `zorroAttrs`                                 |
+| 拖拽       | vue-draggable-plus       | vuedraggable                  | sortablejs                        | `@angular/cdk/drag-drop`                     |
 
 ## 本仓落点
 
 - `packages/custom-columns` / `packages/v2-custom-columns` / `packages/r-custom-columns` / `packages/a-custom-columns`
-- 已知缺口：kv2 Demo 02–08 暂复用 `BASIC_COLUMN_SCHEMAS`，未演示嵌套表头 / 插槽等场景（见 [admin-parity](../admin-parity/)）
+- 随包分发（`postinstall` 复制到消费项目 `.cursor/`，已存在不覆盖）：`packages/custom-columns/rules/custom-columns-vue3-pattern.mdc`、`packages/custom-columns/skills/custom-columns/SKILL.md`、`packages/v2-custom-columns/rules/v2-custom-columns-pattern.mdc`、`packages/v2-custom-columns/skills/v2-custom-columns/SKILL.md`——与 app 版同结构，去掉 app 专有落点（`TableWrap` 可选、schema 路径不限定）
 - `apps/kv3-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv3-admin/.cursor/rules/custom-columns-vue3-pattern.mdc`
 - `apps/kv2-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kv2-admin/.cursor/rules/custom-columns-vue2-pattern.mdc`
 - `apps/kr-admin/.cursor/skills/custom-columns/SKILL.md`、`apps/kr-admin/.cursor/rules/custom-columns-react-pattern.mdc`
