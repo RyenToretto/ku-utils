@@ -1,5 +1,16 @@
 # @ku-utils/nuxt-module
 
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [c5d99b5]
+- Updated dependencies [31b0c0e]
+  - @ku-utils/skin@0.2.0
+  - @ku-utils/hooks@1.5.23
+  - @ku-utils/ui@1.2.4
+  - @ku-utils/directives@1.3.1
+
 ## 1.3.0
 
 ### Minor Changes

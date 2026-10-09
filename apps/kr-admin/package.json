@@ -1,7 +1,7 @@
 {
   "name": "@ku-utils/kr-admin",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "React 19 + Ant Design 5 管理端 starter，workspace 消费 @ku-utils/*",
   "scripts": {
