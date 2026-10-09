@@ -1,7 +1,16 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import type { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
@@ -16,9 +25,11 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     @if (!disabled()) {
       <span
         class="do-number-setter-control"
+        [class.is-changing]="changing()"
+        [class.is-active]="open()"
         nz-popover
         nzPopoverTrigger="click"
-        nzPopoverPlacement="rightBottom"
+        nzPopoverPlacement="bottomRight"
         [nzPopoverContent]="panel"
         [nzPopoverVisible]="open()"
         (nzPopoverVisibleChange)="onOpenChange($event)"
@@ -31,14 +42,22 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     }
     <ng-template #panel>
       <div class="do-number-setter-popover">
-        <div class="do-number-setter-form">
-          <span style="margin-right: 8px">{{ label() }}</span>
-          <nz-input-number
-            [nzMin]="minNum()"
-            [ngModel]="draft()"
-            (ngModelChange)="draft.set(+($event ?? minNum()))"
-          />
-        </div>
+        @if (label()) {
+          <div class="do-number-setter-title">{{ label() }}</div>
+        }
+        <nz-input-number
+          #numberInput
+          class="do-number-setter-input"
+          [nzMin]="minNum()"
+          [nzPlaceHolder]="resolvedPlaceholder()"
+          [nzStatus]="error() ? 'error' : ''"
+          [ngModel]="draft()"
+          (ngModelChange)="onDraftChange($event)"
+          (keydown.enter)="submit()"
+        />
+        @if (error()) {
+          <div class="do-number-setter-error">{{ error() }}</div>
+        }
         <div class="do-number-setter-footer">
           <button
             nz-button
@@ -64,21 +83,46 @@ export class DoNumberSetter {
   readonly num = input(0);
   readonly newValue = input<number>();
   readonly minNum = input(0);
-  readonly label = input('数值');
+  readonly label = input('');
+  readonly placeholder = input<string>();
   readonly disabled = input(false);
   readonly changing = input(false);
   readonly ok = input<(value: number) => void | Promise<void>>();
 
   protected readonly open = signal(false);
-  protected readonly draft = signal(0);
+  protected readonly draft = signal<number | null>(null);
+  protected readonly error = signal('');
+  protected readonly resolvedPlaceholder = computed(
+    () => this.placeholder() ?? `请输入${this.label()}`,
+  );
+  private readonly numberInput = viewChild<NzInputNumberComponent>('numberInput');
 
-  protected onOpenChange(visible: boolean) {
-    this.open.set(visible);
-    if (visible) this.draft.set(this.newValue() ?? this.num());
+  constructor() {
+    effect(() => this.numberInput()?.focus());
   }
 
-  protected async submit() {
-    await this.ok()?.(this.draft());
+  protected onOpenChange(visible: boolean) {
+    if (visible && this.changing()) return;
+    this.open.set(visible);
+    if (visible) {
+      this.draft.set(this.newValue() ?? this.num());
+      this.error.set('');
+    }
+  }
+
+  protected onDraftChange(value: number | null) {
+    this.draft.set(value);
+    if (value !== null) this.error.set('');
+  }
+
+  protected submit() {
+    const value = this.draft();
+    if (value === null) {
+      this.error.set(this.resolvedPlaceholder());
+      return;
+    }
+    if (this.changing()) return;
     this.open.set(false);
+    if (value !== this.num()) void this.ok()?.(value);
   }
 }

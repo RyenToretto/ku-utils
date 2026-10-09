@@ -94,6 +94,8 @@ const COLUMNS = [
         <span class="do-filter-field-label">关键字</span>
         <ka-do-txt-setter
           [inline]="true"
+          [required]="false"
+          placeholder="请输入关键字"
           [initValue]="query.filters().keyword"
           [ok]="onKeywordOk"
         >
@@ -165,6 +167,7 @@ const COLUMNS = [
               <td><ka-cell-date-time [value]="row.createdAt" /></td>
               <td nzAlign="right">
                 <ka-do-number-setter
+                  label="数量"
                   [num]="row.amount"
                   [newValue]="row.amount"
                   [changing]="!!row.amountChanging"

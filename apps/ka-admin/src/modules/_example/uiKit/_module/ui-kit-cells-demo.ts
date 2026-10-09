@@ -125,6 +125,7 @@ const CITY_OPTIONS = [
       >
         <ka-do-number-setter
           *nzSpaceItem
+          label="评分"
           [num]="score()"
           [newValue]="score()"
           [ok]="onScoreOk"

@@ -672,22 +672,65 @@ el-form-item.do-fill-form > .el-form-item__content {
 .do-number-setter {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 
   .do-number-setter-control {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
     cursor: pointer;
-    color: var(--ku-color-primary, #b37338);
+    color: var(--ku-color-primary, #9a6328);
+    transition: background-color 0.2s;
+
+    &:hover,
+    &.is-active {
+      background-color: var(--ku-color-primary-bg, #fbf6ec);
+    }
+
+    &.is-changing {
+      cursor: default;
+    }
   }
+}
+
+.do-number-setter-popover {
+  width: 196px;
+
+  .do-number-setter-title {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ku-text-primary, #4e4540);
+  }
+
+  .do-number-setter-input {
+    width: 100%;
+  }
+}
+
+.do-txtsetter-popover {
+  width: 256px;
 }
 
 .do-number-setter-popover,
 .do-txtsetter-popover {
-  min-width: 200px;
+  .do-number-setter-error,
+  .do-txtsetter-error {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ku-color-danger, #9f6559);
+  }
 
   .do-number-setter-footer,
   .do-txtsetter-footer {
-    margin-top: 8px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
   }
 }
 

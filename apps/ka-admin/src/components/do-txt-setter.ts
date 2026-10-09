@@ -1,5 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  input,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -51,12 +59,18 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
       <div class="do-txtsetter-popover">
         <nz-input-wrapper nzAllowClear>
           <input
+            #txtInput
             nz-input
+            [nzStatus]="error() ? 'error' : ''"
+            [placeholder]="placeholder()"
             [ngModel]="draft()"
-            (ngModelChange)="draft.set($event ?? '')"
+            (ngModelChange)="onDraftChange($event)"
             (keydown.enter)="submit()"
           />
         </nz-input-wrapper>
+        @if (error()) {
+          <div class="do-txtsetter-error">{{ error() }}</div>
+        }
         <div class="do-txtsetter-footer">
           <button
             nz-button
@@ -80,6 +94,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 })
 export class DoTxtSetter {
   readonly initValue = input('');
+  readonly required = input(true);
+  readonly placeholder = input('请输入');
   readonly inline = input(false);
   readonly disabled = input(false);
   readonly changing = input(false);
@@ -87,14 +103,35 @@ export class DoTxtSetter {
 
   protected readonly open = signal(false);
   protected readonly draft = signal('');
+  protected readonly error = signal('');
+  private readonly txtInput = viewChild<ElementRef<HTMLInputElement>>('txtInput');
 
-  protected onOpenChange(visible: boolean) {
-    this.open.set(visible);
-    if (visible) this.draft.set(this.initValue());
+  constructor() {
+    effect(() => this.txtInput()?.nativeElement.focus());
   }
 
-  protected async submit() {
-    await this.ok()?.(this.draft());
+  protected onOpenChange(visible: boolean) {
+    if (visible && this.changing()) return;
+    this.open.set(visible);
+    if (visible) {
+      this.draft.set(this.initValue());
+      this.error.set('');
+    }
+  }
+
+  protected onDraftChange(value: string | null) {
+    this.draft.set(value ?? '');
+    if (value) this.error.set('');
+  }
+
+  protected submit() {
+    const value = this.draft();
+    if (this.required() && !value) {
+      this.error.set(this.placeholder());
+      return;
+    }
+    if (this.changing()) return;
     this.open.set(false);
+    if (value !== this.initValue()) void this.ok()?.(value);
   }
 }
