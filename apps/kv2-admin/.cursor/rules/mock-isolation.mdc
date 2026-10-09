@@ -35,4 +35,4 @@ Mock、`_api`、拦截器必须同形；**禁止**双码兼容（如同时认 `0
 
 ## Example 门控
 
-`VITE_APP_USE_EXAMPLE=0` 时 example mocks 走空 stub；业务仓生产构建勿打进 `_example`。
+`VITE_APP_USE_EXAMPLE=0` 时 example mocks 走空 stub；生产构建（`.env.production` 为 `0`）产物不得含 `_example`。

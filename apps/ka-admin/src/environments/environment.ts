@@ -6,7 +6,7 @@ export const environment: AppEnvironment = {
   publicPath: '/',
   apiBaseUrl: '/api',
   useMock: true,
-  useExample: true,
+  useExample: false,
   loginUrl: '',
   logoutUrl: '',
 };

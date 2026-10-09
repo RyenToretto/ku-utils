@@ -36,4 +36,4 @@ Mock、`_api`、拦截器必须同形；**禁止**双码兼容（如同时认 `0
 
 ## Example 门控
 
-`environment.useExample=false` 时 `src/mock/index.ts` 不聚合 example mocks；`business` 构建用 `fileReplacements` 换 stubs，产物不得含 `_example`。
+`environment.useExample=false` 时 `src/mock/index.ts` 不聚合 example mocks；生产构建用 `fileReplacements` 换 stubs，产物不得含 `_example`。

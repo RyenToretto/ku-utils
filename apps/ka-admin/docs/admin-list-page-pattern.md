@@ -86,7 +86,7 @@ src/modules/<域>/<子业务>/
 
 ## 7. Example 门控
 
-`environment.useExample=true` 仅开发；`ng build --configuration business` 用 `fileReplacements` 把 `_example` 路由 / maps / 顶栏 Tab 换成 `src/stubs/*`，esbuild 插件 `forbid-example-in-bundle` 禁止打进产物。
+`environment.useExample=true` 仅开发；生产 `ng build` 用 `fileReplacements` 把 `_example` 路由 / maps / 顶栏 Tab 换成 `src/stubs/*`，esbuild 插件 `forbid-example-in-bundle` 禁止打进产物。
 
 ## 8. 合同信封（本仓）
 

@@ -72,7 +72,7 @@ src/modules/<域>/<子业务>/
 
 ## 6. Example 门控
 
-`VITE_APP_USE_EXAMPLE=1` 仅开发；拷到业务仓后生产设为 `0`，Vite 插件 `forbid-example-in-bundle` 禁止打进产物。
+`VITE_APP_USE_EXAMPLE=1` 仅开发；`.env.production` 为 `0`，Vite 插件 `forbid-example-in-bundle` 禁止打进产物。
 
 ## 7. 合同信封（本仓）
 

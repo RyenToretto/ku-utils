@@ -55,22 +55,8 @@
                   "maximumError": "16kB"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "business": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2.5MB",
-                  "maximumError": "4MB"
-                }
-              ],
               "outputHashing": "all",
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.business.ts"
-                },
                 {
                   "replace": "src/modules/_example/_router/index.ts",
                   "with": "src/stubs/empty-example-routes.ts"
@@ -88,7 +74,12 @@
                 {
                   "path": "./esbuild/forbid-example-in-bundle.ts",
                   "options": {
-                    "enabled": true
+                    "enabled": true,
+                    "replaced": [
+                      "src/modules/_example/_router/index.ts",
+                      "src/modules/_example/_maps/index.ts",
+                      "src/layouts/header-example-tab-entry.ts"
+                    ]
                   }
                 }
               ]

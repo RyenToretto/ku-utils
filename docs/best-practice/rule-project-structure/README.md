@@ -46,6 +46,7 @@ src/modules/<域>/<子业务>/
 - **`_router`**：子业务只导出本业务路由；域根 `_router/index.ts` 静态 import 汇总各子业务
 - **禁止**为旧 path 保留空壳域；redirect 挂现行域 `_router`
 - `src/views/` 只放全局状态页（无权限 / 账号异常 / 登出 / 即将上线等），业务页一律在 `src/modules`
+- `_example` 只在开发态装配（Vite `VITE_APP_USE_EXAMPLE=1` / Angular `environment.useExample`）；生产构建关闭，并由构建插件 `forbid-example-in-bundle` 拦截残留
 
 ### 命名
 
@@ -72,3 +73,4 @@ React 端扩展名为 `.tsx`；Angular 端 kebab-case（`xxx-layer.ts` / `dialog
 - [ ] 新页面具备 Layer + `_module` 分离
 - [ ] 无 `DrawerXxx.vue` 新文件
 - [ ] 业务页不静态 import `_example`
+- [ ] 生产构建通过（产物无 `_example`）

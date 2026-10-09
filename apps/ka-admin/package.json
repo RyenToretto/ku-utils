@@ -12,8 +12,6 @@
     "predev": "pnpm run prepare:assets",
     "build": "ng build",
     "prebuild": "pnpm run prepare:assets",
-    "build:business": "ng build --configuration business",
-    "prebuild:business": "pnpm run prepare:assets",
     "prepare:assets": "node ./scripts/generate-static-version.mjs && node ./scripts/generate-zorro-theme.mjs",
     "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.dev.json --noEmit",
     "lint": "eslint src esbuild"

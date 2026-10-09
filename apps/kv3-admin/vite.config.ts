@@ -30,7 +30,7 @@ export default defineConfig(async ({ mode, command }): Promise<UserConfig> => {
 
   return {
     base: env.VITE_APP_PUBLIC_PATH || '/',
-    plugins: [...(await createPlugins(useMock)), forbidExampleInBundle(useExample)],
+    plugins: [...(await createPlugins(useMock, useExample)), forbidExampleInBundle(useExample)],
     css: {
       preprocessorOptions: {
         scss: {

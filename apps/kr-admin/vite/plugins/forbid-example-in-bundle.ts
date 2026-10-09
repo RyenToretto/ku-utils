@@ -5,8 +5,6 @@ function isExampleLeak(moduleId: string): boolean {
   return (
     normalized.includes('/_example/') ||
     normalized.endsWith('/HeaderExampleTab.tsx') ||
-    normalized.endsWith('/HeaderExampleTab.tsx') ||
-    normalized.endsWith('/HeaderExampleTab.vue') ||
     normalized.endsWith('/headerExampleTabEntry.ts')
   );
 }
