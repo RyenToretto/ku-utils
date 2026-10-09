@@ -90,16 +90,20 @@
 
 ## 自动校验
 
-`scripts/check-bp-sync.mjs` 以本文件「已落地」表为唯一输入，检查登记完整性（未登记 / 已失效 / 模块缺 README / 模块地图缺登记）与双向配对（改真源须同时改模块，改已落地模块须同时改任一真源）。
+`scripts/check-bp-sync.mjs` 以本文件「已落地」表为唯一输入，检查三层：
 
-| 时机           | 入口                                                     | 不一致时                          |
-| -------------- | -------------------------------------------------------- | --------------------------------- |
-| Agent 每轮结束 | `.cursor/hooks.json` → `stop` 钩子（全部未提交改动）     | 追加 followup，本任务内补齐另一侧 |
-| `git commit`   | `.husky/pre-commit`（暂存区）                            | 拒绝提交                          |
-| PR / push main | `.github/workflows/ci.yml`「Best-practice sync」（diff） | CI 失败                           |
-| 手动           | `pnpm check:bp-sync`                                     | 列出问题                          |
+1. **登记**：未登记 / 已失效 / 模块缺 README / 模块地图缺登记
+2. **内容**（`scripts/bp-content-lint.mjs`）：反引号路径存在、globs 命中且 app 规则用相对路径、app 规则无别栈专有写法、四端同名 rule/skill 二级标题一致
+3. **配对**：改真源须同时改模块，改已落地模块须同时改任一真源；对侧已核对一致时用 trailer `BP-Sync-Reviewed: <对侧路径>` 豁免
 
-配对只保证「两边同一次改动都动了」；内容一致仍由 [best-practice-sync.mdc](../../.cursor/rules/best-practice-sync.mdc) 约束，禁止为过检查做无意义改动。
+| 时机           | 入口                                                           | 不一致时                          |
+| -------------- | -------------------------------------------------------------- | --------------------------------- |
+| Agent 每轮结束 | `.cursor/hooks.json` → `stop` 钩子（登记 + 内容 + 配对）       | 追加 followup，本任务内补齐另一侧 |
+| `git commit`   | `.husky/pre-commit`（登记 + 内容）+ `commit-msg`（配对）       | 拒绝提交                          |
+| PR / push main | `.github/workflows/ci.yml`「Best-practice sync」（逐提交配对） | CI 失败                           |
+| 手动           | `pnpm check:bp-sync`                                           | 列出问题                          |
+
+脚本只兜机械可判的部分；语义一致仍由 [best-practice-sync.mdc](../../.cursor/rules/best-practice-sync.mdc) 约束——改任一侧都对照真实代码核对另一侧，禁止为过检查做无意义改动或滥用 trailer。
 
 ## Agent 操作清单
 
