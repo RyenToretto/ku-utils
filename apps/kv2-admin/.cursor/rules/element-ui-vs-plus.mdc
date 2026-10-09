@@ -1,6 +1,8 @@
 ---
 description: Element UI（kv2）↔ Element Plus（kv3）差异与移植约束。从 kv3 搬模板 / 样式、改 Element UI 外观、对齐 kv3 视觉时读取。
-globs: apps/kv2-admin/src/**/*.{vue,scss,css,ts},apps/kv2-admin/scripts/*.mjs
+globs:
+  - 'src/**/*.{vue,scss,css,ts}'
+  - 'scripts/*.mjs'
 alwaysApply: false
 ---
 
@@ -14,10 +16,12 @@ Element UI 对不认识的类名、`--el-*` 变量、prop **静默忽略**：照
 | --- | --- |
 | 颜色、弹层阴影 | `scripts/generate-element-theme.mjs` 映射表（未映射即失败；禁手写换色覆写） |
 | 尺寸 / 间距 / 圆角 / 状态（EU 与 EP 结构差异） | `assets/styles/modules/element-ui-bridge.scss` |
-| 组件默认行为（周一开头、弹层居中等） | 全局包装组件（如 `DateRange.vue`），不在每个页面传 |
+| 组件默认行为 | 全局一处：周一开头走包装组件 `DateRange.vue`；弹层居中走 `_page-utils.scss` 全局 `.el-dialog__wrapper`；不在每个页面传 |
 | 页面业务样式 | 按 EU DOM 写，不留 EP 选择器 |
 
 ## 移植对照（高频）
+
+<!-- bp-lint-ignore-start -->
 
 | Element Plus（kv3） | Element UI（kv2） |
 | --- | --- |
@@ -29,18 +33,22 @@ Element UI 对不认识的类名、`--el-*` 变量、prop **静默忽略**：照
 | `var(--el-border)` / `--el-disabled-bg-color` / `--el-color-white` | 不存在：写展开值或通用变量 |
 | `show-after` / `hide-after` / `show-arrow` | `open-delay` / `close-delay` / `visible-arrow` |
 | `teleported` / `align-center` | `append-to-body`（默认已挂 body）/ 无（全局已居中） |
+| `el-drawer` 的 `class` / `:close-on-click-modal` / `#header` / `#footer` | `custom-class` / `:wrapper-closable` / `#title` / 无（脚部放 body 内） |
+| `el-dialog` 的 `#header` | `#title` |
+
+<!-- bp-lint-ignore-end -->
 
 ## 已知语义差异（写代码时主动处理）
 
 1. 根上的组件变量（`--el-input-*`、`--el-table-*`）EU 不读；EP 又在组件选择器上重声明——都以通用中性色为准。
 2. 下拉 / 日期面板 / popover 都挂 `.el-popper`：禁写 `.el-popper > *` 之类全局规则，会改坏内部滚动。
-3. EU 鼠标 `:focus` 沿用悬停色；本仓已回落静止态，新按钮类型同样处理。MessageBox 确认钮同时挂 `--default` 与 `--primary` 且打开即聚焦。
+3. EU 鼠标 `:focus` 沿用悬停色；本仓已回落静止态、仅键盘 `:focus-visible` 描边，新按钮类型同样处理。MessageBox 确认钮同时挂 `--default` 与 `--primary` 且打开即聚焦。
 4. EU `.el-pagination span:not([class*=suffix])` 等通配规则优先级高，覆写前先查命中规则。
 5. EU 选中 `value=""` 的选项；EP 视 `''` 为空并显示占位（「不限」显示差异，属框架语义，保留）。
 6. EU 原生滚动条占位（表格 gutter、`el-scrollbar__wrap` 负 margin），EP 为浮层滚动条，宽度差 ≈ 滚动条宽。
 
 ## 验收（改外观必做）
 
-1. `pnpm --filter @ku-utils/kv2-admin audit:ep` 为 0（prebuild 自动跑；查不存在的类名 / 未声明变量 / EP 专有 prop）
+1. `pnpm --filter @ku-utils/kv2-admin audit:ep` 为 0（prebuild 自动跑；查不存在的类名 / 未声明变量 / EP 专有 prop / 抽屉与对话框的 EP prop、插槽）
 2. kv3↔kv2 同路由同状态对比**计算样式与几何**，明暗各一遍，含悬停、聚焦、展开的下拉 / 日期 / 对话框 / 确认框
 3. 新发现的映射或差异：补进本 rule 对照表 + `docs/best-practice/rule-element-ui-vs-plus/`；能脚本化的补进 `audit-ep-leftovers.mjs`

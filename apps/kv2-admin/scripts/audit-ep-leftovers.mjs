@@ -3,7 +3,8 @@
  * 审计 kv2 源码里「从 kv3 搬来、Element UI 不存在」的写法（照抄即失效）：
  * 1. `.el-*` 类名在 Element UI chalk 里不存在（如 `.el-input__wrapper` / `.el-overlay-dialog`）；
  * 2. `var(--el-*)` 既不在 skin / 生成主题 / 本仓样式里声明（如 EP 才有的 `--el-border`）；
- * 3. 模板里的 EP 专有 prop（如 `show-after` / `teleported`），EU 静默忽略。
+ * 3. 模板里的 EP 专有 prop（如 `show-after` / `teleported`），EU 静默忽略；
+ * 4. 同名组件在 EP / EU 的 prop 与插槽差异（如 EP `el-drawer` 的 `close-on-click-modal` / `#header` / `#footer`）。
  * 有问题即退出 1；`prepare:assets` 之后、提交前跑。
  */
 
@@ -47,6 +48,14 @@ const EP_ONLY_PROPS = {
   'empty-values': '（EU 无）',
 }
 const EP_ONLY_PROP_RE = new RegExp(`<el-[\\w-]+[^>]*?\\s:?(${Object.keys(EP_ONLY_PROPS).join('|')})(?=[\\s=/>])`, 'g')
+/** 仅特定组件在 EU 不存在的 prop / 插槽（同名 prop 在其他组件合法，如 el-dialog 的 close-on-click-modal） */
+const TAG_DIFFS = {
+  'el-drawer': {
+    props: { 'close-on-click-modal': 'wrapper-closable', 'modal-class': 'custom-class' },
+    slots: { header: '#title', footer: '（EU 无；脚部放 body 内）' },
+  },
+  'el-dialog': { props: {}, slots: { header: '#title' } },
+}
 
 const chalkClasses = new Set(chalk.match(/\.el-[\w-]+/g)?.map((c) => c.slice(1)))
 const declared = new Set(
@@ -70,6 +79,17 @@ for (const [file, text] of sources) {
     const template = text.match(/<template>[\s\S]*<\/template>/)?.[0] ?? ''
     for (const m of template.matchAll(EP_ONLY_PROP_RE)) {
       problems.push([file, `EP 专有 prop「${m[1]}」→ ${EP_ONLY_PROPS[m[1]]}`])
+    }
+    for (const [tag, { props, slots }] of Object.entries(TAG_DIFFS)) {
+      for (const block of template.match(new RegExp(`<${tag}\\b[\\s\\S]*?</${tag}>`, 'g')) ?? []) {
+        const open = block.match(new RegExp(`<${tag}\\b[^>]*>`))?.[0] ?? ''
+        for (const [prop, eu] of Object.entries(props)) {
+          if (new RegExp(`\\s:?${prop}(?=[\\s=/>])`).test(open)) problems.push([file, `${tag} 的 EP prop「${prop}」→ ${eu}`])
+        }
+        for (const [slot, eu] of Object.entries(slots)) {
+          if (new RegExp(`<template\\s+(#|v-slot:)${slot}\\b`).test(block)) problems.push([file, `${tag} 的 EP 插槽「#${slot}」→ ${eu}`])
+        }
+      }
     }
   }
   for (const m of text.matchAll(/(,\s*)?var\((--el-[\w-]+)(\s*,)?/g)) {
