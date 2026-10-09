@@ -232,7 +232,7 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* ─── 全局响应式约束 ─────────────────────────────────────────── */
 
-/* 弹窗不超出视口；垂直居中走 ConfigProvider modal.centered（勿再写死 top） */
+/* 弹窗不超出视口；垂直居中见 zorro-ku-bridge.scss `.ant-modal-wrap`（勿再写死 top） */
 .ant-modal {
   max-width: calc(100vw - 32px);
 

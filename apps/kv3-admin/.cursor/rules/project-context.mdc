@@ -7,7 +7,7 @@ alwaysApply: false
 # kv3-admin starter
 
 - 对话与 commit message 使用中文
-- 本目录是 Vue 3 + Vite + Element Plus 管理端 starter，workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/custom-columns`
+- 本目录是 Vue 3 + Vite + Element Plus 管理端 starter（四生金标，端口 **3111**，`pnpm dev:admin`），workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks`、`@ku-utils/custom-columns`
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kv3-admin/docs/admin-list-page-pattern.md`
 - Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
@@ -21,7 +21,7 @@ alwaysApply: false
 
 ```text
 src/modules/<域>/<子业务>/
-├── _api/ _map/ _mock/ _module/
+├── _api/ _map/ _mock/ _module/ _router/
 └── XxxLayer.vue          # 薄壳；List / DialogXxx 在 _module
 ```
 
@@ -60,10 +60,11 @@ src/modules/<域>/<子业务>/
 | 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
 | 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
 | 自定义列 | `/example/custom-columns/*` | 01–08 |
+| 多级导航 | `/example/nest-menus/*` | 4 个叶子 |
 
 ## Example 门控
 
-开发态 `VITE_APP_USE_EXAMPLE=1`。拷到业务仓后，生产构建应设为 `0`，并保留 `forbid-example-in-bundle` 插件。
+开发态 `VITE_APP_USE_EXAMPLE=1`；生产 `.env.production` 为 `0`，由 `vite/plugins/forbid-example-in-bundle.ts` 拦截产物中残留的 Demo。
 
 ## 专题 Rules（同目录）
 

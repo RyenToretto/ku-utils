@@ -7,35 +7,34 @@ alwaysApply: false
 # kr-admin starter
 
 - 对话与 commit message 使用中文
-- 本目录是 React + Vite + Ant Design 管理端 starter，workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks-react`、`@ku-utils/r-custom-columns`
+- 本目录是 React 19 + Vite + Ant Design 5 管理端 starter（四生之一，端口 **3333**），workspace 消费 `@ku-utils/utils`、`@ku-utils/hooks-react`、`@ku-utils/r-custom-columns`、`@ku-utils/skin`；`pnpm dev:admin:react`
 - 样板：`src/modules/_example/simpleExample`、`customColumns`、`schoolResource`、`doFilterPanel`、`uiKit`
 - 文档真源：`apps/kr-admin/docs/admin-list-page-pattern.md`
-- Demo 壳：`DomainModuleShell`（`modules/_example/index.vue`）
+- Demo 壳：`DomainModuleShell`（`modules/_example/index.tsx`）
 - **模块化最佳实践**（列表/选择器/Mock 等专题，避免巨石 context）：仓库根 `docs/best-practice/`（见 `_decomposition/README.md` 与模块地图 B 组）
-- **四生同步**：以 kv3-admin 为金标，与 kv2-admin / ka-admin 1:1 对齐（见 `docs/best-practice/admin-parity/`）
+- **四生同步**：以 kv3-admin 为金标，与 kv2-admin / ka-admin 1:1 对齐（见 `docs/best-practice/admin-parity/`）；从 Vue 端搬约束必须换成 React / antd 写法
 
 ## 目录骨架
 
-细则见同目录 `project-structure.mdc`（就近原则、命名、`v-loading`）。摘要：
+细则见同目录 `project-structure.mdc`（就近原则、命名、loading 落点）。摘要：
 
 ```text
 src/modules/<域>/<子业务>/
-├── _api/ _map/ _mock/ _module/
-└── XxxLayer.vue          # 薄壳；List / DialogXxx 在 _module
+├── _api/ _map/ _mock/ _module/ _router/
+└── XxxLayer.tsx          # 薄壳；XxxList / DialogXxx 在 _module
 ```
 
 ## 列表页硬约束
 
-1. 页面根 class：`page-<业务>`
-2. 列表状态：`useTableQuery`（`listFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `refresh`）；fetcher 传 `AbortSignal`；有分页用 `BasePagination` `enable-refresh` + `@refresh`
-3. 表格用 `<TableWrap>` 包裹
-4. 表格 class：`do-inner-scroller page-table hide-table-border`
-5. `border` + `stripe` + `:max-height="maxHeight"`（`useAdminTableMaxHeight`，基于 `@ku-utils/hooks-react` 的 `useMaxHeight`）
-6. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查；禁 `watch(listFilters)`；分组筛选 / 非表单节点用 `disableFold`
-7. **禁止页面态 `PageHeader` / 页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回；组件可保留但业务页零引用
-8. 弹层文件名一律 `DialogXxx.vue`（可用 drawer，禁止 `DrawerXxx`）；`el-dialog` 默认视口居中（`App.vue` ConfigProvider `dialog.alignCenter`）
-9. 自定义列：`@ku-utils/r-custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
-10. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
+1. 页面根 `className`：`page-<业务>`
+2. 列表状态：`useTableQuery`（`filters` / `setListFilters` / `tableData` / `tableLoading` / `tableLoadFailed` / `search` / `reset` / `patchRow`）；fetcher 传 `AbortSignal`；分页用 `ListPaginationBar`，刷新留页 `onRefresh={() => void search(false)}`（对应 kv3 `refresh`）
+3. 表格用 `<TableWrap>` 包裹；antd `Table` 的 `className="do-inner-scroller page-table"`、`pagination={false}`
+4. 高度 `useAdminTableMaxHeight('.page-xxx', 400)`（基于 `@ku-utils/hooks-react` 的 `useMaxHeight`）→ `scroll={{ y: maxHeight }}`
+5. 筛选用 `DoFilterPanel`；placeholder「不限」；日期在前、radio 在后；离散完成即查（`setListFilters` 后 `search(true)`）；禁 `useEffect` 监听 filters 自动查；分组筛选 / 非表单节点用 `disableFold`
+6. **禁止页面态 PageHeader / 页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回
+7. 弹层文件名一律 `DialogXxx.tsx`（`Modal` 或 `Drawer`，禁止 `DrawerXxx`）；由父级 `open` + `onClose` / `onSuccess` 受控；默认视口居中（`App.tsx` ConfigProvider `modal={{ centered: true }}`）
+8. 自定义列：`@ku-utils/r-custom-columns` 的 `useSchemaColumnConfig` + `ColumnSchema`
+9. 分页实体外键 → `entity-selector` 金标（`SchoolSelector` 样板）
 
 ## Ant Design 反馈（React 19）
 
@@ -44,7 +43,7 @@ src/modules/<域>/<子业务>/
 - `main.tsx` 首行保留 `@ant-design/v5-patch-for-react-19`
 - 主题只在 `plugins/antdTheme.ts` 由 `@ku-utils/skin/tokens` 生成（含 Table 等组件 token）；样式颜色读 `var(--ku-*, <tome 浅色>)`，禁止 `--ant-*` 覆写与 antd 默认色
 
-全局组件（禁止业务页再 import）：`TableWrap`、`PageHeader`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`BasePagination` 等，见 `plugins/globalComponents.ts`。
+React 无全局组件：页面从 `@/components` 按需 import（`TableWrap`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`ListPaginationBar` 等）。
 
 局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`utils/scheduleTime.ts`）、`DialogPreviewVideo` / `openPreviewVideo`。
 
@@ -67,10 +66,11 @@ src/modules/<域>/<子业务>/
 | 基础组件 | `/example/ui-kit/*` | panel / cells / max-height / name-pattern / selector / words-tag / preview-video / schedule-week |
 | 筛选面板 | `/example/do-filter-panel/*` | 9 场景；见 skill `filter-panel-demo` |
 | 自定义列 | `/example/custom-columns/*` | 01–08 |
+| 多级导航 | `/example/nest-menus/*` | 4 个叶子 |
 
 ## Example 门控
 
-开发态 `VITE_APP_USE_EXAMPLE=1`。拷到业务仓后，生产构建应设为 `0`，并保留 `forbid-example-in-bundle` 插件。
+开发态 `VITE_APP_USE_EXAMPLE=1`；生产 `.env.production` 为 `0`，由 `vite/plugins/forbid-example-in-bundle.ts` 拦截产物中残留的 Demo。
 
 ## 专题 Rules（同目录）
 
@@ -78,8 +78,8 @@ src/modules/<域>/<子业务>/
 | --- | --- |
 | `project-structure` | Layer / `_module` / DialogXxx |
 | `mock-isolation` | Mock 边界与种子；信封 `code:0`/`data` |
-| `api-contract` | `requestXxx`、`$MAPS`、禁兼容 |
+| `api-contract` | `requestXxx`、`maps`、禁兼容 |
 | `entity-selector` | List 双模选择器（+ skill `selector`） |
 | `user-visible-copy` | 用户可见文案禁开发态泄漏 |
 | `task-ledger` | 精简台账 `docs/task/` |
-| `custom-columns-vue3-pattern` | 自定义列 |
+| `custom-columns-react-pattern` | 自定义列 |

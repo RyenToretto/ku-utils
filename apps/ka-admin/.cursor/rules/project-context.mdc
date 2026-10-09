@@ -41,7 +41,7 @@ src/modules/<域>/<子业务>/
 4. 高度 `injectAdminTableMaxHeight('.page-xxx', 400)` → `[nzScroll]="{ y: maxHeight() + 'px' }"`；列宽 `injectFlexColumns(COLUMNS, '.page-xxx')` → `[nzWidthConfig]`
 5. 筛选用 `ka-do-filter-panel`；placeholder「不限」；日期在前、radio 在后；离散完成即查（`setListFilters` 后 `search(true)`）；禁 `effect` 监听 filters 自动查
 6. **禁止页面态 PageHeader / 页级 title / subtitle**（顶栏 + 侧栏已表达身份）
-7. 弹层文件名一律 `dialog-xxx.ts`（含 nz-drawer，禁 `drawer-xxx`）；由父级 `[open]` + `(closed)` / `(success)` 驱动
+7. 弹层文件名一律 `dialog-xxx.ts`（含 nz-drawer，禁 `drawer-xxx`）；由父级 `[open]` + `(closed)` / `(success)` 驱动；默认视口居中（nz 无全局开关，`zorro-ku-bridge.scss` 全局 `.ant-modal-wrap` 居中，勿再写死 `top`）
 8. 自定义列：`@ku-utils/a-custom-columns` 的 `createSchemaColumnConfig` + `[kuSchemaColumnConfig]`
 9. 分页实体外键 → `entity-selector` 金标（`ka-school-selector` 样板）
 
@@ -54,6 +54,8 @@ src/modules/<域>/<子业务>/
 - 图标静态注册在 `plugins/zorro-icons.ts`，禁全量动态加载
 
 Angular 无全局组件：页面按需 `imports`（`TableWrap`、`DoFilterPanel`、`CellNameId`、`CellState`、`DateRange`、`ListPaginationBar` 等，均在 `src/components`）。
+
+局部引入（Demo / 业务按需）：`ScheduleTimeWeekPicker`（`components/schedule-time-week-picker.ts`）、`DialogPreviewVideo` / `openPreviewVideo`（`utils/preview-media.ts`）。
 
 ## 按钮状态（强制，四端一致）
 
@@ -78,7 +80,7 @@ Angular 无全局组件：页面按需 `imports`（`TableWrap`、`DoFilterPanel`
 
 ## Example 门控
 
-开发态 `environment.useExample = true`。`ng build --configuration business` 用 `fileReplacements` 把 `_example` 路由 / maps / 顶栏 Tab 换成 `src/stubs/*`，并由 esbuild 插件 `forbid-example-in-bundle` 拦截产物。
+开发态 `environment.useExample = true`；生产 `ng build`（production 配置）用 `fileReplacements` 把 `_example` 路由 / maps / 顶栏 Tab 换成 `src/stubs/*`，并由 esbuild 插件 `forbid-example-in-bundle` 拦截产物。
 
 ## 专题 Rules（同目录）
 

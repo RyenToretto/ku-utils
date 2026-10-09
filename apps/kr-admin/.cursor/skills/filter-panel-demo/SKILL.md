@@ -7,10 +7,10 @@ description: DoFilterPanel 专项 Demo 场景（按钮数 × 筛选项规模 / �
 
 ## 位置
 
-- 场景路由：`src/modules/_example/doFilterPanel/_router/index.ts`
-- 场景页：`_module/DoFilterPanelScenarioDemo.vue`（读 `route.meta.doFilterPanel`）
+- 场景路由：`src/modules/_example/doFilterPanel/_router/index.tsx`（`scenarioRoute` 工厂）
+- 场景页：`_module/DoFilterPanelScenarioDemo.tsx`（`useMatches()` 读末级路由 `handle.doFilterPanel`）
 - 工厂：`_utils/doFilterPanelDemo.ts`
-- 列表宿主：`simpleExample/.../SimpleExampleList.vue`（演示 props）
+- 列表宿主：`simpleExample/_module/SimpleExampleList.tsx`（演示 props）
 
 ## 场景字段
 
@@ -25,15 +25,15 @@ type DoFilterPanelDemoScenario = {
 
 ## 新增场景步骤
 
-1. 在 `_router/index.ts` 用 `scenarioRoute(path, name, title, desc, scenario)` 追加一条
-2. 在 `_example/index.vue` 侧栏「筛选面板」`children` 追加对应 path
-3. `meta.title` / `meta.desc` 用中文硬编码（无 i18n）
+1. 在 `_router/index.tsx` 用 `scenarioRoute(path, name, title, desc, scenario)` 追加一条
+2. 在 `_example/index.tsx` 侧栏「筛选面板」`children` 追加对应 path
+3. `handle.title` / `handle.desc` 用中文硬编码（无 i18n）
 
 ## SimpleExampleList 演示 props
 
 | prop                 | 作用                     |
 | -------------------- | ------------------------ |
-| `filterButtonCount`  | #ctl 按钮规模            |
+| `filterButtonCount`  | 控制区按钮规模           |
 | `filterFieldCount`   | 传入则工厂字段 Demo      |
 | `filterLine`         | 折叠行数                 |
 | `fillViewportLayout` | 根 class `fill-viewport` |

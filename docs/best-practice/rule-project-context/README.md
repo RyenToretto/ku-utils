@@ -1,10 +1,10 @@
 # rule-project-context — 项目上下文（瘦身壳）
 
 > **参考接入**：供本项目或其他项目接入 `.cursor/rules` 时参考，非运行时依赖。  
-> **本仓同步**：与根 / kv3-admin 的 `project-context.mdc` **双向同步**（见 [SYNC.md](../SYNC.md)）。  
+> **本仓同步**：与根及四端 admin 的 `project-context.mdc` **双向同步**（见 [SYNC.md](../SYNC.md)）。  
 > **来源提炼**：jx-dsp / oversea-creative-web 巨石 context 的「反模式教训」→ 本模块只保留壳层义务。
 
-**类型**：Cursor Rule（`.mdc`，`alwaysApply: true`）
+**类型**：Cursor Rule（`.mdc`）。根 context `alwaysApply: true`；子应用 context `alwaysApply: false`，靠 `description` 按需触发（写列表 / 表格 / 弹层等时读取）
 
 ## 设计原则：禁止巨石 context
 
@@ -62,6 +62,8 @@
 
 根 context（包地图、发版）+ 子应用 context（列表/合同）；子应用**不**重复根级包列表。
 
+子应用 context 段落（多端 starter 须同构）：身份（栈 + 端口 + 启动命令 + 消费的包）→ 目录骨架摘要 → 列表硬约束 → 按钮状态 → Demo 索引 → Example 门控 → 专题 Rules 索引。合同冻结表（信封码 / 载荷）委托 `api-contract` / `mock-isolation`，context 只在索引里一句话点明。
+
 ### 4. 禁止
 
 - 密钥、内网账号、真实 Cookie 写入 context
@@ -70,9 +72,9 @@
 ## 本仓落点
 
 - [`.cursor/rules/project-context.mdc`](../../../.cursor/rules/project-context.mdc)
-- [`apps/kv3-admin/.cursor/rules/project-context.mdc`](../../../apps/kv3-admin/.cursor/rules/project-context.mdc)（含专题 Rules 索引表）
+- `apps/{kv3,kv2,kr,ka}-admin/.cursor/rules/project-context.mdc`（各含专题 Rules 索引表；kr / ka 写各自栈的 API，不照抄 Vue）
 - kv3-admin 已落地专题：`project-structure` / `mock-isolation` / `api-contract` / `entity-selector`(+skill) / `user-visible-copy` / `task-ledger`（精简）/ `custom-columns` / `filter-panel-demo`
-- kv2-admin / kr-admin / ka-admin：同名 8 rules + 3 skills 四生对齐（见 [admin-parity](../admin-parity/)）
+- 四端同名 8 rules + 3 skills（kv2 另有 `element-ui-vs-plus`）四生对齐（见 [admin-parity](../admin-parity/)）
 - 同步机制：[`.cursor/rules/best-practice-sync.mdc`](../../../.cursor/rules/best-practice-sync.mdc)
 - 对照表：[SYNC.md](../SYNC.md)（`rule-fe-be-doc-sync` 仍为参考，按需升格）
 

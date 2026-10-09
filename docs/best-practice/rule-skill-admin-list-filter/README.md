@@ -1,7 +1,7 @@
 # rule-skill-admin-list-filter — 管理端列表 / 筛选
 
 > **参考接入**：列表页硬约束（表格、筛选、操作列、Cell、刷新）。  
-> **本仓同步**：与 kv3-admin `project-context` + `filter-panel-demo` **双向同步**（见 [SYNC.md](../SYNC.md)）。  
+> **本仓同步**：与四端 `project-context` + `filter-panel-demo` **双向同步**（见 [SYNC.md](../SYNC.md)）。  
 > **来源加强**：jx-dsp / oversea 列表专章；Mock 细则见 [rule-mock-isolation](../rule-mock-isolation/)，选择器见 [rule-skill-entity-selector](../rule-skill-entity-selector/)。
 
 **类型**：Cursor Rule + Skill（`.mdc` + `SKILL.md`）
@@ -22,8 +22,9 @@
 ### 页面与表格
 
 1. Layer 薄壳 + `_module/XxxList`；单根 `page-*`；Dialog 在根内。
-2. 列表状态：`useTableQuery`（abort / `tableLoadFailed` / `refresh`）；失败 `#empty` 有出口；有分页挂 `BasePagination` `enable-refresh`。
+2. 列表状态：`useTableQuery` / `injectTableQuery`（fetcher 传 `AbortSignal` / `tableLoadFailed` / 留页刷新）；失败态有重试出口；有分页挂刷新按钮（Vue `BasePagination` `enable-refresh` + `@refresh`；React / Angular `ListPaginationBar` 刷新调 `search(false)`）。
 3. **表格四要素**：`TableWrap`（Dialog 内嵌可省）+ `class="do-inner-scroller page-table hide-table-border"` + `border`/`stripe` + `:max-height`（页面用 admin maxHeight hook；**弹层表**用 drawer 专用 hook，禁写死 px）。
+   React / Angular 表格 class 只用 `do-inner-scroller page-table`，高度走 antd `scroll={{ y }}` / `[nzScroll]`。
 4. 两种滚动（可选）：区内滚动（默认）vs 整页滚动（高筛选页，表不传 max-height）。
 5. **禁止业务/Demo 页挂 `PageHeader`，禁止页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回。
 
@@ -34,7 +35,8 @@
 - 范围日期用封装 `DateRange`；默认可清空
 - 单选 ≤3 → 分段 radio（首项空=不限）；≥4/多选/长文案 → select
 - `#ctl` 横向贴卡片右下；搜索按钮只传 loading（禁同时 disabled），宽度由全局按钮样式保证不变（见下「按钮状态」）
-- **离散完成即查**（radio / select / DateRange / 选择器确定 / 关键字清空）；关键字打字不查；禁 `watch(listFilters)`
+- **离散完成即查**（radio / select / DateRange / 选择器确定 / 关键字清空）；关键字打字不查；禁监听筛选自动查（Vue `watch(listFilters)`、React `useEffect`、Angular `effect`）
+- 分组筛选 / 非表单节点用 `disableFold`（不参与折叠计数）
 
 ### 操作列与动作分区
 
@@ -62,7 +64,7 @@
 ### 排序 / 刷新 / 勾选
 
 - 合同已支持排序且产品需要 → 必须有 UI（`sortable="custom"` 或 `DoSorter`）；Mock 按同参排序
-- `search(true)` 回第 1 页；`refresh` 留页；轮询宜 silent
+- `search(true)` 回第 1 页；留页刷新 Vue `refresh`、React / Angular `search(false)`；轮询宜 silent
 - 勾选列：仅批量或选择器模式
 
 ### 写操作确认
@@ -71,7 +73,7 @@
 
 ### 全局组件
 
-已注册的 TableWrap / DoFilterPanel / Cell* / DateRange 等，业务页禁再 import。
+Vue 端已全局注册 TableWrap / DoFilterPanel / Cell* / DateRange 等，业务页禁再 import；React / Angular 无全局组件，从 `@/components` 按需 import / `imports`。
 
 ### Demo / Example
 
@@ -82,7 +84,7 @@
 - [`apps/kv3-admin/.cursor/rules/project-context.mdc`](../../../apps/kv3-admin/.cursor/rules/project-context.mdc)
 - [`apps/kv3-admin/.cursor/skills/filter-panel-demo/SKILL.md`](../../../apps/kv3-admin/.cursor/skills/filter-panel-demo/SKILL.md)
 - `apps/kv3-admin/docs/admin-list-page-pattern.md`
-- kv2-admin / kr-admin / ka-admin：同名 `project-context.mdc` + `skills/filter-panel-demo` + `docs/admin-list-page-pattern.md`（ka 为 Angular 写法：`injectTableQuery`、`ka-do-filter-panel`、路由 data 直绑 input）
+- kv2-admin / kr-admin / ka-admin：同名 `project-context.mdc` + `skills/filter-panel-demo` + `docs/admin-list-page-pattern.md`（kr 为 React 写法：场景挂路由 `handle.doFilterPanel`，页面 `useMatches()` 读取；ka 为 Angular 写法：`injectTableQuery`、`ka-do-filter-panel`、路由 data 直绑 input）
 
 ## 验收清单
 
