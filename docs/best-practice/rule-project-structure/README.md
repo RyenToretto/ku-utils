@@ -1,6 +1,6 @@
 # rule-project-structure — 目录结构与命名
 
-> **已落地**：`apps/kv3-admin/.cursor/rules/project-structure.mdc`  
+> **已落地**：`apps/{kv3,kv2,kr,ka}-admin/.cursor/rules/project-structure.mdc`  
 > **来源**：oversea `project-structure.mdc` + jx-dsp 模块组织节。  
 > **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
@@ -36,33 +36,36 @@
 ```text
 src/modules/<域>/<子业务>/
 ├── _api/          # requestXxx 唯一请求入口
-├── _map/          # 可选；聚合进域 _maps → $MAPS
+├── _map/          # 可选；聚合进域 _maps → 全局字典（Vue `$MAPS`；React / Angular `@/maps`）
 ├── _mock/         # 仅 Mock 插件加载
 ├── _module/       # XxxList / DialogXxx / XxxSelector
+├── _router/       # 本子业务路由（default export）
 └── XxxLayer.vue   # 薄壳：单根 page-*；只挂 List + 根内 Dialog
 ```
 
-- **`_router` / `_locales`**：仅域根（glob 扫域级）
+- **`_router`**：子业务只导出本业务路由；域根 `_router/index.ts` 静态 import 汇总各子业务
 - **禁止**为旧 path 保留空壳域；redirect 挂现行域 `_router`
-- `src/views/` 只留 403/404/会话失效
+- `src/views/` 只放全局状态页（无权限 / 账号异常 / 登出 / 即将上线等），业务页一律在 `src/modules`
 
 ### 命名
 
-| 用途              | 命名                                             |
-| ----------------- | ------------------------------------------------ |
-| 路由落点          | `XxxLayer.vue`                                   |
-| 表格              | `_module/XxxList.vue`                            |
-| 弹层（含 drawer） | **`DialogXxx.vue`**（禁 `DrawerXxx`）            |
-| 选择器            | `XxxSelector.vue` + `DialogSelectXxx.vue`        |
-| HTTP              | `_api` 内 **`requestXxx`**（禁 `fetch*` 作入口） |
+| 用途              | 命名                                                   |
+| ----------------- | ------------------------------------------------------ |
+| 路由落点          | `XxxLayer.vue`                                         |
+| 表格              | `_module/XxxList.vue`                                  |
+| 弹层（含 drawer） | **`DialogXxx.vue`**（禁 `DrawerXxx`）                  |
+| 选择器            | `XxxSelector.vue` + `DialogSelectXxx.vue`              |
+| HTTP              | `_api` 内 **`requestXxx`**（禁 `fetchXxx` 作请求入口） |
+
+React 端扩展名为 `.tsx`；Angular 端 kebab-case（`xxx-layer.ts` / `dialog-xxx.ts` / `xxx-selector.ts`）。
 
 ### 具象化命名（变量）
 
-禁泛称：`form`→`loginForm`，`filters`→`listFilters`，`loading`→`tableLoading`/`submitLoading`，`visible`→`dialogVisible`。Vue 标准 `router`/`route`/`emit` 可不改。
+禁泛称：`form`→`loginForm`，`filters`→`listFilters`，`loading`→`tableLoading`/`submitLoading`，`visible`→`dialogVisible`（React / Angular 为 `open` / `editOpen`）。Vue 标准 `router`/`route`/`emit` 可不改。
 
-### `v-loading`
+### 表格 loading
 
-绑在 `el-table`（或根为 table 的 List）上；禁挂 `TableWrap`；`DoFilterPanel` 的 loading 只禁用搜索按钮。
+绑在表格本身（`el-table` 的 `v-loading`、antd `Table` 的 `loading`、`nz-table` 的 `[nzLoading]`）；禁挂 `TableWrap`；`DoFilterPanel` 的 `loading` 只让搜索按钮进入 loading（不禁用筛选项）。
 
 ## 验收清单
 

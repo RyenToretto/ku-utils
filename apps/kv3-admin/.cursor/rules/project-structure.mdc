@@ -22,10 +22,12 @@ src/modules/<域>/<子业务>/
 ├── _map/          # 可选 → $MAPS
 ├── _mock/         # 仅 Mock 插件加载
 ├── _module/       # XxxList / DialogXxx / XxxSelector
+├── _router/       # 本子业务路由（default export）
 └── XxxLayer.vue   # 薄壳 page-*；只挂 List + 根内 Dialog
 ```
 
-- `_router` 在域根；禁止为空壳旧 path 保留空域目录
+- 子业务 `_router` 只导出本业务路由；域根 `_router/index.ts` 静态 import 汇总各子业务；禁止为空壳旧 path 保留空域目录
+- `src/views/` 只放全局状态页（无权限 / 账号异常 / 登出 / 即将上线等），业务页一律在 `src/modules`
 - Example 仅 `VITE_APP_USE_EXAMPLE=1`；业务禁静态 import `_example`
 
 ## 命名
@@ -36,9 +38,9 @@ src/modules/<域>/<子业务>/
 | 表格 | `_module/XxxList.vue` |
 | 弹层（含 drawer） | `DialogXxx.vue`（禁 `DrawerXxx`） |
 | 选择器 | `XxxSelector` + `DialogSelectXxx` |
-| HTTP | `_api` 内 `requestXxx` |
+| HTTP | `_api` 内 `requestXxx`（禁 `fetchXxx` 作请求入口） |
 
 ## 具象化变量名
 
 `form`→`*Form`，`filters`→`listFilters`，`loading`→`tableLoading`/`submitLoading`，`visible`→`dialogVisible`。  
-`v-loading` 绑在 `el-table` 上，禁挂 `TableWrap`。
+`v-loading` 绑在 `el-table` 上，禁挂 `TableWrap`；`DoFilterPanel` 的 `loading` 只让搜索按钮进入 loading（不禁用筛选项）。

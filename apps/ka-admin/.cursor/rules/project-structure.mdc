@@ -26,6 +26,8 @@ src/modules/<域>/<子业务>/
 └── xxx-layer.ts   # 薄壳 page-*；只挂 List + 根内 Dialog（export default）
 ```
 
+- 子业务 `_router` 只导出本业务路由；域根 `_router/index.ts` 静态 import 汇总各子业务；禁止为空壳旧 path 保留空域目录
+- `src/views/` 只放全局状态页（无权限 / 账号异常 / 登出 / 即将上线等），业务页一律在 `src/modules`
 - 业务禁静态 import `_example`；Example 只在 `useExample` 构建里装配
 
 ## 命名
@@ -36,10 +38,10 @@ src/modules/<域>/<子业务>/
 | 表格 | `_module/xxx-list.ts` / `XxxList` | `ka-xxx-list` |
 | 弹层（含 drawer） | `dialog-xxx.ts` / `DialogXxx`（禁 `drawer-xxx`） | `ka-dialog-xxx` |
 | 选择器 | `xxx-selector.ts` + `dialog-select-xxx.ts` | `ka-xxx-selector` |
-| HTTP | `_api` 内 `XxxApi.requestXxx` | — |
+| HTTP | `_api` 内 `XxxApi.requestXxx`（禁 `fetchXxx` 作请求入口） | — |
 | 注入函数 | `src/composables/inject-xxx.ts` / `injectXxx()` | — |
 
 ## 具象化变量名
 
 `form`→`xxxForm`，`filters`→`query.filters()`，`loading`→`tableLoading`/`submitLoading`，`visible`→`open`/`editOpen`。
-`[nzLoading]` 绑在 `nz-table` 上，禁挂 `ka-table-wrap`。
+`[nzLoading]` 绑在 `nz-table` 上，禁挂 `ka-table-wrap`；`ka-do-filter-panel` 的 `loading` 只让搜索按钮进入 loading（不禁用筛选项）。
