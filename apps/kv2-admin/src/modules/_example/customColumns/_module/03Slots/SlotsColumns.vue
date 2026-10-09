@@ -28,14 +28,22 @@
         />
         <el-table-column
           v-for="schema in visibleSchemas"
-          :key="schema.prop || schema.label"
+          :key="schema.prop"
           :prop="schema.prop"
           :label="schema.label"
           :min-width="schema.minWidth || undefined"
           :align="schema.align || 'left'"
         >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
+          <template #default="{ row, column }">
+            <span
+              v-if="schema.prop === 'roi'"
+              :class="row.roi >= 1.8 ? 'roi-high' : 'roi-normal'"
+            >
+              {{ formatSchemaCell(row[column.property], schema) }}
+            </span>
+            <template v-else>
+              {{ formatSchemaCell(row[column.property], schema) }}
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -47,7 +55,7 @@
 import { useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
 
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
-import { SLOTS_COLUMN_SCHEMAS } from '@/modules/_example/customColumns/_utils/demoSchemas';
+import { BASIC_COLUMN_SCHEMAS } from '@/modules/_example/customColumns/_utils/demoSchemas';
 import { useCustomColumnsDemoData } from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
 export default {
@@ -62,7 +70,7 @@ export default {
     return {
       schemaStorageKey: 'kv2-example-slots',
       schemaVersion: 1,
-      columnSchemas: SLOTS_COLUMN_SCHEMAS,
+      columnSchemas: BASIC_COLUMN_SCHEMAS,
       alwaysVisibleColumns: [
         { prop: 'id', label: 'ID' },
         { prop: 'name', label: '名称' },
@@ -71,3 +79,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.roi-high {
+  color: var(--ku-color-success);
+  font-weight: 600;
+}
+.roi-normal {
+  color: var(--ku-text-secondary);
+}
+</style>

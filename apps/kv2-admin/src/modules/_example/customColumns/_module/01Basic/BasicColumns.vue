@@ -9,9 +9,10 @@
         v-loading="tableLoading"
         class="do-inner-scroller page-table hide-table-border"
         :max-height="maxHeight"
-        :data="tableData"
+        :data="sortedTableData"
         border
         stripe
+        @sort-change="handleSortChange"
       >
         <el-table-column
           label="ID"
@@ -28,14 +29,15 @@
         />
         <el-table-column
           v-for="schema in visibleSchemas"
-          :key="schema.prop || schema.label"
+          :key="schema.prop"
           :prop="schema.prop"
           :label="schema.label"
           :min-width="schema.minWidth || undefined"
           :align="schema.align || 'left'"
+          :sortable="schema.sortable ? 'custom' : false"
         >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
+          <template #default="{ row, column }">
+            {{ formatSchemaCell(row[column.property], schema) }}
           </template>
         </el-table-column>
       </el-table>
@@ -67,7 +69,24 @@ export default {
         { prop: 'id', label: 'ID' },
         { prop: 'name', label: '名称' },
       ],
+      sortProp: '',
+      sortOrder: null,
     };
+  },
+  computed: {
+    sortedTableData() {
+      const list = [...this.tableData];
+      if (!this.sortProp || !this.sortOrder) return list;
+      const prop = this.sortProp;
+      const factor = this.sortOrder === 'ascending' ? 1 : -1;
+      return list.sort((a, b) => (Number(a[prop] ?? 0) - Number(b[prop] ?? 0)) * factor);
+    },
+  },
+  methods: {
+    handleSortChange({ prop, order }) {
+      this.sortProp = prop || '';
+      this.sortOrder = order;
+    },
   },
 };
 </script>

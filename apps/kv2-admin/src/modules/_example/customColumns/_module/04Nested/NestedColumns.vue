@@ -26,25 +26,19 @@
           min-width="120"
           fixed="left"
         />
-        <el-table-column
+        <SchemaColumn
           v-for="schema in visibleSchemas"
           :key="schema.prop || schema.label"
-          :prop="schema.prop"
-          :label="schema.label"
-          :min-width="schema.minWidth || undefined"
-          :align="schema.align || 'left'"
-        >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
-          </template>
-        </el-table-column>
+          :schema="schema"
+          :format-cell="formatSchemaCell"
+        />
       </el-table>
     </TableWrap>
   </div>
 </template>
 
 <script>
-import { useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
+import { SchemaColumn, useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
 
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
 import { NESTED_COLUMN_SCHEMAS } from '@/modules/_example/customColumns/_utils/demoSchemas';
@@ -52,6 +46,7 @@ import { useCustomColumnsDemoData } from '@/modules/_example/customColumns/_util
 
 export default {
   name: 'NestedColumns',
+  components: { SchemaColumn },
   mixins: [useSchemaColumnConfig],
   setup() {
     const { tableLoading, tableData } = useCustomColumnsDemoData();

@@ -9,7 +9,7 @@
         v-loading="tableLoading"
         class="do-inner-scroller page-table hide-table-border"
         :max-height="maxHeight"
-        :data="tableData"
+        :data="versionTableData"
         border
         stripe
       >
@@ -28,14 +28,14 @@
         />
         <el-table-column
           v-for="schema in visibleSchemas"
-          :key="schema.prop || schema.label"
+          :key="schema.prop"
           :prop="schema.prop"
           :label="schema.label"
           :min-width="schema.minWidth || undefined"
           :align="schema.align || 'left'"
         >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
+          <template #default="{ row, column }">
+            {{ formatSchemaCell(row[column.property], schema) }}
           </template>
         </el-table-column>
       </el-table>
@@ -61,13 +61,18 @@ export default {
   data() {
     return {
       schemaStorageKey: 'kv2-example-version',
-      schemaVersion: 1,
+      schemaVersion: 2,
       columnSchemas: VERSION_COLUMN_SCHEMAS,
       alwaysVisibleColumns: [
         { prop: 'id', label: 'ID' },
         { prop: 'name', label: '名称' },
       ],
     };
+  },
+  computed: {
+    versionTableData() {
+      return this.tableData.map((row) => ({ ...row, cvtRate: row.rate }));
+    },
   },
 };
 </script>

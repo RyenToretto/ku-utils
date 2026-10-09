@@ -5,7 +5,7 @@ description: Vue2 自定义列接入指南（@ku-utils/v2-custom-columns）。�
 
 # Vue2 自定义列接入 Skill
 
-`@ku-utils/v2-custom-columns` 是基于 Vue 2.7 + Element UI 的自定义列方案：核心是 `useSchemaColumnConfig` **mixin**（Options API），通过 `provide('crud', this)` 让 `DoTableHeader` / `DoConfigColumnDialog` / `DoReadColumnConfig` 读写列配置；schema 驱动 `v-for` 渲染，配置持久化到 localStorage。包为纯 JS，不导出 TS 类型，无 `messages` 选项（弹窗文案包内中文）。
+`@ku-utils/v2-custom-columns` 是基于 Vue 2.7 + Element UI 的自定义列方案：核心是 `useSchemaColumnConfig` **mixin**（Options API），通过 `provide('crud', this)` 让 `DoTableHeader` / `DoConfigColumnDialog` / `DoReadColumnConfig` 读写列配置；schema 驱动 `v-for` 渲染（嵌套表头用 `SchemaColumn`），配置持久化到 localStorage。无 `messages` 选项（弹窗文案包内中文）；类型由包导出。
 
 ## Step 0：确认依赖
 
@@ -20,10 +20,10 @@ import '@ku-utils/v2-custom-columns/style';
 
 ## Step 1：定义列 schema
 
-在模块 `_utils/xxxColumnSchemas.ts` 导出 schema 数组（`ColumnSchema` 类型在仓内声明）：
+在模块 `_utils/xxxColumnSchemas.ts` 导出 schema 数组：
 
 ```ts
-import type { ColumnSchema } from '@/modules/<域>/<子业务>/_utils/columnSchema';
+import type { ColumnSchema } from '@ku-utils/v2-custom-columns';
 
 export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
   { prop: 'nickname', label: '昵称', group: '基础信息', minWidth: 120 },
@@ -52,6 +52,9 @@ export const USER_COLUMN_SCHEMAS: ColumnSchema[] = [
 - `label`：列头文字
 - `group`：弹窗左侧分组（默认「未分组」）
 - `renderType` / `renderArgs`：内置格式化（text / integer / float / percent）
+- `cellComponent`：自定义单元格组件（props: row/column/index/schema）
+- `renderHeader` / `headerTooltip`：自定义列头（`renderHeader` 为 `(h, { column, $index }) => VNode`）
+- `elAttrs`：透传 `el-table-column` 原生属性
 - `isDefault`：无缓存时默认显示
 - `children`：嵌套表头子列
 - `fixed`：固定列（弹窗中不可取消勾选）
@@ -85,21 +88,35 @@ export default {
     <el-table-column prop="id" label="ID" fixed="left" width="80" />
     <el-table-column
       v-for="schema in visibleSchemas"
-      :key="schema.prop || schema.label"
+      :key="schema.prop"
       :prop="schema.prop"
       :label="schema.label"
       :min-width="schema.minWidth || undefined"
       :align="schema.align || 'left'"
+      v-bind="schema.elAttrs || {}"
     >
-      <template #default="{ row }">
-        {{ formatSchemaCell(row[schema.prop], schema) }}
+      <template #default="{ row, column, $index }">
+        <component :is="schema.cellComponent" v-if="schema.cellComponent"
+          :row="row" :column="column" :index="$index" :schema="schema" />
+        <span v-else>{{ formatSchemaCell(row[column.property], schema) }}</span>
       </template>
     </el-table-column>
   </el-table>
 </TableWrap>
 ```
 
-嵌套表头：`visibleSchemas` 返回裁剪后的树，用局部递归列组件渲染 `children`（包不提供递归组件）。
+嵌套表头改用包内递归组件（`components: { SchemaColumn }`）：
+
+```vue
+<SchemaColumn
+  v-for="schema in visibleSchemas"
+  :key="schema.prop || schema.label"
+  :schema="schema"
+  :format-cell="formatSchemaCell"
+/>
+```
+
+`cellComponent` 写在 `data()` 时用 `markRaw()` 包住，避免组件选项被深度响应化。各写法范本见 `src/modules/_example/customColumns/`（01–08 与 kv3 Demo 一一对应）。
 
 ## API 速查
 

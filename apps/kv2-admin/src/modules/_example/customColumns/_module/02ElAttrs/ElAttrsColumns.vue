@@ -28,14 +28,15 @@
         />
         <el-table-column
           v-for="schema in visibleSchemas"
-          :key="schema.prop || schema.label"
+          :key="schema.prop"
           :prop="schema.prop"
           :label="schema.label"
           :min-width="schema.minWidth || undefined"
           :align="schema.align || 'left'"
+          v-bind="schema.elAttrs || {}"
         >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
+          <template #default="{ row, column }">
+            {{ formatSchemaCell(row[column.property], schema) }}
           </template>
         </el-table-column>
       </el-table>
@@ -47,7 +48,6 @@
 import { useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
 
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
-import { EL_ATTRS_COLUMN_SCHEMAS } from '@/modules/_example/customColumns/_utils/demoSchemas';
 import { useCustomColumnsDemoData } from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
 export default {
@@ -62,7 +62,34 @@ export default {
     return {
       schemaStorageKey: 'kv2-example-el-attrs',
       schemaVersion: 1,
-      columnSchemas: EL_ATTRS_COLUMN_SCHEMAS,
+      columnSchemas: [
+        {
+          prop: 'amount',
+          label: '数量',
+          minWidth: 100,
+          align: 'right',
+          renderType: 'integer',
+          isDefault: true,
+          elAttrs: { 'show-overflow-tooltip': true },
+        },
+        {
+          prop: 'cost',
+          label: '成本（超长提示）',
+          minWidth: 140,
+          align: 'right',
+          renderType: 'float',
+          isDefault: true,
+          elAttrs: { 'show-overflow-tooltip': true },
+        },
+        {
+          prop: 'roi',
+          label: 'ROI',
+          minWidth: 100,
+          align: 'right',
+          renderType: 'float',
+          isDefault: true,
+        },
+      ],
       alwaysVisibleColumns: [
         { prop: 'id', label: 'ID' },
         { prop: 'name', label: '名称' },

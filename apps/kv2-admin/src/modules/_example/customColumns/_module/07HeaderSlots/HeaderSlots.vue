@@ -26,16 +26,33 @@
           min-width="120"
           fixed="left"
         />
+        <SchemaColumn
+          v-for="schema in schemaColumnList"
+          :key="schema.prop"
+          :schema="schema"
+          :format-cell="formatSchemaCell"
+        />
         <el-table-column
-          v-for="schema in visibleSchemas"
-          :key="schema.prop || schema.label"
+          v-for="schema in templateHeaderSchemas"
+          :key="schema.prop"
           :prop="schema.prop"
           :label="schema.label"
           :min-width="schema.minWidth || undefined"
           :align="schema.align || 'left'"
         >
-          <template #default="{ row }">
-            {{ formatSchemaCell(row[schema.prop], schema) }}
+          <template #header>
+            <BadgeHeader
+              v-if="schema.prop === 'cost'"
+              :label="schema.label"
+            />
+            <TrendHeader
+              v-else-if="schema.prop === 'roi'"
+              :label="schema.label"
+            />
+            <span v-else>{{ schema.label }}</span>
+          </template>
+          <template #default="{ row, column }">
+            {{ formatSchemaCell(row[column.property], schema) }}
           </template>
         </el-table-column>
       </el-table>
@@ -44,14 +61,17 @@
 </template>
 
 <script>
-import { useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
+import { SchemaColumn, useSchemaColumnConfig } from '@ku-utils/v2-custom-columns';
+
+import BadgeHeader from './headers/BadgeHeader.vue';
+import TrendHeader from './headers/TrendHeader.vue';
 
 import { useAdminTableMaxHeight } from '@/composables/useAdminTableMaxHeight';
-import { HEADER_SLOTS_COLUMN_SCHEMAS } from '@/modules/_example/customColumns/_utils/demoSchemas';
 import { useCustomColumnsDemoData } from '@/modules/_example/customColumns/_utils/useCustomColumnsDemoData';
 
 export default {
   name: 'HeaderSlots',
+  components: { BadgeHeader, SchemaColumn, TrendHeader },
   mixins: [useSchemaColumnConfig],
   setup() {
     const { tableLoading, tableData } = useCustomColumnsDemoData();
@@ -61,13 +81,56 @@ export default {
   data() {
     return {
       schemaStorageKey: 'kv2-example-header-slots',
-      schemaVersion: 1,
-      columnSchemas: HEADER_SLOTS_COLUMN_SCHEMAS,
+      schemaVersion: 2,
+      columnSchemas: [
+        {
+          prop: 'amount',
+          label: '数量',
+          minWidth: 110,
+          align: 'right',
+          renderType: 'integer',
+          headerTooltip: '投放量（headerTooltip）',
+          isDefault: true,
+        },
+        {
+          prop: 'score',
+          label: '评分',
+          minWidth: 120,
+          align: 'right',
+          renderType: 'integer',
+          renderHeader: (h) => h(TrendHeader, { props: { label: '评分' } }),
+          isDefault: true,
+        },
+        {
+          prop: 'cost',
+          label: '成本',
+          minWidth: 110,
+          align: 'right',
+          renderType: 'float',
+          isDefault: true,
+        },
+        {
+          prop: 'roi',
+          label: 'ROI',
+          minWidth: 100,
+          align: 'right',
+          renderType: 'float',
+          isDefault: true,
+        },
+      ],
       alwaysVisibleColumns: [
         { prop: 'id', label: 'ID' },
         { prop: 'name', label: '名称' },
       ],
     };
+  },
+  computed: {
+    schemaColumnList() {
+      return this.visibleSchemas.filter((s) => s.prop === 'amount' || s.prop === 'score');
+    },
+    templateHeaderSchemas() {
+      return this.visibleSchemas.filter((s) => s.prop === 'cost' || s.prop === 'roi');
+    },
   },
 };
 </script>

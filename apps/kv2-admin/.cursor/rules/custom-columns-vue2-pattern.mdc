@@ -1,17 +1,19 @@
 ---
 description: Vue 2.7 自定义列模式约束（@ku-utils/v2-custom-columns）
 globs:
+  - '**/*Columns*.vue'
+  - '**/*List.vue'
 alwaysApply: false
 ---
 
 # DoCustomColumns（Vue 2.7）开发模式
 
-`@ku-utils/v2-custom-columns` 是 **Options API mixin**：`mixins: [useSchemaColumnConfig]` + `data()` 声明 schema + 模板 `v-for="schema in visibleSchemas"`。包为纯 JS，无 composable、无 `SchemaColumn` 组件、无 `messages` 选项（弹窗文案包内中文）。
+`@ku-utils/v2-custom-columns` 是 **Options API mixin**：`mixins: [useSchemaColumnConfig]` + `data()` 声明 schema + 模板 `v-for="schema in visibleSchemas"`。无 composable、无 `messages` 选项（弹窗文案包内中文）；`ColumnSchema` 等类型与递归列组件 `SchemaColumn` 由包导出。
 
 ## 接入要求
 
 1. `src/main.ts` 只全局引入一次 `@ku-utils/v2-custom-columns/style`；`DoTableHeader` 由 `TableWrap` 在 `enable-do-header` 时渲染，页面不再 import
-2. 复杂 schema 放入同模块 `_utils/*Schemas.ts`；`ColumnSchema` 类型为仓内声明（包不导出类型）；叶子列 `prop` 全局稳定且唯一
+2. 复杂 schema 放入同模块 `_utils/*Schemas.ts`，类型用包导出的 `ColumnSchema`；叶子列 `prop` 全局稳定且唯一
 3. 表格放在独立 `XxxList.vue`；`mixins: [useSchemaColumnConfig]`，`data()` 提供 `columnSchemas`、唯一 `schemaStorageKey`、从 1 开始的 `schemaVersion`
 4. 固定身份列和操作列写在 `v-for` 之外，并在 `alwaysVisibleColumns` 登记（弹窗固定区置顶展示）
 5. `TableWrap` 启用 `enable-do-header`，并设置 `:disabled-column-config="false"`
@@ -35,8 +37,8 @@ export default {
 
 ## 约束
 
-- 数字列右对齐，并按金额、整数、比例语义格式化（`formatSchemaCell(row[schema.prop], schema)`）
+- 数字列右对齐，并用 `renderType`（`integer` / `float` / `percent`）+ `renderArgs` 由 `formatSchemaCell` 内置格式化
 - 字段新增通常不升级 `schemaVersion`；字段重命名、删除或语义破坏性变化必须升级（存储 key 含 `_sv${schemaVersion}`，旧缓存自然失效）
 - `schemaStorageKey` 不得跨页面复用；禁止手写 localStorage 或另建 `visibleColumns` 状态
-- 嵌套表头：`visibleSchemas` 返回裁剪后的树，模板须递归渲染 `children`（自写局部递归列组件，包不提供）
-- 自定义 cell 使用独立 Vue 2.7 SFC；`ElementTableColumnAdapter` 只服务旧 `tableControl` 迁移，新页面禁用
+- 嵌套表头使用包提供的 `SchemaColumn`；自定义 cell 使用独立 Vue 2.7 SFC，写进 `data()` 时用 `markRaw()` 包住；`ElementTableColumnAdapter` 只服务旧 `tableControl` 迁移，新页面禁用
+- 交互与 Vue 3 / React / Angular 包 1:1；改一端须同步另三端
