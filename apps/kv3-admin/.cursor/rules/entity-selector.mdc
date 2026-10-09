@@ -23,7 +23,7 @@ alwaysApply: false
 | 列表（页面 + 选择器共用） | **`XxxList.vue`** | `SchoolResourceList.vue` |
 | 选择器控件（假 select） | **`XxxSelector.vue`** | `SchoolSelector.vue` |
 | 选值弹层（薄壳） | **`DialogSelectXxx.vue`** | `DialogSelectSchoolResource.vue`（即使是 `el-drawer`） |
-| Demo 壳 | `XxxSelectorDemoLayer.vue` | `modules/_example/<kebab>Selector/` |
+| Demo 壳 | `XxxSelectorDemoLayer.vue` | `modules/_example/<camel>Selector/` |
 | Demo 编辑弹层 | `DialogEditXxxSelectorDemo.vue` | 筛选区之外的「新增/编辑」回填验证 |
 
 ### 禁止
@@ -162,4 +162,4 @@ XxxSelector ──► DialogSelectXxx.show()
 3. `DialogSelectXxx` 是否仍含 `useTableQuery`？→ 违规，收到 `XxxList`
 4. 接口支持新建/编辑/删除时，选择器态是否可操作？→ 必须；新建在操作列表头且与页面态同形
 5. Demo 三件套齐全？
-6. `pnpm type-check`（本仓）
+6. `pnpm --filter @ku-utils/kv3-admin typecheck`

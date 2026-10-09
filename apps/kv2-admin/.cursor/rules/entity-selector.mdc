@@ -23,7 +23,7 @@ alwaysApply: false
 | 列表（页面 + 选择器共用） | **`XxxList.vue`** | `SchoolResourceList.vue` |
 | 选择器控件（假 select） | **`XxxSelector.vue`** | `SchoolSelector.vue` |
 | 选值弹层（薄壳） | **`DialogSelectXxx.vue`** | `DialogSelectSchoolResource.vue`（即使是 `el-drawer`） |
-| Demo 壳 | `XxxSelectorDemoLayer.vue` | `modules/_example/<kebab>Selector/` |
+| Demo 壳 | `XxxSelectorDemoLayer.vue` | `modules/_example/<camel>Selector/` |
 | Demo 编辑弹层 | `DialogEditXxxSelectorDemo.vue` | 筛选区之外的「新增/编辑」回填验证 |
 
 ### 禁止
@@ -123,8 +123,8 @@ XxxSelector ──► DialogSelectXxx.show()
 
 ### B. `DialogSelectXxx` 薄壳
 
-1. `el-drawer`：`class` 含 **`drawer-model-selector`**；`append-to-body`；`destroy-on-close`；`size` 约 960px；`:close-on-click-modal="false"`
-2. 结构：`#header` 标题 → `do-drawer__view` 内 **仅** `<XxxList enable-selector in-dialog ... />` → `#footer`（已选文案 + 取消/确定）
+1. `el-drawer`（Element UI）：`:visible.sync`；`custom-class="drawer-model-selector"`；`append-to-body`；`destroy-on-close`；`size="960px"`；`:wrapper-closable="false"` + `:close-on-press-escape="false"`
+2. 结构：`#title` 标题 → `do-drawer__view` 内 **仅** `<XxxList enable-selector in-dialog ... />` → 抽屉内容区底部 `.do-drawer__foot_btn`（已选文案 + 取消/确定；Element UI 抽屉无 footer 插槽）
 3. **禁止**壳内 `useTableQuery` / 列定义 / `requestXxxPage`
 4. `visibleTable`：`destroy-on-close` 后重建 List
 5. **禁止**外壳再挂 `v-loading`（只留表内 `tableLoading`，避免双圈）
@@ -136,7 +136,7 @@ XxxSelector ──► DialogSelectXxx.show()
 1. 假 `el-select`：`popper-class` 非 scoped `display: none !important`
 2. `@visible-change` → blur + `DialogSelectXxx.show(当前值)`
 3. `el-option` 仅回显已选；多选 collapse-tags + hover tags 浮层（`do-selector-tags-panel`）
-4. `v-model`：`{ id: string, label, item }`；单选对象/`null`，多选数组
+4. `v-model`（Vue 2：`value` + `input` 事件）：`{ id: string, label, item }`；单选对象/`null`，多选数组
 
 ### D. 独立 Demo（强制）
 
@@ -162,4 +162,4 @@ XxxSelector ──► DialogSelectXxx.show()
 3. `DialogSelectXxx` 是否仍含 `useTableQuery`？→ 违规，收到 `XxxList`
 4. 接口支持新建/编辑/删除时，选择器态是否可操作？→ 必须；新建在操作列表头且与页面态同形
 5. Demo 三件套齐全？
-6. `pnpm type-check`（本仓）
+6. `pnpm --filter @ku-utils/kv2-admin typecheck`

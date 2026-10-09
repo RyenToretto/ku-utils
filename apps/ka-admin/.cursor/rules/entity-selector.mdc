@@ -131,7 +131,7 @@ xxx-selector ──► dialog-select-xxx ([open]=true)
 1. 侧栏独立叶子 + 路由 `/example/<kebab>-selector/demo`
 2. **筛选区**：单选 + 多选各一枚 `xxx-selector`
 3. **新增/编辑弹层**：`dialog-edit-xxx-selector-demo`
-4. 仅 `useExample` 构建；`business` 构建必须换 stubs
+4. 仅开发态 `useExample`；生产构建必须换 stubs
 
 ## 本仓合同（ka-admin）
 

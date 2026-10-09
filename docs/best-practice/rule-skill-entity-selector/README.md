@@ -1,6 +1,6 @@
 # rule-skill-entity-selector — 实体选择器
 
-> **已落地**：`apps/kv3-admin/.cursor/rules/entity-selector.mdc` + `skills/selector/SKILL.md`  
+> **已落地**：`apps/{kv3,kv2,kr,ka}-admin/.cursor/rules/entity-selector.mdc` + `skills/selector/SKILL.md`  
 > **来源**：oversea `selector-best-practices`（取其精华：List 双模、写能力、筛项锁定、薄壳、Demo；去其糟粕：不强制 vue-i18n、不照搬 `0000`/`result`、不引入 HTTP 适配层）。  
 > **同步**：改本模块或 `.cursor` 须双向更新，见 [SYNC.md](../SYNC.md)。
 
@@ -8,13 +8,13 @@
 
 ## 本仓落点
 
-| 路径                                                                           | 说明                                            |
-| ------------------------------------------------------------------------------ | ----------------------------------------------- |
-| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`                             | List 双模硬约束                                 |
-| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`                              | 新建选择器步骤                                  |
-| `schoolResource` List + DialogSelect + SchoolSelector                          | 金标样板                                        |
-| `schoolSelector` Demo                                                          | `/example/school-selector/demo`                 |
-| `apps/{kv2,kr,ka}-admin/.cursor/rules/entity-selector.mdc` + `skills/selector` | 四生同名；ka 选择器为 CVA，抽屉由 `[open]` 驱动 |
+| 路径                                                                           | 说明                                                                                 |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `apps/kv3-admin/.cursor/rules/entity-selector.mdc`                             | List 双模硬约束                                                                      |
+| `apps/kv3-admin/.cursor/skills/selector/SKILL.md`                              | 新建选择器步骤                                                                       |
+| `schoolResource` List + DialogSelect + SchoolSelector                          | 金标样板                                                                             |
+| `schoolSelector` Demo                                                          | `/example/school-selector/demo`                                                      |
+| `apps/{kv2,kr,ka}-admin/.cursor/rules/entity-selector.mdc` + `skills/selector` | 四生同名；kr 抽屉由 `open` 受控 + `onConfirm`，ka 选择器为 CVA、抽屉由 `[open]` 驱动 |
 
 ## 推进接入分数
 
@@ -35,20 +35,20 @@
 
 ### 分页 → List 双模
 
-| 文件                  | 职责                                    |
-| --------------------- | --------------------------------------- |
-| `XxxList.vue`         | **唯一**表格逻辑；`enableSelector` 分叉 |
-| `XxxSelector.vue`     | 假 select + 开抽屉                      |
-| `DialogSelectXxx.vue` | 薄壳 `show()`，内挂 List                |
+| 文件              | 职责                                                                 |
+| ----------------- | -------------------------------------------------------------------- |
+| `XxxList`         | **唯一**表格逻辑；`enableSelector` 分叉                              |
+| `XxxSelector`     | 假 select + 开抽屉（受控值，可直接进表单项）                         |
+| `DialogSelectXxx` | 薄壳，内挂 List；Vue 用 `show()`，React / Angular 由父级 `open` 受控 |
 
-禁止 Dialog 内第二套表；禁止 remote `el-select` 截断首屏。
+扩展名按栈：Vue `.vue`、React `.tsx`、Angular kebab-case `.ts`。**禁止**命名 `XxxSelect` / `XxxPicker` / `DrawerSelectXxx`；禁止 Dialog 内第二套表；禁止远程下拉截断首屏冒充分页。
 
 ### 选择器态硬约束
 
-- 筛项同形保留；锁定用 `:disabled`，禁 `v-if` 藏
+- 筛项同形保留；锁定用禁用态（`:disabled` / `disabled` / `[nzDisabled]`），禁条件渲染藏掉
 - 有写接口 → 操作列表头「新建」同形文案按钮 + 行内编辑删除；禁卸 Dialog
-- `load-failed` + `#empty` 失败态；薄壳勿叠 `v-loading`
-- 抽屉表高：`useDrawerPickListMaxHeight`；禁页面 `useAdminTableMaxHeight`
+- 加载失败必须回调（`load-failed` / `onLoadFailed` / `loadFailed`）+ 表体失败态与重试；薄壳勿再叠 loading
+- 抽屉表高：Vue 用 `useDrawerPickListMaxHeight`；React / Angular 用 `useAdminTableMaxHeight` / `injectAdminTableMaxHeight` 并按 `inDialog` 调小基准
 
 ### 回传
 
@@ -56,7 +56,7 @@
 
 ### Demo
 
-独立页：筛选单选+多选 + `DialogEditXxxSelectorDemo`。门控 `VITE_APP_USE_EXAMPLE`。
+独立页：筛选单选+多选 + `DialogEditXxxSelectorDemo`。门控 `VITE_APP_USE_EXAMPLE`：开发 `1`，生产必须 `0`（Angular 为 `environment.useExample`，生产构建用 fileReplacements 换 stubs）。
 
 ## 验收清单
 
@@ -64,4 +64,4 @@
 - [ ] 分页实体只有一份 List 逻辑
 - [ ] 选择器态可写（若接口支持）且筛项不藏
 - [ ] Demo 三件套
-- [ ] `pnpm type-check`
+- [ ] `pnpm --filter @ku-utils/<app> typecheck`

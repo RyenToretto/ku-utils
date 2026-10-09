@@ -14,7 +14,7 @@ description: >-
 - **金标真源**：`src/modules/_example/schoolResource/_module/school-resource-list.ts` + `dialog-select-school-resource.ts` + `school-selector.ts`
 - 最佳实践：仓库根 `docs/best-practice/rule-skill-entity-selector/`
 
-Demo 仅 `useExample` 构建；`business` 构建换 stubs。
+Demo 仅开发态 `useExample`；生产构建换 stubs。
 
 ## 命名（强制）
 

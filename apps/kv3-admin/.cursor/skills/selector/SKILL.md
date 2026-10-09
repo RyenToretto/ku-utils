@@ -60,4 +60,4 @@ Demo 仅 `VITE_APP_USE_EXAMPLE=1`；生产必须 `0`。
 - [ ] 接口支持新建/编辑/删除 → 选择器态同样可操作；新建在操作列表头且与页面态同形
 - [ ] 筛项 lock 用 disabled，不藏
 - [ ] Demo：筛选单多选 + DialogEdit
-- [ ] `pnpm type-check`
+- [ ] `pnpm --filter @ku-utils/kv3-admin typecheck`

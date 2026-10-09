@@ -1,8 +1,8 @@
 ---
 description: kr-admin 实体选择器 — XxxList 双模 + XxxSelector + 薄壳 DialogSelectXxx；分页接口强制金标
 globs:
-  - '**/*Selector*.vue'
-  - '**/DialogSelect*.vue'
+  - '**/*Selector*.tsx'
+  - '**/DialogSelect*.tsx'
   - '**/useRowSelector.ts'
   - '**/_example/**/*'
 alwaysApply: false
@@ -11,7 +11,7 @@ alwaysApply: false
 # 实体选择器（kr-admin）
 
 > 最佳实践：`docs/best-practice/rule-skill-entity-selector/`。  
-> 金标真源：`schoolResource` 的 `SchoolResourceList` + `DialogSelectSchoolResource` + `SchoolSelector`。
+> 金标真源：`schoolResource` 的 `SchoolResourceList.tsx` + `DialogSelectSchoolResource.tsx` + `SchoolSelector.tsx`。
 
 跨表单 / 筛选选业务实体时，封装为可复用选择器。  
 **凡「有接口且分页」的实体点选，必须按 List 双模金标实现**。
@@ -20,27 +20,27 @@ alwaysApply: false
 
 | 类型 | 命名 | 示例 |
 | --- | --- | --- |
-| 列表（页面 + 选择器共用） | **`XxxList.vue`** | `SchoolResourceList.vue` |
-| 选择器控件（假 select） | **`XxxSelector.vue`** | `SchoolSelector.vue` |
-| 选值弹层（薄壳） | **`DialogSelectXxx.vue`** | `DialogSelectSchoolResource.vue`（即使是 `el-drawer`） |
-| Demo 壳 | `XxxSelectorDemoLayer.vue` | `modules/_example/<kebab>Selector/` |
-| Demo 编辑弹层 | `DialogEditXxxSelectorDemo.vue` | 筛选区之外的「新增/编辑」回填验证 |
+| 列表（页面 + 选择器共用） | **`XxxList.tsx`** | `SchoolResourceList.tsx` |
+| 选择器控件（假 select） | **`XxxSelector.tsx`** | `SchoolSelector.tsx` |
+| 选值弹层（薄壳） | **`DialogSelectXxx.tsx`** | `DialogSelectSchoolResource.tsx`（即使是 antd `Drawer`） |
+| Demo 壳 | `XxxSelectorDemoLayer.tsx` | `modules/_example/<camel>Selector/` |
+| Demo 编辑弹层 | `DialogEditXxxSelectorDemo.tsx` | 筛选区之外的「新增/编辑」回填验证 |
 
 ### 禁止
 
-- **禁止**在 `DialogSelectXxx` 内再写完整表格（`DoFilterPanel` + `el-table` + `useTableQuery` + 列定义）
+- **禁止**在 `DialogSelectXxx` 内再写完整表格（`DoFilterPanel` + antd `Table` + `useTableQuery` + 列定义）
 - **禁止**页面 List 与选择器抽屉各维护一份表格逻辑
-- **禁止** `XxxSelect.vue` / `XxxPicker.vue` / `DrawerSelectXxx.vue`
+- **禁止** `XxxSelect.tsx` / `XxxPicker.tsx` / `DrawerSelectXxx.tsx`
 - **禁止**多种选择器堆同一聚合 Demo 页
-- **禁止**「只读 input + 页面 `ref.show()` 弹层」冒充控件
-- **禁止**筛选 / 表单手填实体 ID / 包名代替已有 `XxxSelector`
-- **禁止** `ScrollSelect` / remote `el-select` 截断首屏冒充分页
+- **禁止**「只读 Input + 页面手动开弹层」冒充控件；选择器必须是 `value` / `onChange` 受控组件（可直接放进 `Form.Item`）
+- **禁止**筛选 / 表单手填实体 ID 代替已有 `XxxSelector`
+- **禁止**远程 `Select` 截断首屏冒充分页
 
 ### 允许保留
 
-- 模板内原生 `el-select`（枚举 / 短 `$MAPS` options，非远程实体）
-- `$MAPS` 驱动的 `el-radio-group` / `el-select`
-- 选择器抽屉**内部**名称搜索仍可用 `el-input`（写在 `XxxList` 筛选区）
+- 原生 antd `Select`（枚举 / 短 `maps` options，非远程实体）
+- `maps` 驱动的 `Radio.Group` / `Select`
+- 选择器抽屉**内部**名称搜索仍可用 `Input`（写在 `XxxList` 筛选区）
 - `DoSelector` 仅适合静态枚举 / 简单 remote 下拉，**不**替代分页实体选择器
 
 ## 何时必须用选择器
@@ -49,7 +49,7 @@ alwaysApply: false
 
 筛选区、新建 / 编辑弹层中的外键：无现成选择器时**先建** `XxxList` 双模 + `XxxSelector` + `DialogSelectXxx` + 独立 Demo，禁止手填凑合。
 
-编辑已用选择器时，筛选暴露同条件必须用**同一**选择器（可 `clearable` 表示不限）。
+编辑已用选择器时，筛选暴露同条件必须用**同一**选择器（可清空表示不限）。
 
 ## 分页接口判定（强制）
 
@@ -59,19 +59,19 @@ alwaysApply: false
 | --- | --- |
 | 请求含 `pageNum` + `pageSize` | 含等价命名 |
 | 响应含 `total` 或分页结构 | `lists`/`list` + `total` |
-| 业务上可翻页点选实体 | 禁止 remote `el-select` 截断首屏 |
+| 业务上可翻页点选实体 | 禁止远程 `Select` 截断首屏 |
 
-**全量小数组 / `$MAPS`** → 可用轻量 `el-select`，勿硬套抽屉。
+**全量小数组 / `maps`** → 可用轻量 `Select`，勿硬套抽屉。
 
 ## List 双模金标（强制）
 
 ```text
 XxxLayer ──► XxxList (enableSelector=false)
-DialogSelectXxx ──► XxxList (enableSelector=true, inDialog=true)
-XxxSelector ──► DialogSelectXxx.show()
+DialogSelectXxx ──► XxxList (enableSelector, inDialog)
+XxxSelector ──► DialogSelectXxx (open)
 ```
 
-### A. `XxxList.vue` 双模
+### A. `XxxList.tsx` 双模
 
 **Props（选择器态）**
 
@@ -79,23 +79,25 @@ XxxSelector ──► DialogSelectXxx.show()
 | --- | --- | --- |
 | `enableSelector` | `false` | 选择器模式 |
 | `isMultiple` | 视业务 | 单选 / 多选 |
-| `inDialog` | `false` | 抽屉内：drawer maxHeight + `drawer-pick-table-wrap` |
-| `enableCache` | `false` | 多选跨页 cache |
-| `checkedIds` | `[]` | 受控勾选 id |
+| `inDialog` | `false` | 抽屉内：根 class 加 `in-dialog`，表高基准改小 |
+| `checkedRows` | `[]` | 打开时回显的已选行 |
 | `lockXxxFilter` | — | 如仅启用态 |
 | `defaultPageSize` | — | 选择器可改小页演示翻页 |
 
+**回调**：`onChange(row | rows | undefined)`、`onLoaded`、**`onLoadFailed`（强制，在 `useTableQuery` 的 `onError` 里调）**。
+
 **行为分叉**
 
-- `!enableSelector`：`#batch`、操作列表头「新建」文案按钮、`useAdminTableMaxHeight`；`useTableQuery.immediate: true`；**禁止**页面态 `PageHeader` / title / subtitle（见 project-context）
-- `enableSelector`：勾选列始终渲染；`#batch` 仍仅页面态；`CellState` 等 `:switchable="false"`；`inDialog` 时 `useDrawerPickListMaxHeight`；`immediate: false`，由 Dialog `show()` 触发 `search(true)`；`refreshOnActivated: !enableSelector`
+- `!enableSelector`：`TableWrap` 的 `batch`、操作列表头「新建」文案按钮；`useTableQuery({ immediate: !enableSelector })`；**禁止**页面态 PageHeader / title
+- `enableSelector`：勾选列始终渲染；`batch` 仍仅页面态；`CellState` 仅页面态 `switchable`；表高 `useAdminTableMaxHeight(pageSelector, inDialog ? 360 : 400)`
+- 失败态：`Table` 的 `locale.emptyText` 按 `tableLoadFailed` 出失败文案 + 重试
 
 **筛选项可见（选择器态强制）**
 
-- 页面态已有的 `DoFilterPanel` 筛项，选择器态**必须同形保留**；**禁止** `v-if="!enableSelector"` 等把筛项整项藏掉
-- 锁定约束（如 `lockEnabledStatus` → 强制启用）：控件**仍展示**，绑锁定值，加 **`:disabled`**；fetcher / `transformQuery` 仍写死约束
-- 金标：`SchoolResourceList` 状态 radio `:disabled="statusFilterLocked"`（lock 时不藏）
-- 若筛项本身是会再开抽屉的 `XxxSelector`（嵌套点选），选择器态改为**只读展示锁定上下文**，**禁止**整项消失，也禁止抽屉套抽屉再点选
+- 页面态已有的 `DoFilterPanel` 筛项，选择器态**必须同形保留**；**禁止** `{!enableSelector && …}` 把筛项整项藏掉
+- 锁定约束（如 `lockEnabledStatus` → 强制启用）：控件**仍展示**，绑锁定值并加 `disabled`；fetcher / `transformQuery` 仍写死约束
+- 金标：`SchoolResourceList` 状态 radio `disabled={statusFilterLocked}`（lock 时不藏）
+- 若筛项本身是会再开抽屉的 `XxxSelector`（嵌套点选），选择器态改为**只读展示锁定上下文**，**禁止**整项消失，也禁止抽屉套抽屉
 
 **写能力（选择器态强制，与接口对齐）**
 
@@ -104,39 +106,31 @@ XxxSelector ──► DialogSelectXxx.show()
 | 能力 | 选择器态落点 |
 | --- | --- |
 | 新建 | **操作列表头**；与页面态**同形**：`type="primary"` + `size="small"` +「新建」文案按钮（**禁止**选择器另做 Plus icon 分叉） |
-| 编辑 / 删除等行内写 | 操作列行内按钮（`plain` + `size="small"`；`@click.stop`） |
-| 依赖弹层 | `DialogXxx` **禁止** `v-if="!enableSelector"` 卸掉 |
+| 编辑 / 删除等行内写 | 操作列行内按钮（`color` + `variant="outlined"` + `size="small"`；`onClick` 里 `e.stopPropagation()`） |
+| 依赖弹层 | `DialogXxx` **禁止** `{!enableSelector && …}` 卸掉 |
 
 仅点选、无写接口的实体：可不渲染操作列；有写接口却藏掉操作列 / 表头新建 → 违规。
 
-**Emit / Expose**
-
-- `emit('change', row | rows | undefined)`、`emit('loaded')`、`emit('refresh-start')`（可选）
-- **`emit('load-failed')`（强制）**：在 `useTableQuery` 的 `onError` 里发；同时 `#empty` 按 `tableLoadFailed` 出失败态 + 重试
-- `defineExpose({ setChecked, clearSelection, search, remeasureAfterLayout })`
-
 **勾选列**
 
-- 多选全选：`do-select-cell` **仅**写在勾选列 `#header`；**禁止**塞进 `TableWrap #batch`
+- `useRowSelector`：`isMultiple` 透传；变更回调内仅选择器态调 `onChange`
+- 多选全选：`createSelectColumn`（`DoSelectCell`）**仅**写在勾选列表头；**禁止**塞进 `TableWrap` 的 `batch`
 - 确需表外全选：`.batch-select-control`（Demo：`/example/simple/batch-select`）
-- `useRowSelector`：`enableSelector: true`；多选 `enableCache: true`
 
 ### B. `DialogSelectXxx` 薄壳
 
-1. `el-drawer`：`class` 含 **`drawer-model-selector`**；`append-to-body`；`destroy-on-close`；`size` 约 960px；`:close-on-click-modal="false"`
-2. 结构：`#header` 标题 → `do-drawer__view` 内 **仅** `<XxxList enable-selector in-dialog ... />` → `#footer`（已选文案 + 取消/确定）
-3. **禁止**壳内 `useTableQuery` / 列定义 / `requestXxxPage`
-4. `visibleTable`：`destroy-on-close` 后重建 List
-5. **禁止**外壳再挂 `v-loading`（只留表内 `tableLoading`，避免双圈）
-6. `@opened` → `listRef.remeasureAfterLayout()`
-7. 确定后才 `emit('change')`；`defineExpose({ show })`
+1. antd `Drawer`：`className="drawer-model-selector"`；`width={960}`；`maskClosable={false}`；`keyboard={false}`；`destroyOnHidden`（关闭即销毁 List）
+2. 结构：`title` → `.do-drawer__view` 内 **仅** `<XxxList enableSelector inDialog … />` → `footer`（已选计数 + 取消 / 确定）
+3. **禁止**壳内 `useTableQuery` / 列定义 / `requestXxxPage`；外壳不再叠加 loading（只留表内 `tableLoading`）
+4. 由父级 `open` 受控；`useEffect` 只在打开瞬间快照 `checkedRows`，抽屉内勾选不回写外部
+5. 确定后才 `onConfirm(...)`；取消 `onCancel()`
 
 ### C. `XxxSelector` 控件
 
-1. 假 `el-select`：`popper-class` 非 scoped `display: none !important`
-2. `@visible-change` → blur + `DialogSelectXxx.show(当前值)`
-3. `el-option` 仅回显已选；多选 collapse-tags + hover tags 浮层（`do-selector-tags-panel`）
-4. `v-model`：`{ id: string, label, item }`；单选对象/`null`，多选数组
+1. 受控 `value` / `onChange`（兼容 `Form.Item` 注入）
+2. 假 antd `Select`：`open={false}`，`onOpenChange` 里打开 `DialogSelectXxx`；下拉层不展示
+3. 选项仅回显已选；多选 `maxTagCount={1}` 折叠 + `Popover` 悬浮浮层（`do-selector-tags-panel`）
+4. 值：`{ id: string, label, item }`；单选对象 / `null`，多选数组
 
 ### D. 独立 Demo（强制）
 
@@ -151,8 +145,8 @@ XxxSelector ──► DialogSelectXxx.show()
 | --- | --- |
 | 成功码 / 载荷 | `code === 0` / **`data`**（勿照搬他仓 `0000`/`result`） |
 | ID | 分页实体选择器 **`id: string`**（学校金标） |
-| 全局组件 | TableWrap / DoFilterPanel / Cell* / BasePagination 禁止业务再 import |
-| 文案 | 中文即可（本 starter 不强制 vue-i18n） |
+| 组件引入 | `TableWrap` / `DoFilterPanel` / `Cell*` / `ListPaginationBar` 从 `@/components` 按需 import |
+| 文案 | 中文即可（本 starter 不强制 i18n） |
 | HTTP | 继续用本仓 axios 封装；**不要**引入他仓 request 适配层 |
 
 ## Agent 自检
@@ -162,4 +156,4 @@ XxxSelector ──► DialogSelectXxx.show()
 3. `DialogSelectXxx` 是否仍含 `useTableQuery`？→ 违规，收到 `XxxList`
 4. 接口支持新建/编辑/删除时，选择器态是否可操作？→ 必须；新建在操作列表头且与页面态同形
 5. Demo 三件套齐全？
-6. `pnpm type-check`（本仓）
+6. `pnpm --filter @ku-utils/kr-admin typecheck`
