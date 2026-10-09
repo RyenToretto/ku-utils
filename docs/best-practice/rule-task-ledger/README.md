@@ -1,6 +1,6 @@
 # rule-task-ledger — 任务台账与确认队列
 
-> **已落地（精简）**：`apps/kv3-admin/.cursor/rules/task-ledger.mdc` + `apps/kv3-admin/docs/task/TASK.md`  
+> **已落地（精简）**：`apps/{kv3,kv2,kr,ka}-admin/.cursor/rules/task-ledger.mdc` + 各自 `docs/task/TASK.md`（四端同文，仅 app 名不同）  
 > **来源**：jx-dsp 任务/wait 专节 + oversea 台账分流。  
 > **同步**：改本模块或 `.mdc` 须双向更新，见 [SYNC.md](../SYNC.md)。  
 > **说明**：库仓/starter 不强制 wait 双队列；完整版流程仍以本文「最佳实践」为准，业务交付仓可升格。
@@ -32,7 +32,8 @@
 ### 强制触发
 
 用户说「实现 / 开发 / 优化 / 修复」等 → **先**建 `docs/task/{id}.md`（活跃则登记 `TASK.md`），**再**编码。  
-一次任务一次 commit；收工更新 `{id}.md` 并从活跃索引移除。
+一次任务一次 commit；收工更新 `{id}.md` 并从活跃索引移除。  
+Commit：`type(<app>): 中文摘要`，scope 用 app / 包名（受 commitlint `scope-enum` 约束），**不**把任务 ID 当 scope；任务 ID `{id}[-nn]` 写进 subject 末尾括号或 body。
 
 ### 任务 ID（多人防冲突 · 强制）
 

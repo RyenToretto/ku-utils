@@ -72,7 +72,7 @@ alwaysApply: false
 | `❎` | 确认先不做 / 非本仓义务 | 否（仅 `{id}.md`） |
 
 一次任务尽量一次 commit；收工时同步：更新 `{id}.md` + 从本人节移除。  
-Commit 前缀：`docs|feat|fix|chore({id}[-nn]): 中文摘要`。
+Commit：`type(kv2-admin): 中文摘要`（scope 用 app 名，受 commitlint `scope-enum` 约束），任务 ID `{id}[-nn]` 写进 subject 末尾括号或 body，例：`feat(kv2-admin): 表外全选 Demo（koujianfeng1-batch-select-01）`。
 
 ## 与完整版差异
 
