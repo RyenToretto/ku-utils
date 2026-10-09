@@ -19,6 +19,19 @@ alwaysApply: true
 - 仅存在于 `docs/best-practice`、本仓尚未落地的参考模块（见 `SYNC.md`「参考模块」表）。
 - 一旦落地成 `.cursor` 文件，立即按上表升级为「必须双向同步」。
 
+## 自动校验（`scripts/check-bp-sync.mjs`，以 SYNC「已落地」表为准）
+
+| 时机 | 入口 | 不一致时 |
+| --- | --- | --- |
+| Agent 每轮结束 | `.cursor/hooks.json` → `stop` 钩子（检查全部未提交改动） | 追加 followup，本任务内补齐另一侧 |
+| `git commit` | `.husky/pre-commit`（检查暂存区） | 拒绝提交 |
+| PR / push main | CI「Best-practice sync」（检查 diff） | CI 失败 |
+| 手动 | `pnpm check:bp-sync` | 列出问题 |
+
+- 校验项：未登记 / 已失效登记 / 模块缺 README / 模块地图缺登记；改真源未改模块、改已落地模块未改任一真源
+- 配对只认「同一次改动里两边都动了」，内容是否一致仍靠本规则；**禁止**为过检查做无意义改动——补的是实质同步（精炼实践、本仓落点、对照表）
+- 新增 / 删除 rule、skill 或模块：先改 SYNC 表，脚本即自动纳入
+
 ## 查表
 
 对应关系唯一真源：`docs/best-practice/SYNC.md`。

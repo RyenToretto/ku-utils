@@ -15,6 +15,11 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Best-practice sync
+        run: node scripts/check-bp-sync.mjs --base "${{ github.event.pull_request.base.sha || github.event.before }}"
 
       - uses: pnpm/action-setup@v4
         with:

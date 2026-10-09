@@ -23,6 +23,7 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
+    "check:bp-sync": "node scripts/check-bp-sync.mjs --worktree",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,vue,json,md,css,scss}\"",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",

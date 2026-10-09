@@ -88,6 +88,19 @@
 | jx-dsp               | 巨石 `project-context.mdc`                                                                   | 拆分见 `_decomposition`；专题见 B 组模块 |
 | oversea-creative-web | `project-context` + `project-structure` + `selector` + `mock-isolation` + `doc-backend-sync` | 拆分后范本                               |
 
+## 自动校验
+
+`scripts/check-bp-sync.mjs` 以本文件「已落地」表为唯一输入，检查登记完整性（未登记 / 已失效 / 模块缺 README / 模块地图缺登记）与双向配对（改真源须同时改模块，改已落地模块须同时改任一真源）。
+
+| 时机           | 入口                                                     | 不一致时                          |
+| -------------- | -------------------------------------------------------- | --------------------------------- |
+| Agent 每轮结束 | `.cursor/hooks.json` → `stop` 钩子（全部未提交改动）     | 追加 followup，本任务内补齐另一侧 |
+| `git commit`   | `.husky/pre-commit`（暂存区）                            | 拒绝提交                          |
+| PR / push main | `.github/workflows/ci.yml`「Best-practice sync」（diff） | CI 失败                           |
+| 手动           | `pnpm check:bp-sync`                                     | 列出问题                          |
+
+配对只保证「两边同一次改动都动了」；内容一致仍由 [best-practice-sync.mdc](../../.cursor/rules/best-practice-sync.mdc) 约束，禁止为过检查做无意义改动。
+
 ## Agent 操作清单
 
 改本仓 `.cursor/rules|skills` → 更新对应 BP 模块。  
