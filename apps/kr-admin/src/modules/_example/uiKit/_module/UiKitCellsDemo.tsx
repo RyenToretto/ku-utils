@@ -129,6 +129,7 @@ export default function UiKitCellsDemo() {
           size="large"
         >
           <DoNumberSetter
+            label="评分"
             num={score}
             newValue={score}
             onOk={(v) => {

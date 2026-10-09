@@ -137,6 +137,7 @@ export default function UiKitPanelDemo() {
         align: 'right',
         render: (_, row) => (
           <DoNumberSetter
+            label="数量"
             num={row.amount}
             newValue={row.amount}
             changing={!!row.amountChanging}
@@ -197,6 +198,8 @@ export default function UiKitPanelDemo() {
           <span className="do-filter-field-label">关键字</span>
           <DoTxtSetter
             inline
+            required={false}
+            placeholder="请输入关键字"
             initValue={listFilters.keyword}
             onOk={(value) => {
               setListFilters({ keyword: value ?? '' });
