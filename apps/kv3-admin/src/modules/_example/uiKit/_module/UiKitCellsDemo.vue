@@ -94,6 +94,7 @@
       <template #header>DoNumberSetter / DoTxtSetter</template>
       <div class="demo-row">
         <DoNumberSetter
+          label="评分"
           :num="score"
           :new-value="score"
           @ok="onScoreOk"

@@ -21,6 +21,8 @@
         <el-form-item label="关键字">
           <DoTxtSetter
             inline
+            :required="false"
+            placeholder="请输入关键字"
             :init-value="listFilters.keyword"
             @ok="onKeywordOk"
           >
@@ -118,6 +120,7 @@
         >
           <template #default="{ row }">
             <DoNumberSetter
+              label="数量"
               :num="(row as DemoRow).amount"
               :new-value="(row as DemoRow).amount"
               :changing="(row as DemoRow).amountChanging"
