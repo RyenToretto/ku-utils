@@ -1,5 +1,11 @@
 # @ku-utils/tsconfig
 
+## 1.3.0
+
+### Minor Changes
+
+- dbc1b48: 新增 `angular.json` 预设（Angular 22 + TypeScript 6.0：module preserve、strictTemplates、typeCheckHostBindings，不使用 baseUrl）
+
 ## 1.2.1
 
 ### Patch Changes
