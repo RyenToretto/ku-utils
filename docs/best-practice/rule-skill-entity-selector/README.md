@@ -35,11 +35,11 @@
 
 ### 分页 → List 双模
 
-| 文件              | 职责                                                                 |
-| ----------------- | -------------------------------------------------------------------- |
-| `XxxList`         | **唯一**表格逻辑；`enableSelector` 分叉                              |
-| `XxxSelector`     | 假 select + 开抽屉（受控值，可直接进表单项）                         |
-| `DialogSelectXxx` | 薄壳，内挂 List；Vue 用 `show()`，React / Angular 由父级 `open` 受控 |
+| 文件              | 职责                                                                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------- |
+| `XxxList`         | **唯一**表格逻辑；`enableSelector` 分叉                                                         |
+| `XxxSelector`     | 假 select + 开抽屉（受控值，可直接进表单项）；多选悬浮 tags 浮层不出视口（上下翻转 + 限高滚动） |
+| `DialogSelectXxx` | 薄壳，内挂 List；Vue 用 `show()`，React / Angular 由父级 `open` 受控                            |
 
 扩展名按栈：Vue `.vue`、React `.tsx`、Angular kebab-case `.ts`。**禁止**命名 `XxxSelect` / `XxxPicker` / `DrawerSelectXxx`；禁止 Dialog 内第二套表；禁止远程下拉截断首屏冒充分页。
 

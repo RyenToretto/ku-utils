@@ -583,6 +583,8 @@ el-form-item.do-fill-form > .el-form-item__content {
   gap: 6px;
   min-width: 240px;
   max-width: 420px;
+  max-height: 40vh;
+  overflow-y: auto;
 
   .do-selector-tag {
     max-width: 100%;

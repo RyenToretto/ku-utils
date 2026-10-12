@@ -135,7 +135,7 @@ XxxSelector ──► DialogSelectXxx.show()
 
 1. 假 `el-select`：`popper-class` 非 scoped `display: none !important`
 2. `@visible-change` → blur + `DialogSelectXxx.show(当前值)`
-3. `el-option` 仅回显已选；多选 collapse-tags + hover tags 浮层（`do-selector-tags-panel`）
+3. `el-option` 仅回显已选；多选 collapse-tags + hover tags 浮层（`do-selector-tags-panel`，按视口上下空间翻转、限高滚动）
 4. `v-model`：`{ id: string, label, item }`；单选对象/`null`，多选数组
 
 ### D. 独立 Demo（强制）

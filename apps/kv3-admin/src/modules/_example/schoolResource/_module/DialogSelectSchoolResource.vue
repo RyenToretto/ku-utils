@@ -163,6 +163,7 @@ defineExpose({ show });
 
 .do-drawer__foot_btn {
   display: flex;
+  flex: 1;
   justify-content: flex-end;
   align-items: center;
   gap: 8px;

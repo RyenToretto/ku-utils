@@ -1,5 +1,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, type ComputedRef } from 'vue';
 
+import { useMeasurableAfterMount } from './useAdminTableMaxHeight';
+
 import { useMaxHeight } from '@/lib/useMaxHeight';
 
 /** Drawer 根节点 class，与 Selector 上 el-drawer 保持一致 */
@@ -29,6 +31,7 @@ export function useDrawerPickListMaxHeight(
   remeasure: () => void;
   remeasureAfterLayout: () => Promise<void>;
 } {
+  const measurable = useMeasurableAfterMount();
   const wrapBdHeight = ref(0);
   const targetSelector = `${DRAWER_MODEL_SELECTOR_CLASS} .drawer-pick-table-wrap .el-table.${tableClass}`;
 
@@ -85,6 +88,7 @@ export function useDrawerPickListMaxHeight(
   });
 
   const maxHeight = computed(() => {
+    if (!measurable.value) return minHeight;
     // wrapBd 已是表格可用区（不含 TableWrap 分页 ft）；有实测则以其为准填满
     if (wrapBdHeight.value > 0) {
       return Math.max(Math.floor(wrapBdHeight.value), minHeight);

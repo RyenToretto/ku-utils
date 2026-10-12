@@ -5,8 +5,7 @@ import { openPreviewVideo } from '@/utils/previewMedia';
 /** 公开样例资源，仅 Demo 演示宿主调用 */
 const SAMPLE_LANDSCAPE = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
 /** 竖屏样例（360×640）；加载失败时仍可凭 raw 尺寸走竖屏画幅 */
-const SAMPLE_PORTRAIT =
-  'https://videos.pexels.com/video-files/3571264/3571264-sd_360_640_30fps.mp4';
+const SAMPLE_PORTRAIT = 'https://assets.mixkit.co/videos/1232/1232-360.mp4';
 const SAMPLE_AUDIO = 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3';
 
 function openLandscape() {
@@ -25,7 +24,7 @@ function openPortrait() {
     type: 'VIDEO',
     width: 360,
     height: 640,
-    videoDuration: 8,
+    videoDuration: 12,
   });
 }
 

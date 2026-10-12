@@ -255,12 +255,14 @@ el-form-item.do-fill-form > .el-form-item__content {
 
 /* Drawer 内点选/列表：配合 useDrawerPickListMaxHeight（禁止写死 max-height px） */
 .drawer-model-selector {
+  /* Element UI 抽屉 body 默认无内边距；底栏也在 body 内，需与 Element Plus 抽屉（20px）同留白 */
   .el-drawer__body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
+    padding: 20px;
   }
 
   /* 内容壳必须撑满 body，否则表格高度会回落到 minHeight（约 4～5 行） */

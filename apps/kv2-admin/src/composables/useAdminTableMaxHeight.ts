@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, ref, type ComputedRef } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, type ComputedRef, type Ref } from 'vue';
 
 import { useMaxHeight, type UseMaxHeightOptions } from '@/lib/useMaxHeight';
 
@@ -89,6 +89,25 @@ export function measureAdminTableMaxHeight(
 }
 
 /**
+ * 挂载后下一帧才放开测量。
+ *
+ * Element UI 的 el-table 在创建时就以初始 max-height 调 `layout.setMaxHeight`，此时 `$el` 为空会
+ * `nextTick` 重放这个旧值；若挂载期间已算出新值，旧值会在之后覆盖外层 `style.max-height`，
+ * 而新值不再变化、watch 不会重触发，表格就卡在默认高度。
+ */
+export function useMeasurableAfterMount(): Readonly<Ref<boolean>> {
+  const measurable = ref(false);
+  let frame = 0;
+  onMounted(() => {
+    frame = requestAnimationFrame(() => {
+      measurable.value = true;
+    });
+  });
+  onBeforeUnmount(() => cancelAnimationFrame(frame));
+  return measurable;
+}
+
+/**
  * Admin 列表页表格 max-height：
  * - contain 用页面根 `.page-*`（勿用默认 `.main-body`，本仓不存在）
  * - 以 `.domain-module-main`（Demo 为 `.main-container-inner`）二次测量为主真源
@@ -105,6 +124,7 @@ export function useAdminTableMaxHeight(
     minHeight,
   });
 
+  const measurable = useMeasurableAfterMount();
   const layoutRevision = ref(0);
   let mutationObserver: MutationObserver | null = null;
   let resizeObserver: ResizeObserver | null = null;
@@ -155,6 +175,9 @@ export function useAdminTableMaxHeight(
     void layoutRevision.value;
 
     const baseVal = baseMaxHeight.value;
+    if (!measurable.value) {
+      return defaultHeight;
+    }
     if (typeof document === 'undefined') {
       return Math.max(baseVal, minHeight);
     }

@@ -129,7 +129,7 @@ XxxSelector ──► DialogSelectXxx (open)
 
 1. 受控 `value` / `onChange`（兼容 `Form.Item` 注入）
 2. 假 antd `Select`：`open={false}`，`onOpenChange` 里打开 `DialogSelectXxx`；下拉层不展示
-3. 选项仅回显已选；多选 `maxTagCount={1}` 折叠 + `Popover` 悬浮浮层（`do-selector-tags-panel`）
+3. 选项仅回显已选；多选 `maxTagCount={1}` 折叠 + `Popover` 悬浮浮层（`do-selector-tags-panel`，靠 Popover 自动翻转、限高滚动）
 4. 值：`{ id: string, label, item }`；单选对象 / `null`，多选数组
 
 ### D. 独立 Demo（强制）

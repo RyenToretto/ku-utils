@@ -107,6 +107,10 @@ let showHoverTimer: ReturnType<typeof setTimeout> | null = null;
 let hideHoverTimer: ReturnType<typeof setTimeout> | null = null;
 const HOVER_SHOW_DELAY_MS = 300;
 const HOVER_HIDE_DELAY_MS = 140;
+const TAGS_PANEL_GAP = 6;
+const TAGS_PANEL_VIEWPORT_MARGIN = 8;
+/** 上方空间不少于该值时优先向上展开，否则取上下更宽的一侧 */
+const TAGS_PANEL_PREFER_ABOVE_MIN = 160;
 
 const selectedList = computed<SchoolSelectorValue[]>(() => {
   const value = props.modelValue;
@@ -136,13 +140,16 @@ function updateTagsPanelPosition() {
   const el = rootRef.value;
   if (!el) return;
   const rect = el.getBoundingClientRect();
-  const width = Math.max(rect.width, 240);
+  const spaceAbove = rect.top - TAGS_PANEL_GAP - TAGS_PANEL_VIEWPORT_MARGIN;
+  const spaceBelow = window.innerHeight - rect.bottom - TAGS_PANEL_GAP - TAGS_PANEL_VIEWPORT_MARGIN;
+  const placeAbove = spaceAbove >= TAGS_PANEL_PREFER_ABOVE_MIN || spaceAbove >= spaceBelow;
   tagsPanelStyle.value = {
     position: 'fixed',
     left: `${rect.left}px`,
-    top: `${Math.max(8, rect.top - 6)}px`,
-    transform: 'translateY(-100%)',
-    width: `${width}px`,
+    top: placeAbove ? `${rect.top - TAGS_PANEL_GAP}px` : `${rect.bottom + TAGS_PANEL_GAP}px`,
+    transform: placeAbove ? 'translateY(-100%)' : undefined,
+    width: `${Math.max(rect.width, 240)}px`,
+    maxHeight: `${Math.max(placeAbove ? spaceAbove : spaceBelow, 0)}px`,
     zIndex: 4000,
   };
 }
@@ -303,6 +310,7 @@ onBeforeUnmount(() => {
   border: 1px solid var(--ku-border-light, #ddd4c6);
   border-radius: 6px;
   box-shadow: var(--ku-box-shadow-light, 0 2px 12px rgba(0, 0, 0, 0.08));
+  overflow-y: auto;
 }
 
 .do-selector-tag {
