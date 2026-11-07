@@ -6,6 +6,7 @@ const opsSidebar = [
   {
     text: '运维与部署',
     items: [
+      { text: '修改 / 发版 / 部署 / 升依赖 / 新包', link: '/guide/ops' },
       { text: 'Turborepo 使用指南', link: '/turborepo' },
       { text: 'VitePress 部署', link: '/deploy-vitepress' },
       { text: '发布到 npm', link: '/npm-publish' },
@@ -29,7 +30,7 @@ export default defineConfig({
       { text: '组件库', link: '/components/button' },
       { text: '工具库', link: '/packages/utils' },
       { text: 'CLI', link: '/cli/overview' },
-      { text: '运维', link: '/turborepo' },
+      { text: '运维', link: '/guide/ops' },
     ],
     sidebar: {
       '/guide/': [
@@ -40,6 +41,7 @@ export default defineConfig({
             { text: '快速上手', link: '/guide/getting-started' },
             { text: '从 npm 安装', link: '/guide/npm' },
             { text: '存量项目迁移', link: '/guide/migration' },
+            { text: '修改 / 发版 / 部署 / 升依赖 / 新包', link: '/guide/ops' },
           ],
         },
       ],
@@ -93,6 +95,7 @@ export default defineConfig({
           ],
         },
       ],
+      '/guide/ops': opsSidebar,
       '/turborepo': opsSidebar,
       '/deploy-vitepress': opsSidebar,
       '/npm-publish': opsSidebar,

@@ -5,7 +5,8 @@
 - Node.js >= 20
 - pnpm >= 10
 
-包已发布到 npm，直接安装即可。详见 [从 npm 安装](/guide/npm)。
+包已发布到 npm，直接安装即可。详见 [从 npm 安装](/guide/npm)。  
+维护者：修改 / 发版 / 部署文档 / 升依赖 / 新增包见 [运维操作指引](/guide/ops)。
 
 ## 本仓 starter
 

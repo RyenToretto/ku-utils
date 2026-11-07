@@ -97,14 +97,17 @@ pnpm typecheck
 
 ## 四、新增包
 
+> 完整教程（含文档站挂载、首次发版、验收清单）见 **[运维操作指引 · 新增包](./guide/ops.md#5-新增包教程)**。摘要如下：
+
 1. 在 `packages/` 下创建目录，例如 `packages/my-lib/`
 2. 初始化 `package.json`，确保：
    - `name` 使用 `@ku-utils/my-lib` 格式
    - 添加 `"publishConfig": { "access": "public" }`
    - `version` 设为 `0.0.1`
 3. 添加 `tsconfig.json`，继承 `@ku-utils/tsconfig/library.json`
-4. 编写源码和构建脚本
-5. 在 `commitlint.config.js` 中添加新的 scope
+4. 编写源码和构建脚本；补包根 README
+5. 在 `commitlint.config.js` 中添加新的 scope；在 `docs/` + VitePress sidebar 挂文档
+6. `pnpm changeset` → 发版到 npm 后再给业务仓安装
 
 `package.json` 模板：
 
@@ -201,7 +204,8 @@ git commit -m "chore(deps): 升级 typescript 到 5.8.3"
 
 ## 七、版本发布
 
-本项目使用 [Changesets](https://github.com/changesets/changesets) 管理版本和变更日志。
+本项目使用 [Changesets](https://github.com/changesets/changesets) 管理版本和变更日志。  
+端到端流程（含文档部署、消费方升依赖）见 **[运维操作指引](./guide/ops.md)**；npm 细节见 [发布到 npm](./npm-publish.md)。
 
 ### 7.1 创建变更记录
 

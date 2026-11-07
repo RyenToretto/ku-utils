@@ -22,7 +22,15 @@ pnpm turbo build --filter='./packages/*' --filter='./tools/*'
 
 echo ""
 echo "4. 发布到 npm..."
-pnpm changeset publish
+if [[ -n "${NPM_OTP:-}" ]]; then
+  pnpm changeset publish --otp="$NPM_OTP"
+elif [[ -n "${1:-}" ]]; then
+  pnpm changeset publish --otp="$1"
+else
+  echo "若账号开启 2FA：NPM_OTP=xxxxxx bash scripts/publish.sh"
+  echo "或改用 Automation token（npm config / CI Secret NPM_TOKEN）免 OTP"
+  pnpm changeset publish
+fi
 
 echo ""
 echo "5. 推送 git tags..."
