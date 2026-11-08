@@ -77,7 +77,7 @@ pnpm dev:v3          # 或 dev:admin / dev:n4 …
       → 合并 Version PR → 自动 build + changeset publish + git tag
 ```
 
-仓库 Secrets 需配置 **`NPM_TOKEN`**（npm **Automation** 类型，免交互 OTP）。详见 [发布到 npm](/npm-publish)。
+仓库 Secrets 需配置 **`NPM_TOKEN`**（npm **Granular Access Token**，勾选 **Bypass 2FA** + Packages Read and write；免交互 OTP）。详见 [发布到 npm](/npm-publish)。
 
 ### 本地紧急发版
 
