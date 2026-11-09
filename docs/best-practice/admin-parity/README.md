@@ -32,7 +32,7 @@
 - ka：确认框统一 `injectConfirm()`，提示用 `NzMessageService`；日期适配 `provideNzDateFnsAdapter`（`NZ_DATE_LOCALE` 已废弃，v23 移除）。
 - ka ↔ kr 固定换算：ng-zorro modal 无 content 级 padding → ka 内距 = kr `bodyStyle` + 16；antd v5 `Paragraph` 是 `div` → ka 用 `<div nz-typography>`；el plain / kr outlined → ka `btn-plain-*`（禁 ghost / `nzGhost`；plain 配色读 skin 色阶 `--ku-color-{family}-light-9 / 5 / 8`，与 kv3 同值）。
 - **禁止**页级 `PageHeader` / title / subtitle（四端一致）。
-- 弹层默认视口居中，各栈全局一处落点：kv3 `App.vue` ConfigProvider `dialog.alignCenter`；kv2 `_page-utils.scss` `.el-dialog__wrapper` flex 居中；kr `App.tsx` ConfigProvider `modal={{ centered: true }}`；ka `zorro-ku-bridge.scss` `.ant-modal-wrap`（nz 无全局开关）。业务弹层勿再写死 `top`。
+- 弹层默认视口居中，各栈全局一处落点：kv3 `App.vue` ConfigProvider `dialog.alignCenter`；kv2 `_page-utils.scss` `.el-dialog__wrapper` flex 居中；kr `App.tsx` ConfigProvider `modal={ { centered: true } }`；ka `zorro-ku-bridge.scss` `.ant-modal-wrap`（nz 无全局开关）。业务弹层勿再写死 `top`。
 - kv2 控制台零异常：`predev` / `prebuild` 跑 `scripts/ensure-vue-demi-vue27.mjs`（Pinia 依赖的 vue-demi 须判定为 Vue 2.7）；跨文件 type alias 的 props 用运行时 `PropType`，禁 `| null`。
 - `.domain-module-main` padding 四边一致（20px）；页内首块勿再叠 `margin-top`，用父级 `gap`。
 - 侧栏多级以 kv3 `app-shell.scss` `.side-menu` 为准：二级起左缘 22 / 34 / 46、引导线 28 / 40 / 52、各级右缘同为 209、激活链与悬停时箭头 / 图标高亮。kr / ka 用 `.ant-menu-sub` 层级选择器补齐（标题宽 `calc(100% - 20px)`、箭头 `inset-inline-end: 26px`）；ka 递归模板投影的 `nz-submenu` 查不到子项，需显式绑定 `ant-menu-submenu-selected`；kv2 Element UI 子项默认 `min-width: 200px` 须清零。

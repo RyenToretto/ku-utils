@@ -24,7 +24,7 @@
 1. Layer 薄壳 + `_module/XxxList`；单根 `page-*`；Dialog 在根内。
 2. 列表状态：`useTableQuery` / `injectTableQuery`（fetcher 传 `AbortSignal` / `tableLoadFailed` / 留页刷新）；失败态有重试出口；有分页挂刷新按钮（Vue `BasePagination` `enable-refresh` + `@refresh`；React / Angular `ListPaginationBar` 刷新调 `search(false)`）。
 3. **表格四要素**：`TableWrap`（Dialog 内嵌可省）+ `class="do-inner-scroller page-table hide-table-border"` + `border`/`stripe` + `:max-height`（页面用 admin maxHeight hook；**弹层表**用 drawer 专用 hook，禁写死 px）。
-   React / Angular 表格 class 只用 `do-inner-scroller page-table`，高度走 antd `scroll={{ y }}` / `[nzScroll]`。
+   React / Angular 表格 class 只用 `do-inner-scroller page-table`，高度走 antd `scroll={ { y } }` / `[nzScroll]`。
 4. 两种滚动（可选）：区内滚动（默认）vs 整页滚动（高筛选页，表不传 max-height）。
 5. **禁止业务/Demo 页挂 `PageHeader`，禁止页级 title / subtitle**（顶栏+侧栏已表达身份）。**非产品明确拍板**不得加回。
 
