@@ -133,9 +133,19 @@ const normalizeHeading = (h) => {
 
 const PATH_TOKEN = /^[\w@.~][\w@./{},-]*$/;
 const SKIP_TOKEN = /[*<>$]|\.\.\.|xxx|Xxx|XXX|\{id\}|^https?:|^@ku-utils\/|^\.\.?\/|^~/;
+/** 仓内/相对落点；`element-plus/...` 等 npm 包路径不当作仓库文件校验（CI 常在 install 前跑） */
+const REPO_OR_REL =
+  /^(apps|docs|packages|scripts|tools|src|\.cursor|assets|public|components|composables|utils|styles)\//;
+
+function isNpmPackagePath(token) {
+  if (REPO_OR_REL.test(token) || token.startsWith('@/')) return false;
+  const first = token.split('/')[0] ?? '';
+  return /^[a-z0-9][a-z0-9._-]*$/i.test(first);
+}
 
 function isPathLike(token) {
   if (!PATH_TOKEN.test(token) || SKIP_TOKEN.test(token) || !token.includes('/')) return false;
+  if (isNpmPackagePath(token)) return false;
   return token.endsWith('/') || /\.[a-z]{1,5}$/i.test(token);
 }
 

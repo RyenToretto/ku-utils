@@ -18,20 +18,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Best-practice sync
-        run: node scripts/check-bp-sync.mjs --base "${{ github.event.pull_request.base.sha || github.event.before }}"
-
       - uses: pnpm/action-setup@v4
         with:
           version: 10.8.0
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install
         run: pnpm install --frozen-lockfile
+
+      # 放在 install 之后：内容 lint 可能解析 node_modules 内包路径
+      - name: Best-practice sync
+        run: node scripts/check-bp-sync.mjs --base "${{ github.event.pull_request.base.sha || github.event.before }}"
 
       - name: Lint
         run: pnpm lint
