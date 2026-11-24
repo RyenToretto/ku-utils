@@ -1,3 +1,7 @@
+## 1.6.1
+
+- 正式发布 prepareImageForUpload（1.6.0 npm staged 冲突后的补发）
+
 # @ku-utils/utils
 
 ## 1.6.0
