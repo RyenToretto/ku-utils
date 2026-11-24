@@ -1,5 +1,12 @@
 # @ku-utils/hooks
 
+## 1.5.24
+
+### Patch Changes
+
+- Updated dependencies
+  - @ku-utils/utils@1.6.0
+
 ## 1.5.23
 
 ### Patch Changes

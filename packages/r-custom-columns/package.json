@@ -1,6 +1,6 @@
 {
   "name": "@ku-utils/r-custom-columns",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -53,7 +53,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.32.1",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4"
   }

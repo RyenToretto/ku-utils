@@ -1,5 +1,11 @@
 # @ku-utils/utils
 
+## 1.6.0
+
+### Minor Changes
+
+- feat(utils): 对齐相机站上传预处理 prepareImageForUpload（1024/JPEG0.7/1MB）
+
 ## 1.5.4
 
 ### Patch Changes

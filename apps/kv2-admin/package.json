@@ -1,7 +1,7 @@
 {
   "name": "@ku-utils/kv2-admin",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Vue 2.7 + Element UI 管理端 starter，与 kv3-admin 1:1 四生对齐，workspace 消费 @ku-utils/*",
   "scripts": {

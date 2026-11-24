@@ -7,7 +7,7 @@ type ImportsMap = Record<string, (string | string[])[]>;
 
 /**
  * 由 scripts/generate-auto-import.mjs 自动生成，勿手动编辑。
- * 共 181 个命名导出。
+ * 共 185 个命名导出。
  */
 export const kuUtilsUtilsImports: ImportsMap = {
   '@ku-utils/utils': [
@@ -71,6 +71,7 @@ export const kuUtilsUtilsImports: ImportsMap = {
     'formatUnitNumber',
     'formatWeekLabel',
     'generateAnonymousUserId',
+    'generateUrlByFileRaw',
     'generateUUID',
     'getBrowserFingerprint',
     'getBrowserInfo',
@@ -146,6 +147,7 @@ export const kuUtilsUtilsImports: ImportsMap = {
     'matchMap',
     'matchObjProperty',
     'multiplyNumber',
+    'NO_ASPECT_CROP_RANGE',
     'parseEnv',
     'parseFromCookie',
     'parseQuery',
@@ -154,6 +156,7 @@ export const kuUtilsUtilsImports: ImportsMap = {
     'posInElement',
     'PRE_COMPRESS_CONFIG',
     'preCompressImage',
+    'prepareImageForUpload',
     'randomInt',
     'removeClass',
     'restoreScroll',
@@ -181,6 +184,7 @@ export const kuUtilsUtilsImports: ImportsMap = {
     'transferTF',
     'truncate',
     'truncateText',
+    'UPLOAD_PREPARE_DEFAULTS',
     'useToken',
     'uuid',
     'validatePassword',

@@ -20,10 +20,24 @@ export interface GenerateUrlOptions {
   limitSide?: number;
   limitFile?: number;
   format?: 'image/jpeg' | 'image/png' | 'image/webp';
+  quality?: number;
   aspectRatio?: number;
+  /** 超出范围时居中裁剪；上传预处理请用 NO_ASPECT_CROP_RANGE 关闭 */
   aspectRatioRange?: [number, number];
   recursionCount?: number;
 }
+
+/** 对齐 aigc-camera-web `generateUrlByFileRaw` 默认 */
+export const UPLOAD_PREPARE_DEFAULTS = {
+  maxSide: 1024,
+  maxBytes: 1024 * 1024,
+  quality: 0.7,
+  format: 'image/jpeg' as const,
+  minMaxSide: 100,
+} as const;
+
+/** 关闭宽高比裁剪（相机站上传链路无裁剪） */
+export const NO_ASPECT_CROP_RANGE: [number, number] = [0, Number.POSITIVE_INFINITY];
 
 export const defaultCompressSettings: CompressionOptions = {
   maxSide: 4096,
@@ -53,6 +67,7 @@ export function preCompressImage(fileRaw: Blob): Promise<UserUploadInfo> {
     return compressImage(fileRaw, {
       limitSide: defaultCompressSettings.maxSide,
       limitFile: defaultCompressSettings.maxFileSize,
+      aspectRatioRange: NO_ASPECT_CROP_RANGE,
     });
   }
 
@@ -69,14 +84,60 @@ export function preCompressImage(fileRaw: Blob): Promise<UserUploadInfo> {
   return compressImage(fileRaw, {
     limitSide: defaultCompressSettings.maxSide,
     limitFile: targetSize,
+    aspectRatioRange: NO_ASPECT_CROP_RANGE,
   });
+}
+
+export interface PrepareImageForUploadOptions {
+  /** 最长边，默认 1024；-1 跳过缩放重编码 */
+  maxSide?: number;
+  /** 目标体积（字节），默认 1MB */
+  maxBytes?: number;
+  format?: 'image/jpeg' | 'image/png' | 'image/webp';
+  /** 0–1，默认 0.7 */
+  quality?: number;
+}
+
+/**
+ * 上传前标准预处理（对齐 aigc-camera-web）：
+ * Canvas 最长边缩放 + JPEG 0.7 + 递归压到约 1MB；不做宽高比裁剪。
+ */
+export function prepareImageForUpload(
+  fileRaw: Blob,
+  options: PrepareImageForUploadOptions = {},
+): Promise<UserUploadInfo> {
+  const {
+    maxSide = UPLOAD_PREPARE_DEFAULTS.maxSide,
+    maxBytes = UPLOAD_PREPARE_DEFAULTS.maxBytes,
+    format = UPLOAD_PREPARE_DEFAULTS.format,
+    quality = UPLOAD_PREPARE_DEFAULTS.quality,
+  } = options;
+
+  return compressImage(fileRaw, {
+    limitSide: maxSide,
+    limitFile: maxBytes,
+    format,
+    quality,
+    aspectRatioRange: NO_ASPECT_CROP_RANGE,
+  });
+}
+
+/**
+ * @deprecated 兼容相机站命名；请改用 prepareImageForUpload
+ */
+export function generateUrlByFileRaw(
+  fileRaw: Blob,
+  limitSide = UPLOAD_PREPARE_DEFAULTS.maxSide,
+  limitFile = UPLOAD_PREPARE_DEFAULTS.maxBytes,
+): Promise<UserUploadInfo> {
+  return prepareImageForUpload(fileRaw, { maxSide: limitSide, maxBytes: limitFile });
 }
 
 /**
  * 通过 Canvas 压缩图片
  *   - 限制最大边长
  *   - 限制最大文件体积（递归二次压缩）
- *   - 宽高比超出范围时居中裁剪
+ *   - 宽高比超出范围时居中裁剪（可用 NO_ASPECT_CROP_RANGE 关闭）
  *   - limitSide = -1 时跳过压缩，仅返回元信息
  */
 export function compressImage(
@@ -87,6 +148,7 @@ export function compressImage(
     limitSide = defaultCompressSettings.maxSide,
     limitFile: maxFileSize = defaultCompressSettings.maxFileSize,
     format = defaultCompressSettings.format,
+    quality = defaultCompressSettings.quality,
     aspectRatioRange = defaultCompressSettings.aspectRatioRange,
     aspectRatio = 0,
     recursionCount = 0,
@@ -137,13 +199,18 @@ export function compressImage(
 
           const currentAspectRatio = iWidth / iHeight;
           const [minRatio, maxRatio] = aspectRatioRange;
+          const cropEnabled =
+            Number.isFinite(minRatio) &&
+            Number.isFinite(maxRatio) &&
+            minRatio > 0 &&
+            maxRatio < Number.POSITIVE_INFINITY;
 
           let cropX = 0;
           let cropY = 0;
           let cropWidth = iWidth;
           let cropHeight = iHeight;
 
-          if (currentAspectRatio < minRatio || currentAspectRatio > maxRatio) {
+          if (cropEnabled && (currentAspectRatio < minRatio || currentAspectRatio > maxRatio)) {
             if (currentAspectRatio < minRatio) {
               const targetHeight = iWidth / minRatio;
               cropHeight = Math.round(targetHeight);
@@ -209,13 +276,25 @@ export function compressImage(
               });
 
               if (compressedFile.size > maxFileSize) {
-                const sizeRatio = Math.sqrt(maxFileSize / compressedFile.size);
-                const newLimitSide = Math.max(100, Math.round(limitSide * sizeRatio));
+                // 与相机站同形：按体积比缩小最长边；过小则停止继续压
+                const newLimitSide = Math.round((limitSide * maxFileSize) / compressedFile.size);
+                if (newLimitSide <= UPLOAD_PREPARE_DEFAULTS.minMaxSide) {
+                  resolve({
+                    blob: compressedFile,
+                    url: URL.createObjectURL(compressedFile),
+                    size: compressedFile.size,
+                    width: scaleWidth,
+                    height: scaleHeight,
+                    aspectRatio: calcAspectRatio,
+                  });
+                  return;
+                }
 
                 compressImage(compressedFile, {
                   limitSide: newLimitSide,
                   limitFile: maxFileSize,
                   format,
+                  quality,
                   aspectRatio: calcAspectRatio,
                   aspectRatioRange,
                   recursionCount: recursionCount + 1,
@@ -243,7 +322,7 @@ export function compressImage(
               }
             },
             format,
-            defaultCompressSettings.quality,
+            quality,
           );
         } catch {
           const width = eleImg.naturalWidth || eleImg.width;
