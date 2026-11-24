@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "ku-utils 团队通用工具函数库（零框架依赖）",
+  "description": "ku-utils \u56e2\u961f\u901a\u7528\u5de5\u5177\u51fd\u6570\u5e93\uff08\u96f6\u6846\u67b6\u4f9d\u8d56\uff09",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
