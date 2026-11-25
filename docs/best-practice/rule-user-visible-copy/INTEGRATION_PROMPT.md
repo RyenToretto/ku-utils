@@ -6,7 +6,7 @@
 
 1. 添加 `.cursor/rules/user-visible-copy.mdc`。
 2. 列出 sink 与禁止类别；与任务台账/wait 文档交叉引用。
-3. grep 业务文案中的「待后端」「一期」「waitRD」等，列整改项。
+3. grep 业务文案中的「待后端」「一期」「waitConfirm」等，列整改项。
 
 ## 完成后
 

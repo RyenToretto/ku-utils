@@ -33,7 +33,8 @@
     "release": "turbo run build --filter='./packages/*' --filter='./tools/*' && changeset publish",
     "pack:tarballs": "turbo run build --filter='./packages/*' && node scripts/pack-tarballs.mjs",
     "pack:tarballs:only": "node scripts/pack-tarballs.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "taskledger:cleanup": "node scripts/check-task-ledger-cleanup.mjs"
   },
   "prettier": "@ku-utils/prettier-config",
   "devDependencies": {

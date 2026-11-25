@@ -1,7 +1,7 @@
 # rule-fe-be-doc-sync — 前后端合同与上游增量
 
-> **参考接入**：合同真源、增量同步、wait 队列与 Agent 技能。  
-> **来源加强**：oversea `doc-backend-sync` skill；jx-dsp waitRD/waitConfirm + `docs/apis`。
+> **参考接入**：合同真源、增量同步、waitConfirm 与 Agent 技能。  
+> **来源加强**：oversea `doc-backend-sync` skill；jx-dsp / xh-ai 确认队列（**统一 waitConfirm**，不再分 waitRD）。
 
 **类型**：Cursor Rule + 可选 Skill（`doc-backend-sync`）
 
@@ -22,15 +22,15 @@
 2. **路径**：用环境变量（非业务 `VITE_` 打进包）；禁止文档散落本机绝对路径。
 3. **落地顺序**：已确认合同 → 运行时接口 → Mock → 文档示例（只读形状）。
 4. **前端 `docs/apis`（可选）**：按模块维护；与 `_api`/Mock 同形；设计稿未落地标状态。
-5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → 开 `{owner}{seq}-{slug}` → 逐条 CDP（`report.ok=true`）+ commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
+5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → **先**台账清理（见 [rule-task-ledger](../rule-task-ledger/)）→ 开 `{owner}{seq}-{slug}` → 逐条 CDP（`report.ok=true`）+ commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
 6. **Phase E 完成度表（强制）**：收口后对话须输出 Markdown 主表（编号 / 摘要 / FE 边界 / 状态 / 落点 / CDP 留证），禁止只写散文；可选对照表（纯 BE）；附台账路径、commit 短 SHA、快照是否已对齐。
-7. **wait 队列**：后端合同缺口 → waitRD；产品拍板 → waitConfirm；已确认必须消费移除，禁长期滞留。
+7. **waitConfirm（统一）**：产品拍板与接口合同缺口一律进 `docs/waitConfirm/<owner>/`；整份转发服务端（对方可再转 PM）；QA 不写「收件人」；精确决策七项 / 精确合同九项；未确认合同 **零请求**；已确认必须消费移除，禁长期滞留。**不要**再维护 waitRD 目录。
 8. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合（台账 ID 约定以 task-ledger 为准）。
 
 ## 本仓落点
 
 - 参考模块（ku-utils 库仓可不落地完整 wait 体系）
-- 业务仓范本：oversea / ai-router `.cursor/skills/doc-backend-sync/`；jx-dsp `docs/waitRD/` + `docs/apis/`
+- 业务仓范本：xh-ai `docs/waitConfirm/<owner>/` + `waitconfirm:ready`；oversea / ai-router `.cursor/skills/doc-backend-sync/`
 
 ## 验收清单
 
@@ -38,3 +38,4 @@
 - [ ] Agent 改 API 会核对合同 / mock
 - [ ] 若启用上游同步：TASK 有快照表
 - [ ] 若启用上游同步：skill Phase E 含完成度表模板；CDP 要求 `report.ok=true`
+- [ ] 若启用确认队列：仅 waitConfirm（按提交人子目录），无 waitRD

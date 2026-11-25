@@ -1,79 +1,88 @@
 ---
-description: kv2-admin 任务台账（精简）— {owner}{seq}-{slug}、按人/状态活跃看板
-globs:
-  - docs/task/**
-alwaysApply: false
+description: kv2-admin 任务台账（精简）— {owner}{seq}-{slug}、按人/状态活跃看板、开账前清理、统一 waitConfirm
+alwaysApply: true
 ---
 
 # 任务台账（kv2-admin · 精简）
 
-> 最佳实践：`docs/best-practice/rule-task-ledger/`（完整版含 wait 双队列；本仓 starter 用精简落地）。  
+> 完整版（waitConfirm 模板、上游增量 Skill、验收清单）：`docs/best-practice/rule-task-ledger/`。  
 > 台账目录：`apps/kv2-admin/docs/task/`。  
-> 上游增量 Skill 见参考模块 `rule-fe-be-doc-sync`（业务仓范本：oversea `doc-backend-sync`）。
+> 与完整版差异：库仓演示可不落地 wait 目录；启用时统一 `docs/waitConfirm/<owner>/`，**不要** waitRD。
 
 ## 何时登记
 
 用户说「实现 / 开发 / 优化 / 修复」且触及 **kv2-admin 业务页/组件/Mock** → **先**建 `docs/task/{id}.md` 并（若仍活跃）写入 `TASK.md` **本人章节**，**再**编码。  
-纯文档/rule 同步、单行 typo 可跳过。
+纯文档、纯样式 token、与业务无关的基建可跳过台账。
 
-## 任务 ID（多人防冲突 · 强制）
+## 开新台账前 · 本人清理（强制）
+
+取新 `{owner}{seq}-{slug}` **之前**，在仓根执行：
+
+```bash
+node scripts/check-task-ledger-cleanup.mjs --app kv2-admin --owner <owner>
+# 或扫全部 apps：node scripts/check-task-ledger-cleanup.mjs --owner <owner>
+```
+
+| 可删条件（同时满足） | 说明 |
+| --- | --- |
+| `{owner}{seq}-{slug}.md` | **禁止**删 `TASK.md`、历史 `Pxx-*.md` |
+| 文件内无 `⭕️`/`⚠️`/`⛔️` | 仅剩 `✅`/`❎` |
+| 不在 `TASK.md` 活跃板 ⭕️/⚠️/⛔️ 表 | |
+| 距该文件最近一次 git 提交 ≥ **30 天** | |
+| 非强制续作主题现行文件 | 除非用户结案 |
+
+有可删 → 先删再开新账。无可删 → 回复注明「台账清理：无满 30 天可删项」。
+
+## 任务 ID
 
 | 规则 | 说明 |
 | --- | --- |
-| **新任务** | `{owner}{seq}-{slug}`（例：`koujianfeng1-batch-select`）。**禁止**只写 `koujianfeng1` |
-| `owner` | `git config user.name` 规范化（小写、仅 `[a-z0-9]`）；也可用 GitHub login |
-| `seq` | 扫 `docs/task/{owner}{数字}-*.md`，取 owner 后、第一个 `-` 前的数字，最大号 + 1（`koujianfeng10-…` 大于 `koujianfeng1-…`） |
-| `slug` | 英文 kebab，2～4 个词，看文件名就知道做什么；**禁止**空 slug、禁止中文、禁止再堆一句长标题 |
-| **禁止** | 全局 `Pnn` / `Pnn-<slug>.md` / `Pxx` 等任意不符形式；**禁止** `{owner}{seq}.md`（无 slug） |
-| **历史** | 若有旧 `Pxx-*` 或无 slug 文件，**只读保留**；继续收口仍改原文件，**不要**改号或迁文件名 |
+| 格式 | `{owner}{seq}-{slug}`（例：`koujianfeng1-batch-select`） |
+| `owner` | `git config user.name` → 小写、仅 `[a-z0-9]` |
+| `seq` | 扫本 app `docs/task/{owner}{数字}-*.md`，取 owner 后、第一个 `-` 前数字，最大 + 1 |
+| `slug` | 英文 kebab，2～4 词；禁止空 slug、禁止中文 |
+| **禁止** | 全局 `Pnn` / `Pxx`；**禁止**无 slug 的 `{owner}{seq}.md` |
+| 子任务 | `{id}-01`、`{id}-02` |
 
-子任务行号：`{id}-01`、`{id}-02`（id 已含 slug，例：`koujianfeng1-batch-select-01`）。一次 commit 一条。
+历史 `Pxx-*` / 无 slug 文件只读保留，继续收口改原文件。
 
-## `TASK.md`：按人 → 按状态（降冲突 + 防膨胀）
-
-| 真源 | 职责 |
-| --- | --- |
-| `docs/task/{id}.md` | **全量档案**；历史一律保留 |
-| `TASK.md` | **仅活跃看板**；结构固定如下 |
+## `TASK.md`：按人 → 按状态（仅活跃）
 
 ```markdown
-## {owner}
+## koujianfeng
+
 ### ⭕️ 待实现
 | ID | 标题 | 路径 |
 | --- | --- | --- |
-| koujianfeng1-batch-select | … | ./koujianfeng1-batch-select.md |
 
 ### ⚠️ 部分完成
-| ID | 标题 | 路径 |
-| --- | --- | --- |
+…
 
 ### ⛔️ 阻塞
-| ID | 标题 | 路径 |
-| --- | --- | --- |
+…
 ```
 
-硬约束：
+- **只改自己的 `## {owner}`**；没有则在文件**末尾**新建整节
+- `✅` / `❎` → 更新 `{id}.md` 后 **从看板删行**（文件可留档，满期可按上节清理）
+- 禁止改别人的节、禁止把索引当编年史
 
-1. **只改自己的 `## {owner}` 节**；没有则在文件末尾新建该节（勿插进别人中间）
-2. 行只出现在对应状态子节；状态变更 = **在本人节内剪切行**到另一子节（或出看板）
-3. `✅` / `❎` → 更新 `{id}.md` 后 **从 `TASK.md` 删行**（不进索引）
-4. 禁止改别人的节、禁止全局重排、禁止把历史堆回 `TASK.md`
+## 状态符号
 
-合并冲突：通常只撞在同一人同状态表；保留双方新增行即可。
+| 符号 | 含义 |
+| --- | --- |
+| `✅` | 已完成 |
+| `⚠️` | 部分完成 |
+| `⭕️` | 待实现 |
+| `⛔️` | 阻塞（须原因；仍属本仓义务） |
+| `❎` | FE 不跟 / 确认不做（纯 BE、等供给） |
 
-## 状态符号（禁止 `- [ ]`）
+纯后端/等字典 → `❎`，禁止用 `⛔️` 冒充本仓阻塞。
 
-| 符号 | 含义 | 是否进 `TASK.md` |
-| --- | --- | --- |
-| `⭕️` | 待实现 | 是 → `### ⭕️ 待实现` |
-| `⚠️` | 部分完成 | 是 → `### ⚠️ 部分完成` |
-| `⛔️` | 阻塞（须附原因） | 是 → `### ⛔️ 阻塞` |
-| `✅` | 已完成 | 否（仅 `{id}.md`） |
-| `❎` | 确认先不做 / 非本仓义务 | 否（仅 `{id}.md`） |
+## 确认队列（若启用 · 统一 waitConfirm）
 
-一次任务尽量一次 commit；收工时同步：更新 `{id}.md` + 从本人节移除。  
-Commit：`type(kv2-admin): 中文摘要`（scope 用 app 名，受 commitlint `scope-enum` 约束），任务 ID `{id}[-nn]` 写进 subject 末尾括号或 body，例：`feat(kv2-admin): 表外全选 Demo（koujianfeng1-batch-select-01）`。
+产品拍板与接口合同一律 `docs/waitConfirm/<owner>/`；整份转发**服务端**；QA **禁止**写「收件人」；未确认合同 **零请求**。**不要**再维护 waitRD。细则见 best-practice `rule-task-ledger` / `rule-fe-be-doc-sync`。
 
-## 与完整版差异
+## Commit
 
-本仓不强制 waitRD/waitConfirm 双队列与上游合同增量 Skill（见参考模块 `rule-fe-be-doc-sync`）。需要时再升格；升格后开账同样用 `{owner}{seq}-{slug}`，禁止 `Pnn`。
+Commit：`type(kv2-admin): 中文摘要`（scope 用 app 名，受 commitlint `scope-enum` 约束），任务 ID `{id}[-nn]` 写进 subject 末尾括号或 body，例：`feat(kv2-admin): 表外全选 Demo（koujianfeng1-batch-select-01）`。  
+每个任务一次 commit；不 push 除非用户要求。

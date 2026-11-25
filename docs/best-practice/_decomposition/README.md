@@ -42,10 +42,10 @@
 
 ## 参考真源（只读对照，勿整文件复制）
 
-| 仓                   | 路径                                                                    | 备注                                   |
-| -------------------- | ----------------------------------------------------------------------- | -------------------------------------- |
-| jx-dsp               | `.cursor/rules/project-context.mdc`                                     | 巨石完整版；选择器/waitRD/字段检查极全 |
-| oversea-creative-web | `project-context` + `project-structure` + `selector` + `mock-isolation` | **拆分后范本**；信封与 DSP 不同        |
+| 仓                   | 路径                                                                    | 备注                                        |
+| -------------------- | ----------------------------------------------------------------------- | ------------------------------------------- |
+| jx-dsp               | `.cursor/rules/project-context.mdc`                                     | 巨石完整版；选择器/waitConfirm/字段检查极全 |
+| oversea-creative-web | `project-context` + `project-structure` + `selector` + `mock-isolation` | **拆分后范本**；信封与 DSP 不同             |
 
 ## 他仓接入顺序（绿场）
 

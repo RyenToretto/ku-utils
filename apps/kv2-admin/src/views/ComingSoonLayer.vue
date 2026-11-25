@@ -17,7 +17,7 @@
           v-if="!backendReady"
           class="page-coming-soon-warn"
         >
-          后端尚未落地该模块 Controller；请勿臆造运行时请求，缺口见 waitRD。
+          后端尚未落地该模块 Controller；请勿臆造运行时请求，缺口请登记确认队列。
         </p>
         <p v-if="docsHint">
           接口合同：
