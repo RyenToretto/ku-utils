@@ -80,7 +80,9 @@ node scripts/check-task-ledger-cleanup.mjs --app kv2-admin --owner <owner>
 
 ## 确认队列（若启用 · 统一 waitConfirm）
 
-产品拍板与接口合同一律 `docs/waitConfirm/<owner>/`；整份转发**服务端**；QA **禁止**写「收件人」；未确认合同 **零请求**。**不要**再维护 waitRD。细则见 best-practice `rule-task-ledger` / `rule-fe-be-doc-sync`。
+产品拍板与接口合同一律 `docs/waitConfirm/<owner>/`；整份转发**服务端**；QA **禁止**写「收件人」。**不要**再维护 waitRD。
+
+开 QA 前对照合同仓需求/设计/接口：**已写死 / 纯 BE / 「是否按设计冻结」复读题 → 禁止开 QA**；只问文档「待确认」且会改 FE 能力面、或文档完全没有的合同缝。拿不准默认不问，台账写「按现行设计稿」。未回复**仅阻塞该 QA 对应能力**；已写死合同照常请求/Mock。细则见 best-practice `rule-task-ledger` / `rule-fe-be-doc-sync`。
 
 ## Commit
 

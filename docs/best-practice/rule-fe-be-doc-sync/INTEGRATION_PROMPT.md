@@ -7,7 +7,7 @@
 1. 明确合同真源（OpenAPI / 文档仓 / `docs/apis`）；写入环境变量名或相对路径约定。
 2. 添加 `.cursor/rules/fe-be-doc-sync.mdc`：改 `_api` 必对合同；同步 mock；无合同须标假设。
 3. 若有独立合同仓 + 实现仓：添加 `.cursor/skills/doc-backend-sync/SKILL.md`（侦测快照 → 开 `{owner}{seq}-{slug}` 台账 → 逐条提交 → Phase E 完成度表）；可参考 oversea / ai-router 同名 skill；**禁止** `Pnn` / 无 slug；CDP 须 `report.ok=true`。
-4. 可选统一确认队列 `docs/waitConfirm/<owner>/`（见 [rule-task-ledger](../rule-task-ledger/)；不要再开 waitRD）。
+4. 可选统一确认队列 `docs/waitConfirm/<owner>/`（见 [rule-task-ledger](../rule-task-ledger/)；不要再开 waitRD；**合同已写死 / 纯 BE 禁止再问**，只问文档未决且影响 FE 的项）。
 5. 与 [rule-api-contract](../rule-api-contract/) 信封/响应示例规则一致。
 
 ## 完成后

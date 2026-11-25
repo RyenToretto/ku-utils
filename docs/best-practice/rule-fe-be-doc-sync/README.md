@@ -24,7 +24,9 @@
 4. **前端 `docs/apis`（可选）**：按模块维护；与 `_api`/Mock 同形；设计稿未落地标状态。
 5. **上游增量 Skill**：快照 SHA 记在 `TASK.md` → 侦测新 commit → 分析 FE 影响 → **先**台账清理（见 [rule-task-ledger](../rule-task-ledger/)）→ 开 `{owner}{seq}-{slug}` → 逐条 CDP（`report.ok=true`）+ commit；纯 BE 标 `❎`。**禁止**再开 `Pnn` / 无 slug。
 6. **Phase E 完成度表（强制）**：收口后对话须输出 Markdown 主表（编号 / 摘要 / FE 边界 / 状态 / 落点 / CDP 留证），禁止只写散文；可选对照表（纯 BE）；附台账路径、commit 短 SHA、快照是否已对齐。
-7. **waitConfirm（统一）**：产品拍板与接口合同缺口一律进 `docs/waitConfirm/<owner>/`；整份转发服务端（对方可再转 PM）；QA 不写「收件人」；精确决策七项 / 精确合同九项；未确认合同 **零请求**；已确认必须消费移除，禁长期滞留。**不要**再维护 waitRD 目录。
+7. **waitConfirm（统一）**：产品拍板与接口合同缺口进 `docs/waitConfirm/<owner>/`；整份转发服务端；QA 不写「收件人」；精确决策七项 / 精确合同九项；已确认必须消费移除。**不要**再维护 waitRD。
+   - **已写死则直接按文档**，禁止再开「是否按设计冻结」QA；仅当合同仓「待确认」且会改 FE 能力面、或文档完全没有合同时才开队列（见 [rule-task-ledger](../rule-task-ledger/)）。
+   - 未回复 **仅阻塞该 QA 对应能力**；已写死合同照常请求/Mock，勿整页因无关待确认而零请求。纯 BE / 不影响 FE → 台账 `❎`，不开 QA。旧式 `SERVER_CONFIRM.md` 不再新开。
 8. 与 [rule-api-contract](../rule-api-contract/)、[rule-task-ledger](../rule-task-ledger/) 配合（台账 ID 约定以 task-ledger 为准）。
 
 ## 本仓落点
@@ -38,4 +40,4 @@
 - [ ] Agent 改 API 会核对合同 / mock
 - [ ] 若启用上游同步：TASK 有快照表
 - [ ] 若启用上游同步：skill Phase E 含完成度表模板；CDP 要求 `report.ok=true`
-- [ ] 若启用确认队列：仅 waitConfirm（按提交人子目录），无 waitRD
+- [ ] 若启用确认队列：仅 waitConfirm（按提交人子目录），无 waitRD；已写死/纯 BE 不开 QA
